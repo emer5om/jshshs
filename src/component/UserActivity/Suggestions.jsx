@@ -10,8 +10,8 @@ import SectionHeading from '../SectionHeading/SectionHeading'
 import MapPin5LineIcon from "remixicon-react/MapPin5LineIcon"
 import ArrowRightCircleFillIcon from "remixicon-react/ArrowRightCircleFillIcon"
 import OrderCards from '../Cards/OrderCards';
-import { Swiper, SwiperSlide } from "swiper/react";
 
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
@@ -22,7 +22,7 @@ const Suggestions = ({ data }) => {
         <Box bgcolor={theme.palette.primary[50]} px={4} py={2} borderRadius={theme.radius.xl}
             boxShadow={"8px 0px 36px 0px #002F3514"}
         >
-            <Box display={"flex"} flexDirection={"column"} gap={3}>
+            <Box display={"flex"} flexDirection={"column"} gap={2}>
                 <SectionHeading title={"Because You Ordered"}></SectionHeading>
 
                 <Box>
@@ -30,13 +30,11 @@ const Suggestions = ({ data }) => {
                         spaceBetween={30}
                         centeredSlides={true}
                         pagination={{ clickable: true }}
-                        scrollbar={{ draggable: true }}
-                        loop={true}
                         modules={[Autoplay, Pagination, Navigation]}
                     >
                         {data.map((item, index) => {
                             return (<SwiperSlide key={index}>
-                                <OrderCards image={item.image} />
+                                <OrderCards image={item.image} title={item.title} titleQty={item.titleQty} others={item.other} daysAgo={item.daysAgo} type={item.type} />
                             </SwiperSlide>)
                         })}
                     </Swiper>

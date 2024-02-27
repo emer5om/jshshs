@@ -22,18 +22,19 @@ const SectionHeading = ({ title, showMore = false, showMoreLink = "", color = "p
                     width: "10px",
                     borderRadius: theme.radius.xl
                 }} />
-                <Typography level="h2"
+                <Typography
                     sx={{
                         color: color === "primary" ? theme.palette.text.primary : theme.palette.text.currency,
                     }}
+                    fontSize={"xl2"}
                     fontWeight={theme.fontWeight.xl}>{title}</Typography>
             </Box>
             {showMore &&
                 <Box>
                     <Link href={showMoreLink}>
                         <Typography
-                            fontSize={theme.fontSize.xl}
-                            fontWeight={theme.fontWeight.lg}
+                            fontSize={theme.fontSize.md}
+                            fontWeight={theme.fontWeight.xl}
                             sx={{
                                 color: theme.palette.text.description,
                                 textDecoration: "none",

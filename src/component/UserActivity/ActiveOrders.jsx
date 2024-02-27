@@ -18,7 +18,7 @@ const ActiveOrders = () => {
       <Box display={"flex"} flexDirection={"column"}>
         <SectionHeading title={"Active Orders"} color='currency'></SectionHeading>
 
-        <Card orientation="horizontal" sx={{ mt: 2, my: 3 }}>
+        <Card orientation="horizontal" sx={{ mt: 2, my: 2 }}>
           <CardContent sx={{ display: "flex", alignItems: "center", flexDirection: "row", px: 1, py: 2 }}>
             <Box >
               <CardOverflow>
@@ -27,10 +27,10 @@ const ActiveOrders = () => {
             </Box>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
               <Box>
-                <Typography fontWeight="md" fontSize={"xl2"}>
+                <Typography fontWeight="md" fontSize={"xl"}>
                   Paneer Tikka Masala And More
                 </Typography>
-                <Typography fontWeight={"sm"} fontSize={"xl"}>
+                <Typography fontWeight={"sm"} fontSize={"md"}>
                   Your Order is Out For Delivery
                 </Typography>
               </Box>

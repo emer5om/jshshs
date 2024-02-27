@@ -8,6 +8,9 @@ import DealsCards from "@/component/Cards/DealsCards";
 import ActiveOrders from "@/component/UserActivity/ActiveOrders";
 import Suggestions from "@/component/UserActivity/Suggestions";
 
+import "swiper/swiper-bundle.css";
+import "swiper/css/navigation";
+
 const popularCardData = [
   {
     type: "veg",
@@ -45,6 +48,24 @@ const popularCardData = [
     price: "90.00",
     rating: "4.7",
   },
+  {
+    type: "veg",
+    isLiked: false,
+    image: "/images/demo-images/salad-1.png",
+    title: "Fattoush salad",
+    description: "Description of the food",
+    price: "100.00",
+    rating: "5.0",
+  },
+  {
+    type: "veg",
+    isLiked: false,
+    image: "/images/demo-images/noodles.png",
+    title: "Pan-Fried Noodles",
+    description: "Description of the food",
+    price: "50.00",
+    rating: "4.9",
+  },
 ];
 
 const categoryData = [
@@ -78,6 +99,46 @@ const categoryData = [
     title: "Beverages",
     count: "300",
   },
+  {
+    image: "/images/demo-images/category-1.png",
+    title: "Main Dish",
+    count: "100",
+  },
+  {
+    image: "/images/demo-images/category-2.png",
+    title: "Break fast",
+    count: "50",
+  },
+  {
+    image: "/images/demo-images/category-3.png",
+    title: "Dessert",
+    count: "200",
+  },
+  {
+    image: "/images/demo-images/category-4.png",
+    title: "Chinese Food",
+    count: "25",
+  },
+  {
+    image: "/images/demo-images/category-1.png",
+    title: "Main Dish",
+    count: "100",
+  },
+  {
+    image: "/images/demo-images/category-2.png",
+    title: "Break fast",
+    count: "50",
+  },
+  {
+    image: "/images/demo-images/category-3.png",
+    title: "Dessert",
+    count: "200",
+  },
+  {
+    image: "/images/demo-images/category-4.png",
+    title: "Chinese Food",
+    count: "25",
+  }
 ];
 
 const hotDeals = [
@@ -85,14 +146,17 @@ const hotDeals = [
   { image: "/images/demo-images/offer-image-2.jpg", link: "#" },
   { image: "/images/demo-images/offer-image-3.jpg", link: "#" },
   { image: "/images/demo-images/offer-images-4.jpeg", link: "#" },
+  { image: "/images/demo-images/offer-image-1.png", link: "#" },
+  { image: "/images/demo-images/offer-image-2.jpg", link: "#" },
+  { image: "/images/demo-images/offer-image-3.jpg", link: "#" },
+  { image: "/images/demo-images/offer-images-4.jpeg", link: "#" },
 ];
-
 
 const reorderData = [
   {
     image: "/images/demo-images/reorder-1.png",
-    type: "veg",
-    title: "Fattoush salad",
+    type: "non-veg",
+    title: "Indian Punjabi Cuisine Thali",
     titleQty: "1",
     other: "4",
     daysAgo: "20 Days Ago",
@@ -100,18 +164,18 @@ const reorderData = [
   {
     image: "/images/demo-images/reorder-2.png",
     type: "veg",
-    title: "Fattoush salad",
-    titleQty: "1",
+    title: "Ice cream balls with cookies",
+    titleQty: "2",
     other: "4",
-    daysAgo: "20 Days Ago",
+    daysAgo: "2 Days Ago",
   },
   {
     image: "/images/demo-images/reorder-3.png",
     type: "veg",
-    title: "Fattoush salad",
-    titleQty: "1",
+    title: "Tortilla Wraps with fresh salad",
+    titleQty: "6",
     other: "4",
-    daysAgo: "20 Days Ago",
+    daysAgo: "10 Days Ago",
   },
 ];
 
@@ -147,6 +211,12 @@ export default function Home() {
             <Suggestions data={reorderData}></Suggestions>
           </Grid>
         </Grid>
+      </Box>
+
+      {/* Delightful Dishes */}
+      <Box>
+
+
       </Box>
     </Box>
   );

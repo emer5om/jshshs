@@ -26,10 +26,9 @@ const PopularCards = ({ data }) => {
             <Grid container spacing={2}>
                 {data.map(item => {
                     return (
-                        <Grid xs={12} md={3}>
+                        <Grid xs={12} md={2}>
                             <Card sx={{
-                                width: 400,
-                                height: 523,
+                                width: "100%",
                                 p: 0,
                                 my: 4,
                                 borderRadius: theme.radius.xl,
@@ -45,26 +44,33 @@ const PopularCards = ({ data }) => {
                                 transition: "transform 0.3s ease-in-out"
 
                             }} >
-                                <CardActions sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                                    <Box px={3.5} py={3} >
-                                        <Box
-                                            width={"24px"}
-                                            component={"img"}
-                                            src={item.type === "veg" ? "/images/icons/veg.png" : "/images/icons/non-veg.jpg"}
-                                            alt='veg-non-veg.icon'
-                                        >
-                                        </Box>
-                                    </Box>
-                                    <Box bgcolor={theme.palette.primary[400]} px={3.5} py={3} sx={{ borderRadius: "0px 16px 0px 42.5px" }}>
-                                        <HeartLineIcon size={"24px"} className="likeIcon" />
-                                    </Box>
-                                </CardActions>
+
 
                                 <CardContent>
+
+                                    <CardActions sx={{
+                                        position: "absolute",
+                                        display: "flex", alignItems: "center", justifyContent: "space-between",
+                                        width: "100%"
+                                    }}>
+                                        <Box px={1.5} py={1} >
+                                            <Box
+                                                width={"18px"}
+                                                component={"img"}
+                                                src={item.type === "veg" ? "/images/icons/veg.png" : "/images/icons/non-veg.jpg"}
+                                                alt='veg-non-veg.icon'
+                                            >
+                                            </Box>
+                                        </Box>
+                                        <Box bgcolor={theme.palette.primary[400]} px={2.5} py={2} sx={{ borderRadius: "0px 16px 0px 42.5px", mt: "-1px" }}>
+                                            <HeartLineIcon size={"18px"} className="likeIcon" />
+                                        </Box>
+                                    </CardActions>
+
                                     <Box display={"flex"} alignItems={"center"} justifyContent={"center"} mt={1}>
                                         <Box
-                                            width={"225px"}
-                                            height={"225px"}
+                                            maxWidth={"100%"}
+                                            height={"200px"}
                                             borderRadius={"50%"}
                                             display={"flex"}
                                             alignItems={"center"}
@@ -84,32 +90,34 @@ const PopularCards = ({ data }) => {
                                             />
                                         </Box>
                                     </Box>
-                                    <Box px={3.5} py={4} display={"flex"} alignItems={"end"} justifyContent={"space-between"}>
-                                        <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"} gap={1}>
-                                            <Typography fontSize={theme.fontSize.xl2} fontWeight={theme.fontWeight.lg}>
-                                                {item.title}
-                                            </Typography>
-                                            <Typography
-                                                sx={{ color: theme.palette.text.description }}
-                                                fontSize={theme.fontSize.xl}
-                                                fontWeight={theme.fontWeight.lg}>
-                                                {item.description}
-                                            </Typography>
-                                        </Box>
-                                        <Box>
-                                            <CustomButton text={"Add"} customStyle={{ px: 4, py: 0.5 }} />
+                                    <Box p={2} display={"flex"} flexDirection={"column"} alignItems={"start"} justifyContent={"space-between"} gap={1}>
+                                        <Typography fontSize={theme.fontSize.md} fontWeight={theme.fontWeight.lg}
+                                            sx={{ textOverflow: "ellipsis", width: "100%", textWrap: "nowrap", overflow: "hidden" }}
+                                        >
+                                            {item.title}
+                                        </Typography>
+                                        <Typography
+                                            textOverflow={"ellipsis"}
+                                            
+                                            overflow={"hidden"}
+                                            sx={{ color: theme.palette.text.description, textWrap: "nowrap" }}
+                                            fontSize={theme.fontSize.sm}
+                                            fontWeight={theme.fontWeight.md}>
+                                            {item.description}
+                                        </Typography>
+                                        <CustomButton text={"Add"} customStyle={{ px: 4, py: 0.5 }} />
+                                        <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
+                                            <Box display={"flex"} alignItems={"center"} gap={1}>
+                                                <Typography sx={{ color: theme.palette.text.tertiary, textDecoration: "line-through" }} fontSize={theme.fontSize.xs} fontWeight={theme.fontWeight.sm}>$ {item.price}</Typography>
+                                                <Typography sx={{ color: theme.palette.text.currency }} fontSize={theme.fontSize.md} fontWeight={theme.fontWeight.lg}>$ {item.price}</Typography>
+                                            </Box>
+                                            <Box display={"flex"} alignItems={"center"} gap={1}>
+                                                <StarFillIcon size={theme.fontSize.sm} color={theme.palette.warning[500]} />
+                                                <Typography fontSize={theme.fontSize.sm} fontWeight={theme.fontWeight.lg}>{item.rating}</Typography>
+                                            </Box>
                                         </Box>
                                     </Box>
 
-                                    <Box px={3.5} pb={3} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                                        <Box>
-                                            <Typography sx={{ color: theme.palette.text.currency }} fontSize={theme.fontSize.xl2} fontWeight={theme.fontWeight.lg}>$ {item.price}</Typography>
-                                        </Box>
-                                        <Box display={"flex"} alignItems={"center"} gap={1}>
-                                            <StarFillIcon color={theme.palette.warning[500]} />
-                                            <Typography fontSize={theme.fontSize.xl2} fontWeight={theme.fontWeight.lg}>{item.rating}</Typography>
-                                        </Box>
-                                    </Box>
 
                                 </CardContent>
                             </Card>

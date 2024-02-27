@@ -10,14 +10,15 @@ const CategoryCards = ({ image, title, count }) => {
         <Box>
             <Card
                 sx={{
-                    width: 256,
+                    px:1,
+                    width: 200,
                     height: "auto",
                     border: "none",
                     borderBottom: "1px solid #18274B14",
                     borderRadius: theme.radius.lg,
                     boxShadow:
                         "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
-                    py: 4,
+                    py: 2,
                     "&:hover": {
                         cursor: "pointer", // Optional: Add pointer cursor
                         backgroundColor: theme.palette.primary[50],
@@ -29,8 +30,8 @@ const CategoryCards = ({ image, title, count }) => {
             >
                 <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
                     <Box
-                        width={"120px"}
-                        height={"120px"}
+                        width={"100px"}
+                        height={"100px"}
                         bgcolor={"#F0BB62"}
                         borderRadius={"50%"}
                         display={"flex"}
@@ -44,8 +45,8 @@ const CategoryCards = ({ image, title, count }) => {
                             loading="lazy"
                             alt=""
                             borderRadius={"50%"}
-                            height={"120px"}
-                            width={"120px"}
+                            maxHeight={"100%"}
+                            maxWidth={"100%"}
                             sx={{ transition: "transform 0.3s ease-in-out" }} // Smooth transition
                         />
                     </Box>
@@ -58,10 +59,12 @@ const CategoryCards = ({ image, title, count }) => {
                         alignItems={"center"}
                         justifyContent={"center"}
                     >
-                        <Typography fontWeight={"md"} fontSize={"xl3"}>
+                        <Typography fontWeight={"md"} fontSize={"md"}
+                        sx={{textWrap:"nowrap", textOverflow:"ellipsis", overflow:"hidden"}}
+                        >
                             {title}
                         </Typography>
-                        <Typography fontSize="xl" sx={{ color: theme.palette.text.description }} fontWeight={theme.fontWeight.md}>
+                        <Typography fontSize="sm" sx={{ color: theme.palette.text.description }} fontWeight={theme.fontWeight.md}>
                             {"(" + count + " items )"}
                         </Typography>
                     </Box>

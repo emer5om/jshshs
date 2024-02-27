@@ -13,44 +13,44 @@ const OrderCards = ({ image, type, title, titleQty, others, daysAgo }) => {
             <Card
                 variant="outlined"
                 orientation="horizontal"
-                sx={{ mt: 2, my: 1 }}
+                sx={{ mt: 1, my: 1 }}
             >
-                <AspectRatio ratio="1" sx={{ width: "180px" }}>
+                <Box sx={{ maxWidth: "100%", maxHeight: "100%" }}>
                     <Box
                         component={"img"}
                         src={image}
                         srcSet={`${image} 2x`}
                         loading="lazy"
                         alt=""
-                        sx={{ objectFit: "cover", borderRadius: theme.radius.lg }}
+                        sx={{ objectFit: "cover", borderRadius: theme.radius.lg, width: "100px" }}
                     >
                     </Box>
-                </AspectRatio>
+                </Box>
                 <CardContent>
                     <Box>
                         <Box display={"flex"} alignItems={"center"} gap={2}>
                             <Box
-                                width={"24px"}
+                                width={"20px"}
                                 component={"img"}
-                                src={"/images/icons/veg.png"}
+                                src={type === "veg" ? "/images/icons/veg.png" : "/images/icons/non-veg.jpg"}
                                 alt='veg-non-veg.icon'
                             >
                             </Box>
-                            <Typography fontSize={"xl2"} fontWeight={"md"}>
-                                1 x Indian Punjabi Cuisine Thali
+                            <Typography fontSize={"xl"} fontWeight={"xl"}>
+                                {titleQty} x {title}
                             </Typography>
                         </Box>
-                        <Typography fontSize={"xl"} fontWeight={"sm"} aria-describedby="card-description" mb={1}>
-                            +3 more
+                        <Typography fontSize={"md"} fontWeight={"md"} aria-describedby="card-description" mb={1}>
+                            +{others} more
                         </Typography>
                     </Box>
                     <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                         <Box>
-                            <Typography fontSize={"xl2"} fontWeight={"md"}>
+                            <Typography fontSize={"xl"} fontWeight={"xl"}>
                                 You Ordered
                             </Typography>
-                            <Typography fontSize={"lg"} fontWeight={"sm"}>
-                                20 days ago
+                            <Typography fontSize={"sm"} fontWeight={"md"}>
+                                {daysAgo}
                             </Typography>
                         </Box>
                         <CustomButton text={"Re-Order"} customStyle={{ px: 2, py: 1 }} />

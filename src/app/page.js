@@ -10,6 +10,8 @@ import Suggestions from "@/component/UserActivity/Suggestions";
 
 import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
+import DelightfulDishes from "@/component/Products/DelightfulDishes";
+import Offers from "@/component/Products/Offers";
 
 const popularCardData = [
   {
@@ -138,7 +140,7 @@ const categoryData = [
     image: "/images/demo-images/category-4.png",
     title: "Chinese Food",
     count: "25",
-  }
+  },
 ];
 
 const hotDeals = [
@@ -179,6 +181,75 @@ const reorderData = [
   },
 ];
 
+const dishesData = [
+  {
+    image: "/images/demo-images/dish-1.jpeg",
+    type: "veg",
+    rating: "5.0",
+    isLiked: false,
+    categoryName: "Healthy Salad",
+    title: "Good Food",
+    price: 120.0,
+    discountedPrice: 100,
+    discount: "20%",
+  },
+  {
+    image: "/images/demo-images/dish-2.png",
+    type: "non-veg",
+    rating: "4.8",
+    isLiked: false,
+    categoryName: "Pizza",
+    title: "Peperoni Pizza",
+    price: 100.0,
+    discountedPrice: 90,
+    discount: "10%",
+  },
+  {
+    image: "/images/demo-images/dish-3.png",
+    type: "non-veg",
+    rating: "4.9",
+    isLiked: false,
+    categoryName: "Burger",
+    title: "Big MAC",
+    price: 100.0,
+    discountedPrice: 80,
+    discount: "30%",
+  },
+  {
+    image: "/images/demo-images/dish-4.jpeg",
+    type: "veg",
+    rating: "4.7",
+    isLiked: false,
+    categoryName: "Indian special",
+    title: "Pani Poori",
+    price: 180.0,
+    discountedPrice: 150.0,
+    discount: "5%",
+  },
+  {
+    image: "/images/demo-images/dish-5.jpeg",
+    type: "veg",
+    rating: "4.9",
+    isLiked: false,
+    categoryName: "Healthy Salad",
+    title: "Good Food",
+    price: 180.0,
+    discountedPrice: 150.0,
+    discount: "15%",
+  },
+  {
+    image: "/images/demo-images/dish-6.jpeg",
+    type: "veg",
+    rating: "4.9",
+    isLiked: false,
+    categoryName: "Healthy Salad",
+    title: "Good Food",
+    price: 180.0,
+    discountedPrice: 150.0,
+    discount: "9%",
+  },
+];
+
 export default function Home() {
   return (
     <Box>
@@ -215,8 +286,11 @@ export default function Home() {
 
       {/* Delightful Dishes */}
       <Box>
+        <DelightfulDishes data={dishesData}></DelightfulDishes>
+      </Box>
 
-
+      <Box>
+        <Offers></Offers>
       </Box>
     </Box>
   );

@@ -15,14 +15,14 @@ const OrderCards = ({ image, type, title, titleQty, others, daysAgo }) => {
                 orientation="horizontal"
                 sx={{ mt: 1, my: 1 }}
             >
-                <Box sx={{ maxWidth: "100%", maxHeight: "100%" }}>
+                <Box >
                     <Box
                         component={"img"}
                         src={image}
                         srcSet={`${image} 2x`}
                         loading="lazy"
                         alt=""
-                        sx={{ objectFit: "cover", borderRadius: theme.radius.lg, width: "100px" }}
+                        sx={{ objectFit: "cover", borderRadius: theme.radius.lg, width: "150px",height: "150px" }}
                     >
                     </Box>
                 </Box>

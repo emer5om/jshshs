@@ -1,46 +1,48 @@
 "use client";
 import React from 'react'
 import {
-  Sheet,
   Container,
   Grid,
   Box,
-  Text,
-  Badge,
-  Avatar,
-  Button,
-  Divider,
-  Typography,
-  Link,
-  Stack,
-  ListItem,
-  List
 } from '@mui/joy';
-import { Img } from '@/component/Img';
 
 // import components
 import Header from "@/component/Header/index"
 import Footer from "@/component/Footer/index"
 
 import { useTheme } from '@mui/joy/styles';
+import MobileNavigation from '@/component/Header/MobileNavigation';
 const layout = ({ children }) => {
   const theme = useTheme();
-
+  const isMobile = theme.breakpoints.down('sm');
+  console.log(isMobile);
   return (
-    <Container maxWidth={"xl2"}>
-      <Box pt={4}>
-        <Header />
+    <div>
+      <Container maxWidth={"xl2"}>
+        <Box pt={4}>
 
-        <Grid minHeight={"700px"} mt={4} px={8} container spacing={2} alignItems={"center"}>
-          <Grid xs={12}>
-            {children}
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            {/* Available For Large Screens Only */}
+            <Header />
+          </Box>
+          <Box sx={{ display: { xs: "block", md: "none" } }}>
+            {/* Available For Small Screens Only */}
+            <MobileNavigation />
+          </Box>
+
+
+
+          <Grid minHeight={"700px"} mt={4} px={{ xs: 2, md: 8 }} container spacing={2} alignItems={"center"}>
+            <Grid xs={12}>
+              {children}
+            </Grid>
           </Grid>
-        </Grid>
 
-      </Box>
-      {/* need to put  contents only within container */}
+        </Box>
+        {/* need to put  contents only within container */}
+      </Container>
       <Footer />
-    </Container>
+    </div>
   )
 }
 

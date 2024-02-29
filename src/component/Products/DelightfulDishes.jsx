@@ -17,9 +17,9 @@ const DelightfulDishes = ({ data }) => {
 
             <Box mt={4}>
                 <Grid container spacing={2}>
-                    {data.map(item => {
+                    {data.map((item, index) => {
                         return (
-                            <Grid xs={3}>
+                            <Grid xs={12} md={3} key={index}>
                                 <ProductCards image={item.image} discount={item.discount} categoryName={item.categoryName} title={item.title} discountedPrice={item.discountedPrice} price={item.price} type={item.type}/>
                             </Grid>
                         )

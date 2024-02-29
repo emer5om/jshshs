@@ -5,20 +5,20 @@ import React from 'react'
 import SectionHeading from '../SectionHeading/SectionHeading';
 import { OfferCards } from '../Cards/OfferCards';
 
-const Offers = ({ data }) => {
+const NewItems = ({ data }) => {
     return (
         <Box>
 
             <Box my={4}>
-                <SectionHeading title={"Foods On Offer"} showMore={true} showMoreLink='#' />
+                <SectionHeading title={"New On List"} showMore={true} showMoreLink='#' />
             </Box>
 
             <Box>
                 <Grid container spacing={2} sx={{ flexGrow: 1 }} >
                     {data.map((item, index) => {
                         return (
-                            <Grid xs={12} md={2} key={index}>
-                                <OfferCards image={item.image} title={item.title} discount={item.discount} price={item.price} />
+                            <Grid xs={12} md={3} key={index}>
+                                <OfferCards image={item.image} title={item.title} discount={item.discount} price={item.price} shape='rectangle' />
                             </Grid>
                         )
                     })}
@@ -29,4 +29,4 @@ const Offers = ({ data }) => {
     )
 }
 
-export default Offers
+export default NewItems

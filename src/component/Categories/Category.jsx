@@ -48,7 +48,7 @@ const Category = ({ data }) => {
                     >
                         {data.map((item, index) => {
                             return (
-                                <Grid xs={3} md={1}>
+                                <Grid xs={3} md={1} key={index}>
                                     <SwiperSlide key={index}>
                                         <Box >
                                             <CategoryCards image={item.image} title={item.title} count={item.count} />

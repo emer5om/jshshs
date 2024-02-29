@@ -24,9 +24,9 @@ const PopularCards = ({ data }) => {
             />
 
             <Grid container spacing={2}>
-                {data.map(item => {
+                {data.map((item, index) => {
                     return (
-                        <Grid xs={12} md={2}>
+                        <Grid xs={12} md={2} key={index}>
                             <Card sx={{
                                 width: "100%",
                                 p: 0,
@@ -98,7 +98,7 @@ const PopularCards = ({ data }) => {
                                         </Typography>
                                         <Typography
                                             textOverflow={"ellipsis"}
-                                            
+
                                             overflow={"hidden"}
                                             sx={{ color: theme.palette.text.description, textWrap: "nowrap" }}
                                             fontSize={theme.fontSize.sm}

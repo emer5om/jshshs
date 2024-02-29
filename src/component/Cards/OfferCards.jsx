@@ -4,15 +4,18 @@ import { Card, CardCover, CardContent, Typography, Box } from '@mui/joy';
 import React from 'react'
 
 // shape is for is it rectangle or square 
-export const OfferCards = ({ shape = "square", title, discount, price }) => {
+export const OfferCards = ({ shape = "square", title, discount, price, image }) => {
     return (
-        <Card sx={{ minHeight: 300, width: shape === "square" ? 300 : "500px", borderRadius: "xl" }}>
+        <Card sx={{
+            minHeight: 250, width: shape === "square" ? "100%" : "700px",
+            borderRadius: shape === "square" ? "xl" : "md"
+        }}>
             <CardCover>
                 <img
-                    src="https://images.unsplash.com/photo-1542773998-9325f0a098d7?auto=format&fit=crop&w=320"
-                    srcSet="https://images.unsplash.com/photo-1542773998-9325f0a098d7?auto=format&fit=crop&w=320&dpr=2 2x"
+                    src={image}
+                    srcSet={`${image} 2x`}
                     loading="lazy"
-                    alt=""
+                    alt={title}
                 />
             </CardCover>
             <CardCover
@@ -22,20 +25,23 @@ export const OfferCards = ({ shape = "square", title, discount, price }) => {
                 }}
             />
             <CardContent sx={{ justifyContent: 'flex-end' }}>
-                <Box display={"flex"} alignItems={"baseline"} justifyContent={"space-between"}>
-                    <Box>
-                        <Typography textColor={"background.level1"} fontSize={"xl"} fontWeight={"md"}>
-                            Cheese Pizza
+                <Box display={"flex"} alignItems={"start"} justifyContent={"space-between"} flexDirection={"column"} gap={1}>
+                    <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
+                        <Typography textColor={"background.level1"} fontSize={"xl"} fontWeight={"md"} textOverflow={"ellipsis"} sx={{ textWrap: "nowrap", overflow: "hidden" }}>
+                            {title}
                         </Typography>
-                        <Typography
-                            textColor="neutral.300"
-                        >
-                            20% OFF
+                        <Typography textColor={"neutral.50"} fontSize={"sm"} fontWeight={"sm"}>
+                            price
                         </Typography>
                     </Box>
 
-                    <Box>
-                        <Typography textColor={"warning.400"} fontSize={"xl"} fontWeight={"md"}> $120 </Typography>
+                    <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
+                        <Typography textColor="neutral.300" >
+                            {discount}% OFF
+                        </Typography>
+                        <Typography textColor={"warning.400"} fontSize={"xl"} fontWeight={"md"}>
+                            ${price}
+                        </Typography>
                     </Box>
                 </Box>
 

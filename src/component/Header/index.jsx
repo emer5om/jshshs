@@ -14,7 +14,9 @@ import {
     Link,
     Stack,
     ListItem,
-    List
+    List,
+    Menu,
+    MenuItem
 } from '@mui/joy';
 import { Img } from '@/component/Img';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,7 +29,30 @@ import ShoppingBag3LineIcon from 'remixicon-react/ShoppingBag3LineIcon';
 import ArrowDownSLineIcon from 'remixicon-react/ArrowDownSLineIcon';
 
 import { useTheme } from '@mui/joy/styles';
+import NavMenuButton from './NavMenuButton';
 const index = () => {
+
+    const [menuIndex, setMenuIndex] = React.useState(null);
+    const itemProps = {
+        onClick: () => setMenuIndex(null),
+    };
+
+
+    const createHandleLeaveMenu = (index) => (getIsOnButton) => {
+        setTimeout(() => {
+            const isOnButton = getIsOnButton();
+            if (!isOnButton) {
+                setMenuIndex((latestIndex) => {
+                    if (index === latestIndex) {
+                        return null;
+                    }
+                    return latestIndex;
+                });
+            }
+        }, 200);
+    };
+
+
     const theme = useTheme();
     return (
         <Grid container spacing={2} px={8} alignItems={"center"}>
@@ -68,14 +93,41 @@ const index = () => {
                                         Home
                                     </Typography>
                                 </Link>
-                                <Link href="#" underline="none" color="inherit">
-                                    <Typography fontSize={20} fontWeight={"bolder"}
-                                        display={"flex"} alignItems={"center"} justifyContent={"space-between"}
-                                    >
+                                <NavMenuButton
+                                    label="Apps"
+                                    open={menuIndex === 0}
+                                    onOpen={() => setMenuIndex(0)}
+                                    onLeaveMenu={createHandleLeaveMenu(0)}
+                                    menu={
+                                        <Menu onClose={() => setMenuIndex(null)}>
+                                            <Grid container spacing={2} width={"100%"} height={"100%"} p={2}>
+                                                <Grid xs={4}>
+                                                    <MenuItem {...itemProps}>Spicy Burger</MenuItem>
+                                                    <MenuItem {...itemProps}>Fried Chicken</MenuItem>
+                                                    <MenuItem {...itemProps}>Chole Bhature</MenuItem>
+                                                    <MenuItem {...itemProps}>Delicious Dessert</MenuItem>
+                                                </Grid>
+                                                <Grid xs={4}>
+                                                    <MenuItem {...itemProps}>South Indian</MenuItem>
+                                                    <MenuItem {...itemProps}>Crispy Wrap</MenuItem>
+                                                    <MenuItem {...itemProps}>Delicious Thali</MenuItem>
+                                                    <MenuItem {...itemProps}>Healthy Food</MenuItem>
+                                                </Grid>
+                                                <Grid xs={4}>
+                                                    <MenuItem {...itemProps}>Chinese Food</MenuItem>
+                                                    <MenuItem {...itemProps}>Pizza</MenuItem>
+                                                    <MenuItem {...itemProps}>Punjabi Food</MenuItem>
+                                                    <MenuItem {...itemProps}>Sea Food</MenuItem>
+                                                </Grid>
+                                            </Grid>
+                                        </Menu>
+                                    }
+                                >
+                                    <Typography fontSize={20} display={"flex"} alignItems={"center"} gap={1}>
                                         Menu
-                                        <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]} fontWeight={"bolder"} />
+                                        <ArrowDownSLineIcon color={theme.palette.primary[500]} />
                                     </Typography>
-                                </Link>
+                                </NavMenuButton>
                                 <Link href="#" underline="none" color="inherit">
                                     <Typography fontSize={20} fontWeight={"bolder"}
 

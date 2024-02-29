@@ -7,11 +7,13 @@ import SectionHeading from "@/component/SectionHeading/SectionHeading";
 import DealsCards from "@/component/Cards/DealsCards";
 import ActiveOrders from "@/component/UserActivity/ActiveOrders";
 import Suggestions from "@/component/UserActivity/Suggestions";
+import DelightfulDishes from "@/component/Products/DelightfulDishes";
+import Offers from "@/component/Products/Offers";
+import NewItems from "@/component/Products/NewItems";
 
 import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
-import DelightfulDishes from "@/component/Products/DelightfulDishes";
-import Offers from "@/component/Products/Offers";
+import SpecificItem from "@/component/Categories/SpecificItem";
 
 const popularCardData = [
   {
@@ -250,6 +252,103 @@ const dishesData = [
   },
 ];
 
+const offerFoodData = [
+  {
+    image: "/images/demo-images/offer-food-1.png",
+    title: "Meat Sandwich",
+    discount: "10",
+    price: "10.00",
+  },
+  {
+    image: "/images/demo-images/offer-food-2.png",
+    title: "Cheesy Pizza",
+    discount: "10",
+    price: "50.60",
+  },
+  {
+    image: "/images/demo-images/offer-food-3.png",
+    title: "Hot & Spicy Maggie",
+    discount: "5",
+    price: "8.60",
+  },
+  {
+    image: "/images/demo-images/offer-food-2.png",
+    title: "Margherita Pizza",
+    discount: "10",
+    price: "50.60",
+  },
+  {
+    image: "/images/demo-images/offer-food-4.png",
+    title: "Veg Biryani",
+    discount: "15",
+    price: "15.90",
+  },
+  {
+    image: "/images/demo-images/offer-food-2.png",
+    title: "Mexican Pizza",
+    discount: "10",
+    price: "50.60",
+  },
+];
+
+const newProducts = [
+  {
+    image: "/images/demo-images/offer-food-1.png",
+    title: "Meat Sandwich",
+    discount: "10",
+    price: "10.00",
+  },
+  {
+    image: "/images/demo-images/offer-food-2.png",
+    title: "Cheesy Pizza",
+    discount: "10",
+    price: "50.60",
+  },
+  {
+    image: "/images/demo-images/offer-food-3.png",
+    title: "Hot & Spicy Maggie",
+    discount: "5",
+    price: "8.60",
+  },
+  {
+    image: "/images/demo-images/offer-food-2.png",
+    title: "Margherita Pizza",
+    discount: "10",
+    price: "50.60",
+  },
+];
+
+const specificProductData = [
+  {
+    image: "/images/demo-images/burger-1.png",
+    title: "Simple Burger",
+    ratings: "4.5",
+    price: "10",
+    discountedPrice: "9.5",
+  },
+  {
+    image: "/images/demo-images/burger-2.png",
+    title: "Cheese Burger",
+    ratings: "4.6",
+    price: "10",
+    discountedPrice: "9.4",
+  },
+  {
+    image: "/images/demo-images/burger-3.png",
+    title: "Spicy Burger",
+    ratings: "4.7",
+    price: "10",
+    discountedPrice: "9.7",
+  },
+  {
+    image: "/images/demo-images/burger-4.png",
+    title: "Extra Cheesy Burger",
+    ratings: "4.0",
+    price: "10",
+    discountedPrice: "9.99",
+  },
+];
+
 export default function Home() {
   return (
     <Box>
@@ -290,7 +389,15 @@ export default function Home() {
       </Box>
 
       <Box>
-        <Offers></Offers>
+        <Offers data={offerFoodData}></Offers>
+      </Box>
+
+      <Box>
+        <NewItems data={newProducts}></NewItems>
+      </Box>
+
+      <Box>
+        <SpecificItem data={specificProductData} />
       </Box>
     </Box>
   );

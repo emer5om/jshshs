@@ -1,20 +1,12 @@
 "use client";
 import React from 'react'
 import {
-    Sheet,
-    Container,
     Grid,
     Box,
-    Text,
     Badge,
     Avatar,
-    Button,
-    Divider,
     Typography,
     Link,
-    Stack,
-    ListItem,
-    List,
     Menu,
     MenuItem
 } from '@mui/joy';
@@ -30,7 +22,7 @@ import ArrowDownSLineIcon from 'remixicon-react/ArrowDownSLineIcon';
 
 import { useTheme } from '@mui/joy/styles';
 import NavMenuButton from './NavMenuButton';
-const index = () => {
+const Index = () => {
 
     const [menuIndex, setMenuIndex] = React.useState(null);
     const itemProps = {
@@ -172,4 +164,4 @@ const index = () => {
     )
 }
 
-export default index
+export default Index

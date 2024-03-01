@@ -20,7 +20,7 @@ const PopularCards = ({ data }) => {
             <SectionHeading
                 title={"Popular Dishes"}
                 showMore={true}
-                showMoreLink="#"
+                showMoreLink="/popular-dishes"
             />
 
             <Grid container spacing={2}>

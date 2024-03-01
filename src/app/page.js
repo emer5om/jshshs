@@ -349,6 +349,12 @@ const specificProductData = [
   },
 ];
 
+export const metadata = {
+  title: "eRestro Single vendor",
+  description: "eRestro single vendor, orders foods and stuff ",
+};
+
+
 export default function Home() {
   return (
     <Box>

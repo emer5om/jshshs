@@ -7,8 +7,8 @@ import {
 } from '@mui/joy';
 
 // import components
-import Header from "@/component/Header/index"
-import Footer from "@/component/Footer/index"
+import Header from "@/component/Header/Index"
+import Footer from "@/component/Footer/Index"
 
 import { useTheme } from '@mui/joy/styles';
 import MobileNavigation from '@/component/Header/MobileNavigation';
@@ -31,12 +31,13 @@ const layout = ({ children }) => {
           </Box>
 
 
-
-          <Grid minHeight={"700px"} mt={4} px={{ xs: 2, md: 8 }} container spacing={2} alignItems={"center"}>
+          <Box minHeight={"700px"} mt={4} px={{ xs: 1, md: 8 }}>
+            {children}
+          </Box>
+          {/* <Grid minHeight={"700px"} mt={4} px={{ xs: 1, md: 8 }} container spacing={2} alignItems={"center"}>
             <Grid xs={12}>
-              {children}
             </Grid>
-          </Grid>
+          </Grid> */}
 
         </Box>
         {/* need to put  contents only within container */}

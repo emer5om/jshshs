@@ -44,3 +44,7 @@ a{
 .likeIcon {
   color: #ffff !important;
 }
+
+.MuiBreadcrumbs-separator{
+  color: var(--joy-palette-background-footer)   
+}

@@ -1,6 +1,6 @@
 "use client";
 import React from 'react'
-import { Container, Box, Avatar, useTheme, Drawer, List, ListItem, ListItemButton, IconButton, DialogContent } from '@mui/joy';
+import { Box, Avatar, useTheme, Drawer, IconButton, DialogContent, Stack,Typography } from '@mui/joy';
 
 // icons
 import ArrowDownSLineIcon from 'remixicon-react/ArrowDownSLineIcon';
@@ -22,6 +22,8 @@ const MobileNavigation = () => {
 
         setOpen(inOpen);
     };
+
+
 
     return (
         <Box>
@@ -75,14 +77,12 @@ const MobileNavigation = () => {
                             <CloseCircleLineIcon size={theme.fontSize.xl4} color={theme.palette.primary[500]} fontWeight={"bolder"} onClick={toggleDrawer(false)} />
                         </Box>
 
-                        <Box width={"100%"} justifyContent={"center"} display={"flex"} alignItems={"center"}>
-                            <List width={"100%"} justifyContent={"center"} display={"flex"} alignItems={"center"}>
+                        <Box width={"100%"} justifyContent={"center"} display={"flex"} alignItems={"center"} textAlign={"center"} my={4}>
+                            <Stack spacing={2}>
                                 {['Home', 'Services', 'Offers', 'Notifications', "Cart"].map((text, index) => (
-                                    <ListItem key={index}  width={"100%"} justifyContent={"center"} display={"flex"} alignItems={"center"}>
-                                        <ListItemButton>{text}</ListItemButton>
-                                    </ListItem>
+                                    <Box component={Typography} fontSize={"xl"} fontWeight={"lg"} key={index}>{text}</Box>
                                 ))}
-                            </List>
+                            </Stack>
                         </Box>
                     </Box>
                 </DialogContent>

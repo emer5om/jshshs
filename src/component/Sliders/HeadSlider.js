@@ -16,13 +16,12 @@ import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
 
 const HeadSlider = ({ images = [1, 2, 3] }) => {
-
   return (
     <Box>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
-        pagination={{ clickable: true}}
+        pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         loop={true}
         navigation={true}
@@ -33,10 +32,10 @@ const HeadSlider = ({ images = [1, 2, 3] }) => {
             <Card
               sx={{
                 borderRadius: "var(--border-radius-xl)",
-                minHeight: 472,
+                minHeight: { xs: 250, md: 472 },
               }}
             >
-              <CardCover sx={{ minHeight: "472px" }}>
+              <CardCover sx={{ minHeight: "100%" }}>
                 <Box
                   component={"img"}
                   src={image}

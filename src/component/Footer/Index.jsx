@@ -23,7 +23,7 @@ import TwitterLineIcon from 'remixicon-react/TwitterLineIcon';
 import YoutubeLineIcon from 'remixicon-react/YoutubeLineIcon';
 
 import { useTheme } from '@mui/joy/styles';
-const index = () => {
+const Index = () => {
     const theme = useTheme();
     return (
         <Grid mt={8} container px={6} bgcolor={theme.palette.background.footer}>
@@ -47,103 +47,84 @@ const index = () => {
                             <Grid xs={12} md={6} color={"white"} spacing={12} gap={12}>
                                 <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: { xs: "center", md: "baseline" } }} gap={{ xs: 2, md: 12 }}>
                                     {/* 1 */}
-                                    <Box >
+                                    <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
                                         <Typography
                                             id="decorated-list-demo"
                                             level="body-lg"
                                             fontWeight={"bolder"}
-                                            mb={1}
+                                            mb={2}
                                             textColor={"white"}
                                         >
                                             Useful Links
                                         </Typography>
-                                        <List aria-labelledby="decorated-list-demo"  >
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    About us
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    Events
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    Blogs
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    FAQ
-                                                </Typography>
-                                            </ListItem>
-                                        </List>
+                                        <Stack gap={2}>
+                                            <Typography textColor={"white"}>
+                                                About us
+                                            </Typography>
+                                            <Typography textColor={"white"}>
+                                                Events
+                                            </Typography>
+                                            <Typography textColor={"white"}>
+                                                Blogs
+                                            </Typography>
+                                            <Typography textColor={"white"}>
+                                                FAQ
+                                            </Typography>
+
+                                        </Stack>
                                     </Box>
 
                                     {/* 2 */}
-                                    <Box mx={{ xs: 0, md: 8 }}>
+                                    <Box mx={{ xs: 0, md: 8 }} sx={{ textAlign: { xs: "center", md: "left" } }}>
                                         <Typography
                                             id="decorated-list-demo"
                                             level="body-lg"
                                             fontWeight={"bolder"}
-                                            mb={1}
+                                            mb={2}
                                             textColor={"white"}
                                         >
                                             Main Menu
                                         </Typography>
-                                        <List aria-labelledby="decorated-list-demo">
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    Home
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    Office
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    Menus
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    Reservation
-                                                </Typography>
-                                            </ListItem>
-                                        </List>
+                                        <Stack gap={2}>
+                                            <Typography textColor={"white"}>
+                                                Home
+                                            </Typography>
+                                            <Typography textColor={"white"}>
+                                                Office
+                                            </Typography>
+                                            <Typography textColor={"white"}>
+                                                Menus
+                                            </Typography>
+                                            <Typography textColor={"white"}>
+                                                Reservation
+                                            </Typography>
+                                        </Stack>
                                     </Box>
 
                                     {/* 3 */}
-                                    <Box>
+                                    <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
                                         <Typography
                                             id="decorated-list-demo"
                                             level="body-lg"
                                             fontWeight={"bolder"}
-                                            mb={1}
+                                            mb={2}
                                             textColor={"white"}
                                         >
                                             Contact Us
                                         </Typography>
-                                        <List aria-labelledby="decorated-list-demo" sx={{ textAlign: "center" }}>
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    example@mail.com
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    +91 123 456 7890
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem sx={{ paddingLeft: { xs: 1, md: 0 } }}>
-                                                <Typography textColor={"white"}>
-                                                    Social Media
-                                                </Typography>
-                                            </ListItem>
-                                        </List>
+                                        <Stack gap={2}>
+                                            <Typography textColor={"white"} sx={{ textAlign: { xs: "center", md: "left" } }}>
+                                                example@mail.com
+                                            </Typography>
+
+                                            <Typography textColor={"white"} sx={{ textAlign: { xs: "center", md: "left" } }}>
+                                                +91 123 456 7890
+
+                                            </Typography>
+                                            <Typography textColor={"white"} sx={{ textAlign: { xs: "center", md: "left" } }}>
+                                                Social Media
+                                            </Typography>
+                                        </Stack>
                                     </Box>
 
                                 </Box>
@@ -169,7 +150,7 @@ const index = () => {
                                 </Box>
                             </Grid>
                             <Grid xs={12} md={7}>
-                                <Typography textColor={"#ffff"}>
+                                <Typography textColor={"#ffff"} sx={{ textAlign: { xs: "center", md: "left" } }}>
                                     Copyright &#169; 2023 Infinitie Technologies | All rights reserved
                                 </Typography>
                             </Grid>
@@ -181,4 +162,4 @@ const index = () => {
     )
 }
 
-export default index
+export default Index

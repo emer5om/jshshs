@@ -23,7 +23,7 @@ const DealsCards = ({ images }) => {
             <SectionHeading
                 title={"Hot Deals"}
                 showMore={true}
-                showMoreLink="#"
+                showMoreLink="/hot-deals"
             />
 
             <Grid container gap={3} mt={4}>

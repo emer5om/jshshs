@@ -13,9 +13,6 @@ import Footer from "@/component/Footer/Index"
 import { useTheme } from '@mui/joy/styles';
 import MobileNavigation from '@/component/Header/MobileNavigation';
 const layout = ({ children }) => {
-  const theme = useTheme();
-  const isMobile = theme.breakpoints.down('sm');
-  console.log(isMobile);
   return (
     <div>
       <Container maxWidth={"xl2"}>

@@ -5,12 +5,14 @@ import React from 'react'
 import SectionHeading from '../SectionHeading/SectionHeading';
 import { OfferCards } from '../Cards/OfferCards';
 
-const NewItems = ({ data }) => {
+const NewItems = ({ data, showMore = true }) => {
     return (
         <Box>
 
             <Box my={4}>
-                <SectionHeading title={"New On List"} showMore={true} showMoreLink='#' />
+                {showMore &&
+                    <SectionHeading title={"New On List"} showMore={true} showMoreLink='/new-products' />
+                }
             </Box>
 
             <Box>

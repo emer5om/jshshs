@@ -12,16 +12,18 @@ import CustomButton from '../Buttons/CustomButton';
 import HeartLineIcon from "remixicon-react/HeartLineIcon"
 import StarFillIcon from "remixicon-react/StarFillIcon"
 
-const PopularCards = ({ data }) => {
+const PopularCards = ({ data, showHeadline = "true" }) => {
     const theme = useTheme()
-
+    
     return (
         <Box display={"flex"} flexDirection={"column"}>
-            <SectionHeading
-                title={"Popular Dishes"}
-                showMore={true}
-                showMoreLink="/popular-dishes"
-            />
+            {showHeadline &&
+                <SectionHeading
+                    title={"Popular Dishes"}
+                    showMore={true}
+                    showMoreLink="/popular-dishes"
+                />
+            }
 
             <Grid container spacing={2}>
                 {data.map((item, index) => {
@@ -80,7 +82,7 @@ const PopularCards = ({ data }) => {
                                                 component={"img"}
                                                 className='img'
                                                 src={item.image}
-                                                srcSet="/images/demo-images/salad-1.png 2x"
+                                                srcSet={`${item.image} 2x`}
                                                 loading="lazy"
                                                 alt=""
                                                 borderRadius={"50%"}

@@ -1,5 +1,5 @@
 import BreadCrumb from '@/component/BreadCrumb/BreadCrumb';
-import Filter from '@/component/Filter/Filter';
+import PopularDishes from '@/views/PopularDishes';
 import { Box } from '@mui/joy'
 import React from 'react'
 
@@ -9,6 +9,9 @@ export const metadata = {
 };
 
 const page = () => {
+
+ 
+
   return (
     <Box>
       <Box>
@@ -17,13 +20,7 @@ const page = () => {
 
 
       <Box my={4}>
-
-        <Box>
-          {/* Filter */}
-          <Filter />
-        </Box>
-
-
+          <PopularDishes />
       </Box>
 
     </Box>

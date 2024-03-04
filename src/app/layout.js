@@ -6,10 +6,6 @@ import { CssBaseline, CssVarsProvider, extendTheme } from "@mui/joy";
 import theme from "./theme";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
-// export const metadata = {
-//   title: "eRestro Single vendor",
-//   description: "eRestro single vendor, orders foods and stuff ",
-// };
 
 export default function RootLayout({ children }) {
   // const theme = useTheme()

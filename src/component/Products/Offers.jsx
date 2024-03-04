@@ -5,12 +5,14 @@ import React from 'react'
 import SectionHeading from '../SectionHeading/SectionHeading';
 import { OfferCards } from '../Cards/OfferCards';
 
-const Offers = ({ data }) => {
+const Offers = ({ data, showMore = true }) => {
     return (
         <Box>
 
             <Box my={4}>
-                <SectionHeading title={"Foods On Offer"} showMore={true} showMoreLink='#' />
+                {showMore &&
+                    <SectionHeading title={"Foods On Offer"} showMore={true} showMoreLink='/offers' />
+                }
             </Box>
 
             <Box>

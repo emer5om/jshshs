@@ -82,6 +82,7 @@ const theme = extendTheme({
           activeOrders: "#E4EFF1",
         },
         text: {
+          menuText: "#002F35",
           currency: "#1C7D88",
           description: "#555555",
         },
@@ -143,6 +144,7 @@ const theme = extendTheme({
           activeOrders: "#E4EFF1",
         },
         text: {
+          menuText: "#002F35",
           currency: "#1C7D88",
           description: "#555555",
         },

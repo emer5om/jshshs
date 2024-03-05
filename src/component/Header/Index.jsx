@@ -6,7 +6,6 @@ import {
     Badge,
     Avatar,
     Typography,
-    Link,
     Menu,
     MenuItem
 } from '@mui/joy';
@@ -22,6 +21,7 @@ import ArrowDownSLineIcon from 'remixicon-react/ArrowDownSLineIcon';
 
 import { useTheme } from '@mui/joy/styles';
 import NavMenuButton from './NavMenuButton';
+import Link from 'next/link';
 const Index = () => {
 
     const [menuIndex, setMenuIndex] = React.useState(null);
@@ -53,13 +53,8 @@ const Index = () => {
                     <Grid xs={3} display={"flex"} alignItems={"center"}>
                         <Box
                             component={"img"}
-                            src="/images/img_erestro.svg"
-                            sx={{ width: "80px" }}
-                        />
-                        <Box
-                            component={"img"}
-                            src="/images/eRestro_logo_2.svg" alt=""
-                            sx={{ width: "80px" }}
+                            src="/images/logo.png"
+                            sx={{ width: "100%", height: "50px" }}
                         />
                     </Grid>
                     <Grid xs={9}>
@@ -77,7 +72,7 @@ const Index = () => {
                                     </Typography>
                                 </Box>
                             </Box>
-                            <Box display={"flex"} gap={8}>
+                            <Box display={"flex"} gap={8} alignItems={"center"}>
                                 <Link href="#" underline="none" color="inherit">
                                     <Typography fontSize={20} fontWeight={"bolder"}
 
@@ -154,7 +149,7 @@ const Index = () => {
                     <Box display={"flex"} alignItems={"center"} gap={2}>
                         <Avatar alt="Remy Sharp" src="https://ui-avatars.com/api/?background=random" />
 
-                        <Typography level="h4" color='white' fontWeight={"bold"}> James </Typography>
+                        <Typography component={Link} href={"/user/profile"} level="h4" color='white' fontWeight={"bold"}> James </Typography>
                         <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]} fontWeight={"bolder"} />
                     </Box>
                 </Box>

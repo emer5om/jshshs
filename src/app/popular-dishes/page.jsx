@@ -15,7 +15,7 @@ const page = () => {
   return (
     <Box>
       <Box>
-        <BreadCrumb page={["Popular Dishes"]} />
+        <BreadCrumb page={[{name:"Popular Dishes", link: "#"}]} />
       </Box>
 
 

@@ -9,6 +9,8 @@ import CustomButton from '../Buttons/CustomButton';
 
 import StarFillIcon from "remixicon-react/StarFillIcon"
 import HeartLineIcon from "remixicon-react/HeartLineIcon"
+import { RiHeartFill } from "@remixicon/react"
+
 
 const ProductCards = ({ image, type, rating, isLiked, categoryName, title, price, discountedPrice, discount }) => {
 
@@ -66,7 +68,11 @@ const ProductCards = ({ image, type, rating, isLiked, categoryName, title, price
                             </Box>
                         </Box>
                         <Box>
-                            <HeartLineIcon color={theme.palette.background.footer} />
+                            {isLiked ?
+                                <RiHeartFill color={theme.palette.danger[500]} />
+                                :
+                                <HeartLineIcon color={theme.palette.background.footer} />
+                            }
                         </Box>
                         {/* images and other data */}
                     </Box>

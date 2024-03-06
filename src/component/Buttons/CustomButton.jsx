@@ -12,7 +12,8 @@ const CustomButton = ({
     loadingStatus,
     loadingStatusPosition,
     onClick,
-    customStyle
+    customStyle,
+    fullWidth
 }) => {
     return (
         <div>
@@ -22,6 +23,7 @@ const CustomButton = ({
                 color={color}
                 onClick={onClick}
                 sx={customStyle}
+                fullWidth={fullWidth}
             >
                 {text}
             </Button>

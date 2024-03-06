@@ -13,8 +13,8 @@ const Profile = () => {
 
     const countryCode = process.env.NEXT_PUBLIC_COUNTRY_CODE
     const [prefill, setPrefill] = useState({
-        first_name: "test",
-        last_name: "user",
+        first_name: "james",
+        last_name: "carter",
         email: "test.user@mail.com",
         country: "in",
         phone: "+919876543210",
@@ -59,8 +59,8 @@ const Profile = () => {
                                     alt="Remy Sharp"
                                     src="https://ui-avatars.com/api/?background=random"
                                     sx={{
-                                        height: "100%",
-                                        width: 150
+                                        height: "150px",
+                                        width: "100%"
                                     }}
                                 />
 

@@ -1,7 +1,8 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
+import { usePathname } from 'next/navigation';
 
-import { Grid, Card, CardOverflow, AspectRatio, CardContent, Typography, Box, useTheme, Stack, List, ListItem, ListItemButton, ListItemDecorator, ListItemContent } from '@mui/joy'
+import { Grid, Card, CardOverflow, AspectRatio, CardContent, Typography, Box, useTheme, Stack, List, ListItem, ListItemButton, ListItemDecorator, ListItemContent, Avatar, ListDivider } from '@mui/joy'
 import Link from 'next/link'
 
 // icons
@@ -13,6 +14,8 @@ import { RiP2pLine, RiDeleteBin5Line, RiShutDownLine, RiUserSettingsLine, RiShop
 
 const UserLayout = ({ children }) => {
     const theme = useTheme()
+
+    const router = usePathname();
     return (
         <Grid container spacing={{ xs: 0, md: 2 }} >
             <Grid xs={12} md={3}>
@@ -20,40 +23,50 @@ const UserLayout = ({ children }) => {
                     <CardContent>
                         <Grid container spacing={{ md: 2, xs: 0 }} >
                             <Grid xs={12} >
-                                <Box bgcolor={"primary.400"} height={"90px"} width={"100%"}
+                                <Box bgcolor={"primary.400"} height={"55px"} width={"100%"}
                                     sx={{ borderTopRightRadius: theme.radius.xl, borderTopLeftRadius: theme.radius.xl }}>
                                 </Box>
                                 <Box display={"flex"} justifyContent={"center"} alignItems={"center"} sx={{
                                     position: "relative",
-                                    top: "-25%"
+                                    top: { xs: "-20%", md: "-25%" }
                                 }}>
                                     <Card
                                         variant="outlined"
                                         sx={{
-                                            width: "70%",
+                                            width: "90%",
                                             borderRadius: "xl",
                                             display: "flex",
-                                            flexDirection: { xs: "column", md: "row" },
+                                            flexDirection: "row",
                                             alignItems: "center"
                                         }}
                                     >
                                         <Box
-                                            component={"img"}
-                                            src="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90"
-                                            srcSet="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90&dpr=2 2x"
-                                            loading="lazy"
-                                            alt=""
-                                            height={{ xs: "150px", md: "90px" }}
-                                            width={"100%"}
-                                            borderRadius={"50%"}
+                                            display={"flex"} justifyContent={"center"} alignItems={"center"}
                                         >
+                                            <Box
+                                                component={Avatar}
+                                                size={"lg"}
+                                                src="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90"
+                                                srcSet="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90&dpr=2 2x"
+                                                loading="lazy"
+                                                alt=""
+                                            >
+                                            </Box>
                                         </Box>
                                         <Box
                                             display={"flex"} flexDirection={"column"} justifyContent={"center"} width={"100%"}>
-                                            <Typography fontSize={"lg"} fontWeight={"lg"}>
+                                            <Typography fontSize={"lg"} fontWeight={"lg"}
+                                                textOverflow={"ellipsis"} overflow={"hidden"}
+                                                sx={{ textWrap: "nowrap", maxWidth: "80%" }}
+                                            >
+                                                James Carter
+                                                James Carter
                                                 James Carter
                                             </Typography>
-                                            <Typography fontSize={"sm"} fontWeight={"md"}>
+                                            <Typography fontSize={"sm"} fontWeight={"md"}
+                                                textOverflow={"ellipsis"} overflow={"hidden"}
+                                                sx={{ textWrap: "nowrap", maxWidth: "80%" }}
+                                            >
                                                 user@testmail.com
                                             </Typography>
                                         </Box>
@@ -62,14 +75,21 @@ const UserLayout = ({ children }) => {
                             </Grid>
                             <Grid xs={12}>
                                 <Card size='sm'>
-                                    <Stack spacing={3} >
-                                        <List sx={{ gap: 2 }}>
-                                            <ListItem >
-                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} pb={1} borderBottom={"0.5px gray dashed"}>
+                                    <Stack >
+                                        <List sx={{ gap: 1 }}>
+                                            <ListItem component={Link} href={"/user/profile"}>
+                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
-                                                            <Box bgcolor={"primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
-                                                                <RiUserSettingsLine color={theme.palette.text.menuText} />
+                                                            <Box
+                                                                bgcolor={router === "/user/profile" ?
+                                                                    "text.currency" :
+                                                                    "primary.300"}
+                                                                borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
+                                                                <RiUserSettingsLine color={
+                                                                    router === "/user/profile" ?
+                                                                        "white" :
+                                                                        theme.palette.text.menuText} />
                                                             </Box>
                                                         </ListItemDecorator>
                                                         <ListItemContent>
@@ -81,12 +101,19 @@ const UserLayout = ({ children }) => {
                                                     <ArrowRightSLineIcon color={theme.palette.text.menuText} />
                                                 </Box>
                                             </ListItem>
-                                            <ListItem >
-                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} pb={1} borderBottom={"0.5px gray dashed"}>
+
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+
+                                            <ListItem component={Link} href={"/user/favourites"}>
+                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
-                                                            <Box bgcolor={"primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
-                                                                <Heart3LineIcon color={theme.palette.text.menuText} />
+                                                            <Box
+                                                                bgcolor={router === "/user/favourites" ?
+                                                                    "text.currency" : "primary.300"}
+                                                                borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
+                                                                <Heart3LineIcon color={router === "/user/favourites" ?
+                                                                    "white" : theme.palette.text.menuText} />
                                                             </Box>
                                                         </ListItemDecorator>
                                                         <ListItemContent>
@@ -98,12 +125,17 @@ const UserLayout = ({ children }) => {
                                                     <ArrowRightSLineIcon color={theme.palette.text.menuText} />
                                                 </Box>
                                             </ListItem>
-                                            <ListItem>
-                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} pb={1} borderBottom={"0.5px gray dashed"}>
+
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+
+                                            <ListItem component={Link} href={"/user/wallet"}>
+                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
-                                                            <Box bgcolor={"primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
-                                                                <WalletLineIcon color={theme.palette.text.menuText} />
+                                                            <Box bgcolor={router === "/user/wallet" ?
+                                                                "text.currency" : "primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
+                                                                <WalletLineIcon color={router === "/user/wallet" ?
+                                                                    "white" : theme.palette.text.menuText} />
                                                             </Box>
                                                         </ListItemDecorator>
                                                         <ListItemContent>
@@ -115,12 +147,17 @@ const UserLayout = ({ children }) => {
                                                     <ArrowRightSLineIcon color={theme.palette.text.menuText} />
                                                 </Box>
                                             </ListItem>
+
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+
                                             <ListItem>
-                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} pb={1} borderBottom={"0.5px gray dashed"}>
+                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
-                                                            <Box bgcolor={"primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
-                                                                <ExchangeDollarLineIcon color={theme.palette.text.menuText} />
+                                                            <Box bgcolor={router === "/user/transactions" ?
+                                                                "text.currency" : "primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
+                                                                <ExchangeDollarLineIcon color={router === "/user/transactions" ?
+                                                                    "white" : theme.palette.text.menuText} />
                                                             </Box>
                                                         </ListItemDecorator>
                                                         <ListItemContent>
@@ -132,14 +169,19 @@ const UserLayout = ({ children }) => {
                                                     <ArrowRightSLineIcon color={theme.palette.text.menuText} />
                                                 </Box>
                                             </ListItem>
+
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+
                                             {/*  */}
                                             <ListItem>
-                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} pb={1} borderBottom={"0.5px gray dashed"}>
+                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
-                                                            <Box bgcolor={"primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
+                                                            <Box bgcolor={router === "/user/refer" ?
+                                                                "text.currency" : "primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
 
-                                                                <RiP2pLine color={theme.palette.text.menuText} />
+                                                                <RiP2pLine color={router === "/user/refer" ?
+                                                                    "white" : theme.palette.text.menuText} />
                                                             </Box>
                                                         </ListItemDecorator>
                                                         <ListItemContent>
@@ -152,9 +194,12 @@ const UserLayout = ({ children }) => {
                                                 </Box>
                                             </ListItem>
 
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+
+
                                             {/*  */}
                                             <ListItem>
-                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} pb={1} borderBottom={"0.5px gray dashed"}>
+                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
                                                             <Box bgcolor={"primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
@@ -171,6 +216,9 @@ const UserLayout = ({ children }) => {
                                                     <ArrowRightSLineIcon color={theme.palette.text.menuText} />
                                                 </Box>
                                             </ListItem>
+
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+
 
                                             <ListItem>
                                                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>

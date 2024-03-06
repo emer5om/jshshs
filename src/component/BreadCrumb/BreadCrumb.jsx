@@ -23,7 +23,7 @@ const BreadCrumb = ({ page }) => {
 
                     {page.map((item, index) => {
                         return (
-                            <Typography textColor={"text.currency"} fontWeight={"xl"} fontSize={"lg"} key={index}>{item}</Typography>
+                            <Typography component={Link} href={item.link} textColor={"text.currency"} fontWeight={"xl"} fontSize={"lg"} key={index}>{item.name}</Typography>
                         )
                     })}
                 </Breadcrumbs>

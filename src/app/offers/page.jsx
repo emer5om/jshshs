@@ -111,7 +111,7 @@ const page = () => {
     return (
         <Box>
             <Box>
-                <BreadCrumb page={["Foods On Offer"]} />
+                <BreadCrumb page={[{name:"Foods On Offer", link: "#"}]} />
             </Box>
 
 

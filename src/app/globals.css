@@ -50,3 +50,7 @@ a {
 .MuiBreadcrumbs-separator {
   color: var(--joy-palette-background-footer);
 }
+
+.MuiTypography-root {
+  text-transform: capitalize;
+}

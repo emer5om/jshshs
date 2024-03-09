@@ -2,6 +2,8 @@
 
 import CustomButton from '@/component/Buttons/CustomButton';
 import ProductCards from '@/component/Cards/ProductCards';
+import WalletTransactions from '@/component/Transactions/WalletTransactions';
+import WalletWithdraw from '@/component/Transactions/WalletWithdraw';
 import {
   Box,
   Card,
@@ -128,8 +130,14 @@ const Wallet = ({ data }) => {
                 clipPath: 'inset(0 -100vmax)',
               })}
             >
-              <TabPanel value={0}>Deals</TabPanel>
-              <TabPanel value={1}>Library</TabPanel>
+              <TabPanel value={0}>
+
+                <WalletTransactions />
+
+              </TabPanel>
+              <TabPanel value={1}>
+                <WalletWithdraw />
+              </TabPanel>
             </Box>
           </Tabs>
         </Box>

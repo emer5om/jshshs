@@ -3,12 +3,13 @@
 import React, { useState } from 'react'
 import { Avatar, Box, FormLabel, Grid, Input, Radio, RadioGroup, Sheet, Textarea, Typography } from '@mui/joy'
 import PhoneInput from 'react-phone-input-2'
-// import 'react-phone-input-2/lib/style.css'
-import 'react-phone-input-2/lib/material.css'
+import dayjs from "dayjs"
 
 // icons
 import { RiPencilLine } from "@remixicon/react"
 import CustomButton from '@/component/Buttons/CustomButton';
+// CSS
+import 'react-phone-input-2/lib/material.css'
 const Profile = () => {
 
     const countryCode = process.env.NEXT_PUBLIC_COUNTRY_CODE
@@ -18,7 +19,7 @@ const Profile = () => {
         email: "test.user@mail.com",
         country: "in",
         phone: "+919876543210",
-        date_of_birth: "15-07-1999",
+        date_of_birth: dayjs("15-07-1999"),
         gender: "male",
     })
 
@@ -110,7 +111,17 @@ const Profile = () => {
                             <Grid xs={12} md={6}>
                                 <FormLabel sx={{ mb: 1, color: "text.tertiary" }}>Date of Birth</FormLabel>
                                 <Input size='lg' placeholder="Type in here…" variant="outlined"
-                                    {...addValueProps('date_of_birth')} />
+                                    type="date"
+                                    defaultValue={prefill.date_of_birth}
+                                    value={prefill.date_of_birth}
+                                    {...addValueProps('date_of_birth')}
+                                    slotProps={{
+                                        input: {
+                                            defaultValue: prefill.date_of_birth,
+                                            value: prefill.date_of_birth,
+                                        },
+                                    }}
+                                />
                             </Grid>
                             <Grid xs={12} md={6}>
 

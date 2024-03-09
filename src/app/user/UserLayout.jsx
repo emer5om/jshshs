@@ -1,8 +1,8 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation';
 
-import { Grid, Card, CardOverflow, AspectRatio, CardContent, Typography, Box, useTheme, Stack, List, ListItem, ListItemButton, ListItemDecorator, ListItemContent, Avatar, ListDivider } from '@mui/joy'
+import { Grid, Card, CardOverflow, AspectRatio, CardContent, Typography, Box, useTheme, Stack, List, ListItem, ListItemButton, ListItemDecorator, ListItemContent, Avatar, ListDivider, Modal, ModalDialog, DialogTitle, Divider, DialogContent, DialogActions, Button } from '@mui/joy'
 import Link from 'next/link'
 
 // icons
@@ -10,12 +10,25 @@ import ArrowRightSLineIcon from "remixicon-react/ArrowRightSLineIcon"
 import Heart3LineIcon from "remixicon-react/Heart2LineIcon"
 import WalletLineIcon from "remixicon-react/WalletLineIcon"
 import ExchangeDollarLineIcon from "remixicon-react/FileListLineIcon"
-import { RiP2pLine, RiDeleteBin5Line, RiShutDownLine, RiUserSettingsLine, RiShoppingBagLine, RiFilePaper2Line, RiMapPin2Line } from "@remixicon/react"
+import {
+    RiP2pLine,
+    RiDeleteBin5Line,
+    RiShutDownLine,
+    RiUserSettingsLine,
+    RiShoppingBagLine,
+    RiFilePaper2Line,
+    RiMapPin2Line,
+    RiAlertFill
+} from "@remixicon/react"
 
 const UserLayout = ({ children }) => {
     const theme = useTheme()
 
     const router = usePathname();
+
+    const [open, setOpen] = useState(false)
+    const [openDeleteAccount, setOpenDeleteAccount] = useState(false)
+
     return (
         <Grid container spacing={{ xs: 0, md: 2 }} >
             <Grid xs={12} md={3}>
@@ -29,7 +42,9 @@ const UserLayout = ({ children }) => {
                                 <Box display={"flex"} justifyContent={"center"} alignItems={"center"} sx={{
                                     position: "relative",
                                     top: { xs: "-20%", md: "-25%" }
-                                }}>
+                                }}
+                                    component={Link} href={"/user/profile"}
+                                >
                                     <Card
                                         variant="outlined"
                                         sx={{
@@ -77,32 +92,6 @@ const UserLayout = ({ children }) => {
                                 <Card size='sm'>
                                     <Stack >
                                         <List sx={{ gap: 1 }}>
-                                            <ListItem component={Link} href={"/user/profile"}>
-                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
-                                                    <Box display={"flex"} alignItems={"center"} gap={1}>
-                                                        <ListItemDecorator>
-                                                            <Box
-                                                                bgcolor={router === "/user/profile" ?
-                                                                    "text.currency" :
-                                                                    "primary.300"}
-                                                                borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
-                                                                <RiUserSettingsLine color={
-                                                                    router === "/user/profile" ?
-                                                                        "white" :
-                                                                        theme.palette.text.menuText} />
-                                                            </Box>
-                                                        </ListItemDecorator>
-                                                        <ListItemContent>
-                                                            <Typography textColor={"text.menuText"} fontWeight={"md"}>
-                                                                Profile
-                                                            </Typography>
-                                                        </ListItemContent>
-                                                    </Box>
-                                                    <ArrowRightSLineIcon color={theme.palette.text.menuText} />
-                                                </Box>
-                                            </ListItem>
-
-                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
 
                                             <ListItem component={Link} href={"/user/favourites"}>
                                                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
@@ -150,7 +139,7 @@ const UserLayout = ({ children }) => {
 
                                             <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
 
-                                            <ListItem>
+                                            <ListItem component={Link} href={"/user/transactions"}>
                                                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
@@ -173,7 +162,7 @@ const UserLayout = ({ children }) => {
                                             <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
 
                                             {/*  */}
-                                            <ListItem>
+                                            <ListItem component={Link} href={"/user/refer"}>
                                                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
@@ -197,8 +186,13 @@ const UserLayout = ({ children }) => {
                                             <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
 
 
-                                            {/*  */}
-                                            <ListItem>
+                                            {/* Delete Account */}
+                                            <ListItem
+                                                onClick={() => setOpen(true)}
+                                                sx={{
+                                                    "&:hover": { cursor: "pointer" }
+                                                }}
+                                            >
                                                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
@@ -220,7 +214,11 @@ const UserLayout = ({ children }) => {
                                             <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
 
 
-                                            <ListItem>
+                                            <ListItem onClick={() => setOpen(true)}
+                                                sx={{
+                                                    "&:hover": { cursor: "pointer" }
+                                                }}
+                                            >
                                                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                                         <ListItemDecorator>
@@ -263,23 +261,29 @@ const UserLayout = ({ children }) => {
                                         Cart
                                     </Typography>
                                 </Box>
-                                <Box component={Link} href={"#"} display={"flex"} alignItems={"center"} gap={1}
+                                <Box component={Link} href={"/user/my-orders"} display={"flex"} alignItems={"center"} gap={1}
                                     border={"1px #C7C2C2 solid"} borderRadius={"md"} px={3} py={1}
                                     boxShadow={"0px 4px 4px -2px #18274B14"}
                                 >
-                                    <Box bgcolor={"primary.300"} borderRadius={"50%"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={1} >
-                                        <RiFilePaper2Line color={theme.palette.text.menuText} />
+                                    <Box bgcolor={router === "/user/my-orders" ?
+                                        "text.currency" : "primary.300"}
+                                        borderRadius={"50%"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={1} >
+                                        <RiFilePaper2Line color={router === "/user/myorders" ?
+                                            "white" : theme.palette.text.menuText} />
                                     </Box>
                                     <Typography fontSize={"lg"} fontWeight={"md"} textColor={"text.menuText"}>
                                         My Orders
                                     </Typography>
                                 </Box>
-                                <Box component={Link} href={"#"} display={"flex"} alignItems={"center"} gap={1}
+                                <Box component={Link} href={"/user/address"} display={"flex"} alignItems={"center"} gap={1}
                                     border={"1px #C7C2C2 solid"} borderRadius={"md"} px={3} py={1}
                                     boxShadow={"0px 4px 4px -2px #18274B14"}
                                 >
-                                    <Box bgcolor={"primary.300"} borderRadius={"50%"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={1} >
-                                        <RiMapPin2Line color={theme.palette.text.menuText} />
+                                    <Box bgcolor={router === "/user/address" ?
+                                        "text.currency" : "primary.300"}
+                                        borderRadius={"50%"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={1} >
+                                        <RiMapPin2Line color={router === "/user/address" ?
+                                            "white" : theme.palette.text.menuText} />
                                     </Box>
                                     <Typography fontSize={"lg"} fontWeight={"md"} textColor={"text.menuText"}>
                                         Address
@@ -293,7 +297,52 @@ const UserLayout = ({ children }) => {
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+
+
+            {/* Logout */}
+            <Modal open={open} onClose={() => setOpen(false)} >
+                <ModalDialog variant="soft" role="alertdialog" size="lg">
+                    <DialogTitle sx={{ alignItems: "center" }}>
+                        <RiAlertFill />
+                        Confirmation
+                    </DialogTitle>
+                    <Divider sx={{ alignSelf: "center", width: "100%" }} />
+                    <DialogContent>
+                        Are you sure you want to logout?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="solid" color="danger" onClick={() => setOpen(false)}>
+                            Discard notes
+                        </Button>
+                        <Button variant="outlined" color="neutral" onClick={() => setOpen(false)}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </ModalDialog>
+            </Modal>
+
+            {/* Delete */}
+            <Modal open={openDeleteAccount} onClose={() => setOpenDeleteAccount(false)} >
+                <ModalDialog variant="soft" role="alertdialog" size="lg">
+                    <DialogTitle sx={{ alignItems: "center" }}>
+                        <RiAlertFill />
+                        Confirmation
+                    </DialogTitle>
+                    <Divider sx={{ alignSelf: "center", width: "100%" }} />
+                    <DialogContent>
+                        Are you sure you want to delete your Account?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="solid" color="danger" onClick={() => setOpenDeleteAccount(false)}>
+                            Discard notes
+                        </Button>
+                        <Button variant="outlined" color="neutral" onClick={() => setOpenDeleteAccount(false)}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </ModalDialog>
+            </Modal>
+        </Grid >
     )
 }
 

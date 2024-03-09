@@ -5,7 +5,8 @@ import Layout from "@/layouts/Layout";
 import { CssBaseline, CssVarsProvider, extendTheme } from "@mui/joy";
 import theme from "./theme";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RootLayout({ children }) {
   // const theme = useTheme()
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
             options={{ showSpinner: false }}
             shallowRouting
           />
+          <ToastContainer />
         </CssVarsProvider>
       </body>
     </html>

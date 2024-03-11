@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation';
+import { usePathname, useParams } from 'next/navigation';
 
 import { Grid, Card, CardOverflow, AspectRatio, CardContent, Typography, Box, useTheme, Stack, List, ListItem, ListItemButton, ListItemDecorator, ListItemContent, Avatar, ListDivider, Modal, ModalDialog, DialogTitle, Divider, DialogContent, DialogActions, Button } from '@mui/joy'
 import Link from 'next/link'
@@ -26,11 +26,13 @@ const UserLayout = ({ children }) => {
 
     const router = usePathname();
 
+    // console.log(router.includes("/user/my-orders/"))
+
     const [open, setOpen] = useState(false)
     const [openDeleteAccount, setOpenDeleteAccount] = useState(false)
 
     return (
-        <Grid container spacing={{ xs: 0, md: 2 }} >
+        <Grid container spacing={{ xs: 0, md: 1 }} >
             <Grid xs={12} md={3}>
                 <Card sx={{ border: "none", px: 0, width: "100%" }}>
                     <CardContent>
@@ -115,7 +117,7 @@ const UserLayout = ({ children }) => {
                                                 </Box>
                                             </ListItem>
 
-                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "Background.level3" }} />
 
                                             <ListItem component={Link} href={"/user/wallet"}>
                                                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
@@ -137,7 +139,7 @@ const UserLayout = ({ children }) => {
                                                 </Box>
                                             </ListItem>
 
-                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "Background.level3" }} />
 
                                             <ListItem component={Link} href={"/user/transactions"}>
                                                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
@@ -159,7 +161,7 @@ const UserLayout = ({ children }) => {
                                                 </Box>
                                             </ListItem>
 
-                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "Background.level3" }} />
 
                                             {/*  */}
                                             <ListItem component={Link} href={"/user/refer"}>
@@ -183,7 +185,7 @@ const UserLayout = ({ children }) => {
                                                 </Box>
                                             </ListItem>
 
-                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "Background.level3" }} />
 
 
                                             {/* Delete Account */}
@@ -211,7 +213,7 @@ const UserLayout = ({ children }) => {
                                                 </Box>
                                             </ListItem>
 
-                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "text.menuText" }} />
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "Background.level3" }} />
 
 
                                             <ListItem onClick={() => setOpen(true)}
@@ -265,10 +267,10 @@ const UserLayout = ({ children }) => {
                                     border={"1px #C7C2C2 solid"} borderRadius={"md"} px={3} py={1}
                                     boxShadow={"0px 4px 4px -2px #18274B14"}
                                 >
-                                    <Box bgcolor={router === "/user/my-orders" ?
+                                    <Box bgcolor={router.includes("/user/my-orders") ?
                                         "text.currency" : "primary.300"}
                                         borderRadius={"50%"} display={"flex"} alignItems={"center"} justifyContent={"center"} p={1} >
-                                        <RiFilePaper2Line color={router === "/user/myorders" ?
+                                        <RiFilePaper2Line color={router.includes("/user/my-orders") ?
                                             "white" : theme.palette.text.menuText} />
                                     </Box>
                                     <Typography fontSize={"lg"} fontWeight={"md"} textColor={"text.menuText"}>

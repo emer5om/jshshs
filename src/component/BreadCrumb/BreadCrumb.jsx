@@ -22,8 +22,18 @@ const BreadCrumb = ({ page }) => {
                     </Link>
 
                     {page.map((item, index) => {
+                        const isLastItem = index === page.length - 1;
                         return (
-                            <Typography component={Link} href={item.link} textColor={"text.currency"} fontWeight={"xl"} fontSize={"lg"} key={index}>{item.name}</Typography>
+                            <Typography
+                                component={!isLastItem ? Link : Box}
+                                href={item.link}
+                                textColor={!isLastItem? "text.currency" : "text.menuText"}
+                                fontWeight={"xl"}
+                                fontSize={"lg"}
+                                key={index}
+                            >
+                                {item.name}
+                            </Typography>
                         )
                     })}
                 </Breadcrumbs>

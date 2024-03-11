@@ -16,18 +16,16 @@ const CustomButton = ({
     fullWidth
 }) => {
     return (
-        <div>
-            <Button
-                variant={variant}
-                size={size}
-                color={color}
-                onClick={onClick}
-                sx={customStyle}
-                fullWidth={fullWidth}
-            >
-                {text}
-            </Button>
-        </div>
+        <Button
+            variant={variant}
+            size={size}
+            color={color}
+            onClick={onClick}
+            sx={customStyle}
+            fullWidth={fullWidth}
+        >
+            {text}
+        </Button>
     )
 }
 

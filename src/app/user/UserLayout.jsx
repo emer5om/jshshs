@@ -252,7 +252,7 @@ const UserLayout = ({ children }) => {
                     <Grid xs={12} width={"100%"}>
                         <Card sx={{ border: "none", px: 0 }}>
                             <CardContent sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 1 }} >
-                                <Box component={Link} href={"#"} display={"flex"} alignItems={"center"} gap={1}
+                                <Box component={Link} href={"/user/cart"} display={"flex"} alignItems={"center"} gap={1}
                                     border={"1px #C7C2C2 solid"} borderRadius={"md"} px={3} py={1}
                                     boxShadow={"0px 4px 4px -2px #18274B14"}
                                 >

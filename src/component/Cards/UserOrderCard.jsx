@@ -7,6 +7,7 @@ import React from 'react'
 import { RiArrowRightCircleFill } from "@remixicon/react"
 import { BorderStyle } from '@mui/icons-material';
 import CustomButton from '../Buttons/CustomButton';
+import Link from 'next/link';
 
 const UserOrderCard = ({ status, image, id, date, qty, name, amount, type }) => {
     const theme = useTheme();
@@ -90,7 +91,7 @@ const UserOrderCard = ({ status, image, id, date, qty, name, amount, type }) => 
                             </Typography>
                         </Box>
                     </Box>
-                    <Box minWidth={{ md: "5%", xs: "100%" }} alignItems={"center"} display={"flex"} justifyContent={"center"}>
+                    <Box  component={Link} href={"/user/my-orders/1"} minWidth={{ md: "5%", xs: "100%" }} alignItems={"center"} display={"flex"} justifyContent={"center"}>
                         <RiArrowRightCircleFill color={theme.palette.text.menuText} />
                     </Box>
                 </Box>

@@ -7,7 +7,10 @@ import {
     Avatar,
     Typography,
     Menu,
-    MenuItem
+    MenuItem,
+    MenuButton,
+    Dropdown,
+    IconButton
 } from '@mui/joy';
 import { Img } from '@/component/Img';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,6 +25,7 @@ import ArrowDownSLineIcon from 'remixicon-react/ArrowDownSLineIcon';
 import { useTheme } from '@mui/joy/styles';
 import NavMenuButton from './NavMenuButton';
 import Link from 'next/link';
+import SmallNotificationCard from '../Cards/SmallNotificationCard';
 const Index = () => {
 
     const [menuIndex, setMenuIndex] = React.useState(null);
@@ -44,6 +48,27 @@ const Index = () => {
         }, 200);
     };
 
+
+    const notificationData = [
+        {
+            id: 1,
+            title: "notification 1",
+            description: "Lorem ipsum dolor dfghdfklgndklfngldfnjkdgkn sit amet consectetur adipisicing elit. Veritatis dolorum voluptate maiores. Animi.",
+            image: "/images/demo-images/salad-1.png"
+        },
+        {
+            id: 2,
+            title: "notification 2",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dolorum voluptate maiores. Animi.",
+            image: "/images/demo-images/noodles.png"
+        },
+        {
+            id: 3,
+            title: "notification 3",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis dolorum voluptate maiores. Animi.",
+            image: "/images/demo-images/pizza-1.png"
+        },
+    ]
 
     const theme = useTheme();
     return (
@@ -89,22 +114,22 @@ const Index = () => {
                                         <Menu onClose={() => setMenuIndex(null)}>
                                             <Grid container spacing={2} width={"100%"} height={"100%"} p={2}>
                                                 <Grid xs={4}>
-                                                    <MenuItem {...itemProps}>Spicy Burger</MenuItem>
-                                                    <MenuItem {...itemProps}>Fried Chicken</MenuItem>
-                                                    <MenuItem {...itemProps}>Chole Bhature</MenuItem>
-                                                    <MenuItem {...itemProps}>Delicious Dessert</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Spicy Burger</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Fried Chicken</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Chole Bhature</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Delicious Dessert</MenuItem>
                                                 </Grid>
                                                 <Grid xs={4}>
-                                                    <MenuItem {...itemProps}>South Indian</MenuItem>
-                                                    <MenuItem {...itemProps}>Crispy Wrap</MenuItem>
-                                                    <MenuItem {...itemProps}>Delicious Thali</MenuItem>
-                                                    <MenuItem {...itemProps}>Healthy Food</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>South Indian</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Crispy Wrap</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Delicious Thali</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Healthy Food</MenuItem>
                                                 </Grid>
                                                 <Grid xs={4}>
-                                                    <MenuItem {...itemProps}>Chinese Food</MenuItem>
-                                                    <MenuItem {...itemProps}>Pizza</MenuItem>
-                                                    <MenuItem {...itemProps}>Punjabi Food</MenuItem>
-                                                    <MenuItem {...itemProps}>Sea Food</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Chinese Food</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Pizza</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Punjabi Food</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Sea Food</MenuItem>
                                                 </Grid>
                                             </Grid>
                                         </Menu>
@@ -138,11 +163,43 @@ const Index = () => {
 
                 <Box display={"flex"} gap={8} alignItems={"center"}>
                     <Box display={"flex"} gap={4}>
-                        <Notification4LineIcon size={"28px"} />
+                        <Dropdown>
+                            <MenuButton
+                                slots={{ root: IconButton }}
+                                slotProps={{ root: { variant: "text", color: 'neutral', size: "small" } }}
+                            >
+                                <Notification4LineIcon size={"28px"} />
+                            </MenuButton>
+                            <Menu sx={{
+                                width: 450, p: 2, bgcolor: "rgba(211, 211, 211, 0.5)",
+                                '& .MuiMenuItem-root:last-child:hover': { backgroundColor: 'transparent', fontWeight: "lg", color: "primary.500" }
+                            }}>
+                                {notificationData.map((item) => {
+                                    return (
+                                        <MenuItem key={item.id}>
+                                            <SmallNotificationCard
+                                                image={item.image}
+                                                title={item.title}
+                                                description={item.description}
+                                            />
+                                        </MenuItem>
+                                    )
+                                })}
+                                <MenuItem component={Link} href='#' sx={{
+                                    display: "flex",
+                                    alignItems: "flex-end",
+                                    justifyContent: "end",
+                                    fontWeight: "md",
+                                    '&:hover': { backgroundColor: "transparent" },
+                                }}>
+                                    Show More
+                                </MenuItem>
+                            </Menu>
+                        </Dropdown>
                         <SearchLineIcon size={"28px"} />
-                        <Badge badgeContent={8} color="primary">
-                            <ShoppingBag3LineIcon size={"28px"} />
-                        </Badge>
+                            <Badge component={Link} href={"/user/cart"} badgeContent={8} color="primary">
+                                <ShoppingBag3LineIcon size={"28px"} color="black" />
+                            </Badge>
                         <SunFillIcon size={"28px"} />
                     </Box>
 

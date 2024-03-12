@@ -37,7 +37,9 @@ export default function ({ params }) {
 
 
             <UserLayout>
+                <Box maxWidth={"100%"}>
                 <OrderDetails />
+                </Box>
             </UserLayout>
         </Box>
     )

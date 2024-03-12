@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import {  MenuItem, List, ListItem, Sheet, MenuButton, Dropdown, } from '@mui/joy';
+import { MenuItem, List, ListItem, Sheet, MenuButton, Dropdown, } from '@mui/joy';
 import Menu, { menuClasses } from '@mui/joy/Menu';
 import { Apps, Settings, Person } from '@mui/icons-material';
 
@@ -10,6 +10,7 @@ const NavMenuButton = ({
     onOpen,
     onLeaveMenu,
     label,
+    placement,
     ...props
 }) => {
     const isOnButton = useRef(false);
@@ -24,17 +25,17 @@ const NavMenuButton = ({
 
     const modifiers = [
         {
-          name: 'offset',
-          options: {
-            offset: ({ placement }) => {
-              if (placement.includes('end')) {
-                return [8, 20];
-              }
-              return [-8, 20];
+            name: 'offset',
+            options: {
+                offset: ({ placement }) => {
+                    if (placement.includes('end')) {
+                        return [8, 20];
+                    }
+                    return [-8, 20];
+                },
             },
-          },
         },
-      ];
+    ];
 
     return (
         <Dropdown
@@ -85,7 +86,7 @@ const NavMenuButton = ({
                         'aria-label': label,
                     },
                 },
-                placement: "bottom-start",
+                placement: placement ?? "bottom-start",
                 sx: {
                     width: "40%",
                     height: "200px",

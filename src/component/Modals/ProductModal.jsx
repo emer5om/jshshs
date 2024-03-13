@@ -28,8 +28,8 @@ const ProductModal = ({ image, title, rating, price, description, variants = [],
                     <ModalClose
                         sx={{
                             position: "absolute",
-                            top: "-9%",
-                            right: "-2%",
+                            top: "-5%",
+                            right: "-1%",
                         }}
                     />
                     <DialogTitle>

@@ -17,7 +17,7 @@ const SectionHeading = ({ title, showMore = false, showMoreLink = "", color = "p
         >
             <Box display={"flex"} alignItems={"center"} justifyContent={"start"} gap={2}>
                 <Box sx={{
-                    height: "50px",
+                    height: "35px",
                     bgcolor: color === "primary" ? theme.palette.primary[500] : theme.palette.text.currency,
                     width: "10px",
                     borderRadius: theme.radius.xl
@@ -26,7 +26,7 @@ const SectionHeading = ({ title, showMore = false, showMoreLink = "", color = "p
                     sx={{
                         color: color === "primary" ? theme.palette.text.primary : theme.palette.text.currency,
                     }}
-                    fontSize={"xl2"}
+                    fontSize={"xl"}
                     fontWeight={theme.fontWeight.xl}>{title}</Typography>
             </Box>
             {showMore &&

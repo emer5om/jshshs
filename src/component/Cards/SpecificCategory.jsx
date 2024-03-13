@@ -4,6 +4,8 @@ import React from 'react'
 import { Card, AspectRatio, CardContent, Typography, Box, useTheme } from '@mui/joy';
 import StarRatings from "react-star-ratings"
 import CustomButton from '../Buttons/CustomButton';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 
 function SpecificCategory({ image, title, ratings, price, discountedPrice }) {
     const theme = useTheme();
@@ -21,11 +23,11 @@ function SpecificCategory({ image, title, ratings, price, discountedPrice }) {
         >
             <AspectRatio ratio="1" sx={{ minWidth: "30%", maxHeight: "100%" }}>
                 <Box
-                    component={"img"}
+                    component={LazyLoadImage}
                     src={image}
                     srcSet={`${image} 2x`}
                     loading="lazy"
-                    alt=""
+                    alt={image}
                     maxWidth={"100%"}
                     sx={{ objectFit: "cover" }}
                     borderRadius={"lg"}

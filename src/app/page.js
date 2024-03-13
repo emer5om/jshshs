@@ -14,6 +14,7 @@ import NewItems from "@/component/Products/NewItems";
 import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
 import SpecificItem from "@/component/Categories/SpecificItem";
+import SearchBar from "@/component/GlobalSearch/SearchBar";
 
 const popularCardData = [
   {
@@ -354,10 +355,13 @@ export const metadata = {
   description: "eRestro single vendor, orders foods and stuff ",
 };
 
-
 export default function Home() {
   return (
     <Box>
+      <Box sx={{ display: {xs: "block", md: "none"} }}>
+        <SearchBar />
+      </Box>
+
       <HeadSlider
         images={[
           "/images/sliders/slider_1.png",

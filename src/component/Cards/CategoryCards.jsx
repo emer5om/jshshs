@@ -2,16 +2,17 @@
 import { AspectRatio, Box, Button, Card, CardContent, IconButton, Typography } from '@mui/joy'
 import React from 'react'
 import { useTheme } from '@mui/joy/styles';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const CategoryCards = ({ image, title, count }) => {
     const theme = useTheme();
 
     return (
-        <Box>
-            <Card
+        <>
+          <Card
                 sx={{
-                    px:1,
-                    width: 200,
+                    px: 1,
+                    width: "100%",
                     height: "auto",
                     border: "none",
                     borderBottom: "1px solid #18274B14",
@@ -32,18 +33,19 @@ const CategoryCards = ({ image, title, count }) => {
                     <Box
                         width={"100px"}
                         height={"100px"}
-                        bgcolor={"#F0BB62"}
                         borderRadius={"50%"}
                         display={"flex"}
                         alignItems={"center"}
                         justifyContent={"center"}
+                        sx={{ backgroundColor: "text.menuText" }}
                     >
                         <Box
-                            component={"img"}
+                            component={LazyLoadImage}
                             src={image}
                             srcSet={`${image} 2x`}
                             loading="lazy"
-                            alt=""
+                            effect="blur"
+                            alt={image}
                             borderRadius={"50%"}
                             maxHeight={"100%"}
                             maxWidth={"100%"}
@@ -60,7 +62,7 @@ const CategoryCards = ({ image, title, count }) => {
                         justifyContent={"center"}
                     >
                         <Typography fontWeight={"md"} fontSize={"md"}
-                        sx={{textWrap:"nowrap", textOverflow:"ellipsis", overflow:"hidden"}}
+                            sx={{ textWrap: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}
                         >
                             {title}
                         </Typography>
@@ -69,8 +71,8 @@ const CategoryCards = ({ image, title, count }) => {
                         </Typography>
                     </Box>
                 </CardContent>
-            </Card>
-        </Box>
+            </Card>  
+        </>
     )
 }
 

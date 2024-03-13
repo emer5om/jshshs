@@ -21,6 +21,7 @@ import {
     RiCheckLine as CheckIcon
 } from "@remixicon/react"
 import CustomButton from '@/component/Buttons/CustomButton';
+import Link from 'next/link';
 
 const ViewCart = () => {
     const [deliveryType, setDeliveryType] = useState("Delivery")
@@ -425,6 +426,8 @@ const ViewCart = () => {
                                         > Add Coupon </Typography>
                                     </Box>
                                     <Typography
+                                        component={Link}
+                                        href={"/user/coupons"}
                                         textColor={"text.currency"}
                                         fontSize={"sm"}
                                         fontWeight={"md"}

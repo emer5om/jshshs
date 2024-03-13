@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "deploy-build": "node ftp.js",
-    "deploy": "npm install &&  npm run build && npm run deploy-build"
+    "deploy": "npm install &&  npm run build && npm run deploy-build",
+    "build-htaccess": "next-htaccess-generator build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -32,6 +33,7 @@
     "react": "^18",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18",
+    "react-lazy-load-image-component": "^1.6.0",
     "react-phone-input-2": "^2.15.1",
     "react-star-ratings": "^2.3.0",
     "react-toastify": "^10.0.4",
@@ -41,6 +43,7 @@
   "devDependencies": {
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
-    "ftp-deploy": "^2.4.7"
+    "ftp-deploy": "^2.4.7",
+    "next-htaccess-generator": "^0.0.8"
   }
 }

@@ -9,6 +9,8 @@ import dayjs from "dayjs"
 import { RiPencilLine } from "@remixicon/react"
 import CustomButton from '@/component/Buttons/CustomButton';
 // CSS
+
+// import 'react-phone-input-2/lib/style.css'
 import 'react-phone-input-2/lib/material.css'
 const Profile = () => {
 
@@ -103,6 +105,7 @@ const Profile = () => {
                                 <FormLabel sx={{ mb: 1, color: "text.tertiary" }} >Phone Number</FormLabel>
                                 <PhoneInput
                                     country={countryCode}
+                                    inputClass='generalClass'
                                     placeholder="Enter phone number"
                                     {...addValueProps('phone')}
                                     inputStyle={{ width: "100%", height: "45px" }}

@@ -9,7 +9,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 
-
 // const data = [{image: ""}]
 
 const Category = ({ data }) => {
@@ -20,7 +19,7 @@ const Category = ({ data }) => {
             {/* Heading */}
             <Box display={"flex"} flexDirection={"column"}>
                 <Box>
-                    <SectionHeading title={"Cuisine Crafted with care"} />
+                    <SectionHeading title={"Cuisine Crafted with care"} showMore={true} showMoreLink='/categories' />
                 </Box>
 
                 <Grid container spacing={1} my={2} >

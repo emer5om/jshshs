@@ -2,6 +2,7 @@
 
 import { Card, CardCover, CardContent, Typography, Box } from '@mui/joy';
 import React from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // shape is for is it rectangle or square 
 export const OfferCards = ({ shape = "square", title, discount, price, image }) => {
@@ -11,12 +12,14 @@ export const OfferCards = ({ shape = "square", title, discount, price, image }) 
             borderRadius: shape === "square" ? "xl" : "md"
         }}>
             <CardCover>
-                <img
+                <Box
+                    component={LazyLoadImage}
                     src={image}
                     srcSet={`${image} 2x`}
                     loading="lazy"
-                    alt={title}
-                />
+                    alt={image}
+                >
+                </Box>
             </CardCover>
             <CardCover
                 sx={{

@@ -11,10 +11,11 @@ import CustomButton from '../Buttons/CustomButton';
 
 import HeartLineIcon from "remixicon-react/HeartLineIcon"
 import StarFillIcon from "remixicon-react/StarFillIcon"
+import ProductModal from '../Modals/ProductModal';
 
 const PopularCards = ({ data, showHeadline = "true" }) => {
     const theme = useTheme()
-    
+
     return (
         <Box display={"flex"} flexDirection={"column"}>
             {showHeadline &&
@@ -107,7 +108,8 @@ const PopularCards = ({ data, showHeadline = "true" }) => {
                                             fontWeight={theme.fontWeight.md}>
                                             {item.description}
                                         </Typography>
-                                        <CustomButton text={"Add"} customStyle={{ px: 4, py: 0.5 }} />
+                                        <ProductModal />
+                                        {/* <CustomButton text={"Add"} customStyle={{ px: 4, py: 0.5 }} /> */}
                                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
                                             <Box display={"flex"} alignItems={"center"} gap={1}>
                                                 <Typography sx={{ color: theme.palette.text.tertiary, textDecoration: "line-through" }} fontSize={theme.fontSize.xs} fontWeight={theme.fontWeight.sm}>$ {item.price}</Typography>

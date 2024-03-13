@@ -18,7 +18,8 @@ import {
     RiShoppingBagLine,
     RiFilePaper2Line,
     RiMapPin2Line,
-    RiAlertFill
+    RiAlertFill,
+    RiCustomerService2Line
 } from "@remixicon/react"
 
 const UserLayout = ({ children }) => {
@@ -178,6 +179,29 @@ const UserLayout = ({ children }) => {
                                                         <ListItemContent>
                                                             <Typography textColor={"text.menuText"} fontWeight={"md"}>
                                                                 Refer and Earn
+                                                            </Typography>
+                                                        </ListItemContent>
+                                                    </Box>
+                                                    <ArrowRightSLineIcon color={theme.palette.text.menuText} />
+                                                </Box>
+                                            </ListItem>
+
+                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "Background.level3" }} />
+
+                                            <ListItem component={Link} href={"/user/support"}>
+                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
+                                                    <Box display={"flex"} alignItems={"center"} gap={1}>
+                                                        <ListItemDecorator>
+                                                            <Box bgcolor={router === "/user/support" ?
+                                                                "text.currency" : "primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
+
+                                                                <RiCustomerService2Line color={router === "/user/support" ?
+                                                                    "white" : theme.palette.text.menuText} />
+                                                            </Box>
+                                                        </ListItemDecorator>
+                                                        <ListItemContent>
+                                                            <Typography textColor={"text.menuText"} fontWeight={"md"}>
+                                                                Help & Support
                                                             </Typography>
                                                         </ListItemContent>
                                                     </Box>

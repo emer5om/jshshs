@@ -3,26 +3,6 @@
 import { extendTheme } from "@mui/joy/styles";
 import "@mui/joy/styles";
 
-// Now you can use the declared interfaces in your code
-// For example:
-const backgroundOverrides = {
-  footer: true,
-  footerSoft: true,
-};
-
-const textOverrides = {
-  currency: true,
-};
-
-// declare module '@mui/joy/styles' {
-//   interface PaletteBackgroundOverrides {
-//     footer: true;
-//     footerSoft: true;
-//   }
-//   interface PaletteTextOverrides {
-//     currency: true;
-//   }
-// }
 
 const theme = extendTheme({
   colorSchemes: {

@@ -54,3 +54,23 @@ a {
 .MuiTypography-root {
   text-transform: capitalize;
 }
+
+.react-tel-input .form-control:focus {
+  border-color: var(
+    --_Input-focusedHighlight,
+    var(--joy-palette-focusVisible)
+  ) !important;
+  box-shadow: none !important;
+}
+.react-tel-input .form-control {
+  border: 1px solid !important;
+  border-color: #cdd7e1 !important;
+  box-sizing: border-box;
+  box-shadow: var(--joy-shadowRing, 0 0 #000),
+    0px 1px 2px 0px
+      rgba(var(--joy-shadowChannel, 21 21 21) / var(--joy-shadowOpacity, 0.08));
+}
+
+.react-tel-input .country-list {
+  max-width: 250px;
+}

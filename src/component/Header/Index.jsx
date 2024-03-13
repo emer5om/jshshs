@@ -26,6 +26,7 @@ import { useTheme } from '@mui/joy/styles';
 import NavMenuButton from './NavMenuButton';
 import Link from 'next/link';
 import SmallNotificationCard from '../Cards/SmallNotificationCard';
+import { RiHeartLine, RiShutDownLine, RiUser3Line } from '@remixicon/react';
 const Index = () => {
 
     const [menuIndex, setMenuIndex] = React.useState(null);
@@ -75,7 +76,7 @@ const Index = () => {
         <Grid container spacing={2} px={8} alignItems={"center"}>
             <Grid xs={7} md={9} display={"flex"}  >
                 <Grid container spacing={4} maxWidth={"100%"} width={"100%"} alignItems={"center"}>
-                    <Grid xs={3} display={"flex"} alignItems={"center"}>
+                    <Grid xs={3} component={Link} href={"/"} display={"flex"} alignItems={"center"}>
                         <Box
                             component={"img"}
                             src="/images/logo.png"
@@ -98,7 +99,7 @@ const Index = () => {
                                 </Box>
                             </Box>
                             <Box display={"flex"} gap={8} alignItems={"center"}>
-                                <Link href="#" underline="none" color="inherit">
+                                <Link href="/" underline="none" color="inherit">
                                     <Typography fontSize={20} fontWeight={"bolder"}
 
                                     >
@@ -197,17 +198,75 @@ const Index = () => {
                             </Menu>
                         </Dropdown>
                         <SearchLineIcon size={"28px"} />
-                            <Badge component={Link} href={"/user/cart"} badgeContent={8} color="primary">
-                                <ShoppingBag3LineIcon size={"28px"} color="black" />
-                            </Badge>
+                        <Badge component={Link} href={"/user/cart"} badgeContent={8} color="primary">
+                            <ShoppingBag3LineIcon size={"28px"} color="black" />
+                        </Badge>
                         <SunFillIcon size={"28px"} />
                     </Box>
 
                     <Box display={"flex"} alignItems={"center"} gap={2}>
-                        <Avatar alt="Remy Sharp" src="https://ui-avatars.com/api/?background=random" />
 
-                        <Typography component={Link} href={"/user/profile"} level="h4" color='white' fontWeight={"bold"}> James </Typography>
-                        <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]} fontWeight={"bolder"} />
+                        <Dropdown>
+                            <MenuButton
+                                variant="plain"
+                                sx={{
+                                    "&:hover": {
+                                        backgroundColor: 'transparent'
+                                    }
+                                }}
+                            >
+                                <Avatar alt="Remy Sharp" src="https://ui-avatars.com/api/?background=random" />
+
+                                <Typography level="h4" color='white' fontWeight={"bold"}
+                                    endDecorator={
+                                        <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]} fontWeight={"bolder"} />
+                                    }
+                                > James </Typography>
+                            </MenuButton>
+                            <Menu >
+                                <MenuItem
+                                    component={Link}
+                                    href='/user/profile'
+                                    sx={{
+                                        "&:hover .MuiTypography-root": {
+                                            color: theme.palette.text.menuText
+                                        }
+                                    }}
+                                >
+                                    <Typography fontSize={"sm"} fontWeight={"md"}
+                                        startDecorator={<RiUser3Line size={theme.fontSize.lg} />}>
+                                        My Profile
+                                    </Typography>
+                                </MenuItem>
+                                <MenuItem
+                                    component={Link}
+                                    href={"/user/favourites"}
+                                    sx={{
+                                        "&:hover .MuiTypography-root": {
+                                            color: theme.palette.text.menuText
+                                        }
+                                    }}
+                                >
+                                    <Typography fontSize={"sm"} fontWeight={"md"}
+                                        startDecorator={<RiHeartLine size={theme.fontSize.lg} />}>
+                                        favourites
+                                    </Typography>
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{
+                                        "&:hover .MuiTypography-root": {
+                                            color: theme.palette.danger[500]
+                                        }
+                                    }}
+                                >
+                                    <Typography fontSize={"sm"} fontWeight={"md"} startDecorator={<RiShutDownLine size={theme.fontSize.lg} />}>
+                                        Logout
+                                    </Typography>
+                                </MenuItem>
+                            </Menu>
+                        </Dropdown>
+
+
                     </Box>
                 </Box>
 

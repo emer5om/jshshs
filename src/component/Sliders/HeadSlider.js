@@ -14,6 +14,7 @@ import UserLocationFillIcon from "remixicon-react/UserLocationFillIcon";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const HeadSlider = ({ images = [1, 2, 3] }) => {
   return (
@@ -22,7 +23,6 @@ const HeadSlider = ({ images = [1, 2, 3] }) => {
         spaceBetween={30}
         centeredSlides={true}
         pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
         loop={true}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
@@ -32,7 +32,7 @@ const HeadSlider = ({ images = [1, 2, 3] }) => {
             <Card
               sx={{
                 borderRadius: "var(--border-radius-xl)",
-                minHeight: { xs: 250, md: 472 },
+                minHeight: { xs: 150, md: 472 },
               }}
             >
               <CardCover sx={{ minHeight: "100%" }}>
@@ -40,12 +40,13 @@ const HeadSlider = ({ images = [1, 2, 3] }) => {
                   component={"img"}
                   src={image}
                   srcSet={image}
+                  effect="blur"
                   loading="lazy"
                   alt={image}
                   sx={{
                     width: "auto",
                     height: "100%",
-                    objectFit: "contain",
+                    objectFit: "cover",
                   }}
                 />
               </CardCover>

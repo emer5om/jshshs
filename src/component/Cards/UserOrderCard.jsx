@@ -91,7 +91,7 @@ const UserOrderCard = ({ status, image, id, date, qty, name, amount, type }) => 
                             </Typography>
                         </Box>
                     </Box>
-                    <Box  component={Link} href={"/user/my-orders/1"} minWidth={{ md: "5%", xs: "100%" }} alignItems={"center"} display={"flex"} justifyContent={"center"}>
+                    <Box component={Link} href={"/user/my-orders/1"} minWidth={{ md: "5%", xs: "100%" }} alignItems={"center"} display={"flex"} justifyContent={"center"}>
                         <RiArrowRightCircleFill color={theme.palette.text.menuText} />
                     </Box>
                 </Box>
@@ -102,7 +102,7 @@ const UserOrderCard = ({ status, image, id, date, qty, name, amount, type }) => 
                     }}
                 >
                     <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.menuText"} >Total Pay</Typography>
-                    <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.currency"}> $ {amount ?? "00.00"}</Typography>
+                    <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.currency"}>  {amount ?? "00.00"}</Typography>
                 </Box>
 
             </CardContent>

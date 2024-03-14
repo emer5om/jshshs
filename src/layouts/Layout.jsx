@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Container,
   Grid,
@@ -12,7 +12,33 @@ import Footer from "@/component/Footer/Index"
 
 import { useTheme } from '@mui/joy/styles';
 import MobileNavigation from '@/component/Header/MobileNavigation';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setSettings } from '../store/reducers/settingsSlice';
+import { get_settings } from "@/interceptor/routes"
+
+
+
 const layout = ({ children }) => {
+
+  // let firebase = firebaseconfig();
+  // console.log(firebase)
+
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.categories.value);
+
+  const getCategories = () => {
+    get_settings().then(res => {
+      console.log(res)
+      dispatch(setSettings(res.data))
+    });
+  }
+  useEffect(() => {
+    if (categories.length === 0) {
+      getCategories()
+    }
+  }, [])
+
   return (
     <div>
       <Container maxWidth={"xl2"}>

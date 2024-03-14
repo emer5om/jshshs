@@ -10,6 +10,7 @@ import CustomButton from '../Buttons/CustomButton';
 import StarFillIcon from "remixicon-react/StarFillIcon"
 import HeartLineIcon from "remixicon-react/HeartLineIcon"
 import { RiHeartFill } from "@remixicon/react"
+import ProductModal from '../Modals/ProductModal';
 
 
 const ProductCards = ({ image, type, rating, isLiked, categoryName, title, price, discountedPrice, discount }) => {
@@ -89,12 +90,12 @@ const ProductCards = ({ image, type, rating, isLiked, categoryName, title, price
                     </Box>
                     <Box>
                         <Typography fontSize={"md"} fontWeight={"xl"} textColor={"text.currency"}>
-                            $ {(discountedPrice) ? discountedPrice : price}
+                             {(discountedPrice) ? discountedPrice : price}
                         </Typography>
                     </Box>
 
                     <Box display={"flex"} flexDirection={"row"} justifyContent={"end"}>
-                        <CustomButton text={"Add"} customStyle={{ px: 3, py: 1 }} />
+                        <ProductModal />
                     </Box>
                 </Box>
 

@@ -9,6 +9,7 @@ import React from 'react'
 import HeartLineIcon from "remixicon-react/HeartLineIcon"
 import StarFillIcon from "remixicon-react/StarFillIcon"
 import CustomButton from '../Buttons/CustomButton'
+import ProductModal from '../Modals/ProductModal'
 
 const ListCards = ({ data }) => {
     const theme = useTheme()
@@ -115,7 +116,7 @@ const ListCards = ({ data }) => {
                                                     <Typography sx={{ color: theme.palette.text.tertiary, textDecoration: "line-through" }} fontSize={theme.fontSize.xs} fontWeight={theme.fontWeight.sm}>$ {item.price}</Typography>
                                                     <Typography sx={{ color: theme.palette.text.currency }} fontSize={theme.fontSize.md} fontWeight={theme.fontWeight.lg}>$ {item.price}</Typography>
                                                 </Box>
-                                                <CustomButton text={"Add"} customStyle={{ px: 3, py: .5 }} />
+                                                <ProductModal />
                                             </Box>
                                         </Box>
 

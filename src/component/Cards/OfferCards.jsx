@@ -43,7 +43,7 @@ export const OfferCards = ({ shape = "square", title, discount, price, image }) 
                             {discount}% OFF
                         </Typography>
                         <Typography textColor={"warning.400"} fontSize={"xl"} fontWeight={"md"}>
-                            ${price}
+                            {price}
                         </Typography>
                     </Box>
                 </Box>

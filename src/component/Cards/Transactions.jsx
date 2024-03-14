@@ -75,7 +75,7 @@ const Transactions = ({ id, status, date, type, message, amount }) => {
                     <Typography textColor={"text.menuText"} fontSize={"md"} fontWeight={"lg"}>Total Pay</Typography>
                 </Box>
                 <Box>
-                    <Typography textColor={"text.currency"} fontSize={"md"} fontWeight={"lg"}>${amount ?? "00.00"}</Typography>
+                    <Typography textColor={"text.currency"} fontSize={"md"} fontWeight={"lg"}>{amount ?? "00.00"}</Typography>
                 </Box>
             </Box>
         </Card>

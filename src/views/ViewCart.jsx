@@ -22,6 +22,7 @@ import {
 } from "@remixicon/react"
 import CustomButton from '@/component/Buttons/CustomButton';
 import Link from 'next/link';
+import { formatePrice } from '@/helpers/functonHelpers';
 
 const ViewCart = () => {
     const [deliveryType, setDeliveryType] = useState("Delivery")
@@ -288,18 +289,18 @@ const ViewCart = () => {
                                     <Box >
                                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                             <Typography textColor={"text.menuText"} fontWeight={"md"}>Item Total</Typography>
-                                            <Typography textColor={"text.currency"} fontWeight={"lg"}>$ 380.00</Typography>
+                                            <Typography textColor={"text.currency"} fontWeight={"lg"}> {formatePrice(380.00)}</Typography>
                                         </Box>
                                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                             <Typography textColor={"text.menuText"} fontWeight={"md"}>Delivery Partner Tip</Typography>
-                                            <Typography textColor={"text.currency"} fontWeight={"lg"}>$ 20.00</Typography>
+                                            <Typography textColor={"text.currency"} fontWeight={"lg"}> {formatePrice(20.00)}</Typography>
                                         </Box>
                                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                             <Typography textColor={"text.menuText"} fontWeight={"md"}>Delivery Charges</Typography>
                                             <Box display={"flex"} alignItems={"center"} gap={1}>
                                                 <Typography textColor={"text.currency"} fontWeight={"lg"}
                                                     sx={{ textDecoration: "line-through" }}
-                                                >$ 20.00</Typography>
+                                                > {formatePrice(20.00)}</Typography>
                                                 <Typography textColor={"text.menuText"} fontWeight={"lg"}>Free</Typography>
                                             </Box>
                                         </Box>
@@ -310,11 +311,11 @@ const ViewCart = () => {
                                     <Box>
                                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                             <Typography textColor={"text.menuText"} fontWeight={"md"}>Coupon Discount</Typography>
-                                            <Typography textColor={"text.currency"} fontWeight={"lg"}>$ 100.00</Typography>
+                                            <Typography textColor={"text.currency"} fontWeight={"lg"}> {formatePrice(100.00)}</Typography>
                                         </Box>
                                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                             <Typography textColor={"text.menuText"} fontWeight={"md"}>Taxes & Charges (17%)</Typography>
-                                            <Typography textColor={"text.currency"} fontWeight={"lg"}>$ 80.00</Typography>
+                                            <Typography textColor={"text.currency"} fontWeight={"lg"}> {formatePrice(80.00)}</Typography>
                                         </Box>
                                     </Box>
                                     <Divider sx={{ mt: 1 }} />
@@ -325,7 +326,7 @@ const ViewCart = () => {
                                         <RiMoneyRupeeCircleLine color={theme.palette.text.menuText} />
                                         <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.menuText"}>Total Pay</Typography>
                                     </Box>
-                                    <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.currency"}>$380.00</Typography>
+                                    <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.currency"}>{formatePrice(380.00)}</Typography>
                                 </CardActions>
 
                             </Card>
@@ -470,7 +471,7 @@ const ViewCart = () => {
                                                     sx={{ flexWrap: 'wrap', gap: 1 }}
                                                 >
                                                     {[
-                                                        "$5", "$10", "15", "$20", "Other",
+                                                        5, 10, 15, 20, "Other",
                                                     ].map((name) => {
                                                         const checked = selected === name;
                                                         return (
@@ -491,7 +492,8 @@ const ViewCart = () => {
                                                                     color={checked ? 'primary' : 'neutral'}
                                                                     disableIcon
                                                                     overlay
-                                                                    label={name}
+                                                                    label={
+                                                                        name !== "Other" ? formatePrice(name) : name}
                                                                     value={name}
                                                                     checked={checked}
                                                                     onChange={(event) => {

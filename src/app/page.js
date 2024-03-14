@@ -15,6 +15,7 @@ import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
 import SpecificItem from "@/component/Categories/SpecificItem";
 import SearchBar from "@/component/GlobalSearch/SearchBar";
+import { formatePrice } from "@/helpers/functonHelpers";
 
 const popularCardData = [
   {
@@ -23,7 +24,7 @@ const popularCardData = [
     image: "/images/demo-images/salad-1.png",
     title: "Fattoush salad",
     description: "Description of the food",
-    price: "100.00",
+    price: formatePrice(100),
     rating: "5.0",
   },
   {
@@ -32,7 +33,7 @@ const popularCardData = [
     image: "/images/demo-images/noodles.png",
     title: "Pan-Fried Noodles",
     description: "Description of the food",
-    price: "50.00",
+    price: formatePrice(50),
     rating: "4.9",
   },
   {
@@ -41,7 +42,7 @@ const popularCardData = [
     image: "/images/demo-images/pizza-1.png",
     title: "Spicy Burger",
     description: "Description of the food",
-    price: "70.00",
+    price: formatePrice(70.05),
     rating: "4.8",
   },
   {
@@ -50,7 +51,7 @@ const popularCardData = [
     image: "/images/demo-images/pizza-1.png",
     title: "Spicy Burger",
     description: "Description of the food",
-    price: "90.00",
+    price: formatePrice(90.0),
     rating: "4.7",
   },
   {
@@ -59,7 +60,7 @@ const popularCardData = [
     image: "/images/demo-images/salad-1.png",
     title: "Fattoush salad",
     description: "Description of the food",
-    price: "100.00",
+    price: formatePrice(100.0),
     rating: "5.0",
   },
   {
@@ -68,7 +69,7 @@ const popularCardData = [
     image: "/images/demo-images/noodles.png",
     title: "Pan-Fried Noodles",
     description: "Description of the food",
-    price: "50.00",
+    price: formatePrice(50.0),
     rating: "4.9",
   },
 ];
@@ -192,8 +193,8 @@ const dishesData = [
     isLiked: false,
     categoryName: "Healthy Salad",
     title: "Good Food",
-    price: 120.0,
-    discountedPrice: 100,
+    price: formatePrice(120),
+    discountedPrice: formatePrice(100),
     discount: "20%",
   },
   {
@@ -203,8 +204,8 @@ const dishesData = [
     isLiked: false,
     categoryName: "Pizza",
     title: "Peperoni Pizza",
-    price: 100.0,
-    discountedPrice: 90,
+    price: formatePrice(100),
+    discountedPrice: formatePrice(90),
     discount: "10%",
   },
   {
@@ -214,8 +215,8 @@ const dishesData = [
     isLiked: false,
     categoryName: "Burger",
     title: "Big MAC",
-    price: 100.0,
-    discountedPrice: 80,
+    price: formatePrice(100.0),
+    discountedPrice: formatePrice(80),
     discount: "30%",
   },
   {
@@ -225,8 +226,8 @@ const dishesData = [
     isLiked: false,
     categoryName: "Indian special",
     title: "Pani Poori",
-    price: 180.0,
-    discountedPrice: 150.0,
+    price: formatePrice(180.0),
+    discountedPrice: formatePrice(150.0),
     discount: "5%",
   },
   {
@@ -236,8 +237,8 @@ const dishesData = [
     isLiked: false,
     categoryName: "Healthy Salad",
     title: "Good Food",
-    price: 180.0,
-    discountedPrice: 150.0,
+    price: formatePrice(180.0),
+    discountedPrice: formatePrice(150.0),
     discount: "15%",
   },
   {
@@ -247,8 +248,8 @@ const dishesData = [
     isLiked: false,
     categoryName: "Healthy Salad",
     title: "Good Food",
-    price: 180.0,
-    discountedPrice: 150.0,
+    price: formatePrice(180.0),
+    discountedPrice: formatePrice(150.0),
     discount: "9%",
   },
 ];
@@ -258,37 +259,37 @@ const offerFoodData = [
     image: "/images/demo-images/offer-food-1.png",
     title: "Meat Sandwich",
     discount: "10",
-    price: "10.00",
+    price: formatePrice(10.00),
   },
   {
     image: "/images/demo-images/offer-food-2.png",
     title: "Cheesy Pizza",
     discount: "10",
-    price: "50.60",
+    price: formatePrice(50.60),
   },
   {
     image: "/images/demo-images/offer-food-3.png",
     title: "Hot & Spicy Maggie",
     discount: "5",
-    price: "8.60",
+    price: formatePrice(8.60),
   },
   {
     image: "/images/demo-images/offer-food-2.png",
     title: "Margherita Pizza",
     discount: "10",
-    price: "50.60",
+    price: formatePrice(50.60),
   },
   {
     image: "/images/demo-images/offer-food-4.png",
     title: "Veg Biryani",
     discount: "15",
-    price: "15.90",
+    price: formatePrice(15.90),
   },
   {
     image: "/images/demo-images/offer-food-2.png",
     title: "Mexican Pizza",
     discount: "10",
-    price: "50.60",
+    price: formatePrice(50.60),
   },
 ];
 
@@ -297,25 +298,25 @@ const newProducts = [
     image: "/images/demo-images/offer-food-1.png",
     title: "Meat Sandwich",
     discount: "10",
-    price: "10.00",
+    price: formatePrice(10.00),
   },
   {
     image: "/images/demo-images/offer-food-2.png",
     title: "Cheesy Pizza",
     discount: "10",
-    price: "50.60",
+    price: formatePrice(50.60),
   },
   {
     image: "/images/demo-images/offer-food-3.png",
     title: "Hot & Spicy Maggie",
     discount: "5",
-    price: "8.60",
+    price: formatePrice(8.60),
   },
   {
     image: "/images/demo-images/offer-food-2.png",
     title: "Margherita Pizza",
     discount: "10",
-    price: "50.60",
+    price: formatePrice(50.60),
   },
 ];
 
@@ -324,31 +325,32 @@ const specificProductData = [
     image: "/images/demo-images/burger-1.png",
     title: "Simple Burger",
     ratings: "4.5",
-    price: "10",
+    price: formatePrice(10),
     discountedPrice: "9.5",
   },
   {
     image: "/images/demo-images/burger-2.png",
     title: "Cheese Burger",
     ratings: "4.6",
-    price: "10",
+    price: formatePrice(10),
     discountedPrice: "9.4",
   },
   {
     image: "/images/demo-images/burger-3.png",
     title: "Spicy Burger",
     ratings: "4.7",
-    price: "10",
+    price: formatePrice(10),
     discountedPrice: "9.7",
   },
   {
     image: "/images/demo-images/burger-4.png",
     title: "Extra Cheesy Burger",
     ratings: "4.0",
-    price: "10",
+    price: formatePrice(10),
     discountedPrice: "9.99",
   },
 ];
+
 
 export const metadata = {
   title: "eRestro Single vendor",
@@ -358,7 +360,7 @@ export const metadata = {
 export default function Home() {
   return (
     <Box>
-      <Box sx={{ display: {xs: "block", md: "none"} }}>
+      <Box sx={{ display: { xs: "block", md: "none" } }}>
         <SearchBar />
       </Box>
 

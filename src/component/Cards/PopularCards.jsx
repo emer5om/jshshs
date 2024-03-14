@@ -109,11 +109,10 @@ const PopularCards = ({ data, showHeadline = "true" }) => {
                                             {item.description}
                                         </Typography>
                                         <ProductModal />
-                                        {/* <CustomButton text={"Add"} customStyle={{ px: 4, py: 0.5 }} /> */}
                                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
                                             <Box display={"flex"} alignItems={"center"} gap={1}>
-                                                <Typography sx={{ color: theme.palette.text.tertiary, textDecoration: "line-through" }} fontSize={theme.fontSize.xs} fontWeight={theme.fontWeight.sm}>$ {item.price}</Typography>
-                                                <Typography sx={{ color: theme.palette.text.currency }} fontSize={theme.fontSize.md} fontWeight={theme.fontWeight.lg}>$ {item.price}</Typography>
+                                                <Typography sx={{ color: theme.palette.text.tertiary, textDecoration: "line-through" }} fontSize={theme.fontSize.xs} fontWeight={theme.fontWeight.sm}> {item.price}</Typography>
+                                                <Typography sx={{ color: theme.palette.text.currency }} fontSize={theme.fontSize.md} fontWeight={theme.fontWeight.lg}> {item.price}</Typography>
                                             </Box>
                                             <Box display={"flex"} alignItems={"center"} gap={1}>
                                                 <StarFillIcon size={theme.fontSize.sm} color={theme.palette.warning[500]} />

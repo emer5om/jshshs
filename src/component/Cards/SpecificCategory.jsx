@@ -5,6 +5,7 @@ import { Card, AspectRatio, CardContent, Typography, Box, useTheme } from '@mui/
 import StarRatings from "react-star-ratings"
 import CustomButton from '../Buttons/CustomButton';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ProductModal from '../Modals/ProductModal';
 
 
 function SpecificCategory({ image, title, ratings, price, discountedPrice }) {
@@ -53,15 +54,15 @@ function SpecificCategory({ image, title, ratings, price, discountedPrice }) {
                             <StarRatings rating={ratings} starDimension={theme.fontSize.xl} starSpacing='1px' starRatedColor={theme.palette.warning[400]} ></StarRatings>
 
                             <Box display={"flex"} alignItems={"end"} gap={2} width={"100%"} >
-                                <Typography fontSize={"sm"} fontWeight={"md"} textColor={"neutral.500"} sx={{textDecoration: "line-through"}}>
-                                    $ {discountedPrice > 0 && price}
+                                <Typography fontSize={"sm"} fontWeight={"md"} textColor={"neutral.500"} sx={{ textDecoration: "line-through" }}>
+                                    {discountedPrice > 0 && price}
                                 </Typography>
                                 <Typography fontSize={"md"} fontWeight={"xl"} textColor={"text.currency"}>
-                                    $ {discountedPrice > 0 ? discountedPrice : price}
+                                    {discountedPrice > 0 ? discountedPrice : price}
                                 </Typography>
                             </Box>
                         </Box>
-                        <CustomButton text={"Add"} customStyle={{ px: 3, py: 1 }} />
+                        <ProductModal />
                     </Box>
                 </Box>
             </CardContent>

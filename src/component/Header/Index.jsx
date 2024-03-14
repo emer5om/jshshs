@@ -26,8 +26,17 @@ import { useTheme } from '@mui/joy/styles';
 import NavMenuButton from './NavMenuButton';
 import Link from 'next/link';
 import SmallNotificationCard from '../Cards/SmallNotificationCard';
-import { RiHeartLine, RiShutDownLine, RiUser3Line } from '@remixicon/react';
+import { RiGlobalLine, RiHeartLine, RiShutDownLine, RiUser3Line } from '@remixicon/react';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { setLanguage } from '../../store/reducers/languageSlice';
+
 const Index = () => {
+
+    const dispatch = useDispatch();
+    const language = useSelector((state) => state.language.value);
+   
+
 
     const [menuIndex, setMenuIndex] = React.useState(null);
     const itemProps = {
@@ -163,13 +172,13 @@ const Index = () => {
             <Grid xs={5} md={3}>
 
                 <Box display={"flex"} gap={8} alignItems={"center"}>
-                    <Box display={"flex"} gap={4}>
+                    <Box display={"flex"} alignItems={"center"} gap={4}>
                         <Dropdown>
                             <MenuButton
                                 slots={{ root: IconButton }}
-                                slotProps={{ root: { variant: "text", color: 'neutral', size: "small" } }}
+                                slotProps={{ root: { variant: "text", color: 'neutral', } }}
                             >
-                                <Notification4LineIcon size={"28px"} />
+                                <Notification4LineIcon size={"20px"} />
                             </MenuButton>
                             <Menu sx={{
                                 width: 450, p: 2, bgcolor: "rgba(211, 211, 211, 0.5)",
@@ -197,11 +206,30 @@ const Index = () => {
                                 </MenuItem>
                             </Menu>
                         </Dropdown>
-                        <SearchLineIcon size={"28px"} />
+                        <IconButton>
+                            <SearchLineIcon size={"20px"} />
+                        </IconButton>
                         <Badge component={Link} href={"/user/cart"} badgeContent={8} color="primary">
-                            <ShoppingBag3LineIcon size={"28px"} color="black" />
+                            <ShoppingBag3LineIcon size={"25px"} color="black" />
                         </Badge>
-                        <SunFillIcon size={"28px"} />
+                        <IconButton>
+                            <SunFillIcon size={"20px"} />
+                        </IconButton>
+
+                        <Dropdown>
+                            <MenuButton
+                                slots={{ root: IconButton }}
+                                slotProps={{ root: { variant: "plain", color: 'neutral' } }}
+                            >
+                                <RiGlobalLine size={"20px"} />
+                            </MenuButton >
+                            <Menu >
+                                <MenuItem onClick={() => dispatch(setLanguage("en"))}  >English</MenuItem>
+                                <MenuItem onClick={() => dispatch(setLanguage("hi"))}>Hindi</MenuItem>
+                                <MenuItem onClick={() => dispatch(setLanguage("fr"))}>French</MenuItem>
+                            </Menu>
+                        </Dropdown>
+
                     </Box>
 
                     <Box display={"flex"} alignItems={"center"} gap={2}>

@@ -7,6 +7,7 @@ import CustomButton from '@/component/Buttons/CustomButton'
 
 // Icon
 import { RiEBike2Line, RiArticleLine, RiDownloadLine, RiMapPinLine, RiHomeSmileLine, RiMoneyDollarCircleLine } from "@remixicon/react"
+import { formatePrice } from '@/helpers/functonHelpers'
 
 const OrderDetails = () => {
     const theme = useTheme();
@@ -92,7 +93,7 @@ const OrderDetails = () => {
                                     fontSize={"md"}
                                     fontWeight={"lg"}
                                 >
-                                    $180.00
+                                    {formatePrice(180.00)}
                                 </Typography>
                             </Box>
 
@@ -127,7 +128,7 @@ const OrderDetails = () => {
                                     fontSize={"md"}
                                     fontWeight={"lg"}
                                 >
-                                    $180.00
+                                    {formatePrice(180.00)}
                                 </Typography>
                             </Box>
 
@@ -161,7 +162,7 @@ const OrderDetails = () => {
                                     fontSize={"md"}
                                     fontWeight={"lg"}
                                 >
-                                    $180.00
+                                    {formatePrice(180.00)}
                                 </Typography>
                             </Box>
                         </Box>
@@ -298,18 +299,18 @@ const OrderDetails = () => {
                             }}>
                                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                     <Typography textColor={"text.menuText"} fontWeight={"md"}>Item Total</Typography>
-                                    <Typography textColor={"text.currency"} fontWeight={"lg"}>$ 380.00</Typography>
+                                    <Typography textColor={"text.currency"} fontWeight={"lg"}> {formatePrice(380.00)}</Typography>
                                 </Box>
                                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                     <Typography textColor={"text.menuText"} fontWeight={"md"}>Delivery Partner Tip</Typography>
-                                    <Typography textColor={"text.currency"} fontWeight={"lg"}>$ 20.00</Typography>
+                                    <Typography textColor={"text.currency"} fontWeight={"lg"}> {formatePrice(20.00)}</Typography>
                                 </Box>
                                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                     <Typography textColor={"text.menuText"} fontWeight={"md"}>Delivery Charges</Typography>
                                     <Box display={"flex"} alignItems={"center"} gap={1}>
                                         <Typography textColor={"text.currency"} fontWeight={"lg"}
                                             sx={{ textDecoration: "line-through" }}
-                                        >$ 20.00</Typography>
+                                        > {formatePrice(20.00)}</Typography>
                                         <Typography textColor={"text.menuText"} fontWeight={"lg"}>Free</Typography>
                                     </Box>
                                 </Box>
@@ -320,11 +321,11 @@ const OrderDetails = () => {
                             <Box>
                                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                     <Typography textColor={"text.menuText"} fontWeight={"md"}>Coupon Discount</Typography>
-                                    <Typography textColor={"text.currency"} fontWeight={"lg"}>$ 100.00</Typography>
+                                    <Typography textColor={"text.currency"} fontWeight={"lg"}> {formatePrice(100.00)}</Typography>
                                 </Box>
                                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                                     <Typography textColor={"text.menuText"} fontWeight={"md"}>Taxes & Charges (17%)</Typography>
-                                    <Typography textColor={"text.currency"} fontWeight={"lg"}>$ 80.00</Typography>
+                                    <Typography textColor={"text.currency"} fontWeight={"lg"}> {formatePrice(80.00)}</Typography>
                                 </Box>
                             </Box>
                             <Divider sx={{ mt: 1 }} />
@@ -335,7 +336,7 @@ const OrderDetails = () => {
                                 <RiMoneyDollarCircleLine color={theme.palette.text.menuText} />
                                 <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.menuText"}>Total Pay</Typography>
                             </Box>
-                            <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.currency"}>$380.00</Typography>
+                            <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.currency"}>{formatePrice(380.00)}</Typography>
                         </CardActions>
                     </Card>
                 </Box>

@@ -4,6 +4,7 @@ import CustomButton from '@/component/Buttons/CustomButton';
 import ProductCards from '@/component/Cards/ProductCards';
 import WalletTransactions from '@/component/Transactions/WalletTransactions';
 import WalletWithdraw from '@/component/Transactions/WalletWithdraw';
+import { formatePrice } from '@/helpers/functonHelpers';
 import {
   Box,
   Card,
@@ -51,7 +52,7 @@ const Wallet = ({ data }) => {
                   fontWeight="lg"
                   textColor="#fff"
                 >
-                  $ 4000.00
+                  {formatePrice(4000.00)}
                 </Typography>
               </Box>
             </Box>

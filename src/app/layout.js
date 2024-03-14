@@ -6,8 +6,10 @@ import { CssBaseline, CssVarsProvider, extendTheme } from "@mui/joy";
 import theme from "./theme";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
+import "react-toastify/dist/ReactToastify.css";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "../store/store";
 export default function RootLayout({ children }) {
   // const theme = useTheme()
   return (
@@ -15,7 +17,11 @@ export default function RootLayout({ children }) {
       <body>
         <CssVarsProvider theme={theme}>
           <CssBaseline />
-          <Layout>{children}</Layout>
+          <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <Layout>{children}</Layout>
+            </PersistGate>
+          </Provider>
           <ProgressBar
             height="4px"
             color={"#fcd34d"}

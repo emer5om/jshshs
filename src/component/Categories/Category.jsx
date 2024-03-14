@@ -1,17 +1,38 @@
 "use client";
 
 import { Box, Typography, Grid } from '@mui/joy';
-import React from 'react'
+import React, { useEffect } from 'react'
 import SectionHeading from "../SectionHeading/SectionHeading"
 import CategoryCards from "../Cards/CategoryCards"
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setCategories } from '../../store/reducers/categorySlice';
 
-// const data = [{image: ""}]
+
+// APIs
+import { get_categories } from "@/interceptor/routes"
+
 
 const Category = ({ data }) => {
+
+
+    const dispatch = useDispatch();
+    const categories = useSelector((state) => state.categories.value);
+
+    const getCategories = () => {
+        get_categories().then(res => {
+            dispatch(setCategories(res.data))
+        });
+    }
+    useEffect(() => {
+        if (categories.length === 0) {
+            getCategories()
+        }
+    }, [])
+
 
     return (
         <Box>
@@ -27,7 +48,7 @@ const Category = ({ data }) => {
                         slidesPerView={12}
                         breakpoints={{
                             320: {
-                                slidesPerView: 1
+                                slidesPerView: 1,
                             },
                             425: {
                                 slidesPerView: 2
@@ -36,7 +57,8 @@ const Category = ({ data }) => {
                                 slidesPerView: 4
                             },
                             1024: {
-                                slidesPerView: 12
+                                slidesPerView: 10,
+                                spaceBetween: 40
                             },
                         }}
                         spaceBetween={10}
@@ -45,12 +67,12 @@ const Category = ({ data }) => {
                         modules={[Autoplay, Pagination, Navigation]}
                         style={{ padding: "8px 0" }}
                     >
-                        {data.map((item, index) => {
+                        {categories.map((item, index) => {
                             return (
                                 <Grid xs={3} md={1} key={index}>
-                                    <SwiperSlide key={index}>
+                                    <SwiperSlide key={index} style={{ width: "100px" }}>
                                         <Box >
-                                            <CategoryCards image={item.image} title={item.title} count={item.count} />
+                                            <CategoryCards image={item.image} title={item.name} count={0} />
                                         </Box>
                                     </SwiperSlide>
                                 </Grid>

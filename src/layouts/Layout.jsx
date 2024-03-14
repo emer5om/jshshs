@@ -25,17 +25,17 @@ const layout = ({ children }) => {
   // console.log(firebase)
 
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.categories.value);
+  const settings = useSelector((state) => state.settings.value);
 
-  const getCategories = () => {
+  const getSettings = () => {
     get_settings().then(res => {
-      console.log(res)
+      // console.log(res.data)
       dispatch(setSettings(res.data))
     });
   }
   useEffect(() => {
-    if (categories.length === 0) {
-      getCategories()
+    if (settings.length === 0) {
+      getSettings()
     }
   }, [])
 

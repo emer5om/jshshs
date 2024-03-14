@@ -1,9 +1,15 @@
 "use client"
-import React from 'react'
-// import firebaseconfig from "@/@core/firebase";
+import React, { useEffect, useState } from 'react'
+import firebaseconfig from "@/@core/firebase";
 const TestRed = () => {
-    // let firebase = firebaseconfig();
-    // console.log(firebase)
+    const [config, setConfig] = useState([])
+    // let firebase = firebaseconfig().then(res => {
+    //     setConfig(res)
+    //     console.log(res)
+    // });
+
+
+
     return (
         <div>
 

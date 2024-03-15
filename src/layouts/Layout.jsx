@@ -2,20 +2,14 @@
 import React, { useEffect } from 'react'
 import {
   Container,
-  Grid,
   Box,
 } from '@mui/joy';
 
 // import components
 import Header from "@/component/Header/Index"
 import Footer from "@/component/Footer/Index"
-
-import { useTheme } from '@mui/joy/styles';
 import MobileNavigation from '@/component/Header/MobileNavigation';
-
-import { useDispatch, useSelector } from 'react-redux';
-import {getSettings, setSettings} from '../store/reducers/settingsSlice';
-import { get_settings } from "@/interceptor/routes"
+import {getSettings} from '@/store/reducers/settingsSlice';
 
 
 

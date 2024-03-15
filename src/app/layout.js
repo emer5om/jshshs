@@ -9,9 +9,18 @@ import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { usePathname } from "next/navigation";
+import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 600000,
+      refetchOnWindowFocus: false // default: true
+    }
+  }
+})
 export default function RootLayout({ children }) {
   // const theme = useTheme()
 
@@ -23,11 +32,15 @@ export default function RootLayout({ children }) {
       <body>
         <CssVarsProvider theme={theme}>
           <CssBaseline />
-          <Provider store={store}>
-            {/*<PersistGate loading={null} persistor={persistor}>*/}
-            {!isRootPath ? <Layout>{children}</Layout> : children}
-            {/*</PersistGate>*/}
-          </Provider>
+          <QueryClientProvider client={queryClient}>
+            <Provider store={store}>
+              {/*<PersistGate loading={null} persistor={persistor}>*/}
+              <Layout>{children}</Layout>
+              {/*</PersistGate>*/}
+            </Provider>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+
           <ProgressBar
             height="4px"
             color={"#fcd34d"}

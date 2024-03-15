@@ -1,4 +1,4 @@
-"use client";
+
 import React, { useEffect } from 'react'
 import {
   Container,
@@ -9,16 +9,27 @@ import {
 import Header from "@/component/Header/Index"
 import Footer from "@/component/Footer/Index"
 import MobileNavigation from '@/component/Header/MobileNavigation';
-import {getSettings} from '@/store/reducers/settingsSlice';
+import {getSettings} from "@/store/reducers/settingsSlice";
+import {useQuery} from "@tanstack/react-query";
+import {useSelector} from "react-redux";
 
 
 
 const layout = ({ children }) => {
 
-  useEffect(() => {
-    getSettings();
-    console.log("asdss")
-  }, []);
+  const SetSystemSettingsApi = async () => {
+    console.log("asdasdasdasd")
+    await getSettings();
+    return true
+  }
+
+  const settings = useSelector((state) => state.settings.value);
+  const { isLoading, data } = useQuery({
+    queryKey: ['systemSettingsData'],
+    queryFn: SetSystemSettingsApi,
+    staleTime:1
+  })
+
 
   return (
     <div>

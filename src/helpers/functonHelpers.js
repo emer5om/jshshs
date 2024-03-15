@@ -26,3 +26,9 @@ export const formatePrice = (price) => {
 
   return formattedPriceStr;
 };
+
+
+export const isSSR = () => {
+  return process.env.NEXT_PUBLIC_SSR == "true"
+}
+

@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import settingsSlice from "@/store/reducers/settingsSlice"
 import languageSlice from "@/store/reducers/languageSlice";
 import authenticationSlice from "@/store/reducers/authenticationSlice";
+import branchSlice from "@/store/reducers/branchSlice";
 
 const persistConfig = {
   key: 'root',
@@ -12,8 +13,9 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   settings: settingsSlice,
-    language: languageSlice,
-    authentication: authenticationSlice
+  language: languageSlice,
+  authentication: authenticationSlice,
+  branch: branchSlice
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

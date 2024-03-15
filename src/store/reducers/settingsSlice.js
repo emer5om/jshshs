@@ -3,7 +3,7 @@ import {get_settings} from "@/interceptor/routes";
 import {store} from "../store"
 
 const initialState = {
-  value: [],
+  value: null,
   fetched: false,
 };
 
@@ -12,9 +12,8 @@ const settingsSlice = createSlice({
   initialState,
   reducers: {
     setSettings: (state, action) => {
-      state = {...state, value: action.payload, fetched: true}
-      // state.fetched = true
-      // state.value = action.payload;
+      state.fetched = true
+      state.value = action.payload;
     },
 
   },
@@ -23,7 +22,7 @@ const settingsSlice = createSlice({
 
 export const getSettings = () => {
   const settings = store.getState();
-  if("settings", settings.settings.value.length ==0){
+  if( settings.settings.value == null){
     get_settings().then(res => {
       // console.log(res.data)
       store.dispatch(setSettings(res.data))
@@ -31,6 +30,8 @@ export const getSettings = () => {
   }
 
 }
+
+
 export const { setSettings } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
@@ -39,3 +40,5 @@ export const selectData = createSelector(
   (state) => state.settings,
   (settings) => settings.data
 );
+
+

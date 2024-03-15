@@ -1,63 +1,26 @@
-// firebase.js
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import "firebase/compat/firestore";
-import "firebase/compat/messaging";
-require("firebase/auth");
-require("firebase/firestore");
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
-import { useSelector } from "react-redux";
-import { store } from "../store/store";
-import { get_settings } from "@/interceptor/routes"
-
-const fetchFirebaseConfigFromBackend = async () => {
-  try {
-    const response = await get_settings();
-    // const config = await response.json();
-    return config;
-  } catch (error) {
-    console.error("Error fetching Firebase config from backend:", error);
-    throw error;
-  }
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APPPID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID,
 };
 
-const FirebaseData = async () => {
-  // api calls
-  const state = store.getState();
-  // const data = await fetchFirebaseConfigFromBackend();
-  // console.log(await data);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
-  let firebaseConfig = {
-    apiKey: "AIzaSyCAxOWBbXYuMNKAHoYtqWmwhbf7-NeQmT0",
-    authDomain: "eshop-2210d.firebaseapp.com",
-    projectId: "eshop-2210d",
-    storageBucket: "eshop-2210d.appspot.com",
-    messagingSenderId: "G-1JN518T7J6",
-    appId: "1:365058967814:web:e205a52dc3abd1719a7687",
-    measurementId: "G-1JN518T7J6",
-  };
-  //   let firebaseConfig = {
-  //     apiKey: data.firebase_settings[0].apiKey,
-  //     authDomain: data.firebase_settings[0].authDomain,
-  //     projectId: data.firebase_settings[0].projectId,
-  //     storageBucket: data.firebase_settings[0].storageBucket,
-  //     messagingSenderId: data.firebase_settings[0].messagingSenderId,
-  //     appId: data.firebase_settings[0].appId,
-  //     measurementId: data.firebase_settings[0].measurementId,
-  //   };
-
-  // eslint-disable-next-line
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+}
 
-  const auth = firebase.auth();
+const auth = firebase.auth();
 
-  const googleProvider = new firebase.auth.GoogleAuthProvider();
-
-  const messaging = firebase.messaging(); // Add this line
-
-  const facebookprovider = new firebase.auth.FacebookAuthProvider();
-
-  return { auth, googleProvider, facebookprovider, firebase, messaging };
-};
-
-export default FirebaseData;
+export { auth };

@@ -16,6 +16,7 @@ import counterReducer from "./reducers/counterSlice";
 import languageReducer from "./reducers/languageSlice";
 import categoryReducer from "./reducers/categorySlice";
 import settingsReducer from "./reducers/settingsSlice";
+import authReducer from "./reducers/authenticationSlice";
 
 const persistConfig = {
   key: "root",
@@ -27,6 +28,10 @@ const persistedReducer = persistReducer(persistConfig, counterReducer);
 const persistedLanguageReducer = persistReducer(persistConfig, languageReducer);
 const persistedCategoryReducer = persistReducer(persistConfig, categoryReducer);
 const persistedSettingsReducer = persistReducer(persistConfig, settingsReducer);
+const persistedAuthenticationReducer = persistReducer(
+  persistConfig,
+  authReducer
+);
 
 const store = configureStore({
   reducer: {
@@ -34,6 +39,7 @@ const store = configureStore({
     language: persistedLanguageReducer,
     categories: persistedCategoryReducer,
     settings: persistedSettingsReducer,
+    authentication: persistedAuthenticationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

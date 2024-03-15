@@ -10,7 +10,8 @@ import {
     MenuItem,
     MenuButton,
     Dropdown,
-    IconButton
+    IconButton,
+    Button
 } from '@mui/joy';
 import { Img } from '@/component/Img';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,7 +27,7 @@ import { useTheme } from '@mui/joy/styles';
 import NavMenuButton from './NavMenuButton';
 import Link from 'next/link';
 import SmallNotificationCard from '../Cards/SmallNotificationCard';
-import { RiGlobalLine, RiHeartLine, RiShutDownLine, RiUser3Line } from '@remixicon/react';
+import { RiGlobalLine, RiHeartLine, RiShutDownLine, RiUser2Line, RiUser3Line } from '@remixicon/react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage } from '../../store/reducers/languageSlice';
@@ -35,7 +36,8 @@ const Index = () => {
 
     const dispatch = useDispatch();
     const language = useSelector((state) => state.language.value);
-   
+    const userDetails = useSelector((state) => state.authentication.value);
+    console.log(userDetails)
 
 
     const [menuIndex, setMenuIndex] = React.useState(null);
@@ -233,66 +235,73 @@ const Index = () => {
                     </Box>
 
                     <Box display={"flex"} alignItems={"center"} gap={2}>
+                        {userDetails.length === 0 ?
 
-                        <Dropdown>
-                            <MenuButton
-                                variant="plain"
-                                sx={{
-                                    "&:hover": {
-                                        backgroundColor: 'transparent'
-                                    }
-                                }}
-                            >
-                                <Avatar alt="Remy Sharp" src="https://ui-avatars.com/api/?background=random" />
+                            <Button variant='text'>
+                                Login
+                            </Button>
 
-                                <Typography level="h4" color='white' fontWeight={"bold"}
-                                    endDecorator={
-                                        <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]} fontWeight={"bolder"} />
-                                    }
-                                > James </Typography>
-                            </MenuButton>
-                            <Menu >
-                                <MenuItem
-                                    component={Link}
-                                    href='/user/profile'
+                            :
+                            <Dropdown>
+                                <MenuButton
+                                    variant="plain"
                                     sx={{
-                                        "&:hover .MuiTypography-root": {
-                                            color: theme.palette.text.menuText
+                                        "&:hover": {
+                                            backgroundColor: 'transparent'
                                         }
                                     }}
                                 >
-                                    <Typography fontSize={"sm"} fontWeight={"md"}
-                                        startDecorator={<RiUser3Line size={theme.fontSize.lg} />}>
-                                        My Profile
-                                    </Typography>
-                                </MenuItem>
-                                <MenuItem
-                                    component={Link}
-                                    href={"/user/favourites"}
-                                    sx={{
-                                        "&:hover .MuiTypography-root": {
-                                            color: theme.palette.text.menuText
+                                    <Avatar alt="Remy Sharp" src="https://ui-avatars.com/api/?background=random" />
+
+                                    <Typography level="h4" color='white' fontWeight={"bold"}
+                                        endDecorator={
+                                            <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]} fontWeight={"bolder"} />
                                         }
-                                    }}
-                                >
-                                    <Typography fontSize={"sm"} fontWeight={"md"}
-                                        startDecorator={<RiHeartLine size={theme.fontSize.lg} />}>
-                                        favourites
-                                    </Typography>
-                                </MenuItem>
-                                <MenuItem
-                                    sx={{
-                                        "&:hover .MuiTypography-root": {
-                                            color: theme.palette.danger[500]
-                                        }
-                                    }}
-                                >
-                                    <Typography fontSize={"sm"} fontWeight={"md"} startDecorator={<RiShutDownLine size={theme.fontSize.lg} />}>
-                                        Logout
-                                    </Typography>
-                                </MenuItem>
-                            </Menu>
-                        </Dropdown>
+                                    > James </Typography>
+                                </MenuButton>
+                                <Menu >
+                                    <MenuItem
+                                        component={Link}
+                                        href='/user/profile'
+                                        sx={{
+                                            "&:hover .MuiTypography-root": {
+                                                color: theme.palette.text.menuText
+                                            }
+                                        }}
+                                    >
+                                        <Typography fontSize={"sm"} fontWeight={"md"}
+                                            startDecorator={<RiUser3Line size={theme.fontSize.lg} />}>
+                                            My Profile
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem
+                                        component={Link}
+                                        href={"/user/favourites"}
+                                        sx={{
+                                            "&:hover .MuiTypography-root": {
+                                                color: theme.palette.text.menuText
+                                            }
+                                        }}
+                                    >
+                                        <Typography fontSize={"sm"} fontWeight={"md"}
+                                            startDecorator={<RiHeartLine size={theme.fontSize.lg} />}>
+                                            favourites
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem
+                                        sx={{
+                                            "&:hover .MuiTypography-root": {
+                                                color: theme.palette.danger[500]
+                                            }
+                                        }}
+                                    >
+                                        <Typography fontSize={"sm"} fontWeight={"md"} startDecorator={<RiShutDownLine size={theme.fontSize.lg} />}>
+                                            Logout
+                                        </Typography>
+                                    </MenuItem>
+                                </Menu>
+                            </Dropdown>
+                        }
 
 
                     </Box>

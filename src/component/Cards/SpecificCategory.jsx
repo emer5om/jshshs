@@ -49,7 +49,7 @@ function SpecificCategory({ image, title, ratings, price, discountedPrice }) {
                             {title}
                         </Typography>
                     </Box>
-                    <Box display={"flex"} alignItems={"end"} justifyContent={"space-between"} width={"100%"} >
+                    <Box display={"flex"} alignItems={"end"} flexDirection={{ xs: "column", md: "row" }} justifyContent={"space-between"} width={"100%"} >
                         <Box>
                             <StarRatings rating={ratings} starDimension={theme.fontSize.xl} starSpacing='1px' starRatedColor={theme.palette.warning[400]} ></StarRatings>
 

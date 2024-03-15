@@ -18,6 +18,7 @@ import "swiper/css/navigation";
 import SpecificItem from "@/component/Categories/SpecificItem";
 import SearchBar from "@/component/GlobalSearch/SearchBar";
 import { formatePrice } from "@/helpers/functonHelpers";
+import SearchModal from '@/component/Modals/SearchModal';
 
 const popularCardData = [
   {
@@ -362,58 +363,58 @@ export const metadata = {
 const page = () => {
   return (
     <Box>
-    <Box sx={{ display: { xs: "block", md: "none" } }}>
-      <SearchBar />
-    </Box>
+      <Box sx={{ display: { xs: "block", md: "none" } }}>
+        <SearchModal displayStyle='input' />
+      </Box>
 
-    <HeadSlider
-      images={[
-        "/images/sliders/slider_1.png",
-        "/images/sliders/slider_2.png",
-        "/images/sliders/slider_3.png",
-      ]}
-    />
+      <HeadSlider
+        images={[
+          "/images/sliders/slider_1.png",
+          "/images/sliders/slider_2.png",
+          "/images/sliders/slider_3.png",
+        ]}
+      />
 
-    <Box mt={4}>
-      <Category data={categoryData} />
-    </Box>
+      <Box mt={4}>
+        <Category data={categoryData} />
+      </Box>
 
-    <Box>
-      <PopularCards data={popularCardData} />
-    </Box>
+      <Box>
+        <PopularCards data={popularCardData} />
+      </Box>
 
-    <Box>
-      <DealsCards link={"#"} images={hotDeals} />
-    </Box>
+      <Box>
+        <DealsCards link={"#"} images={hotDeals} />
+      </Box>
 
-    <Box>
-      <Grid container spacing={2} mt={4}>
-        <Grid xs={12} md={6}>
-          <ActiveOrders></ActiveOrders>
+      <Box>
+        <Grid container spacing={2} mt={4}>
+          <Grid xs={12} md={6}>
+            <ActiveOrders></ActiveOrders>
+          </Grid>
+          <Grid xs={12} md={6}>
+            <Suggestions data={reorderData}></Suggestions>
+          </Grid>
         </Grid>
-        <Grid xs={12} md={6}>
-          <Suggestions data={reorderData}></Suggestions>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
 
-    {/* Delightful Dishes */}
-    <Box>
-      <DelightfulDishes data={dishesData}></DelightfulDishes>
-    </Box>
+      {/* Delightful Dishes */}
+      <Box>
+        <DelightfulDishes data={dishesData}></DelightfulDishes>
+      </Box>
 
-    <Box>
-      <Offers data={offerFoodData}></Offers>
-    </Box>
+      <Box>
+        <Offers data={offerFoodData}></Offers>
+      </Box>
 
-    <Box>
-      <NewItems data={newProducts}></NewItems>
-    </Box>
+      <Box>
+        <NewItems data={newProducts}></NewItems>
+      </Box>
 
-    <Box>
-      <SpecificItem data={specificProductData} />
+      <Box>
+        <SpecificItem data={specificProductData} />
+      </Box>
     </Box>
-  </Box>
   )
 }
 

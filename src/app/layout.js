@@ -10,17 +10,22 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
   // const theme = useTheme()
+
+  const pathname = usePathname();
+  const isRootPath = pathname === "/";
+
   return (
     <html lang="en">
       <body>
         <CssVarsProvider theme={theme}>
           <CssBaseline />
           <Provider store={store}>
-          {/*<PersistGate loading={null} persistor={persistor}>*/}
-            <Layout>{children}</Layout>
+            {/*<PersistGate loading={null} persistor={persistor}>*/}
+            {!isRootPath ? <Layout>{children}</Layout> : children}
             {/*</PersistGate>*/}
           </Provider>
           <ProgressBar

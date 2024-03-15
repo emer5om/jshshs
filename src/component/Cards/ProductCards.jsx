@@ -32,16 +32,17 @@ const ProductCards = ({ image, type, rating, isLiked, categoryName, title, price
             }}
         >
             <Box display={"flex"} gap={2}>
-                <Box maxWidth={"150px"} maxHeight={"150px"}>
+                <Box maxWidth={250} maxHeight={"150px"}>
                     <Box
                         component={"img"}
                         src={image}
                         srcSet={`${image} 2x`}
                         loading="lazy"
                         alt=""
-                        width={"150px"}
+                        width={"100%"}
                         height={"150px"}
                         borderRadius={"md"}
+                        minWidth={"20%"}
                         sx={{ objectFit: "cover" }}
                     ></Box>
                     <Box position={"absolute"} top={"75%"} left={"5%"}>
@@ -65,7 +66,7 @@ const ProductCards = ({ image, type, rating, isLiked, categoryName, title, price
 
                             <Box display={"flex"} alignItems={"center"} width={"100%"}>
                                 <StarFillIcon color={theme.palette.warning[400]} />
-                                <Typography> 4.5 </Typography>
+                                <Typography> {rating ?? 0} </Typography>
                             </Box>
                         </Box>
                         <Box>
@@ -90,7 +91,7 @@ const ProductCards = ({ image, type, rating, isLiked, categoryName, title, price
                     </Box>
                     <Box>
                         <Typography fontSize={"md"} fontWeight={"xl"} textColor={"text.currency"}>
-                             {(discountedPrice) ? discountedPrice : price}
+                            {(discountedPrice) ? discountedPrice : price}
                         </Typography>
                     </Box>
 

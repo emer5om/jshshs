@@ -1,7 +1,10 @@
-import react from "react"
+import react from "react";
+import { Box, Container } from "@mui/joy";
 
 export default function Home() {
   return (
-   <div> hello </div>
+    <Container maxWidth={"xl3"}>
+      <Box></Box>
+    </Container>
   );
 }

@@ -31,6 +31,7 @@ import { RiArrowDownLine, RiGlobalLine, RiHeartLine, RiShutDownLine, RiUser2Line
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage } from '../../store/reducers/languageSlice';
+import SearchModal from '../Modals/SearchModal';
 
 const Index = () => {
 
@@ -209,7 +210,8 @@ const Index = () => {
                             </Menu>
                         </Dropdown>
                         <IconButton>
-                            <SearchLineIcon size={"20px"} />
+                            {/* <SearchLineIcon size={"20px"} /> */}
+                            <SearchModal />
                         </IconButton>
                         <Badge component={Link} href={"/user/cart"} badgeContent={8} color="primary">
                             <ShoppingBag3LineIcon size={"25px"} color="black" />

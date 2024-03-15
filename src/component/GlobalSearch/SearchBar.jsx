@@ -3,9 +3,9 @@ import { Box, Grid, IconButton, Input } from '@mui/joy'
 import { RiMapPin2Line, RiSearch2Line } from '@remixicon/react'
 import React from 'react'
 
-const SearchBar = () => {
+const SearchBar = ({ onClick }) => {
     return (
-        <Box my={4}>
+        <Box my={4} onClick={onClick}>
             <Grid container gap={2} sx={{ flexGrow: 1, alignItems: 'center' }}>
                 <Grid xs={1}>
                     <IconButton variant="plain">

@@ -1,7 +1,10 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
+import {get_settings} from "@/interceptor/routes";
+import {store} from "../store"
 
 const initialState = {
-  value: [], // Initial language set to English
+  value: [],
+  fetched: false,
 };
 
 const settingsSlice = createSlice({
@@ -9,12 +12,27 @@ const settingsSlice = createSlice({
   initialState,
   reducers: {
     setSettings: (state, action) => {
-      state.value = action.payload;
+      state = {...state, value: action.payload, fetched: true}
+      // state.fetched = true
+      // state.value = action.payload;
     },
+
   },
 });
 
+
+export const getSettings = () => {
+  const settings = store.getState();
+  if("settings", settings.settings.value.length !=0){
+    get_settings().then(res => {
+      // console.log(res.data)
+      store.dispatch(setSettings(res.data))
+    });
+  }
+
+}
 export const { setSettings } = settingsSlice.actions;
+
 export default settingsSlice.reducer;
 
 export const selectData = createSelector(

@@ -20,8 +20,7 @@ const Category = ({ data }) => {
 
 
     const dispatch = useDispatch();
-    const categories = useSelector((state) => state.categories.value);
-
+    const categories = []
     const getCategories = () => {
         get_categories().then(res => {
             dispatch(setCategories(res.data))

@@ -14,30 +14,17 @@ import { useTheme } from '@mui/joy/styles';
 import MobileNavigation from '@/component/Header/MobileNavigation';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setSettings } from '../store/reducers/settingsSlice';
+import {getSettings, setSettings} from '../store/reducers/settingsSlice';
 import { get_settings } from "@/interceptor/routes"
 
 
 
 const layout = ({ children }) => {
 
-  // let firebase = firebaseconfig();
-  // console.log(firebase)
-
-  const dispatch = useDispatch();
-  const settings = useSelector((state) => state.settings.value);
-
-  const getSettings = () => {
-    get_settings().then(res => {
-      // console.log(res.data)
-      dispatch(setSettings(res.data))
-    });
-  }
   useEffect(() => {
-    if (settings.length === 0) {
-      getSettings()
-    }
-  }, [])
+    getSettings();
+    console.log("asd")
+  }, []);
 
   return (
     <div>
@@ -46,7 +33,7 @@ const layout = ({ children }) => {
 
           <Box sx={{ display: { xs: "none", md: "block" } }}>
             {/* Available For Large Screens Only */}
-            <Header />
+            {/*<Header />*/}
           </Box>
           <Box sx={{ display: { xs: "block", md: "none" } }}>
             {/* Available For Small Screens Only */}

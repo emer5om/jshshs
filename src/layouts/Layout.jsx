@@ -23,7 +23,7 @@ const layout = ({ children }) => {
 
   useEffect(() => {
     getSettings();
-    console.log("asd")
+    console.log("asdss")
   }, []);
 
   return (
@@ -33,7 +33,7 @@ const layout = ({ children }) => {
 
           <Box sx={{ display: { xs: "none", md: "block" } }}>
             {/* Available For Large Screens Only */}
-            {/*<Header />*/}
+            <Header />
           </Box>
           <Box sx={{ display: { xs: "block", md: "none" } }}>
             {/* Available For Small Screens Only */}

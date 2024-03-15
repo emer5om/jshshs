@@ -23,7 +23,7 @@ const settingsSlice = createSlice({
 
 export const getSettings = () => {
   const settings = store.getState();
-  if("settings", settings.settings.value.length !=0){
+  if("settings", settings.settings.value.length ==0){
     get_settings().then(res => {
       // console.log(res.data)
       store.dispatch(setSettings(res.data))

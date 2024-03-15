@@ -27,7 +27,7 @@ import { useTheme } from '@mui/joy/styles';
 import NavMenuButton from './NavMenuButton';
 import Link from 'next/link';
 import SmallNotificationCard from '../Cards/SmallNotificationCard';
-import { RiGlobalLine, RiHeartLine, RiShutDownLine, RiUser2Line, RiUser3Line } from '@remixicon/react';
+import { RiArrowDownLine, RiGlobalLine, RiHeartLine, RiShutDownLine, RiUser2Line, RiUser3Line } from '@remixicon/react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setLanguage } from '../../store/reducers/languageSlice';
@@ -35,9 +35,9 @@ import { setLanguage } from '../../store/reducers/languageSlice';
 const Index = () => {
 
     const dispatch = useDispatch();
-    const language = useSelector((state) => state.language.value);
-    const userDetails = useSelector((state) => state.authentication.value);
-    console.log(userDetails)
+    // const language = useSelector((state) => state.language.value);
+    // const userDetails = useSelector((state) => state.authentication.value);
+    const userDetails = [[0, 1]]
 
 
     const [menuIndex, setMenuIndex] = React.useState(null);
@@ -174,7 +174,7 @@ const Index = () => {
             <Grid xs={5} md={3}>
 
                 <Box display={"flex"} gap={8} alignItems={"center"}>
-                    <Box display={"flex"} alignItems={"center"} gap={4}>
+                    <Box display={"flex"} alignItems={"center"} gap={2}>
                         <Dropdown>
                             <MenuButton
                                 slots={{ root: IconButton }}
@@ -246,18 +246,36 @@ const Index = () => {
                                 <MenuButton
                                     variant="plain"
                                     sx={{
+                                        display: "flex",
+                                        alignItems: "center",
                                         "&:hover": {
                                             backgroundColor: 'transparent'
                                         }
                                     }}
-                                >
-                                    <Avatar alt="Remy Sharp" src="https://ui-avatars.com/api/?background=random" />
 
-                                    <Typography level="h4" color='white' fontWeight={"bold"}
-                                        endDecorator={
-                                            <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]} fontWeight={"bolder"} />
-                                        }
-                                    > James </Typography>
+                                    endDecorator={
+                                        <Box width={"30px"} mt={"5px"}>
+                                            <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]} />
+                                        </Box>
+                                    }
+                                >
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            "&:hover": {
+                                                backgroundColor: 'transparent'
+                                            }
+                                        }}
+                                    >
+
+                                        <Avatar alt="Remy Sharp" src="https://ui-avatars.com/api/?background=random" />
+
+                                        <Typography level="h4" color='white' fontWeight={"bold"}
+                                        > James </Typography>
+                                    </Box>
+
+
                                 </MenuButton>
                                 <Menu >
                                     <MenuItem

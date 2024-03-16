@@ -1,14 +1,10 @@
 "use client"
 import React from 'react'
-import { Box, Card, CardCover, Container, Grid, Typography, useTheme } from "@mui/joy";
+import { Box, Card, CardCover, Grid, Typography, useTheme } from "@mui/joy";
 const CoverPage = () => {
     const theme = useTheme()
     return (
-        <Box display={"block"} sx={{
-            backgroundImage: 'url("/images/back-grounds/cover-image.png")',
-            height: "100%",
-            width: "100%"
-        }}>
+        <Box display={"block"} >
             <Grid container sx={{ flexGrow: 1 }}>
                 <Grid xs={12}>
                     <Grid container sx={{ flexGrow: 1 }}>

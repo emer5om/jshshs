@@ -19,6 +19,7 @@ import "swiper/css/navigation";
 import SpecificItem from "@/component/Categories/SpecificItem";
 import SearchBar from "@/component/GlobalSearch/SearchBar";
 import { formatePrice } from "@/helpers/functonHelpers";
+import SearchModal from "@/component/Modals/SearchModal";
 
 const popularCardData = [
     {
@@ -361,7 +362,7 @@ const HomePage = () => {
     return (
         <Box>
             <Box sx={{ display: { xs: "block", md: "none" } }}>
-                <SearchBar />
+                <SearchModal displayStyle={"search"} />
             </Box>
 
             <HeadSlider

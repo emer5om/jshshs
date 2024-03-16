@@ -39,14 +39,19 @@ function SearchModal({ displayStyle = "icon" }) {
 
     return (
         <Box>
-            <Box>
+            <Box >
 
                 {displayStyle === "icon" ?
-                    <RiSearch2Line size={"20px"} onClick={() => {
-                        setOpen(true)
-                        setSearchQuery("")
-                        setProducts([])
-                    }} />
+<Box width={"25px"} sx={{
+    cursor: "pointer"
+}}>
+    <RiSearch2Line size={"25px"} onClick={() => {
+        setOpen(true)
+        setSearchQuery("")
+        setProducts([])
+    }} />
+</Box>
+
                     :
                     <SearchBar onClick={
                         () => {

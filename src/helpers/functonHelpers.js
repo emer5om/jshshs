@@ -32,3 +32,7 @@ export const isSSR = () => {
   return process.env.NEXT_PUBLIC_SSR == "true"
 }
 
+export const navigateErrorPage = (data) => {
+
+}
+

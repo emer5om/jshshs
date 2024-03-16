@@ -16,7 +16,7 @@ import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-const HeadSlider = ({ images = [1, 2, 3] }) => {
+const HeadSlider = ({ images = [1, 2, 3] }, isLoading) => {
   return (
     <Box>
       <Swiper
@@ -27,6 +27,7 @@ const HeadSlider = ({ images = [1, 2, 3] }) => {
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
       >
+
         {images.map((image, index) => (
           <SwiperSlide key={index}>
             <Card
@@ -38,11 +39,11 @@ const HeadSlider = ({ images = [1, 2, 3] }) => {
               <CardCover sx={{ minHeight: "100%" }}>
                 <Box
                   component={"img"}
-                  src={image}
-                  srcSet={image}
+                  src={image.image}
+                  srcSet={image.image}
                   effect="blur"
                   loading="lazy"
-                  alt={image}
+                  alt={image.image}
                   sx={{
                     width: "auto",
                     height: "100%",
@@ -50,17 +51,17 @@ const HeadSlider = ({ images = [1, 2, 3] }) => {
                   }}
                 />
               </CardCover>
-              <CardContent sx={{ justifyContent: "flex-end" }}>
-                <Typography level="title-lg" textColor="#fff">
-                  Yosemite National Park
-                </Typography>
-                <Typography
-                  startDecorator={<UserLocationFillIcon />}
-                  textColor="neutral.300"
-                >
-                  California, USA
-                </Typography>
-              </CardContent>
+              {/*<CardContent sx={{ justifyContent: "flex-end" }}>*/}
+              {/*  <Typography level="title-lg" textColor="#fff">*/}
+              {/*    Yosemite National Park*/}
+              {/*  </Typography>*/}
+              {/*  <Typography*/}
+              {/*    startDecorator={<UserLocationFillIcon />}*/}
+              {/*    textColor="neutral.300"*/}
+              {/*  >*/}
+              {/*    California, USA*/}
+              {/*  </Typography>*/}
+              {/*</CardContent>*/}
             </Card>
           </SwiperSlide>
         ))}

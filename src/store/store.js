@@ -5,6 +5,7 @@ import settingsSlice from "@/store/reducers/settingsSlice"
 import languageSlice from "@/store/reducers/languageSlice";
 import authenticationSlice from "@/store/reducers/authenticationSlice";
 import branchSlice from "@/store/reducers/branchSlice";
+import homeSlice from "@/store/reducers/Home/homeSlice";
 
 const persistConfig = {
   key: 'root',
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   settings: settingsSlice,
   language: languageSlice,
   authentication: authenticationSlice,
-  branch: branchSlice
+  branch: branchSlice,
+  homepage: homeSlice
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

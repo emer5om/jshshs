@@ -1,7 +1,8 @@
 
+"use client"
 import React from 'react'
 
-import { Box, Grid } from "@mui/joy";
+import {Box, Grid, Skeleton} from "@mui/joy";
 
 import HeadSlider from "@/component/Sliders/HeadSlider";
 import Category from "@/component/Categories/Category";
@@ -20,6 +21,7 @@ import SpecificItem from "@/component/Categories/SpecificItem";
 import SearchBar from "@/component/GlobalSearch/SearchBar";
 import { formatePrice } from "@/helpers/functonHelpers";
 import SearchModal from "@/component/Modals/SearchModal";
+import {useSelector} from "react-redux";
 
 const popularCardData = [
     {
@@ -359,19 +361,21 @@ const specificProductData = [
 
 
 const HomePage = () => {
+
+
+    const homeStoreData = useSelector((state) => state.homepage);
+    console.log("homeStoreData", homeStoreData)
     return (
         <Box>
             <Box sx={{ display: { xs: "block", md: "none" } }}>
                 <SearchModal displayStyle={"search"} />
             </Box>
+                <HeadSlider
 
-            <HeadSlider
-                images={[
-                    "/images/sliders/slider_1.png",
-                    "/images/sliders/slider_2.png",
-                    "/images/sliders/slider_3.png",
-                ]}
-            />
+                    images={homeStoreData.banner}
+                />
+
+
 
             <Box mt={4}>
                 <Category data={categoryData} />

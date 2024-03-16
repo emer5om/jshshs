@@ -4,8 +4,12 @@ import React, {useEffect} from 'react'
 
 import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
-import HomePage from "@/app/home/homepage";
 import {changeBranchId} from "@/events/actions";
+import dynamic from 'next/dynamic';
+const HomePage = dynamic(() => import('@/app/home/homepage'), {
+  ssr: false
+});
+
 
 
 const page = () => {

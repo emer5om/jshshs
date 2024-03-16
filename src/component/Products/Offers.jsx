@@ -11,16 +11,22 @@ const Offers = ({ data, showMore = true }) => {
 
             <Box my={4}>
                 {showMore &&
-                    <SectionHeading title={"Foods On Offer"} showMore={true} showMoreLink='/offers' />
+                    <SectionHeading title={data.title} showMore={true} showMoreLink='/offers' />
                 }
             </Box>
 
             <Box>
                 <Grid container spacing={2} sx={{ flexGrow: 1 }} >
-                    {data.map((item, index) => {
+                    {data.product_details.map((item, index) => {
+                        const discount  = item.min_max_price.discount_in_percentage
+                        console.log(discount)
                         return (
                             <Grid xs={12} md={2} key={index}>
-                                <OfferCards image={item.image} title={item.title} discount={item.discount} price={item.price} />
+                                <OfferCards image={item.image_sm} title={item.title} discount={discount} price={item.
+                                    variants[0].special_price != 0 ? item.variants[0]
+                                    .special_price  : item.variants[0]
+                                    .price
+                                } />
                             </Grid>
                         )
                     })}

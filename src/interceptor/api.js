@@ -1,12 +1,13 @@
 import axios from "axios";
 import Router from "next/router";
+import {getAuthToken} from "@/events/getters";
 const api = axios.create();
 const backendUrl = process.env.NEXT_PUBLIC_BASE_URL;
 api.interceptors.request.use(
   (config) => {
     config.url = `${backendUrl}${config.url}`;
-    const token = localStorage.getItem("accessToken"); // Replace 'YOUR_BEARER_TOKEN_HERE' with your actual token
-    if (token) {
+      let token = getAuthToken()
+    if (token ) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;

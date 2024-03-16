@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, {useState} from 'react'
 import {
     Avatar,
     Badge,
@@ -32,6 +32,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setLanguage} from '@/store/reducers/languageSlice';
 import SearchModal from "@/component/Modals/SearchModal";
 import LocationModal from '../Modals/LocationModal';
+import LoginModal from "@/component/Header/LoginModal";
+import {setLogout} from "@/store/reducers/authenticationSlice";
 
 
 const Header = () => {
@@ -39,13 +41,16 @@ const Header = () => {
     const city = useSelector((state) => state.selectedCity.value);
     const dispatch = useDispatch();
 
-    const userDetails = [[0, 1]]
 
+    const authStoreData = useSelector((state) => state.authentication);
+    // const userDetails = [[0, 1]]
 
     const [menuIndex, setMenuIndex] = React.useState(null);
     const itemProps = {
         onClick: () => setMenuIndex(null),
     };
+
+    const [loginModalState, setLoginModalState] = useState(false)
 
 
     const createHandleLeaveMenu = (index) => (getIsOnButton) => {
@@ -268,11 +273,17 @@ const Header = () => {
                     </Box>
 
                     <Box display={"flex"} alignItems={"center"} gap={2}>
-                        {userDetails.length === 0 ?
-
-                            <Button variant='text'>
-                                Login
-                            </Button>
+                        {!authStoreData.isLogged ?
+                            <>
+                                <LoginModal loginModalState={loginModalState} onClose={() => {
+                                    setLoginModalState(false)
+                                }} />
+                                <Button variant='text' onClick={() => {
+                                    setLoginModalState(true)
+                                }}>
+                                    Login
+                                </Button>
+                            </>
 
                             :
                             <Dropdown>
@@ -302,10 +313,10 @@ const Header = () => {
                                         }}
                                     >
 
-                                        <Avatar alt="Remy Sharp" src="https://ui-avatars.com/api/?background=random"/>
+                                        <Avatar alt="Remy Sharp" src={authStoreData.userData.image}/>
 
                                         <Typography level="h4" color='white' fontWeight={"bold"}
-                                        > James </Typography>
+                                        > {authStoreData.userData.username} </Typography>
                                     </Box>
 
 
@@ -347,7 +358,9 @@ const Header = () => {
                                         }}
                                     >
                                         <Typography fontSize={"sm"} fontWeight={"md"}
-                                                    startDecorator={<RiShutDownLine size={theme.fontSize.lg}/>}>
+                                                    startDecorator={<RiShutDownLine size={theme.fontSize.lg}/>} onClick={() => {
+                                                        dispatch(setLogout(false))
+                                        }}>
                                             Logout
                                         </Typography>
                                     </MenuItem>

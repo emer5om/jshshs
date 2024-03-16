@@ -404,18 +404,28 @@ const HomePage = () => {
             <Box>
                 <DelightfulDishes data={dishesData}></DelightfulDishes>
             </Box>
+            {
+                homeStoreData.sections.map(val => {
+                    console.log(val)
+                    if(val.product_type == "new_added_foods"){
+                       return ( <Box>
+                            <NewItems data={val}></NewItems>
+                        </Box>)
+                    }
+                    return  (
+                        <Box>
+                            <Offers data={val}></Offers>
+                        </Box>
+                    )
+                })
+            }
 
-            <Box>
-                <Offers data={offerFoodData}></Offers>
-            </Box>
 
-            <Box>
-                <NewItems data={newProducts}></NewItems>
-            </Box>
 
-            <Box>
-                <SpecificItem data={specificProductData} />
-            </Box>
+
+            {/*<Box>*/}
+            {/*    <SpecificItem data={specificProductData} />*/}
+            {/*</Box>*/}
         </Box>
     )
 }

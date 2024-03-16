@@ -66,9 +66,9 @@ const CategoryCards = ({ image, title, count }) => {
                         >
                             {title}
                         </Typography>
-                        <Typography fontSize="sm" sx={{ color: theme.palette.text.description }} fontWeight={theme.fontWeight.md}>
-                            {"(" + count + " items )"}
-                        </Typography>
+                        {/*<Typography fontSize="sm" sx={{ color: theme.palette.text.description }} fontWeight={theme.fontWeight.md}>*/}
+                        {/*    {"(" + count + " items )"}*/}
+                        {/*</Typography>*/}
                     </Box>
                 </CardContent>
             </Card>  

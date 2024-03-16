@@ -17,20 +17,20 @@ import { get_categories } from "@/interceptor/routes"
 
 
 const Category = ({ data }) => {
+    const homeStoreData = useSelector((state) => state.homepage);
 
-
-    const dispatch = useDispatch();
-    const categories = []
-    const getCategories = () => {
-        get_categories().then(res => {
-            dispatch(setCategories(res.data))
-        });
-    }
-    useEffect(() => {
-        if (categories.length === 0) {
-            getCategories()
-        }
-    }, [])
+    const categories = homeStoreData.categories
+    console.log(categories)
+    // const getCategories = () => {
+    //     get_categories().then(res => {
+    //         dispatch(setCategories(res.data))
+    //     });
+    // }
+    // useEffect(() => {
+    //     if (categories.length === 0) {
+    //         getCategories()
+    //     }
+    // }, [])
 
 
     return (

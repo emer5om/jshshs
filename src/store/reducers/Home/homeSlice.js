@@ -4,6 +4,7 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     banner: [],
     sections: [],
+    categories: [],
     update: false
 };
 
@@ -17,13 +18,16 @@ const branchSlice = createSlice({
         },
         setHomeSection: (state, action) => {
             state.sections = action.payload
+        },
+        setHomeCategories: (state, action) => {
+            state.categories = action.payload
         }
 
     },
 });
 
 
-export const {setHomeBanner, setHomeSection} = branchSlice.actions;
+export const {setHomeBanner, setHomeSection,setHomeCategories} = branchSlice.actions;
 
 export default branchSlice.reducer;
 

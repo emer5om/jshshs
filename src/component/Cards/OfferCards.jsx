@@ -3,9 +3,13 @@
 import { Card, CardCover, CardContent, Typography, Box } from '@mui/joy';
 import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import {formatePrice} from "@/helpers/functonHelpers";
 
 // shape is for is it rectangle or square 
 export const OfferCards = ({ shape = "square", title, discount, price, image }) => {
+    if(typeof price == "string"){
+        price = parseFloat(price)
+    }
     return (
         <Card sx={{
             minHeight: 250, width: shape === "square" ? "100%" : "700px",
@@ -39,11 +43,16 @@ export const OfferCards = ({ shape = "square", title, discount, price, image }) 
                     </Box>
 
                     <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
-                        <Typography textColor="neutral.300" >
-                            {discount}% OFF
-                        </Typography>
+                        {(discount) ? <>
+                            <Typography textColor="neutral.300" >
+                                {discount}% OFF
+                            </Typography>
+                        </> : <div>
+
+                        </div>}
+
                         <Typography textColor={"warning.400"} fontSize={"xl"} fontWeight={"md"}>
-                            {price}
+                            {(price)}
                         </Typography>
                     </Box>
                 </Box>

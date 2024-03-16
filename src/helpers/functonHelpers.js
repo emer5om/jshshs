@@ -3,6 +3,9 @@
 import { currencySettings } from "@/@core/config";
 
 export const formatePrice = (price) => {
+  if(typeof price == "string"){
+    price = parseFloat(price)
+  }
   // Format the number with the desired number of decimal places
   const formattedPrice = price.toFixed(currencySettings.decimalPoints);
 
@@ -69,3 +72,15 @@ export const extractAddress = (place) => {
 
   return address;
 };
+
+export const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APPPID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID
+};
+
+

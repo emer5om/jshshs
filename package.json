@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "deploy-build": "node ftp.js",
-    "deploy": "npm install &&  npm run build && npm run deploy-build",
+    "deploy": "npm install &&  npm run build && npm run build-htaccess  && npm run deploy-build",
     "build-htaccess": "next-htaccess-generator build"
   },
   "dependencies": {
@@ -57,6 +57,6 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "ftp-deploy": "^2.4.7",
-    "next-htaccess-generator": "^0.0.8"
+    "next-htaccess-generator": "^1.0.2"
   }
 }

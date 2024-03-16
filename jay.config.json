@@ -1,5 +1,5 @@
 {
-  "buildPath": "./out",
+  "buildPath": "./dist",
   "include404": false,
-  "outputPath": "out"
+  "outputPath": "dist"
 }

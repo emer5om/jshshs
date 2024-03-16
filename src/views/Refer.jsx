@@ -10,14 +10,14 @@ import "@lottiefiles/lottie-player";
 const Refer = () => {
 
 
-    const handleCopyClick = async (value) => {
-        try {
-            await navigator.clipboard.writeText(value);
-            toast("Code Copied")
-        } catch (err) {
-            console.error('Failed to copy text:', err);
-        }
-    };
+    // const handleCopyClick = async (value) => {
+    //     try {
+    //         await navigator.clipboard.writeText(value);
+    //         toast("Code Copied")
+    //     } catch (err) {
+    //         console.error('Failed to copy text:', err);
+    //     }
+    // };
 
     return (
         <Box width={"100%"}>
@@ -44,7 +44,7 @@ const Refer = () => {
                         Your Referral code
                     </Typography>
                     <Chip color="warning" sx={{ borderStyle: "dashed", borderWidth: "1px", borderRadius: "sm" }}
-                        onClick={e => handleCopyClick("A2XYD3R7E0")}
+                        // onClick={e => handleCopyClick("A2XYD3R7E0")}
                     >
                         A2XYD3R7E0
                     </Chip>

@@ -32,7 +32,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setLanguage} from '@/store/reducers/languageSlice';
 import SearchModal from "@/component/Modals/SearchModal";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
     // Fetch the settings data from your API or data source
     const settings = useSelector((state) => state.settings);
 

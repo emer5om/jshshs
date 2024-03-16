@@ -1,0 +1,53 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine On
+
+  RewriteBase / 
+    #
+    RewriteRule ^/$ categories.html [L]
+    #
+    RewriteRule ^/$ featured.html [L]
+    #
+    RewriteRule ^home/$ home.html [L]
+    RewriteRule ^home$ home.html [L]
+    #
+    RewriteRule ^/$ hot-deals.html [L]
+    #
+    RewriteRule ^/$ index.html [L]
+    #
+    RewriteRule ^/$ new-products.html [L]
+    #
+    RewriteRule ^/$ offers.html [L]
+    #
+    RewriteRule ^/$ popular-dishes.html [L]
+    #user
+    RewriteRule ^user/$ user/address.html [L]
+    #user
+    RewriteRule ^user/$ user/cart.html [L]
+    #user
+    RewriteRule ^user/$ user/coupons.html [L]
+    #user
+    RewriteRule ^user/$ user/favourites.html [L]
+    #user/my-orders
+    RewriteRule ^user/my-orders/$ user/my-orders/1.html [L]
+    #user/my-orders
+    RewriteRule ^user/my-orders/$ user/my-orders/2.html [L]
+    #user/my-orders
+    RewriteRule ^user/my-orders/$ user/my-orders/3.html [L]
+    #user/my-orders
+    RewriteRule ^user/my-orders/$ user/my-orders/4.html [L]
+    #user
+    RewriteRule ^user/$ user/my-orders.html [L]
+    #user
+    RewriteRule ^user/$ user/profile.html [L]
+    #user
+    RewriteRule ^user/$ user/refer.html [L]
+    #user
+    RewriteRule ^user/$ user/transactions.html [L]
+    #user
+    RewriteRule ^user/$ user/wallet.html [L]
+    RewriteCond %{REQUEST_FILENAME} !-f 
+
+RewriteCond %{REQUEST_FILENAME} !-d 
+
+RewriteRule ^(.*)$ /404/404.html [L] 
+</IfModule>

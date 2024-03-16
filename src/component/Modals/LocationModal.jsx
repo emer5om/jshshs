@@ -222,7 +222,8 @@ const LocationModal = () => {
             <Modal open={open} onClose={() => setOpen(false)}>
                 <ModalDialog
                     sx={{
-                        width: 800
+                        width: 800,
+                        maxHeight: "100%"
                     }}
                 >
                     <ModalClose />

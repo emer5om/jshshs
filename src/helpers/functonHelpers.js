@@ -27,12 +27,45 @@ export const formatePrice = (price) => {
   return formattedPriceStr;
 };
 
-
 export const isSSR = () => {
-  return process.env.NEXT_PUBLIC_SSR == "true"
-}
+  return process.env.NEXT_PUBLIC_SSR == "true";
+};
 
-export const navigateErrorPage = (data) => {
+export const navigateErrorPage = (data) => {};
 
-}
+export const extractAddress = (place) => {
+  const address = {
+    city: "",
+    state: "",
+    // zip: "",
+    country: "",
+    plain() {
+      const city = this.city ? this.city + ", " : "";
+      const state = this.state ? this.state + ", " : "";
+      return city + state + this.country;
+    },
+  };
 
+  if (!Array.isArray(place?.address_components)) {
+    return address;
+  }
+
+  place.address_components.forEach((component) => {
+    const types = component.types;
+    const value = component.long_name;
+
+    if (types.includes("locality")) {
+      address.city = value;
+    }
+
+    if (types.includes("administrative_area_level_2")) {
+      address.state = value;
+    }
+
+    if (types.includes("country")) {
+      address.country = value;
+    }
+  });
+
+  return address;
+};

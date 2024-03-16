@@ -133,3 +133,22 @@ export const get_products = async ({
   let response = await api.post("/get_products", formData);
   return response.data;
 };
+
+/**
+ *
+ * @param {city name} name
+ * @param {23.241653499709386} latitude
+ * @param {69.66664668584443} longitude
+ * @returns
+ */
+
+export const is_city_deliverable = async ({ name, latitude, longitude }) => {
+  const formData = new FormData();
+
+  formData.append("name", name);
+  formData.append("latitude", latitude);
+  formData.append("longitude", longitude);
+
+  let response = await api.post("/is_city_deliverable", formData);
+  return response.data;
+};

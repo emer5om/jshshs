@@ -29,6 +29,12 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <script
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}&libraries=places`}
+        type="text/javascript"
+        async
+      />
+
       <body>
         <CssVarsProvider theme={theme}>
           <CssBaseline />

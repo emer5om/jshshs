@@ -31,15 +31,14 @@ import {RiGlobalLine, RiHeartLine, RiShutDownLine, RiUser3Line} from '@remixicon
 import {useDispatch, useSelector} from 'react-redux';
 import {setLanguage} from '@/store/reducers/languageSlice';
 import SearchModal from "@/component/Modals/SearchModal";
+import LocationModal from '../Modals/LocationModal';
 
 
 const Header = () => {
     const settings = useSelector((state) => state.settings);
+    const city = useSelector((state) => state.selectedCity.value);
     const dispatch = useDispatch();
-    // const settings = useSelector((state) => state.settings);
-    // console.log(settings)
-    // const language = useSelector((state) => state.language.value);
-    // const userDetails = useSelector((state) => state.authentication.value);
+
     const userDetails = [[0, 1]]
 
 
@@ -122,18 +121,15 @@ const Header = () => {
                         <Box display={"flex"} gap={8}>
                             <Box display={"flex"} alignItems={"center"} justifyContent={"center"} gap={1}>
                                 <Box>
-                                    <FontAwesomeIcon icon={faLocationDot} width={"24px"} height={"24px"}/>
+                                    <LocationModal />
                                 </Box>
                                 <Box>
                                     <Typography variant="h4" fontWeight={"bold"}>
-                                        Bhuj
-                                    </Typography>
-                                    <Typography>
-                                        123, some place, some area
+                                        {city.city ?? "BHUJ"}
                                     </Typography>
                                 </Box>
                             </Box>
-                            <Box display={"flex"} gap={8} alignItems={"center"}>
+                            <Box display={"flex"} gap={4} alignItems={"center"} justifyContent={"center"}>
                                 <Link href="/" underline="none" color="inherit">
                                     <Typography fontSize={20} fontWeight={"bolder"}
 

@@ -16,14 +16,19 @@ import {
   useTheme,
 } from "@mui/joy";
 
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { GpsFixed, LocationCity } from "@mui/icons-material";
-import Footer from "@/component/Footer/Index"
+import Footer from "@/component/Footer/Index";
 const CoverPage = () => {
   const theme = useTheme();
   return (
     <>
-      <Box display="flex" position= 'relative' flexDirection="column" minHeight="100vh">
+      <Box
+        display="flex"
+        position="relative"
+        flexDirection="column"
+        minHeight="100vh"
+      >
         {/* Navbar */}
         <Box
           display="flex"
@@ -55,10 +60,9 @@ const CoverPage = () => {
             <Button
               variant={"solid"}
               color={"primary"}
-              
               sx={{
                 py: 1,
-                borderRadius: "var(--border-radius-lg)", 
+                borderRadius: "var(--border-radius-lg)",
                 color: theme.palette.text.primary, // Change the text color to white
                 // Adjust the value as needed for the desired roundness
                 "&.MuiButton-contained": {
@@ -148,90 +152,81 @@ const CoverPage = () => {
           </Grid>
         </Box>
 
- 
+        <img
+          src="/images/food-items-hero.svg"
+          alt="Your image"
+          style={{
+            position: "absolute",
+            top: "428px",
+            left: "-400px",
+            width: "100%",
+            height: "44%",
+          }}
+        />
+      </Box>
 
-      <img
-      
-        src="/images/food-items-hero.svg"
-        alt="Your image"
-        style={{
-          position: 'absolute',
-          top: '428px',
-          left: "-400px",
-          width: '100%',
-          height: '44%',
-        }}
-      />
-    </Box> 
-      
+      <Box sx={{ py: 6 }}>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={6}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography
+                level="h4"
+                sx={{ mb: 2, color: theme.palette.text.currency }}
+              >
+                Our Story & Services
+              </Typography>
 
-<Box sx={{py:6}}>
-    <Grid container spacing={4}>
+              <Typography
+                variant="h1"
+                gutterBottom
+                sx={{
+                  fontSize: { xs: "2.0rem", md: "2.5rem" },
+                  fontWeight: "bold",
+                  lineHeight: 1.2,
+                  color: theme.palette.text.primary,
+                  mb: 4,
+                }}
+              >
+                Our Culinary Journey And Services
+              </Typography>
 
-  <Grid item xs={12} md={6}>
-    <Box sx={{ display: 'flex', flexDirection: 'column', }}>
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{
+                  fontSize: "1.2rem",
+                  fontWeight: "400",
+                  color: theme.palette.text.tertiary,
+                  mb: 4,
+                }}
+              >
+                Rooted in passion, we curate unforgettable dining experiences
+                and offer exceptional services, blending culinary artistry with
+                warm hospitality.
+              </Typography>
 
-    <Typography level="h4" sx={{ mb: 2, color: theme.palette.text.currency}}>
-      Our Story & Services
-    </Typography>
-
-      <Typography
-                  variant="h1"
-                  gutterBottom
+              <Box>
+                <Button
+                  variant={"solid"}
+                  color={"primary"}
                   sx={{
-                    fontSize: { xs: "2.0rem", md: "2.5rem" },
-                    fontWeight: "bold",
-                    lineHeight:1.2,
-                    color: theme.palette.text.primary,
-                    mb: 4,
+                    py: 1.5,
+                    px: 4,
+                    borderRadius: "var(--border-radius-lg)",
+                    color: theme.palette.text.primary, // Change the text color to white
+                    // Adjust the value as needed for the desired roundness
+                    "&.MuiButton-contained": {
+                      borderRadius: "var(--border-radius-lg)", // Ensure rounded corners for contained state as well
+                    },
                   }}
                 >
-                         Our Culinary Journey And Services
+                  Explore
+                </Button>
+              </Box>
+            </Box>
+          </Grid>
 
-                </Typography>
-
-
-      <Typography
-                  variant="h6"
-                  gutterBottom
-                  sx={{
-                    fontSize: "1.2rem",
-                    fontWeight: "400",
-                    color: theme.palette.text.tertiary,
-                    mb: 4,
-                  }}
-                >
-                         Rooted in passion, we curate unforgettable dining experiences and offer exceptional services, blending culinary artistry with warm hospitality.
-
-                </Typography>
-
-<Box>
-
-
-      <Button
-              variant={"solid"}
-              color={"primary"}
-              
-              sx={{
-                py: 1.5,
-                px:4,
-                borderRadius: "var(--border-radius-lg)", 
-                color: theme.palette.text.primary, // Change the text color to white
-                // Adjust the value as needed for the desired roundness
-                "&.MuiButton-contained": {
-                  borderRadius: "var(--border-radius-lg)", // Ensure rounded corners for contained state as well
-                },
-              }}
-            >
-              Explore
-            </Button>
-</Box>
-
-    
-    </Box>
-  </Grid>
-
-  {/* <Grid item xs={12} md={6}>
+          {/* <Grid item xs={12} md={6}>
     <Grid container spacing={4} justifyContent="center">
       <Grid item>
         <Box>
@@ -278,114 +273,134 @@ const CoverPage = () => {
     </Grid>
   </Grid> */}
 
-<Grid item xs={12} md={6}>
-    
-<Grid container spacing={2} columns={16} sx={{ flexGrow: 1 }}>
-  <Grid xs={8}>
-  <Card
-  variant="outlined"
-  sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    padding: 4,
-  }}
->
-  <CardGiftcardIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-  <Typography level="h6" component="div" mb={1}>
-    GIFT CARDS
-  </Typography>
-  <Typography level="body2" sx={{ color: 'text.secondary' }}>
-    Give the gift of exceptional dining with Foodi Gift Cards
-  </Typography>
-</Card>
-  </Grid>
-  <Grid xs={8}>
-  <Card
-  variant="outlined"
-  sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    padding: 4,
-  }}
->
-  <CardGiftcardIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-  <Typography level="h6" component="div" mb={1}>
-    GIFT CARDS
-  </Typography>
-  <Typography level="body2" sx={{ color: 'text.secondary' }}>
-    Give the gift of exceptional dining with Foodi Gift Cards
-  </Typography>
-</Card>
-  </Grid>
-</Grid>
+          <Grid item xs={12} md={6}>
+            <Grid container spacing={2} columns={16} sx={{ flexGrow: 1 }}>
+              <Grid xs={8}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                    padding: 4,
+                  }}
+                >
+                  <CardGiftcardIcon
+                    sx={{ fontSize: 48, color: "primary.main", mb: 2 }}
+                  />
+                  <Typography level="h6" component="div" mb={1}>
+                    GIFT CARDS
+                  </Typography>
+                  <Typography level="body2" sx={{ color: "text.secondary" }}>
+                    Give the gift of exceptional dining with Foodi Gift Cards
+                  </Typography>
+                </Card>
+              </Grid>
+              <Grid xs={8}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                    padding: 4,
+                  }}
+                >
+                  <CardGiftcardIcon
+                    sx={{ fontSize: 48, color: "primary.main", mb: 2 }}
+                  />
+                  <Typography level="h6" component="div" mb={1}>
+                    GIFT CARDS
+                  </Typography>
+                  <Typography level="body2" sx={{ color: "text.secondary" }}>
+                    Give the gift of exceptional dining with Foodi Gift Cards
+                  </Typography>
+                </Card>
+              </Grid>
+            </Grid>
 
-<Grid container spacing={2} columns={16} sx={{ flexGrow: 1 }}>
-  <Grid xs={8}>
-  <Card
-  variant="outlined"
-  sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    padding: 4,
-  }}
->
-  <CardGiftcardIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-  <Typography level="h6" component="div" mb={1}>
-    GIFT CARDS
-  </Typography>
-  <Typography level="body2" sx={{ color: 'text.secondary' }}>
-    Give the gift of exceptional dining with Foodi Gift Cards
-  </Typography>
-</Card>
-  </Grid>
-  <Grid xs={8}>
-  <Card
-  variant="outlined"
-  sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    padding: 4,
-  }}
->
-  <CardGiftcardIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-  <Typography level="h6" component="div" mb={1}>
-    GIFT CARDS
-  </Typography>
-  <Typography level="body2" sx={{ color: 'text.secondary' }}>
-    Give the gift of exceptional dining with Foodi Gift Cards
-  </Typography>
-</Card>  </Grid>
-</Grid>
-    </Grid>
+            <Grid container spacing={2} columns={16} sx={{ flexGrow: 1 }}>
+              <Grid xs={8}>
+                <Card
+                  variant="outlined"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                    padding: 4,
+                  }}
+                >
+                  <CardGiftcardIcon
+                    sx={{ fontSize: 48, color: "primary.main", mb: 2 }}
+                  />
+                  <Typography level="h6" component="div" mb={1}>
+                    GIFT CARDS
+                  </Typography>
+                  <Typography level="body2" sx={{ color: "text.secondary" }}>
+                    Give the gift of exceptional dining with Foodi Gift Cards
+                  </Typography>
+                </Card>
+              </Grid>
+              <Grid xs={8}>
 
-</Grid>
-</Box>
+                <Card
+                  variant="solid"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                    padding: 1.5,
+                    backgroundColor:"white", // White background using theme palette
+                    borderRadius: 8, // Border radius
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Box shadow
+  
+                }}
+                >
+                  <CardGiftcardIcon
+                    sx={{ fontSize: 48, color: "primary.main", mb: 2, }}
+                  />
+                  <Typography level="h6" component="div" mb={1}>
+                    GIFT CARDS
+                  </Typography>
+                  <Typography level="body2" sx={{ color: "text.secondary" }}>
+                    Give the gift of exceptional dining with Foodi Gift Cards
+                  </Typography>
+                </Card>
 
 
-        {/* Footer */}
-        <Box
-      bgcolor={theme.palette.text.currency}
-      color="white"
-      p={2}
-      sx={{
-        textAlign: "center",
-        alignItems: "center",
-        width: "100%",
-      }}
-    >
-      {/* Add your footer content here */}
-      <Typography variant="body2" bgcolor={theme.palette.text.currency} color={theme.palette.common.white}>
-        &copy; 2024 Infinitie Technologies | All rights reserved
-      </Typography>
-    </Box>
+
+
+
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
+
+      {/* Footer */}
+      <Box
+        bgcolor={theme.palette.text.currency}
+        color="white"
+        p={2}
+        sx={{
+          textAlign: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        {/* Add your footer content here */}
+        <Typography
+          variant="body2"
+          bgcolor={theme.palette.text.currency}
+          color={theme.palette.common.white}
+        >
+          &copy; 2024 Infinitie Technologies | All rights reserved
+        </Typography>
+      </Box>
     </>
   );
 };

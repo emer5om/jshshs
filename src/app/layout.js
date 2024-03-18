@@ -1,5 +1,4 @@
 "use client";
-import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { store, persistor } from "../store/store";
 import Layout from "@/layouts/Layout";
@@ -12,6 +11,8 @@ import { Provider } from "react-redux";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { usePathname } from "next/navigation";
+import {useEffect} from "react";
+import {onAppLoad} from "@/events/events";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,6 +27,9 @@ export default function RootLayout({ children }) {
 
   const pathname = usePathname();
   const isRootPath = pathname === "/";
+  useEffect(() => {
+    onAppLoad()
+  }, []);
 
   return (
     <html lang="en">

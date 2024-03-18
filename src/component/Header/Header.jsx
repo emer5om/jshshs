@@ -43,6 +43,9 @@ const Header = () => {
 
 
     const authStoreData = useSelector((state) => state.authentication);
+    const cartStoreData = useSelector((state) => state.cart);
+
+
     // const userDetails = [[0, 1]]
 
     const [menuIndex, setMenuIndex] = React.useState(null);
@@ -248,9 +251,9 @@ const Header = () => {
                                 </MenuItem>
                             </Menu>
                         </Dropdown>
-                        <SearchModal displayStyle={"icon"} />
-                        <Badge component={Link} href={"/user/cart"} badgeContent={8} color="primary">
-                            <ShoppingBag3LineIcon size={"25px"} color="black" />
+                        <SearchModal displayStyle={"icon"}/>
+                        <Badge component={Link} href={"/user/cart"} badgeContent={cartStoreData.data.length} color="primary">
+                            <ShoppingBag3LineIcon size={"25px"} color="black"/>
                         </Badge>
                         <IconButton>
                             <SunFillIcon size={"20px"} />

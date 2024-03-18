@@ -10,7 +10,7 @@ const Categories = ({ data }) => {
             {data.map((item, index) => {
                 return (
                     <Grid item xs={6} md={2} key={index} >
-                        <CategoryCards image={item.image} title={item.title} count={item.count} />
+                        <CategoryCards image={item.image} title={item.name} count={item.count} />
                     </Grid>
                 )
             })}

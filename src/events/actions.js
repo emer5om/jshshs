@@ -53,3 +53,31 @@ export const logout = async () => {
   } catch (err) {}
   await store.dispatch(logout(false));
 };
+
+export const add_to_cart = ({product_variant_id, qty, addons=[]} = {}) => {
+  let add_on_id = ""
+  let add_on_qty = ""
+  addons.map(val => {
+    if(add_on_id != ""){
+      add_on_id += ","
+      add_on_qty += ","
+    }
+    add_on_id += val.id
+    add_on_qty += qty
+
+  })
+  const data = {
+    product_variant_id,
+    qty,
+    add_on_id,
+    add_on_qty,
+    branch_id: getBranchId()
+  }
+  const formData = new FormData()
+  Object.keys(data).map(key => {
+    formData.append(key, data["key"])
+  })
+  api.post("/manage_cart", formData).then(val => {
+
+  })
+}

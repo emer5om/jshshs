@@ -84,19 +84,25 @@ const categoryData = [
 
 const CategoriesPage = () => {
     const initialQuery = {
-        limit: 10,
+        limit: 2,
         offset: 0
-
     }
     const [query, setQuery] = useState(initialQuery)
-    Object.keys()
-    const request = () => {
+    const [result, setResult] = useState([])
 
-        api.post("/get_categories", )
+    const request = () => {
+        const formData = new FormData()
+        Object.keys(query).map(item => {
+            formData.append(item, query[item])
+        })
+        formData.append("branch_id", "7")
+        api.post("/get_categories", formData).then(res => {
+            setResult(res.data.data)
+        })
     }
     useEffect(() => {
         request()
-    })
+    }, [query])
 
 
 
@@ -105,7 +111,7 @@ const CategoriesPage = () => {
 
 
 
-            <Categories data={categoryData} />
+            <Categories data={result} />
             <Box>Show More</Box>
             <Box  my={4}>
             </Box>

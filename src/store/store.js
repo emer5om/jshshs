@@ -7,6 +7,7 @@ import authenticationSlice from "@/store/reducers/authenticationSlice";
 import branchSlice from "@/store/reducers/branchSlice";
 import homeSlice from "@/store/reducers/Home/homeSlice";
 import selectedMapAddressSlice from "@/store/reducers/selectedMapAddressSlice";
+import cartSlice from "@/store/reducers/cartSlice";
 
 
 const persistConfig = {
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   branch: branchSlice,
   homepage: homeSlice,
   selectedCity: selectedMapAddressSlice,
+  cart: cartSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

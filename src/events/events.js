@@ -4,8 +4,18 @@ import {
     updateHomeOffers,
     updateHomeSectionData
 } from "@/repository/home/home_repo";
+import api from "@/interceptor/api";
+import {getBranchId} from "@/events/getters";
 
-export const onLoad = () => {
+export const onAppLoad = async () => {
+
+    updateUserCart()
+}
+
+export const updateUserCart = async () => {
+    const formData = new FormData()
+    formData.append("branch_id", getBranchId())
+    const res = await api.post("/get_user_cart", formData)
 
 }
 

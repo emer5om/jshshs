@@ -4,6 +4,7 @@ import { Card, CardCover, CardContent, Typography, Box } from '@mui/joy';
 import React from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import {formatePrice} from "@/helpers/functonHelpers";
+import ProductModal from "@/component/Modals/ProductModal";
 
 // shape is for is it rectangle or square 
 export const OfferCards = ({ shape = "square", title, discount, price, image }) => {
@@ -37,9 +38,7 @@ export const OfferCards = ({ shape = "square", title, discount, price, image }) 
                         <Typography textColor={"background.level1"} fontSize={"xl"} fontWeight={"md"} textOverflow={"ellipsis"} sx={{ textWrap: "nowrap", overflow: "hidden" }}>
                             {title}
                         </Typography>
-                        <Typography textColor={"neutral.50"} fontSize={"sm"} fontWeight={"sm"}>
-                            price
-                        </Typography>
+
                     </Box>
 
                     <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
@@ -50,7 +49,14 @@ export const OfferCards = ({ shape = "square", title, discount, price, image }) 
                         </> : <div>
 
                         </div>}
+                        <Typography textColor={"neutral.50"} fontSize={"sm"} fontWeight={"sm"}>
+                            price
+                        </Typography>
 
+
+                    </Box>
+                    <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
+                        <ProductModal />
                         <Typography textColor={"warning.400"} fontSize={"xl"} fontWeight={"md"}>
                             {(price)}
                         </Typography>

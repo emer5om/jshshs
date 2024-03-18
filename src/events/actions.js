@@ -5,6 +5,9 @@ import {getBranchId} from "@/events/getters";
 import api from "@/interceptor/api";
 import {setHomeBanner} from "@/store/reducers/Home/homeSlice";
 import {setAuth} from "@/store/reducers/authenticationSlice";
+import {initializeApp} from "firebase/app";
+import {firebaseConfig} from "@/helpers/functonHelpers";
+import {getAuth} from "firebase/auth";
 
 export const changeBranchId = async ({branch_id} = {}) => {
     const prev_branch_id = getBranchId()
@@ -25,4 +28,15 @@ export const login = async ({phoneNumber} = {}) => {
         store.dispatch(setAuth(res.data))
         onLoggedIn();
 
+}
+
+export const logout = async () => {
+    try {
+        const app = await initializeApp(firebaseConfig)
+        const auth = await getAuth(app);
+        await  auth.signOut();
+    }catch (err) {
+
+    }
+    await store.dispatch(logout(false))
 }

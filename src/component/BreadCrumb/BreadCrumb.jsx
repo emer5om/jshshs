@@ -17,7 +17,7 @@ const BreadCrumb = ({ page }) => {
         <div>
             <Box backgroundColor={theme.palette.primary[100]} px={2} py={1}>
                 <Breadcrumbs separator={<ArrowRightSFillIcon color={theme.palette.text.currency} />} aria-label="breadcrumbs" >
-                    <Link color="primary" href="/">
+                    <Link color="primary" href="/home">
                         <Home4FillIcon fontSize={theme.fontSize.xl} color={theme.palette.text.currency} />
                     </Link>
 
@@ -27,7 +27,7 @@ const BreadCrumb = ({ page }) => {
                             <Typography
                                 component={!isLastItem ? Link : Box}
                                 href={item.link}
-                                textColor={!isLastItem? "text.currency" : "text.menuText"}
+                                textColor={!isLastItem ? "text.currency" : "text.menuText"}
                                 fontWeight={"xl"}
                                 fontSize={"lg"}
                                 key={index}

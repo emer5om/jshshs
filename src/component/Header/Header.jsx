@@ -32,7 +32,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setLanguage} from '@/store/reducers/languageSlice';
 import SearchModal from "@/component/Modals/SearchModal";
 import LocationModal from '../Modals/LocationModal';
-import LoginModal from "@/component/Header/LoginModal";
+import LoginModal from "@/component/Modals/LoginModal";
 import {setLogout} from "@/store/reducers/authenticationSlice";
 
 

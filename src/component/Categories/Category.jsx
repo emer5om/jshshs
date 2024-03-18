@@ -20,7 +20,6 @@ const Category = ({ data }) => {
     const homeStoreData = useSelector((state) => state.homepage);
 
     const categories = homeStoreData.categories
-    console.log(categories)
     // const getCategories = () => {
     //     get_categories().then(res => {
     //         dispatch(setCategories(res.data))

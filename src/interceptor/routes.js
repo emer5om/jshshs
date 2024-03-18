@@ -55,7 +55,7 @@ export const get_cities = async (sort, order, search, limit, offset) => {
  * @returns
  */
 
-export const login = async (mobile, fcm_id) => {
+export const login = async ({ mobile, fcm_id }) => {
   const formData = new FormData();
 
   formData.append("mobile", mobile);

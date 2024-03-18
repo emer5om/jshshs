@@ -4,7 +4,7 @@ import CoverPage from "@/views/CoverPage";
 
 export default function Home() {
   return (
-    <Container maxWidth={"xl"}>
+    <Container>
       <CoverPage />
     </Container>
   );

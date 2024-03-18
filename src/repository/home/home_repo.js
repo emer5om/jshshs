@@ -1,6 +1,6 @@
 import api from "@/interceptor/api";
 import {store} from "@/store/store";
-import {setHomeBanner, setHomeCategories, setHomeSection} from "@/store/reducers/Home/homeSlice";
+import {setHomeBanner, setHomeCategories, setHomeOffers, setHomeSection} from "@/store/reducers/Home/homeSlice";
 import {navigateErrorPage} from "@/helpers/functonHelpers";
 import {get_categories} from "@/interceptor/routes";
 
@@ -22,6 +22,15 @@ export const updateHomeSectionData = async (branch_id) => {
         return navigateErrorPage(res.data)
     }
     store.dispatch(setHomeSection(res.data.data))
+}
+export const updateHomeOffers = async (branch_id) => {
+    const form = new FormData()
+    form.append("branch_id", branch_id)
+    const res = await api.post("/get_offer_images", form);
+    if(res.data.error){
+        return navigateErrorPage(res.data)
+    }
+    store.dispatch(setHomeOffers(res.data.data))
 }
 export const updateHomeCategories = async (branch_id) => {
     const form = new FormData()

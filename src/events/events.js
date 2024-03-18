@@ -1,4 +1,9 @@
-import {updateHomeBannerData, updateHomeCategories, updateHomeSectionData} from "@/repository/home/home_repo";
+import {
+    updateHomeBannerData,
+    updateHomeCategories,
+    updateHomeOffers,
+    updateHomeSectionData
+} from "@/repository/home/home_repo";
 
 export const onLoad = () => {
 
@@ -9,6 +14,7 @@ export const onBranchIdChange = ({branch_id} = {}) => {
     updateHomeBannerData(branch_id)
     updateHomeSectionData(branch_id)
     updateHomeCategories(branch_id)
+    updateHomeOffers(branch_id)
 }
 export const onLoggedIn = async () => {
 

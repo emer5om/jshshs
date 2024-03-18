@@ -7,7 +7,7 @@ import {formatePrice} from "@/helpers/functonHelpers";
 import ProductModal from "@/component/Modals/ProductModal";
 
 // shape is for is it rectangle or square 
-export const OfferCards = ({ shape = "square", title, discount, price, image }) => {
+export const OfferCards = ({ shape = "square", title, discount, price, image, product }) => {
     if(typeof price == "string"){
         price = parseFloat(price)
     }
@@ -35,13 +35,6 @@ export const OfferCards = ({ shape = "square", title, discount, price, image }) 
             <CardContent sx={{ justifyContent: 'flex-end' }}>
                 <Box display={"flex"} alignItems={"start"} justifyContent={"space-between"} flexDirection={"column"} gap={1}>
                     <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
-                        <Typography textColor={"background.level1"} fontSize={"xl"} fontWeight={"md"} textOverflow={"ellipsis"} sx={{ textWrap: "nowrap", overflow: "hidden" }}>
-                            {title}
-                        </Typography>
-
-                    </Box>
-
-                    <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
                         {(discount) ? <>
                             <Typography textColor="neutral.300" >
                                 {discount}% OFF
@@ -49,16 +42,32 @@ export const OfferCards = ({ shape = "square", title, discount, price, image }) 
                         </> : <div>
 
                         </div>}
-                        <Typography textColor={"neutral.50"} fontSize={"sm"} fontWeight={"sm"}>
+
+                    </Box>
+
+                    <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
+                        <Typography textColor={"background.level1"} fontSize={"xl"} fontWeight={"md"} textOverflow={"ellipsis"} sx={{ textWrap: "nowrap", overflow: "hidden" }}>
+                            {title}
+                        </Typography>
+
+                        <Typography textColor={"neutral.50"} fontSize={"sm"} fontWeight={"md"}>
                             price
                         </Typography>
 
 
                     </Box>
                     <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
-                        <ProductModal />
+                        <ProductModal
+                            image={product.image_sm}
+                            title={product.name}
+                            description={product.short_description}
+                            variants={product.variants}
+                            rating={product.rating}
+                            simple={product.type == "simple_product"}
+                            addOns={product.product_add_ons}
+                        />
                         <Typography textColor={"warning.400"} fontSize={"xl"} fontWeight={"md"}>
-                            {(price)}
+                            {formatePrice(price)}
                         </Typography>
                     </Box>
                 </Box>

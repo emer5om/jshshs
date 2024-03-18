@@ -1,16 +1,54 @@
 "use client";
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { AspectRatio, Box, Button, Card, CardContent, Checkbox, DialogActions, DialogContent, DialogTitle, List, ListItem, Modal, ModalClose, ModalDialog, Radio, RadioGroup, Sheet, Typography, useTheme } from '@mui/joy';
 import CustomButton from '../Buttons/CustomButton';
 import Link from 'next/link';
 import StarRatings from "react-star-ratings"
 import { RiAddLine, RiSubtractLine } from '@remixicon/react';
-import { formatePrice } from '@/helpers/functonHelpers';
+import {formatePrice, isIncluded, parseCustomFloat} from '@/helpers/functonHelpers';
 
-const ProductModal = ({ image, title, rating, price, description, variants = [], addOns = [], currentQty, }) => {
+
+const ProductModal = ({ image, title, rating,  description, variants = [], addOns = [], currentQty, simple }) => {
+
     const [open, setOpen] = React.useState(false);
     const [qty, setQty] = React.useState(1);
     const theme = useTheme();
+    const [selectedVariant, setSelectedVariant] = useState(variants[0])
+
+    const [price, setPrice] = useState(0)
+    const [selectedAddons, setSelectedAddons] = useState([])
+
+
+    const getPrice = () => {
+        if(selectedVariant){
+
+            let extraPrice = 0
+            selectedAddons.forEach(item => {
+                extraPrice+=parseCustomFloat(item.price)
+            })
+
+            selectedAddons.map(item => {
+                console.log(item)
+            })
+
+
+            const special_price = parseCustomFloat(selectedVariant.special_price)+extraPrice
+            const price = parseCustomFloat(selectedVariant.price)+extraPrice
+            console.log(selectedVariant.price)
+            if(special_price === 0){
+                setPrice(price*qty)
+            }else {
+                setPrice(special_price*qty)
+            }
+        }
+    }
+
+
+
+    useEffect(() => {
+        getPrice()
+    },[qty,selectedVariant, setSelectedAddons, selectedAddons])
+
 
     const mainColor = theme.palette.text.menuText
     const currencyColor = theme.palette.text.currency
@@ -19,7 +57,12 @@ const ProductModal = ({ image, title, rating, price, description, variants = [],
 
             <CustomButton text={"Add"} customStyle={{ px: 4, py: 0.5 }}
 
-                onClick={() => setOpen(true)}
+                    onClick={() => {
+
+                        setOpen(true)
+                        console.log(addOns)
+                    }
+                }
             />
 
 
@@ -54,8 +97,8 @@ const ProductModal = ({ image, title, rating, price, description, variants = [],
                         >
                             <AspectRatio ratio="1" sx={{ width: 90 }}>
                                 <img
-                                    src="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90"
-                                    srcSet="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90&dpr=2 2x"
+                                    src={image || "https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90"}
+                                    srcSet={image ||"https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90&dpr=2 2x"}
                                     loading="lazy"
                                     alt=""
                                 />
@@ -65,7 +108,7 @@ const ProductModal = ({ image, title, rating, price, description, variants = [],
                                     alignItems={"center"}
                                     justifyContent={"space-between"}>
                                     <Typography level="title-lg" id="card-description">
-                                        Tortilla wrap with fresh salad
+                                        {title}
                                     </Typography>
                                     <Box
                                         border={"1px solid"}
@@ -95,10 +138,11 @@ const ProductModal = ({ image, title, rating, price, description, variants = [],
                                     </Box>
                                 </Box>
                                 <Typography level="body-sm" aria-describedby="card-description" >
-                                    <StarRatings rating={4.5} starDimension={theme.fontSize.xl} starSpacing='1px' starRatedColor={theme.palette.warning[400]} ></StarRatings>
+                                    <StarRatings rating={rating ? typeof rating == "string" ? parseFloat(rating) : rating : 0} starDimension={theme.fontSize.xl} starSpacing='1px' starRatedColor={theme.palette.warning[400]} ></StarRatings>
                                 </Typography>
                                 <Typography fontSize={"md"} fontWeight={"lg"} textColor={"text.currency"} mb={1}>
-                                    {formatePrice(120.00)}
+
+                                    {formatePrice(price)}
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -110,116 +154,136 @@ const ProductModal = ({ image, title, rating, price, description, variants = [],
                     >
                         <Box>
                             <Typography>
-                                Fattoush salad is a refreshing Middle Eastern dish with fresh veggies, herbs, and crispy pita bread, dressed in a zesty mix of olive oil and ...
+                                {description}
                             </Typography>
                         </Box>
 
                         <Box>
+                            {(addOns.length != 0 || !simple) && (
+                                <Card variant="soft" color={theme.palette.neutral[50]}>
+                                    {!simple && (
+                                        <CardContent>
+                                            <Box>
+                                                <Typography fontSize={"md"} fontWeight={"lg"} >
+                                                    Variants
+                                                </Typography>
+                                                <Box>
+                                                    <RadioGroup name="radio-buttons-group">
 
-                            <Card variant="soft" color={theme.palette.neutral[50]}>
-                                <CardContent>
-                                    <Box>
-                                        <Typography fontSize={"md"} fontWeight={"lg"} >
-                                            Variants
-                                        </Typography>
-                                        <Box>
-                                            <RadioGroup name="radio-buttons-group">
-
-                                                <List
-                                                    sx={{
-                                                        minWidth: 240,
-                                                        '--List-gap': '0.5rem',
-                                                        '--ListItem-paddingY': '1rem',
-                                                        '--ListItem-radius': '8px',
-                                                        '--ListItemDecorator-size': '32px',
-                                                    }}
-                                                >
-                                                    {[
-                                                        { title: "small [server 1]", price: 150 },
-                                                        { title: "medium [server 2]", price: 250 },
-                                                        { title: "big [server 3]", price: 350 }
-
-                                                    ].map((item, index) => (
-                                                        <ListItem variant="plain" key={index} sx={{
-                                                            pb: 0
-                                                        }}>
-                                                            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
-                                                                <Typography fontSize={"sm"} fontWeight={"md"} textColor={"text.currency"}>
-                                                                    {item.title}
-                                                                </Typography>
-                                                                <Radio
-                                                                    // overlay
-                                                                    value={item.title}
-                                                                    label={
-                                                                        <Typography
-                                                                            fontSize={"sm"} fontWeight={"md"} textColor={"text.currency"}
-                                                                        >
-                                                                            {item.price}
+                                                        <List
+                                                            sx={{
+                                                                minWidth: 240,
+                                                                '--List-gap': '0.5rem',
+                                                                '--ListItem-paddingY': '1rem',
+                                                                '--ListItem-radius': '8px',
+                                                                '--ListItemDecorator-size': '32px',
+                                                            }}
+                                                        >
+                                                            {variants.map((item, index) => (
+                                                                <ListItem variant="plain" key={index} sx={{
+                                                                    pb: 0
+                                                                }}>
+                                                                    <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
+                                                                        <Typography fontSize={"sm"} fontWeight={"md"} textColor={"text.currency"}>
+                                                                            {item.variant_values}
                                                                         </Typography>
-                                                                    }
-                                                                    variant="solid"
-                                                                    sx={{ flexDirection: 'row-reverse' }}
-                                                                />
-                                                            </Box>
-                                                        </ListItem>
-                                                    ))}
-                                                </List>
-                                            </RadioGroup>
-                                        </Box>
-                                    </Box>
-                                </CardContent>
+                                                                        <Radio
+                                                                            // overlay
+                                                                            value={item.variant_ids}
+                                                                            label={
+                                                                                <Typography
+                                                                                    fontSize={"sm"} fontWeight={"md"} textColor={"text.currency"}
+                                                                                >
+                                                                                    {formatePrice(parseCustomFloat(item.special_price) !== 0 ? parseCustomFloat(item.special_price) : parseCustomFloat(item.price))}
 
-                                <CardContent>
-                                    <Box>
+                                                                                </Typography>
+                                                                            }
+                                                                            checked={selectedVariant.id == item.id}
+                                                                            onChange={() => {
+                                                                                setSelectedVariant(item)
+                                                                            }}
+                                                                            variant="solid"
+                                                                            sx={{ flexDirection: 'row-reverse' }}
+                                                                        />
+                                                                    </Box>
+                                                                </ListItem>
+                                                            ))}
+                                                        </List>
+                                                    </RadioGroup>
+                                                </Box>
+                                            </Box>
+                                        </CardContent>
+                                    )}
 
-                                        <Typography fontSize={"md"} fontWeight={"lg"} >
-                                            Extra Add Ons
-                                        </Typography>
-                                        <Box>
-                                            <List
-                                                sx={{
-                                                    minWidth: 240,
-                                                    '--List-gap': '0.5rem',
-                                                    '--ListItem-paddingY': '1rem',
-                                                    '--ListItem-radius': '8px',
-                                                    '--ListItemDecorator-size': '32px',
-                                                }}
-                                            >
-                                                {[
-                                                    { title: "Cheese", price: 0.50 },
-                                                    { title: "Onion", price: 0.10 },
-                                                    { title: "Tomato ketchup", price: 0.20 }
+                                    {addOns.length != 0 && (
+                                        <CardContent>
+                                            <Box>
 
-                                                ].map((item, index) => (
-                                                    <ListItem variant="plain" key={index} sx={{
-                                                        pb: 0
-                                                    }}>
-                                                        <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
-                                                            <Typography fontSize={"sm"} fontWeight={"md"} textColor={"text.currency"}>
-                                                                {item.title}
-                                                            </Typography>
-                                                            <Checkbox
-                                                                // overlay
-                                                                value={item.title}
-                                                                label={
-                                                                    <Typography
-                                                                        fontSize={"sm"} fontWeight={"md"} textColor={"text.currency"}
-                                                                    >
-                                                                        {item.price}
+                                                <Typography fontSize={"md"} fontWeight={"lg"} >
+                                                    Extra Add Ons
+                                                </Typography>
+                                                <Box>
+                                                    <List
+                                                        sx={{
+                                                            minWidth: 240,
+                                                            '--List-gap': '0.5rem',
+                                                            '--ListItem-paddingY': '1rem',
+                                                            '--ListItem-radius': '8px',
+                                                            '--ListItemDecorator-size': '32px',
+                                                        }}
+                                                    >
+                                                        {addOns.map((item, index) => (
+                                                            <ListItem variant="plain" key={index} sx={{
+                                                                pb: 0
+                                                            }}>
+                                                                <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
+                                                                    <Typography fontSize={"sm"} fontWeight={"md"} textColor={"text.currency"}>
+                                                                        {item.title}
                                                                     </Typography>
-                                                                }
-                                                                variant="solid"
-                                                                sx={{ flexDirection: 'row-reverse' }}
-                                                            />
-                                                        </Box>
-                                                    </ListItem>
-                                                ))}
-                                            </List>
-                                        </Box>
+                                                                    <Checkbox
+                                                                        // overlay
+                                                                        value={item.title}
+                                                                        label={
+                                                                            <Typography
+                                                                                fontSize={"sm"} fontWeight={"md"} textColor={"text.currency"}
+                                                                            >
+                                                                                {formatePrice(item.price)}
+                                                                            </Typography>
+                                                                        }
+                                                                        onChange={event => {
+                                                                            const isChecked = event.target.checked;
+                                                                            console.log(item);
 
-                                    </Box>
-                                </CardContent>
-                            </Card>
+                                                                            if (isChecked) {
+                                                                                // Add item to selectedAddons if it doesn't exist
+                                                                                if (!selectedAddons.some(obj => obj.id === item.id)) {
+                                                                                    setSelectedAddons([...selectedAddons, item]);
+                                                                                }
+                                                                            } else {
+                                                                                // Remove item from selectedAddons if it exists
+                                                                                setSelectedAddons(
+                                                                                    selectedAddons.filter(obj => obj.id !== item.id)
+                                                                                );
+                                                                            }
+                                                                        }}
+                                                                        checked={selectedAddons.some(obj => obj.id === item.id)}
+
+                                                                        variant="solid"
+                                                                        sx={{ flexDirection: 'row-reverse' }}
+                                                                    />
+                                                                </Box>
+                                                            </ListItem>
+                                                        ))}
+                                                    </List>
+                                                </Box>
+
+                                            </Box>
+                                        </CardContent>
+                                    )}
+
+                                </Card>
+                            )}
+
 
                         </Box>
 

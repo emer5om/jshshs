@@ -22,7 +22,7 @@ const Offers = ({ data, showMore = true }) => {
                         console.log(discount)
                         return (
                             <Grid xs={12} md={2} key={index}>
-                                <OfferCards image={item.image_sm} title={item.name} discount={discount} price={item.
+                                <OfferCards image={item.image_sm} title={item.name} discount={discount} product={item} price={item.
                                     variants[0].special_price != 0 ? item.variants[0]
                                     .special_price  : item.variants[0]
                                     .price

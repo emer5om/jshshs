@@ -260,103 +260,6 @@ const dishesData = [
     },
 ];
 
-const offerFoodData = [
-    {
-        image: "/images/demo-images/offer-food-1.png",
-        title: "Meat Sandwich",
-        discount: "10",
-        price: formatePrice(10.00),
-    },
-    {
-        image: "/images/demo-images/offer-food-2.png",
-        title: "Cheesy Pizza",
-        discount: "10",
-        price: formatePrice(50.60),
-    },
-    {
-        image: "/images/demo-images/offer-food-3.png",
-        title: "Hot & Spicy Maggie",
-        discount: "5",
-        price: formatePrice(8.60),
-    },
-    {
-        image: "/images/demo-images/offer-food-2.png",
-        title: "Margherita Pizza",
-        discount: "10",
-        price: formatePrice(50.60),
-    },
-    {
-        image: "/images/demo-images/offer-food-4.png",
-        title: "Veg Biryani",
-        discount: "15",
-        price: formatePrice(15.90),
-    },
-    {
-        image: "/images/demo-images/offer-food-2.png",
-        title: "Mexican Pizza",
-        discount: "10",
-        price: formatePrice(50.60),
-    },
-];
-
-const newProducts = [
-    {
-        image: "/images/demo-images/offer-food-1.png",
-        title: "Meat Sandwich",
-        discount: "10",
-        price: formatePrice(10.00),
-    },
-    {
-        image: "/images/demo-images/offer-food-2.png",
-        title: "Cheesy Pizza",
-        discount: "10",
-        price: formatePrice(50.60),
-    },
-    {
-        image: "/images/demo-images/offer-food-3.png",
-        title: "Hot & Spicy Maggie",
-        discount: "5",
-        price: formatePrice(8.60),
-    },
-    {
-        image: "/images/demo-images/offer-food-2.png",
-        title: "Margherita Pizza",
-        discount: "10",
-        price: formatePrice(50.60),
-    },
-];
-
-const specificProductData = [
-    {
-        image: "/images/demo-images/burger-1.png",
-        title: "Simple Burger",
-        ratings: "4.5",
-        price: formatePrice(10),
-        discountedPrice: "9.5",
-    },
-    {
-        image: "/images/demo-images/burger-2.png",
-        title: "Cheese Burger",
-        ratings: "4.6",
-        price: formatePrice(10),
-        discountedPrice: "9.4",
-    },
-    {
-        image: "/images/demo-images/burger-3.png",
-        title: "Spicy Burger",
-        ratings: "4.7",
-        price: formatePrice(10),
-        discountedPrice: "9.7",
-    },
-    {
-        image: "/images/demo-images/burger-4.png",
-        title: "Extra Cheesy Burger",
-        ratings: "4.0",
-        price: formatePrice(10),
-        discountedPrice: "9.99",
-    },
-];
-
 
 
 
@@ -384,10 +287,12 @@ const HomePage = () => {
             <Box>
                 <PopularCards data={popularCardData} />
             </Box>
+            {homeStoreData.offers.length != 0 && (
+                <Box>
+                    <DealsCards link={"#"} images={homeStoreData.offers} />
+                </Box>
+            )}
 
-            <Box>
-                <DealsCards link={"#"} images={hotDeals} />
-            </Box>
 
             <Box>
                 <Grid container spacing={2} mt={4}>

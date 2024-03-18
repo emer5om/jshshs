@@ -72,6 +72,23 @@ export const extractAddress = (place) => {
 
   return address;
 };
+export const parseCustomFloat = (value) => {
+
+    if(typeof value == "string"){
+
+      return parseFloat(value)
+    }
+    return value
+
+
+
+}
+
+export const isIncluded = (allItems, selectedItems, key = "id") => {
+  return selectedItems.every(selectedItem =>
+      allItems.some(item => item[key] === selectedItem[key])
+  );
+};
 
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,

@@ -14,9 +14,6 @@ const DealsCards = ({ images }) => {
     const theme = useTheme()
 
 
-    // box-shadow: 0px 4px 4px 0px #00000040;
-
-
     return (
 
         <Box display={"flex"} flexDirection={"column"}>
@@ -28,6 +25,7 @@ const DealsCards = ({ images }) => {
 
             <Grid container gap={3} mt={4}>
                 <Swiper
+    className={'wi-100'}
                     slidesPerView={6}
                     breakpoints={{
                         320: {
@@ -54,7 +52,7 @@ const DealsCards = ({ images }) => {
                             <SwiperSlide key={index}>
                                 <Box
                                     component={Link}
-                                    href={item.link}
+                                    href={"#"}
                                 >
                                     <Card
                                         sx={{
@@ -71,7 +69,7 @@ const DealsCards = ({ images }) => {
                                                 srcSet={`${item.image} 2x`}
                                                 loading="lazy"
                                                 alt=""
-                                                sx={{ objectFit: "cover" }}
+                                                sx={{ objectFit: "contain" }}
                                             >
                                             </Box>
                                         </CardCover>

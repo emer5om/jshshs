@@ -153,16 +153,7 @@ const categoryData = [
     },
 ];
 
-const hotDeals = [
-    { image: "/images/demo-images/offer-image-1.png", link: "#" },
-    { image: "/images/demo-images/offer-image-2.jpg", link: "#" },
-    { image: "/images/demo-images/offer-image-3.jpg", link: "#" },
-    { image: "/images/demo-images/offer-images-4.jpeg", link: "#" },
-    { image: "/images/demo-images/offer-image-1.png", link: "#" },
-    { image: "/images/demo-images/offer-image-2.jpg", link: "#" },
-    { image: "/images/demo-images/offer-image-3.jpg", link: "#" },
-    { image: "/images/demo-images/offer-images-4.jpeg", link: "#" },
-];
+
 
 const reorderData = [
     {

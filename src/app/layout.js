@@ -1,18 +1,19 @@
 "use client";
 import "./globals.css";
-import { store, persistor } from "../store/store";
+import { store } from "../store/store";
 import Layout from "@/layouts/Layout";
 import { CssBaseline, CssVarsProvider, extendTheme } from "@mui/joy";
 import theme from "./theme";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Provider } from "react-redux";
+import {Provider, useSelector} from "react-redux";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { usePathname } from "next/navigation";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {onAppLoad} from "@/events/events";
+import Loader from "@/component/Loader";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,6 +25,8 @@ const queryClient = new QueryClient({
 });
 export default function RootLayout({ children }) {
   // const theme = useTheme()
+
+
 
   const pathname = usePathname();
   const isRootPath = pathname === "/";
@@ -45,6 +48,7 @@ export default function RootLayout({ children }) {
           <QueryClientProvider client={queryClient}>
             <Provider store={store}>
               {/*<PersistGate loading={null} persistor={persistor}>*/}
+              <Loader />
               {isRootPath ? children : <Layout>{children}</Layout>}
               {/*</PersistGate>*/}
             </Provider>

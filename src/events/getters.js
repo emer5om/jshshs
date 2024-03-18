@@ -25,6 +25,6 @@ export const getUserData = () => {
 }
 
 export const isLogged = () => {
-    const authStoreData = useSelector((state) => state.authentication);
-    return authStoreData.isLogged
+    const state = store.getState().authentication
+    return state.isLogged
 }

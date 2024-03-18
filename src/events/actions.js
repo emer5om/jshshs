@@ -3,11 +3,12 @@ import { setBranchId } from "@/store/reducers/branchSlice";
 import { onBranchIdChange, onLoggedIn } from "@/events/events";
 import { getBranchId } from "@/events/getters";
 import api from "@/interceptor/api";
-import { setHomeBanner } from "@/store/reducers/Home/homeSlice";
 import { setAuth } from "@/store/reducers/authenticationSlice";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "@/helpers/functonHelpers";
 import { getAuth } from "firebase/auth";
+import {setCart} from "@/store/reducers/cartSlice";
+import {toast} from "react-toastify";
 
 export const changeBranchId = async ({ branch_id } = {}) => {
   const prev_branch_id = getBranchId();
@@ -54,7 +55,9 @@ export const logout = async () => {
   await store.dispatch(logout(false));
 };
 
-export const add_to_cart = ({product_variant_id, qty, addons=[]} = {}) => {
+export const add_to_cart = async ({product_variant_id, qty, addons=[]} = {}) => {
+
+  // setPageLoader(true)
   let add_on_id = ""
   let add_on_qty = ""
   addons.map(val => {
@@ -75,9 +78,35 @@ export const add_to_cart = ({product_variant_id, qty, addons=[]} = {}) => {
   }
   const formData = new FormData()
   Object.keys(data).map(key => {
-    formData.append(key, data["key"])
+    formData.append(key, data[key])
   })
-  api.post("/manage_cart", formData).then(val => {
+  try {
 
-  })
+    const response = await api.post("/manage_cart", formData)
+
+    await updateUserCart()
+    if(response.data.error){
+      toast.error(response.data.message)
+      return false
+    }
+    toast.success(response.data.message)
+    return true
+  }catch (e){
+    toast.error("Something Went wrong...")
+    return false
+  }
+    // setPageLoader(true)
+
+}
+
+export const updateUserCart = async () => {
+  const formData = new FormData()
+  formData.append("branch_id", getBranchId())
+  const res = await api.post("/get_user_cart", formData)
+  store.dispatch(setCart(res.data))
+
+}
+
+export const setPageLoader = (state) => {
+  store.dispatch(setPageLoader(state))
 }

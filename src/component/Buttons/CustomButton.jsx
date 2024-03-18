@@ -11,6 +11,7 @@ const CustomButton = ({
     decoration,
     loadingStatus,
     loadingStatusPosition,
+    disabled = false,
     onClick,
     customStyle,
     fullWidth
@@ -23,6 +24,7 @@ const CustomButton = ({
             onClick={onClick}
             sx={customStyle}
             fullWidth={fullWidth}
+            disabled={disabled}
         >
             {text}
         </Button>

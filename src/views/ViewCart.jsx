@@ -23,6 +23,7 @@ import {
 import CustomButton from '@/component/Buttons/CustomButton';
 import Link from 'next/link';
 import { formatePrice } from '@/helpers/functonHelpers';
+import {useSelector} from "react-redux";
 
 const ViewCart = () => {
     const [deliveryType, setDeliveryType] = useState("Delivery")
@@ -32,6 +33,9 @@ const ViewCart = () => {
 
     const mainColor = theme.palette.text.menuText
     const currencyColor = theme.palette.text.currency
+
+    const cartStoreData = useSelector((state) => state.cart);
+    console.log(cartStoreData)
 
     return (
         <Box>
@@ -87,185 +91,99 @@ const ViewCart = () => {
 
                                 <CardContent sx={{ px: { md: 4, xs: 1 } }}>
                                     <Divider orientation="horizontal" />
-
-                                    <Box py={1} >
-                                        <Card
-                                            variant="plain"
-                                            sx={{
-                                                width: "100%",
-                                                display: "flex",
-                                                flexDirection: { xs: "column", md: "row" },
-                                                alignItems: { xs: "center", md: "start" },
-                                                borderRadius: "md",
-                                                p: 0
-                                            }}
-                                        >
-                                            <Box maxWidth={"40%"}>
-                                                <Box
-                                                    component={"img"}
-                                                    src="https://images.unsplash.com/photo-1507833423370-a126b89d394b"
-                                                    srcSet="https://images.unsplash.com/photo-1507833423370-a126b89d394b 2x"
-                                                    loading="lazy"
-                                                    alt=""
-                                                    width={"70px"}
+                                    {cartStoreData.data.map(item => {
+                                        return <>
+                                            <Box py={1} >
+                                                <Card
+                                                    variant="plain"
                                                     sx={{
-                                                        borderRadius: "md"
+                                                        width: "100%",
+                                                        display: "flex",
+                                                        flexDirection: { xs: "column", md: "row" },
+                                                        alignItems: { xs: "center", md: "start" },
+                                                        borderRadius: "md",
+                                                        p: 0
                                                     }}
                                                 >
-                                                </Box>
-                                            </Box>
-                                            <CardContent sx={{ maxWidth: "90%", flexDirection: { md: "row", xs: "column" }, alignItems: { md: 'flex-start', xs: "center" }, textAlign: { xs: "center", md: "left" }, gap: 1 }}>
-                                                <Box maxWidth={"10%"}>
-                                                    <Box
-                                                        component={"img"}
-                                                        src={"/images/icons/veg.png"}
-                                                        width={"20px"}
-                                                    ></Box>
-                                                </Box>
-                                                <Box
-                                                    display={"flex"}
-                                                    justifyContent={"space-between"}
-                                                    flexDirection={"column"}
-                                                    width={"80%"}
-                                                >
-                                                    <Box
-                                                        display={"flex"}
-                                                        alignItems={"center"}
-                                                        gap={1}
-                                                        maxWidth={"100%"}
-                                                    >
-
-                                                        <Typography textColor={"text.menuText"} fontSize={"md"} fontWeight={"lg"} textOverflow={"ellipsis"} width={{ md: "85%", xs: "100%" }} sx={{ textWrap: { md: "nowrap", xs: "pretty" }, overflow: "hidden" }}>
-                                                            Tortilla Wrap With Fresh Salad ( 750 GM )
-                                                            Tortilla Wrap With Fresh Salad ( 750 GM )
-                                                            Tortilla Wrap With Fresh Salad ( 750 GM )
-                                                        </Typography>
-                                                    </Box>
-
-                                                    <Box display={"flex"} alignItems={"center"} justifyContent={{ xs: "center", md: "start" }} gap={2}>
-                                                        <Typography fontSize={"sm"} fontWeight={"md"} mb={1} textColor={currencyColor}>
-                                                            Medium
-                                                        </Typography>
-
-                                                        <Typography fontSize={"sm"} fontWeight={"md"} mb={1}
-                                                            textColor={currencyColor}
-                                                            endDecorator={<RiPencilLine color={currencyColor} />}
+                                                    <Box maxWidth={"40%"}>
+                                                        <Box
+                                                            component={"img"}
+                                                            src={item.image}
+                                                            srcSet={item.image}
+                                                            loading="lazy"
+                                                            alt=""
+                                                            width={"70px"}
+                                                            sx={{
+                                                                borderRadius: "md"
+                                                            }}
                                                         >
-                                                            edit
-                                                        </Typography>
-
-
+                                                        </Box>
                                                     </Box>
-                                                </Box>
-                                                <Box
-                                                    border={"1px solid"}
-                                                    borderColor={theme.palette.primary[400]}
-                                                    borderRadius={"md"}
-                                                    display={"flex"}
-                                                    alignItems={"center"}
-                                                    justifyContent={"space-between"}
-                                                    minWidth={"13%"}
-                                                >
-                                                    <CustomButton text={<RiAddLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} />
-                                                    <Typography fontSize={"sm"} fontWeight={"md"} textColor={mainColor}>
-                                                        10
-                                                    </Typography>
-                                                    <CustomButton text={<RiSubtractLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} />
-                                                </Box>
-                                            </CardContent>
-                                        </Card>
-                                    </Box>
-
-                                    <Divider />
-
-                                    <Box py={1} >
-                                        <Card
-                                            variant="plain"
-                                            sx={{
-                                                width: "100%",
-                                                display: "flex",
-                                                flexDirection: { xs: "column", md: "row" },
-                                                alignItems: { xs: "center", md: "start" },
-                                                borderRadius: "md",
-                                                p: 0
-                                            }}
-                                        >
-                                            <Box maxWidth={"40%"}>
-                                                <Box
-                                                    component={"img"}
-                                                    src="https://images.unsplash.com/photo-1507833423370-a126b89d394b"
-                                                    srcSet="https://images.unsplash.com/photo-1507833423370-a126b89d394b 2x"
-                                                    loading="lazy"
-                                                    alt=""
-                                                    width={"70px"}
-                                                    sx={{
-                                                        borderRadius: "md"
-                                                    }}
-                                                >
-                                                </Box>
-                                            </Box>
-                                            <CardContent sx={{ maxWidth: "90%", flexDirection: { md: "row", xs: "column" }, alignItems: { md: 'flex-start', xs: "center" }, textAlign: { xs: "center", md: "left" }, gap: 1 }}>
-                                                <Box maxWidth={"10%"}>
-                                                    <Box
-                                                        component={"img"}
-                                                        src={"/images/icons/veg.png"}
-                                                        width={"20px"}
-                                                    ></Box>
-                                                </Box>
-                                                <Box
-                                                    display={"flex"}
-                                                    justifyContent={"space-between"}
-                                                    flexDirection={"column"}
-                                                    width={"80%"}
-                                                >
-                                                    <Box
-                                                        display={"flex"}
-                                                        alignItems={"center"}
-                                                        gap={1}
-                                                        maxWidth={"100%"}
-                                                    >
-
-                                                        <Typography textColor={"text.menuText"} fontSize={"md"} fontWeight={"lg"} textOverflow={"ellipsis"} width={{ md: "85%", xs: "100%" }} sx={{ textWrap: { md: "nowrap", xs: "pretty" }, overflow: "hidden" }}>
-                                                            Tortilla Wrap With Fresh Salad ( 750 GM )
-                                                            Tortilla Wrap With Fresh Salad ( 750 GM )
-                                                            Tortilla Wrap With Fresh Salad ( 750 GM )
-                                                        </Typography>
-                                                    </Box>
-
-                                                    <Box display={"flex"} alignItems={"center"} justifyContent={{ xs: "center", md: "start" }} gap={2}>
-                                                        <Typography fontSize={"sm"} fontWeight={"md"} mb={1} textColor={currencyColor}>
-                                                            Medium
-                                                        </Typography>
-
-                                                        <Typography fontSize={"sm"} fontWeight={"md"} mb={1}
-                                                            textColor={currencyColor}
-                                                            endDecorator={<RiPencilLine color={currencyColor} />}
+                                                    <CardContent sx={{ maxWidth: "90%", flexDirection: { md: "row", xs: "column" }, alignItems: { md: 'flex-start', xs: "center" }, textAlign: { xs: "center", md: "left" }, gap: 1 }}>
+                                                        <Box maxWidth={"10%"}>
+                                                            <Box
+                                                                component={"img"}
+                                                                src={"/images/icons/veg.png"}
+                                                                width={"20px"}
+                                                            ></Box>
+                                                        </Box>
+                                                        <Box
+                                                            display={"flex"}
+                                                            justifyContent={"space-between"}
+                                                            flexDirection={"column"}
+                                                            width={"80%"}
                                                         >
-                                                            edit
-                                                        </Typography>
+                                                            <Box
+                                                                display={"flex"}
+                                                                alignItems={"center"}
+                                                                gap={1}
+                                                                maxWidth={"100%"}
+                                                            >
+
+                                                                <Typography textColor={"text.menuText"} fontSize={"md"} fontWeight={"lg"} textOverflow={"ellipsis"} width={{ md: "85%", xs: "100%" }} sx={{ textWrap: { md: "nowrap", xs: "pretty" }, overflow: "hidden" }}>
+                                                                    {item.name}
+                                                                </Typography>
+                                                            </Box>
+
+                                                            <Box display={"flex"} alignItems={"center"} justifyContent={{ xs: "center", md: "start" }} gap={2}>
+                                                                <Typography fontSize={"sm"} fontWeight={"md"} mb={1} textColor={currencyColor}>
+                                                                    Medium
+                                                                </Typography>
+
+                                                                <Typography fontSize={"sm"} fontWeight={"md"} mb={1}
+                                                                            textColor={currencyColor}
+                                                                            endDecorator={<RiPencilLine color={currencyColor} />}
+                                                                >
+                                                                    edit
+                                                                </Typography>
 
 
-                                                    </Box>
-                                                </Box>
-                                                <Box
-                                                    border={"1px solid"}
-                                                    borderColor={theme.palette.primary[400]}
-                                                    borderRadius={"md"}
-                                                    display={"flex"}
-                                                    alignItems={"center"}
-                                                    justifyContent={"space-between"}
-                                                    minWidth={"13%"}
-                                                >
-                                                    <CustomButton text={<RiAddLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} />
-                                                    <Typography fontSize={"sm"} fontWeight={"md"} textColor={mainColor}>
-                                                        10
-                                                    </Typography>
-                                                    <CustomButton text={<RiSubtractLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} />
-                                                </Box>
-                                            </CardContent>
-                                        </Card>
-                                    </Box>
-                                    <Divider />
+                                                            </Box>
+                                                        </Box>
+                                                        <Box
+                                                            border={"1px solid"}
+                                                            borderColor={theme.palette.primary[400]}
+                                                            borderRadius={"md"}
+                                                            display={"flex"}
+                                                            alignItems={"center"}
+                                                            justifyContent={"space-between"}
+                                                            minWidth={"13%"}
+                                                        >
+                                                            <CustomButton text={<RiAddLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} />
+                                                            <Typography fontSize={"sm"} fontWeight={"md"} textColor={mainColor}>
+                                                                10
+                                                            </Typography>
+                                                            <CustomButton text={<RiSubtractLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} />
+                                                        </Box>
+                                                    </CardContent>
+                                                </Card>
+                                            </Box>
+                                            <Divider />
+                                        </>
+                                    })}
+
+
+
                                 </CardContent>
 
 

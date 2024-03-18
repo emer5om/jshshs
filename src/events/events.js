@@ -4,20 +4,16 @@ import {
     updateHomeOffers,
     updateHomeSectionData
 } from "@/repository/home/home_repo";
-import api from "@/interceptor/api";
-import {getBranchId} from "@/events/getters";
+import {getBranchId, isLogged} from "@/events/getters";
+import {updateUserCart} from "@/events/actions";
 
 export const onAppLoad = async () => {
-
-    updateUserCart()
+    if(isLogged()){
+        updateUserCart()
+    }
 }
 
-export const updateUserCart = async () => {
-    const formData = new FormData()
-    formData.append("branch_id", getBranchId())
-    const res = await api.post("/get_user_cart", formData)
 
-}
 
 export const onBranchIdChange = ({branch_id} = {}) => {
     // dont use await for better loading speed
@@ -27,5 +23,5 @@ export const onBranchIdChange = ({branch_id} = {}) => {
     updateHomeOffers(branch_id)
 }
 export const onLoggedIn = async () => {
-
+    onAppLoad()
 }

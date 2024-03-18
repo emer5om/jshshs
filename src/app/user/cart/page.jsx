@@ -1,9 +1,11 @@
 import React from 'react'
-import UserLayout from '../UserLayout';
 import { Box } from '@mui/joy';
 import BreadCrumb from '@/component/BreadCrumb/BreadCrumb';
-import Favourites from '@/views/Favourites';
-import ViewCart from '@/views/ViewCart';
+import dynamic from "next/dynamic";
+
+const ViewCart = dynamic(() => import('@/views/ViewCart'), {
+    ssr: false
+});
 
 
 export const metadata = {

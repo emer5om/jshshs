@@ -6,6 +6,7 @@ import Link from 'next/link';
 import StarRatings from "react-star-ratings"
 import { RiAddLine, RiSubtractLine } from '@remixicon/react';
 import {formatePrice, isIncluded, parseCustomFloat} from '@/helpers/functonHelpers';
+import {add_to_cart} from "@/events/actions";
 
 
 const ProductModal = ({ image, title, rating,  description, variants = [], addOns = [], currentQty, simple }) => {
@@ -17,6 +18,16 @@ const ProductModal = ({ image, title, rating,  description, variants = [], addOn
 
     const [price, setPrice] = useState(0)
     const [selectedAddons, setSelectedAddons] = useState([])
+    const [loading, setLoading] = useState(false)
+    const addTocart = async () => {
+        setLoading(true)
+        const state = await add_to_cart({product_variant_id: selectedVariant.id, qty: qty,addons: selectedAddons})
+        setLoading(false)
+        if(!state){
+            return
+        }
+        setOpen(false)
+    }
 
 
     const getPrice = () => {
@@ -290,7 +301,7 @@ const ProductModal = ({ image, title, rating,  description, variants = [], addOn
                     </DialogContent>
 
                     <DialogActions>
-                        <CustomButton text={"Add To  Cart"} variant="solid" color="success" customStyle={{ px: 3, py: 1 }} />
+                        <CustomButton text={"Add To  Cart"} variant="solid" color="success" onClick={addTocart} disabled={loading} customStyle={{ px: 3, py: 1 }} />
                     </DialogActions>
 
                 </ModalDialog>

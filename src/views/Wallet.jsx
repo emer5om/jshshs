@@ -2,8 +2,11 @@
 
 import CustomButton from '@/component/Buttons/CustomButton';
 import ProductCards from '@/component/Cards/ProductCards';
+import WalletRechargeModal from '@/component/Modals/WalletRechargeModal';
+import WalletWithdrawModal from '@/component/Modals/WalletWithdrawModal';
 import WalletTransactions from '@/component/Transactions/WalletTransactions';
 import WalletWithdraw from '@/component/Transactions/WalletWithdraw';
+import { getUserData } from '@/events/getters';
 import { formatePrice } from '@/helpers/functonHelpers';
 import {
   Box,
@@ -23,7 +26,8 @@ import {
 import React from 'react'
 
 const Wallet = ({ data }) => {
-
+  const userData = getUserData()
+  const userBalance = userData.balance
   const [index, setIndex] = React.useState(0);
   return (
     <Grid container gap={2}>
@@ -52,7 +56,7 @@ const Wallet = ({ data }) => {
                   fontWeight="lg"
                   textColor="#fff"
                 >
-                  {formatePrice(4000.00)}
+                  {formatePrice(userBalance)}
                 </Typography>
               </Box>
             </Box>
@@ -62,10 +66,10 @@ const Wallet = ({ data }) => {
             <Box width={"100%"}>
               <Grid container gap={2} alignItems={"center"} justifyContent={"center"}>
                 <Grid xs={12} md={5} >
-                  <CustomButton text={"Add Money"} variant='soft' fullWidth={true} customStyle={{ px: 3, py: 1 }} />
+                  <WalletRechargeModal />
                 </Grid>
                 <Grid xs={12} md={5} >
-                  <CustomButton text={"Withdraw Money"} fullWidth={true} customStyle={{ px: 3, py: 1 }} />
+                  <WalletWithdrawModal />
                 </Grid>
               </Grid>
             </Box>

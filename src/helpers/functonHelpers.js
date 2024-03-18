@@ -1,10 +1,14 @@
 // import {} from "@cond"
 
 import { currencySettings } from "@/@core/config";
+import { store } from "@/store/store";
 
 export const formatePrice = (price) => {
-  if(typeof price == "string"){
-    price = parseFloat(price)
+  const currencySymbol =
+    store.getState()?.settings?.value?.system_settings[0]?.currency;
+
+  if (typeof price == "string") {
+    price = parseFloat(price);
   }
   // Format the number with the desired number of decimal places
   const formattedPrice = price.toFixed(currencySettings.decimalPoints);
@@ -24,8 +28,12 @@ export const formatePrice = (price) => {
   // Combine the formatted parts with the currency symbol based on position
   const formattedPriceStr =
     currencySettings.currencySymbolPosition === "start"
-      ? `${currencySettings.currencySymbol}${finalIntegerPart}.${decimalPart}`
-      : `${finalIntegerPart}.${decimalPart}${currencySettings.currencySymbol}`;
+      ? `${
+          currencySymbol ?? currencySettings.currencySymbol
+        }${finalIntegerPart}.${decimalPart}`
+      : `${finalIntegerPart}.${decimalPart}${
+          currencySymbol ?? currencySettings.currencySymbol
+        }`;
 
   return formattedPriceStr;
 };
@@ -73,20 +81,15 @@ export const extractAddress = (place) => {
   return address;
 };
 export const parseCustomFloat = (value) => {
-
-    if(typeof value == "string"){
-
-      return parseFloat(value)
-    }
-    return value
-
-
-
-}
+  if (typeof value == "string") {
+    return parseFloat(value);
+  }
+  return value;
+};
 
 export const isIncluded = (allItems, selectedItems, key = "id") => {
-  return selectedItems.every(selectedItem =>
-      allItems.some(item => item[key] === selectedItem[key])
+  return selectedItems.every((selectedItem) =>
+    allItems.some((item) => item[key] === selectedItem[key])
   );
 };
 
@@ -97,7 +100,5 @@ export const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APPPID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID,
 };
-
-

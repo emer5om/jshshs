@@ -1,17 +1,23 @@
-"use client";
-
-import React from 'react'
-import { Box, Card, CardContent, Chip, Typography, useTheme } from '@mui/joy';
+"use client"
+import React, { useState, useEffect } from 'react'
+import { Box, Card, CardContent, Chip, Typography, useTheme, Grid, CardCover } from '@mui/joy';
 import { format } from 'date-fns';
-
+import { get_transactions } from "@/interceptor/routes"
 // icons
 import { RiMoneyDollarCircleLine } from "@remixicon/react"
+import { toast } from 'react-toastify';
+import { formatePrice } from '@/helpers/functonHelpers';
 
-const Transactions = ({ id, status, date, type, message, amount }) => {
+const Transactions = ({
+    id, status, date, type, message, amount
+}) => {
+
     const theme = useTheme()
 
     const currentDate = new Date();
     const formattedDate = format(currentDate, 'yyyy-MM-dd');
+
+
 
     return (
         <Card sx={{ borderRadius: 'lg', width: "100%" }}>
@@ -21,7 +27,7 @@ const Transactions = ({ id, status, date, type, message, amount }) => {
                         ID:
                     </Typography>
                     <Typography textColor={"text.menuText"} fontSize={"md"} fontWeight={"lg"}>
-                        #{id ?? "000"}
+                        #{id}
                     </Typography>
                 </Box>
                 <Box>
@@ -48,7 +54,7 @@ const Transactions = ({ id, status, date, type, message, amount }) => {
                         Date
                     </Typography>
                     <Typography textColor={"text.menuText"} fontSize={"sm"} fontWeight={"md"} sx={{ opacity: "75%" }}>
-                        {date ?? formattedDate}
+                        {date}
                     </Typography>
                 </Box>
                 <Box>
@@ -75,7 +81,7 @@ const Transactions = ({ id, status, date, type, message, amount }) => {
                     <Typography textColor={"text.menuText"} fontSize={"md"} fontWeight={"lg"}>Total Pay</Typography>
                 </Box>
                 <Box>
-                    <Typography textColor={"text.currency"} fontSize={"md"} fontWeight={"lg"}>{amount ?? "00.00"}</Typography>
+                    <Typography textColor={"text.currency"} fontSize={"md"} fontWeight={"lg"}>{formatePrice(amount) ?? "00.00"}</Typography>
                 </Box>
             </Box>
         </Card>

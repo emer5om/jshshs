@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import {
     Avatar,
     Badge,
@@ -14,8 +14,8 @@ import {
     Typography,
     useTheme
 } from '@mui/joy';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faLocationDot} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 import Notification4LineIcon from 'remixicon-react/Notification4LineIcon';
 import SunFillIcon from 'remixicon-react/SunFillIcon';
@@ -26,14 +26,14 @@ import NavMenuButton from './NavMenuButton';
 import Link from 'next/link';
 import Image from 'next/image';
 import SmallNotificationCard from '../Cards/SmallNotificationCard';
-import {RiGlobalLine, RiHeartLine, RiShutDownLine, RiUser3Line} from '@remixicon/react';
+import { RiGlobalLine, RiHeartLine, RiShutDownLine, RiUser3Line } from '@remixicon/react';
 
-import {useDispatch, useSelector} from 'react-redux';
-import {setLanguage} from '@/store/reducers/languageSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLanguage } from '@/store/reducers/languageSlice';
 import SearchModal from "@/component/Modals/SearchModal";
 import LocationModal from '../Modals/LocationModal';
 import LoginModal from "@/component/Modals/LoginModal";
-import {setLogout} from "@/store/reducers/authenticationSlice";
+import { setLogout } from "@/store/reducers/authenticationSlice";
 
 
 const Header = () => {
@@ -111,7 +111,7 @@ const Header = () => {
                                 alt="logo"
                                 height={50}
                                 width={0}
-                                style={{width: '100%'}}
+                                style={{ width: '100%' }}
                                 loading="lazy"
                             />
 
@@ -151,32 +151,32 @@ const Header = () => {
                                         <Menu onClose={() => setMenuIndex(null)}>
                                             <Grid container spacing={2} width={"100%"} height={"100%"} p={2}>
                                                 <Grid xs={4}>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Spicy
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Spicy
                                                         Burger</MenuItem>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Fried
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Fried
                                                         Chicken</MenuItem>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Chole
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Chole
                                                         Bhature</MenuItem>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Delicious
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Delicious
                                                         Dessert</MenuItem>
                                                 </Grid>
                                                 <Grid xs={4}>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>South
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>South
                                                         Indian</MenuItem>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Crispy
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Crispy
                                                         Wrap</MenuItem>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Delicious
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Delicious
                                                         Thali</MenuItem>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Healthy
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Healthy
                                                         Food</MenuItem>
                                                 </Grid>
                                                 <Grid xs={4}>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Chinese
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Chinese
                                                         Food</MenuItem>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Pizza</MenuItem>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Punjabi
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Pizza</MenuItem>
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Punjabi
                                                         Food</MenuItem>
-                                                    <MenuItem sx={{borderRadius: 'md'}} {...itemProps}>Sea
+                                                    <MenuItem sx={{ borderRadius: 'md' }} {...itemProps}>Sea
                                                         Food</MenuItem>
                                                 </Grid>
                                             </Grid>
@@ -185,7 +185,7 @@ const Header = () => {
                                 >
                                     <Typography fontSize={20} display={"flex"} alignItems={"center"} gap={1}>
                                         Menu
-                                        <ArrowDownSLineIcon color={theme.palette.primary[500]}/>
+                                        <ArrowDownSLineIcon color={theme.palette.primary[500]} />
                                     </Typography>
                                 </NavMenuButton>
                                 <Link href="#" underline="none" color="inherit">
@@ -213,10 +213,10 @@ const Header = () => {
                     <Box display={"flex"} alignItems={"center"} gap={2}>
                         <Dropdown>
                             <MenuButton
-                                slots={{root: IconButton}}
-                                slotProps={{root: {variant: "text", color: 'neutral',}}}
+                                slots={{ root: IconButton }}
+                                slotProps={{ root: { variant: "text", color: 'neutral', } }}
                             >
-                                <Notification4LineIcon size={"20px"}/>
+                                <Notification4LineIcon size={"20px"} />
                             </MenuButton>
                             <Menu sx={{
                                 width: 450, p: 2, bgcolor: "rgba(211, 211, 211, 0.5)",
@@ -242,26 +242,26 @@ const Header = () => {
                                     alignItems: "flex-end",
                                     justifyContent: "end",
                                     fontWeight: "md",
-                                    '&:hover': {backgroundColor: "transparent"},
+                                    '&:hover': { backgroundColor: "transparent" },
                                 }}>
                                     Show More
                                 </MenuItem>
                             </Menu>
                         </Dropdown>
-                        <SearchModal displayStyle={"icon"}/>
+                        <SearchModal displayStyle={"icon"} />
                         <Badge component={Link} href={"/user/cart"} badgeContent={8} color="primary">
-                            <ShoppingBag3LineIcon size={"25px"} color="black"/>
+                            <ShoppingBag3LineIcon size={"25px"} color="black" />
                         </Badge>
                         <IconButton>
-                            <SunFillIcon size={"20px"}/>
+                            <SunFillIcon size={"20px"} />
                         </IconButton>
 
                         <Dropdown>
                             <MenuButton
-                                slots={{root: IconButton}}
-                                slotProps={{root: {variant: "plain", color: 'neutral'}}}
+                                slots={{ root: IconButton }}
+                                slotProps={{ root: { variant: "plain", color: 'neutral' } }}
                             >
-                                <RiGlobalLine size={"20px"}/>
+                                <RiGlobalLine size={"20px"} />
                             </MenuButton>
                             <Menu>
                                 <MenuItem onClick={() => dispatch(setLanguage("en"))}>English</MenuItem>
@@ -299,23 +299,25 @@ const Header = () => {
 
                                     endDecorator={
                                         <Box width={"30px"} mt={"5px"}>
-                                            <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]}/>
+                                            <ArrowDownSLineIcon size={"28px"} color={theme.palette.primary[500]} />
                                         </Box>
                                     }
                                 >
                                     <Box
+                                        width={"100%"}
                                         sx={{
                                             display: "flex",
                                             alignItems: "center",
+                                            gap: 1,
                                             "&:hover": {
                                                 backgroundColor: 'transparent'
                                             }
                                         }}
                                     >
 
-                                        <Avatar alt="Remy Sharp" src={authStoreData.userData.image}/>
+                                        <Avatar alt="Remy Sharp" size='sm' src={authStoreData.userData.image} />
 
-                                        <Typography level="h4" color='white' fontWeight={"bold"}
+                                        <Typography noWrap textOverflow={"ellipsis"} fontSize={"lg"} fontWeight={"md"}
                                         > {authStoreData.userData.username} </Typography>
                                     </Box>
 
@@ -332,7 +334,7 @@ const Header = () => {
                                         }}
                                     >
                                         <Typography fontSize={"sm"} fontWeight={"md"}
-                                                    startDecorator={<RiUser3Line size={theme.fontSize.lg}/>}>
+                                            startDecorator={<RiUser3Line size={theme.fontSize.lg} />}>
                                             My Profile
                                         </Typography>
                                     </MenuItem>
@@ -346,7 +348,7 @@ const Header = () => {
                                         }}
                                     >
                                         <Typography fontSize={"sm"} fontWeight={"md"}
-                                                    startDecorator={<RiHeartLine size={theme.fontSize.lg}/>}>
+                                            startDecorator={<RiHeartLine size={theme.fontSize.lg} />}>
                                             favourites
                                         </Typography>
                                     </MenuItem>
@@ -358,9 +360,9 @@ const Header = () => {
                                         }}
                                     >
                                         <Typography fontSize={"sm"} fontWeight={"md"}
-                                                    startDecorator={<RiShutDownLine size={theme.fontSize.lg}/>} onClick={() => {
-                                                        dispatch(setLogout(false))
-                                        }}>
+                                            startDecorator={<RiShutDownLine size={theme.fontSize.lg} />} onClick={() => {
+                                                dispatch(setLogout(false))
+                                            }}>
                                             Logout
                                         </Typography>
                                     </MenuItem>

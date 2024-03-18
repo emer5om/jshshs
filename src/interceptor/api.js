@@ -1,10 +1,15 @@
+import { getUserData } from "@/events/getters";
+import { store } from "@/store/store";
 import axios from "axios";
 const api = axios.create();
 const backendUrl = process.env.NEXT_PUBLIC_BASE_URL;
 api.interceptors.request.use(
   (config) => {
     config.url = `${backendUrl}${config.url}`;
-
+    const token = store.getState()?.authentication?.accessToken;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

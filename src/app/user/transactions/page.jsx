@@ -5,6 +5,7 @@ import { Box, Grid } from '@mui/joy'
 import BreadCrumb from '@/component/BreadCrumb/BreadCrumb'
 import Wallet from '@/views/Wallet'
 import Transactions from '@/component/Cards/Transactions'
+import TransactionsView from '@/views/TransactionsView'
 
 
 export const metadata = {
@@ -67,14 +68,10 @@ const page = () => {
 
 
             <UserLayout>
-                <Grid container spacing={2}>
-                    {data.map((item, index) => {
-                        return (
-                            <Grid xs={12} md={3} key={index}>
-                                <Transactions id={item.id} status={item.status} date={item.date} type={item.type} message={item.message} amount={item.amount} />
-                            </Grid>
-                        )
-                    })}
+                <Grid container my={4}>
+                    <Grid xs={12}>
+                        <TransactionsView />
+                    </Grid>
                 </Grid>
             </UserLayout>
         </Box>

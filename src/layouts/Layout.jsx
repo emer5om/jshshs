@@ -15,7 +15,6 @@ import {useSelector} from 'react-redux';
 const layout = ({children}) => {
 
     const SetSystemSettingsApi = async () => {
-        console.log("asdasdasdasd")
         await getSettings();
         return true
     }

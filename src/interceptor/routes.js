@@ -61,7 +61,32 @@ export const login = async ({ mobile, fcm_id }) => {
   formData.append("mobile", mobile);
   if (fcm_id) formData.append("fcm_id", fcm_id);
 
-  let response = await api.post("/get_cities", formData);
+  let response = await api.post("/login", formData);
+  return response.data;
+};
+
+export const deleteMyAccount = async ({ user_id }) => {
+  const formData = new FormData();
+
+  formData.append("user_id", user_id);
+
+  let response = await api.post("/delete_my_account", formData);
+  return response.data;
+};
+
+/**
+ *
+ * @param {9876543210} mobile
+ * @param {*} fcm_id
+ * @returns
+ */
+
+export const verify_user = async ({ mobile } = {}) => {
+  const formData = new FormData();
+
+  formData.append("mobile", mobile);
+
+  let response = await api.post("/verify_user", formData);
   return response.data;
 };
 
@@ -150,5 +175,34 @@ export const is_city_deliverable = async ({ name, latitude, longitude }) => {
   formData.append("longitude", longitude);
 
   let response = await api.post("/is_city_deliverable", formData);
+  return response.data;
+};
+
+// Transactions
+
+export const get_transactions = async ({
+  limit,
+  offset,
+  transaction_type,
+  type,
+} = {}) => {
+  const formData = new FormData();
+
+  formData.append("limit", limit ?? 10);
+  formData.append("offset", offset ?? 0);
+  formData.append("transaction_type", transaction_type);
+  if (type) formData.append("type", type);
+
+  let response = await api.post("/transactions", formData);
+  return response.data;
+};
+
+export const send_withdraw_request = async ({ payment_address, amount } = {}) => {
+  const formData = new FormData();
+
+  formData.append("payment_address", payment_address);
+  formData.append("amount", amount);
+
+  let response = await api.post("/send_withdrawal_request", formData);
   return response.data;
 };

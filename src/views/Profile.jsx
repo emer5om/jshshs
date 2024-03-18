@@ -10,6 +10,7 @@ import { RiPencilLine } from "@remixicon/react"
 import CustomButton from '@/component/Buttons/CustomButton';
 // CSS
 
+// import 'react-phone-input-2/lib/style.css'
 import 'react-phone-input-2/lib/material.css'
 const Profile = () => {
 

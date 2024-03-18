@@ -27,6 +27,7 @@ export const login = async ({ phoneNumber } = {}) => {
   else {
     store.dispatch(setAuth(res.data));
     onLoggedIn();
+    return { error: false };
   }
 };
 
@@ -36,7 +37,7 @@ export const register = async ({ name, email, mobile, country_code } = {}) => {
   formData.append("email", email);
   formData.append("country_code", country_code);
   formData.append("mobile", mobile);
-  const res = await api.post("/register", formData);
+  const res = await api.post("/register_user", formData);
   if (res.error) return res;
   else {
     store.dispatch(setAuth(res.data));

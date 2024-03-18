@@ -14,7 +14,7 @@ import OtpInput from "otp-input-react";
 
 // APIs
 // import { login } from "@/interceptor/routes"
-import { login } from "@/events/actions";
+import { login, register } from "@/events/actions";
 
 // css
 import 'react-phone-input-2/lib/material.css'
@@ -28,7 +28,7 @@ export default function LoginModal({ loginModalState, onClose }) {
     const countryCode = process.env.NEXT_PUBLIC_COUNTRY_CODE
     const [otp, setOtp] = useState('');
 
-    const handleLogin = async () => {
+    const handleSendOTP = async () => {
         setIsLoading(true);
 
         try {
@@ -91,6 +91,8 @@ export default function LoginModal({ loginModalState, onClose }) {
             .confirm(otp)
             .then(async (res) => {
                 console.log(res)
+                login({ phoneNumber : "9876543210"})
+                // const login = async login
             })
             .catch((err) => {
                 console.log(err);
@@ -137,7 +139,7 @@ export default function LoginModal({ loginModalState, onClose }) {
                                 variant="solid"
                                 color="primary"
                                 fullWidth
-                                onClick={handleLogin}
+                                onClick={handleSendOTP}
                                 disabled={isLoading}
                             >
                                 {isLoading ? 'Loading...' : 'Login'}

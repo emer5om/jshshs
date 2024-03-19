@@ -1,3 +1,4 @@
+
 import BreadCrumb from '@/component/BreadCrumb/BreadCrumb';
 import NewItems from '@/component/Products/NewItems'
 import Categories from '@/views/Categories';

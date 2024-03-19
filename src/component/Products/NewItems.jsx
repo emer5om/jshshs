@@ -19,6 +19,7 @@ const NewItems = ({ data, showMore = true }) => {
                 <Grid container spacing={2} sx={{ flexGrow: 1 }} >
                     {data.product_details.map((item, index) => {
                         const discount  = item.min_max_price.discount_in_percentage
+
                         return (
                             <Grid xs={12} md={3} key={index}>
                                 <OfferCards image={item.image_sm} title={item.name} product={item} discount={discount} price={item.

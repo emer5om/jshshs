@@ -23,11 +23,13 @@ import {
 import CustomButton from '@/component/Buttons/CustomButton';
 import Link from 'next/link';
 import { formatePrice } from '@/helpers/functonHelpers';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setCart} from "@/store/reducers/cartSlice";
 
 const ViewCart = () => {
     const [deliveryType, setDeliveryType] = useState("Delivery")
     const [selected, setSelected] = useState('');
+    const dispatch = useDispatch()
 
     const theme = useTheme();
 
@@ -91,7 +93,7 @@ const ViewCart = () => {
 
                                 <CardContent sx={{ px: { md: 4, xs: 1 } }}>
                                     <Divider orientation="horizontal" />
-                                    {cartStoreData.data.map(item => {
+                                    {cartStoreData.data.map((item, index) => {
                                         return <>
                                             <Box py={1} >
                                                 <Card
@@ -138,6 +140,7 @@ const ViewCart = () => {
                                                                 alignItems={"center"}
                                                                 gap={1}
                                                                 maxWidth={"100%"}
+
                                                             >
 
                                                                 <Typography textColor={"text.menuText"} fontSize={"md"} fontWeight={"lg"} textOverflow={"ellipsis"} width={{ md: "85%", xs: "100%" }} sx={{ textWrap: { md: "nowrap", xs: "pretty" }, overflow: "hidden" }}>
@@ -156,6 +159,9 @@ const ViewCart = () => {
                                                                 >
                                                                     edit
                                                                 </Typography>
+                                                                <Typography fontSize={"sm"} fontWeight={"md"} mb={1} textColor={"danger.solidBg"} >
+                                                                    Remove
+                                                                </Typography>
 
 
                                                             </Box>
@@ -169,11 +175,29 @@ const ViewCart = () => {
                                                             justifyContent={"space-between"}
                                                             minWidth={"13%"}
                                                         >
-                                                            <CustomButton text={<RiAddLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} />
+                                                            <CustomButton text={<RiAddLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} onClick={() => {
+                                                                const newCart = { ...cartStoreData };
+                                                                newCart.data = newCart.data.map((item, i) => {
+                                                                    if (i === index) {
+                                                                        return { ...item, qty:(parseInt( item.qty) + 1).toString() };
+                                                                    }
+                                                                    return item;
+                                                                });
+                                                                dispatch(setCart(newCart));
+                                                            }} />
                                                             <Typography fontSize={"sm"} fontWeight={"md"} textColor={mainColor}>
-                                                                10
+                                                                {item.qty}
                                                             </Typography>
-                                                            <CustomButton text={<RiSubtractLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} />
+                                                            <CustomButton text={<RiSubtractLine color={mainColor} />} variant='text' customStyle={{ color: "primary.500" }} onClick={() => {
+                                                                const newCart = { ...cartStoreData };
+                                                                newCart.data = newCart.data.map((item, i) => {
+                                                                    if (i === index) {
+                                                                        return { ...item, qty:(parseInt( item.qty) - 1).toString() };
+                                                                    }
+                                                                    return item;
+                                                                });
+                                                                dispatch(setCart(newCart));
+                                                            }} />
                                                         </Box>
                                                     </CardContent>
                                                 </Card>
@@ -181,9 +205,6 @@ const ViewCart = () => {
                                             <Divider />
                                         </>
                                     })}
-
-
-
                                 </CardContent>
 
 

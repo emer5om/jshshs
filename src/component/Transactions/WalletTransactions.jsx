@@ -8,51 +8,12 @@ import Transactions from '../Cards/Transactions';
 import { get_transactions } from "@/interceptor/routes"
 
 import TransactionSkeleton from "../Skeleton/TransactionSkeleton"
-
-const data = [
-  {
-    id: "001",
-    status: "success",
-    date: "2024-02-01",
-    type: "credit",
-    message: "Balance credited against item collection",
-    amount: 300.00
-  },
-  {
-    id: "002",
-    status: "success",
-    date: "2024-02-02",
-    type: "credit",
-    message: "Balance credited against item collection",
-    amount: 100.00
-  },
-  {
-    id: "003",
-    status: "failed",
-    date: "2024-02-02",
-    type: "credit",
-    message: "Balance credited against item collection",
-    amount: 150.00
-  },
-  {
-    id: "003",
-    status: "pending",
-    date: "2024-02-02",
-    type: "credit",
-    message: "Balance credited against item collection",
-    amount: 100.00
-  },
-  {
-    id: "004",
-    status: "authorized",
-    date: "2024-02-02",
-    type: "credit",
-    message: "Balance credited against item collection",
-    amount: 150.00
-  }
-]
+import { useSelector, useDispatch } from 'react-redux';
+import { setCredit } from "@/store/reducers/walletSlice"
 
 const WalletTransactions = () => {
+  const credit = useSelector((state) => state.wallet.credit);
+  const dispatch = useDispatch();
 
   const [allTransactions, getAllTransactions] = useState([])
   const [loading, setLoading] = useState(true)
@@ -63,7 +24,7 @@ const WalletTransactions = () => {
         return toast.error(transactions.message)
       } else {
         setLoading(false)
-        getAllTransactions(transactions.data)
+        dispatch(setCredit(transactions.data))
       }
       console.log("wallet transactions type credit", transactions)
     } catch (error) {
@@ -72,15 +33,17 @@ const WalletTransactions = () => {
   }
 
   useEffect(() => {
-    if (allTransactions.length === 0) {
+    if (credit.length === 0) {
       getTransactions()
+    } else {
+      setLoading(false)
+      getAllTransactions(credit)
     }
   }, [])
 
   return (
     <Box minHeight={200}>
       <Grid container spacing={2} sx={{ flexGrow: 1 }} maxWidth={"100%"} maxHeight={"100%"}>
-
         {loading ?
           [1, 2, 3, 4].map((item, index) => {
             return (

@@ -20,7 +20,7 @@ export const get_categories = async (
   return response.data;
 };
 
-export const get_settings = async (type, user_id) => {
+export const get_settings = async ({ type, user_id } = {}) => {
   const formData = new FormData();
 
   if (type) {
@@ -197,7 +197,10 @@ export const get_transactions = async ({
   return response.data;
 };
 
-export const send_withdraw_request = async ({ payment_address, amount } = {}) => {
+export const send_withdraw_request = async ({
+  payment_address,
+  amount,
+} = {}) => {
   const formData = new FormData();
 
   formData.append("payment_address", payment_address);

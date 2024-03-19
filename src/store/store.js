@@ -9,7 +9,7 @@ import homeSlice from "@/store/reducers/Home/homeSlice";
 import selectedMapAddressSlice from "@/store/reducers/selectedMapAddressSlice";
 import cartSlice from "@/store/reducers/cartSlice";
 import PageLoadingSlice from "@/store/reducers/pageLoadingSlice";
-
+import WalletSlice from "@/store/reducers/walletSlice";
 
 const persistConfig = {
   key: "root",
@@ -24,7 +24,8 @@ const rootReducer = combineReducers({
   homepage: homeSlice,
   selectedCity: selectedMapAddressSlice,
   cart: cartSlice,
-  pageLoading: PageLoadingSlice
+  pageLoading: PageLoadingSlice,
+  wallet: WalletSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

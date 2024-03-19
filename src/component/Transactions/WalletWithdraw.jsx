@@ -3,13 +3,16 @@
 import React, { useState, useEffect } from 'react'
 
 
-import { Box, Grid } from '@mui/joy';
+import { Box, Card, CardContent, Grid, Typography } from '@mui/joy';
 import Transactions from '../Cards/Transactions';
 import { get_transactions } from '@/interceptor/routes';
 import TransactionSkeleton from "../Skeleton/TransactionSkeleton"
-
-
+import { useSelector, useDispatch } from 'react-redux';
+import { setDebit } from "@/store/reducers/walletSlice"
 const WalletWithdraw = () => {
+
+  const debit = useSelector((state) => state.wallet.debit);
+  const dispatch = useDispatch();
 
   const [allTransactions, getAllTransactions] = useState([])
   const [loading, setLoading] = useState(true)
@@ -21,7 +24,7 @@ const WalletWithdraw = () => {
         return toast.error(transactions.message)
       } else {
         setLoading(false)
-        getAllTransactions(transactions.data)
+        dispatch(setDebit(transactions.data))
       }
       console.log("wallet transactions type debit", transactions)
     } catch (error) {
@@ -30,8 +33,11 @@ const WalletWithdraw = () => {
   }
 
   useEffect(() => {
-    if (allTransactions.length === 0) {
+    if (debit.length === 0) {
       getTransactions()
+    } else {
+      setLoading(false)
+      getAllTransactions(debit)
     }
   }, [])
 

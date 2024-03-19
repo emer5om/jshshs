@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const WalletRechargeModal = () => {
     const settings = useSelector((state) => state.settings);
-    console.log(settings.value.payment_method)
+    console.log(settings.value.paymentMethod)
 
 
     const [open, setOpen] = useState(false);

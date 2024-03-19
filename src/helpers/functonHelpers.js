@@ -7,6 +7,7 @@ export const formatePrice = (price) => {
   const currencySymbol =
     store.getState()?.settings?.value?.system_settings[0]?.currency;
 
+
   if (typeof price == "string") {
     price = parseFloat(price);
   }

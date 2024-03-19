@@ -1,3 +1,4 @@
+import { store } from "@/store/store";
 import api from "./api";
 
 export const get_categories = async (
@@ -208,4 +209,52 @@ export const send_withdraw_request = async ({
 
   let response = await api.post("/send_withdrawal_request", formData);
   return response.data;
+};
+
+export const add_transactions = async ({
+  amount,
+  transaction_type,
+  type,
+  message,
+  txn_id,
+  order_id,
+  status,
+  payment_method,
+} = {}) => {
+  try {
+    const paymentMethodName = payment_method.toLowerCase();
+    const user_id = store.getState()?.authentication?.userData?.id;
+    const formData = new FormData();
+    formData.append("user_id", user_id);
+    formData.append("amount", amount);
+    formData.append("transaction_type", transaction_type);
+    formData.append("type", type);
+    formData.append("message", message);
+    formData.append("txn_id", txn_id);
+    formData.append("order_id", order_id);
+    formData.append("status", status);
+    formData.append("payment_method", paymentMethodName);
+    if (paymentMethodName === "stripe" || paymentMethodName === "paypal")
+      formData.append("skip_verify_transaction", true);
+    else formData.append("skip_verify_transaction", false);
+
+    let response = await api.post("/add_transaction", formData);
+    return response.data;
+  } catch (error) {
+    return { error: true, message: error.message, data: error };
+  }
+};
+
+export const razorpay_create_order = async ({ order_id, currency } = {}) => {
+  try {
+    const formData = new FormData();
+
+    formData.append("order_id", order_id);
+    // formData.append("amount", amount);
+
+    let response = await api.post("/razorpay_create_order", formData);
+    return response.data;
+  } catch (error) {
+    return { error: true, message: error.message, data: error };
+  }
 };

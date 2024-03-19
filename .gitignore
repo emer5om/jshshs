@@ -38,5 +38,6 @@ next-env.d.ts
 # public/images/
 public/animations/
 
-public/assets/images/demo-images
+public/assets/images/demo-images/
+public/images/demo-images/
 

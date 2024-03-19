@@ -7,12 +7,12 @@ import theme from "./theme";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {Provider, useSelector} from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { usePathname } from "next/navigation";
-import {useEffect, useState} from "react";
-import {onAppLoad} from "@/events/events";
+import { useEffect, useState } from "react";
+import { onAppLoad } from "@/events/events";
 import Loader from "@/component/Loader";
 
 const queryClient = new QueryClient({
@@ -26,12 +26,10 @@ const queryClient = new QueryClient({
 export default function RootLayout({ children }) {
   // const theme = useTheme()
 
-
-
   const pathname = usePathname();
   const isRootPath = pathname === "/";
   useEffect(() => {
-    onAppLoad()
+    onAppLoad();
   }, []);
 
   return (
@@ -41,6 +39,7 @@ export default function RootLayout({ children }) {
         type="text/javascript"
         async
       />
+      <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
 
       <body>
         <CssVarsProvider theme={theme}>

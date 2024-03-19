@@ -1,13 +1,25 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Button, DialogContent, DialogTitle, FormControl, FormLabel, Input, Modal, ModalClose, ModalDialog, Stack, Textarea, Typography } from '@mui/joy';
-import { send_withdraw_request } from '@/interceptor/routes';
+import { get_settings, send_withdraw_request } from '@/interceptor/routes';
 import { toast } from 'react-toastify';
+import { setUserSettings } from '@/store/reducers/userSettingsSlice';
+import { useDispatch } from 'react-redux';
+import { getUserData } from '@/events/getters';
 
 const WalletWithdrawModal = () => {
     const [open, setOpen] = useState(false);
     const [amount, setAmount] = useState(0);
     const [paymentAddress, setPaymentAddress] = useState("");
+
+    const dispatch = useDispatch()
+    const userData = getUserData()
+    const user_id = userData.id
+    const getUserSettings = async () => {
+        const userSettings = await get_settings({ user_id })
+        dispatch(setUserSettings(userSettings.data))
+    }
+
 
     const handleWalletTransactions = async () => {
         if (amount <= 0) {
@@ -22,6 +34,10 @@ const WalletWithdrawModal = () => {
             toast.error(sendRequest.message)
         } else {
             toast.success(sendRequest.message)
+            setOpen(false)
+            getUserSettings();
+            setAmount(0)
+            setPaymentAddress("")
         }
     }
 

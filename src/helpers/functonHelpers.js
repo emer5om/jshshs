@@ -7,7 +7,6 @@ export const formatePrice = (price) => {
   const currencySymbol =
     store.getState()?.settings?.value?.system_settings[0]?.currency;
 
-
   if (typeof price == "string") {
     price = parseFloat(price);
   }
@@ -102,4 +101,20 @@ export const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APPPID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID,
+};
+
+export const generateOrderID = () => {
+  const now = new Date();
+  const year = now.getFullYear().toString().slice(2);
+  const month = ("0" + (now.getMonth() + 1)).slice(-2);
+  const day = ("0" + now.getDate()).slice(-2);
+  const hours = ("0" + now.getHours()).slice(-2);
+  const minutes = ("0" + now.getMinutes()).slice(-2);
+  const seconds = ("0" + now.getSeconds()).slice(-2);
+
+  const randomDigits = Math.floor(Math.random() * 10000)
+    .toString()
+    .padStart(4, "0");
+
+  return `${year}${month}${day}${hours}${minutes}${seconds}${randomDigits}`;
 };

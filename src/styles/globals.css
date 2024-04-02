@@ -10,6 +10,59 @@
   --border-radius-xl: 25px;
   --joy-fontFamily-body: "Quicksand", sans-serif !important;
 }
+/* Define basic scrollbar styles */
+/* Width */
+::-webkit-scrollbar {
+  width: 6px; /* For Chrome, Safari, and Opera */
+}
+::-moz-scrollbar {
+  width: 6px; /* For Firefox */
+}
+::-ms-scrollbar {
+  width: 6px; /* For Internet Explorer/Edge */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* For Chrome, Safari, and Opera */
+  border-radius: 10px;
+}
+::-moz-scrollbar-track {
+  background: #f1f1f1; /* For Firefox */
+  border-radius: 10px;
+
+}
+::-ms-scrollbar-track {
+  background: #f1f1f1; /* For Internet Explorer/Edge */
+  border-radius: 10px;
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; /* For Chrome, Safari, and Opera */
+  border-radius: 6px;
+}
+::-moz-scrollbar-thumb {
+  background: #888; /* For Firefox */
+  border-radius: 6px;
+}
+::-ms-scrollbar-thumb {
+  background: #888; /* For Internet Explorer/Edge */
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* For Chrome, Safari, and Opera */
+}
+::-moz-scrollbar-thumb:hover {
+  background: #555; /* For Firefox */
+}
+::-ms-scrollbar-thumb:hover {
+  background: #555; /* For Internet Explorer/Edge */
+}
+
 
 * {
   box-sizing: border-box;

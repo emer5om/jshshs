@@ -69,7 +69,6 @@
     "redux-persist": "^5.10.0",
     "remixicon-react": "^1.0.0",
     "replace-js-pagination": "^1.0.5",
-   
     "swiper": "^11.0.6"
   },
   "devDependencies": {

@@ -20,7 +20,7 @@ import {
     Sheet,
     Checkbox
 } from '@mui/joy';
-import { GoogleMap, Marker } from '@react-google-maps/api';
+import { GoogleMap, Marker, MarkerF } from '@react-google-maps/api';
 import { RiMapPinAddFill } from '@remixicon/react';
 import { geocodeByAddress } from 'react-places-autocomplete';
 import toast from 'react-hot-toast';
@@ -150,7 +150,7 @@ const AddUserAddressesModal = ({
     };
 
     const handleAddAddress = async () => {
-
+        console.log("inside add address");
         setPrefill({
             ...prefill,
             is_default: is_default_checked
@@ -168,8 +168,10 @@ const AddUserAddressesModal = ({
                 toast.error(addUserAddress.message)
             } else {
                 const getAddress = await getUserAddress({ user_id: userData.id })
+
                 if (!getAddress.error) {
-                    dispatch(setUserAddresses(getUserAddress.data))
+                    console.log("address")
+                    dispatch(setUserAddresses(getAddress.data))
                     setOpen(false)
                 }
             }
@@ -230,7 +232,7 @@ const AddUserAddressesModal = ({
                                 onClick={handleMapClick}
                                 options={{ streetViewControl: false, maxZoom: "16" }}
                             >
-                                <Marker position={initialCenter} />
+                                <MarkerF position={selectedLocation} />
                             </GoogleMap>
                         </Grid>
                     </Grid>
@@ -239,31 +241,31 @@ const AddUserAddressesModal = ({
                         <Grid xs={12} width={"100%"}>
                             <FormControl>
                                 <FormLabel> {t("address")} </FormLabel>
-                                <Input placeholder="Fill in the Address" {...addValueProps('address')} />
+                                <Input placeholder={t("Fill-in-the-Address")} {...addValueProps('address')} />
                             </FormControl>
                         </Grid>
                         <Grid xs={12} width={"100%"}>
                             <FormControl>
                                 <FormLabel> {t("area")} </FormLabel>
-                                <Input placeholder="Fill in the Area" {...addValueProps('area')} />
+                                <Input placeholder={t("Fill-in-the-Area")} {...addValueProps('area')} />
                             </FormControl>
                         </Grid>
                         <Grid xs={12} width={"100%"}>
                             <FormControl>
                                 <FormLabel> {t("city")} </FormLabel>
-                                <Input placeholder="Fill in the City" {...addValueProps('city')} />
+                                <Input placeholder={t("Fill-in-the-City")} {...addValueProps('city')} />
                             </FormControl>
                         </Grid>
                         <Grid xs={12} width={"100%"}>
                             <FormControl>
                                 <FormLabel> {t("pincode")} </FormLabel>
-                                <Input placeholder="Fill in the pincode" {...addValueProps('pincode')} />
+                                <Input placeholder={t("Fill-in-the-Pincode")} {...addValueProps('pincode')} />
                             </FormControl>
                         </Grid>
                         <Grid xs={12} width={"100%"}>
                             <FormControl>
                                 <FormLabel> {t("landmark")} </FormLabel>
-                                <Input placeholder="Fill in the LandMark" {...addValueProps('landmark')} />
+                                <Input placeholder={t("Fill-in-the-Landmark")}{...addValueProps('landmark')} />
                             </FormControl>
                         </Grid>
                         <Grid xs={12} width={"100%"}>

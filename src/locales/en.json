@@ -52,7 +52,7 @@
   "rate": "Rate",
   "food-in-your-bag": "Food In Your Bag",
   "clear-cart": "Clear Cart",
-  "clear-tip": "Clear-tip",
+  "clear-tip": "Clear tip",
   "Add-Food-In-Your-Bag": "Add Food In Your Bag",
   "remove": "Remove",
   "edit": "Edit",
@@ -132,5 +132,11 @@
   "you-have-no-items-in-your-cart": "You have no items in your cart.",
   "brows-Menu": "Brows Menu.",
   "No-Favourites": "No Favourites",
-  "you-don't-have-any-favorites-yet": "You don't have any favorites yet"
+  "you-don't-have-any-favorites-yet": "You don't have any favorites yet",
+  "select-Delivery-Address":"Select Delivery Address",
+  "Fill-in-the-Address": "Fill in the Address",
+  "Fill-in-the-Area": "Fill in the Area",
+  "Fill-in-the-City": "Fill in the City",
+  "Fill-in-the-Pincode": "Fill in the pincode",
+  "Fill-in-the-Landmark": "Fill in the LandMark"
 }

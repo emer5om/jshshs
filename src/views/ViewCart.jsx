@@ -60,6 +60,7 @@ const ViewCart = () => {
   const [deliveryType, setDeliveryType] = useState("Delivery");
   const [tip, setTip] = useState(0);
   const [customTip, setCustomTip] = useState(1);
+  const [customTipInputValue, setCustomTipInputValue] = useState(1);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
@@ -78,6 +79,11 @@ const ViewCart = () => {
     (state) => state.selectedDeliveryAddress
   )?.value;
   const branch_id = branchData.id;
+
+  const currencySymbol = useSelector(
+    (state) => state.settings.value.currency[0]
+  );
+
   const { t } = useTranslation();
 
   const handleRemoveItem = async (id, cart_id) => {
@@ -1012,14 +1018,35 @@ const ViewCart = () => {
                             <Input
                               size="lg"
                               type="number"
-                              value={customTip}
+                              startDecorator={currencySymbol}
+                              endDecorator={
+                                <Button
+                                  onClick={(e) => {
+                              
+                               
+                                      setCustomTip(customTipInputValue);
+                                    
+                                  }}
+                                  sx={{ maxWidth: "fit-content" }}
+                                >
+                                  Add Tip
+                                </Button>
+                              }
+                              value={customTipInputValue}
                               onChange={(e) => {
                                 const value = e.target.value;
                                 if (value === "" || value < 1) {
-                                  setCustomTip(1);
+                                  setCustomTipInputValue(1);
                                 } else {
-                                  setCustomTip(value);
+                                  setCustomTipInputValue(value);
                                 }
+                              }}
+                              inputProps={{
+                                style: {
+                                  "-moz-appearance": "textfield",
+                                  "-webkit-appearance": "none",
+                                  margin: "1000px",
+                                },
                               }}
                             />
                           </Box>

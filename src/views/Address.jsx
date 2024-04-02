@@ -15,6 +15,7 @@ const Address = () => {
     const userAddresses = useSelector((state) => state.userAddresses)?.value
     const userData = getUserData()
     const [addresses, setAddresses] = useState([])
+
     const userAddress = async () => {
         try {
             const data = await getUserAddress({ user_id: userData.id })
@@ -37,7 +38,7 @@ const Address = () => {
         else {
             userAddress()
         }
-    }, [])
+    }, [userAddresses])
 
     const fetchUserAddresses = async () => {
         try {

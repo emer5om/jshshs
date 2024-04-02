@@ -83,7 +83,7 @@ function SearchModal({ displayStyle = "icon" }) {
                     aria-describedby="modal-desc"
                     sx={{
                         minWidth: { xs: "100%", md: 700 },
-                        minHeight: { xs: "100%", md: "500" }
+                        minHeight: { xs: "100%", md: 700 }
                     }}
                 >
                     <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} >
@@ -99,7 +99,7 @@ function SearchModal({ displayStyle = "icon" }) {
                             <ModalClose />
                         </Box>
                     </Box>
-                    <DialogContent sx={{ minHeight: { md: 800, xs: "100%" }, maxWidth: { md: 700, xs: "100%" } }}>
+                    <DialogContent sx={{ minHeight: { md: 700, xs: "100%" }, maxWidth: { md: 700, xs: "100%" },overflow: 'hidden !important',  }}>
                         <Input
                             value={searchQuery}
                             onChange={handleInputChange}

@@ -185,10 +185,10 @@ const ViewCart = () => {
                     <Box display={"flex"} alignItems={"center"} gap={1}>
                       <RiShoppingBag2Line
                         color={
-                            theme.palette.mode === "light"
-                              ? theme.palette.text.menuText
-                              : theme.palette.text.currency
-                          }
+                          theme.palette.mode === "light"
+                            ? theme.palette.text.menuText
+                            : theme.palette.text.currency
+                        }
                       />
                       <Typography
                         textColor={
@@ -402,21 +402,24 @@ const ViewCart = () => {
                                       dispatch(setCart(newCart));
                                     }}
                                   >
-                                    <RiSubtractLine   color={
-                            theme.palette.mode === "light"
-                              ? theme.palette.text.menuText
-                              : theme.palette.text.currency
-                          } />
+                                    <RiSubtractLine
+                                      color={
+                                        theme.palette.mode === "light"
+                                          ? theme.palette.text.menuText
+                                          : theme.palette.text.currency
+                                      }
+                                    />
                                   </IconButton>
 
                                   <Typography
                                     fontSize={"sm"}
                                     fontWeight={"md"}
                                     color={
-                                        theme.palette.mode === "light"
-                                          ? theme.palette.text.menuText
-                                          : theme.palette.text.currency
-                                      }                                  >
+                                      theme.palette.mode === "light"
+                                        ? theme.palette.text.menuText
+                                        : theme.palette.text.currency
+                                    }
+                                  >
                                     {item.qty}
                                   </Typography>
                                   <IconButton
@@ -451,11 +454,13 @@ const ViewCart = () => {
                                       );
                                     }}
                                   >
-                                    <RiAddLine   color={
-                            theme.palette.mode === "light"
-                              ? theme.palette.text.menuText
-                              : theme.palette.text.currency
-                          }/>
+                                    <RiAddLine
+                                      color={
+                                        theme.palette.mode === "light"
+                                          ? theme.palette.text.menuText
+                                          : theme.palette.text.currency
+                                      }
+                                    />
                                   </IconButton>
                                 </Box>
                               </CardContent>
@@ -494,11 +499,13 @@ const ViewCart = () => {
               <Grid xs={12} sx={{ width: "100%" }}>
                 <Card sx={{ borderRadius: "lg", width: "100%" }}>
                   <CardActions sx={{ pt: 0, gap: 1 }}>
-                    <RiArticleLine   color={
-                            theme.palette.mode === "light"
-                              ? theme.palette.text.menuText
-                              : theme.palette.text.currency
-                          }/>
+                    <RiArticleLine
+                      color={
+                        theme.palette.mode === "light"
+                          ? theme.palette.text.menuText
+                          : theme.palette.text.currency
+                      }
+                    />
                     <Typography
                       fontSize={"md"}
                       fontWeight={"lg"}
@@ -646,11 +653,12 @@ const ViewCart = () => {
                   >
                     <Box display={"flex"} alignItems={"center"} gap={1}>
                       <RiMoneyRupeeCircleLine
-  color={
-    theme.palette.mode === "light"
-      ? theme.palette.text.menuText
-      : theme.palette.text.currency
-  }                      />
+                        color={
+                          theme.palette.mode === "light"
+                            ? theme.palette.text.menuText
+                            : theme.palette.text.currency
+                        }
+                      />
                       <Typography
                         fontSize={"md"}
                         fontWeight={"lg"}
@@ -707,11 +715,13 @@ const ViewCart = () => {
                         justifyContent={"start"}
                         gap={1}
                       >
-                        <RiMapPinLine   color={
+                        <RiMapPinLine
+                          color={
                             theme.palette.mode === "light"
                               ? theme.palette.text.menuText
                               : theme.palette.text.currency
-                          } />
+                          }
+                        />
                         <Typography
                           textColor={
                             theme.palette.mode === "light"
@@ -826,11 +836,13 @@ const ViewCart = () => {
                       justifyContent={"start"}
                       gap={1}
                     >
-                      <RiCoupon2Line   color={
-                            theme.palette.mode === "light"
-                              ? theme.palette.text.menuText
-                              : theme.palette.text.currency
-                          } />
+                      <RiCoupon2Line
+                        color={
+                          theme.palette.mode === "light"
+                            ? theme.palette.text.menuText
+                            : theme.palette.text.currency
+                        }
+                      />
                       <Typography
                         textColor={
                           theme.palette.mode === "light"
@@ -903,25 +915,41 @@ const ViewCart = () => {
                       <Box
                         display={"flex"}
                         alignItems={"center"}
-                        justifyContent={"start"}
+                        justifyContent={"space-between"}
+                        width={"100%"}
                         gap={1}
                       >
-                        <RiHandCoinLine   color={
-                            theme.palette.mode === "light"
-                              ? theme.palette.text.menuText
-                              : theme.palette.text.currency
-                          } />
+                        <Box sx={{ display: "flex", gap: 1 }}>
+                          <RiHandCoinLine
+                            color={
+                              theme.palette.mode === "light"
+                                ? theme.palette.text.menuText
+                                : theme.palette.text.currency
+                            }
+                          />
+
+                          <Typography
+                            textColor={
+                              theme.palette.mode === "light"
+                                ? "text.menuText"
+                                : "text.secondary"
+                            }
+                            fontSize={"md"}
+                            fontWeight={"lg"}
+                          >
+                            {" "}
+                            {t("Tip-Delivery-Boy")}{" "}
+                          </Typography>
+                        </Box>
+
                         <Typography
-                          textColor={
-                            theme.palette.mode === "light"
-                              ? "text.menuText"
-                              : "text.secondary"
-                          }
+                          sx={{ cursor: "pointer" }}
+                          onClick={() => setTip(0)}
                           fontSize={"md"}
                           fontWeight={"lg"}
+                          textColor={"danger.solidBg"}
                         >
-                          {" "}
-                          {t("Tip-Delivery-Boy")}{" "}
+                          {t("clear-tip")}
                         </Typography>
                       </Box>
                     </CardActions>
@@ -1022,11 +1050,12 @@ const ViewCart = () => {
                       gap={1}
                     >
                       <RiStickyNoteAddLine
-  color={
-    theme.palette.mode === "light"
-      ? theme.palette.text.menuText
-      : theme.palette.text.currency
-  }                      />
+                        color={
+                          theme.palette.mode === "light"
+                            ? theme.palette.text.menuText
+                            : theme.palette.text.currency
+                        }
+                      />
                       <Typography
                         textColor={
                           theme.palette.mode === "light"
@@ -1120,7 +1149,7 @@ const ViewCart = () => {
             gap={1}
           >
             <Typography fontSize={"lg"} fontWeight={"lg"}>
-              You have no items in your cart.
+              {t("you-have-no-items-in-your-cart")}
             </Typography>
             <Button
               variant="outlined"
@@ -1130,7 +1159,7 @@ const ViewCart = () => {
               endDecorator={<RiArrowRightLine />}
             >
               <Typography fontSize={"md"} fontWeight={"md"} color="text.danger">
-                Brows Menu.
+                {t("brows-Menu")}
               </Typography>
             </Button>
           </Box>

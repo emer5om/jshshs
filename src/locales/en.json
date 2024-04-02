@@ -52,6 +52,7 @@
   "rate": "Rate",
   "food-in-your-bag": "Food In Your Bag",
   "clear-cart": "Clear Cart",
+  "clear-tip":"Clear-tip",
   "Add-Food-In-Your-Bag": "Add Food In Your Bag",
   "remove": "Remove",
   "edit": "Edit",
@@ -126,5 +127,8 @@
   "You-Have-Not-Made-Any-Transactions-So-Far": "You Have Not Made Any Transactions So Far.",
   "Refer-And-Earn": "Refer And Earn",
   "Invite-your-friends": "Invite your friends to join and get the reward as soon as your friend first order.",
-  "Your-Referral-code": "Your Referral code"
+  "Your-Referral-code": "Your Referral code",
+  "filters":"filters",
+  "you-have-no-items-in-your-cart":"You have no items in your cart.",
+  "brows-Menu":"Brows Menu."
 }

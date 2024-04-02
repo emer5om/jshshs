@@ -95,6 +95,7 @@ const Header = () => {
         <Grid
           container
           spacing={4}
+
           maxWidth={"100%"}
           width={"100%"}
           alignItems={"center"}
@@ -130,7 +131,7 @@ const Header = () => {
               </Box>
               <Box
                 display={"flex"}
-                gap={4}
+                gap={{ md:2,lg:4 }}
                 alignItems={"center"}
                 justifyContent={"center"}
               >

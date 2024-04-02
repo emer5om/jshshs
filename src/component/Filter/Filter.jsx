@@ -176,7 +176,7 @@ const Filter = ({
             overflow: "auto",
           }}
         >
-          <DialogTitle>Filters</DialogTitle>
+          <DialogTitle>{t("filters")}</DialogTitle>
           <ModalClose />
           <Divider sx={{ mt: "auto" }} />
 

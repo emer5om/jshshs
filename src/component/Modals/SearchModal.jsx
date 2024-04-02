@@ -17,7 +17,7 @@ function SearchModal({ displayStyle = "icon" }) {
     const { t } = useTranslation()
 
     const inputRef = useRef(null);
-
+    const timerRef = useRef(null);
 
 
     const handleSearch = debounce((searchQuery) => {
@@ -29,23 +29,29 @@ function SearchModal({ displayStyle = "icon" }) {
 
     }, 250);
 
+  
+
     const handleInputChange = (e) => {
         const query = e.target.value;
         setSearchQuery(query);
         if (query.length === 0) {
             setProducts([]);
         } else {
-            handleSearch(query);
+            // Clear previous timeout if any
+            clearTimeout(timerRef.current);
+            // Set a new timeout to perform search after 500ms (adjust as needed)
+            timerRef.current = setTimeout(() => {
+                handleSearch(query);
+            }, 500);
         }
     };
-
     return (
-        <Box display={"flex"} >
+        <Box display={"flex"} sx={{width:"40px"}} >
 
             {displayStyle === "icon" ?
 
                 <RiSearch2Line
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: 'pointer',width:"40px" }}
                     size={"20px"} onClick={() => {
                         setOpen(true)
                         setSearchQuery("")

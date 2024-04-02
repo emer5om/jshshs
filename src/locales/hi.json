@@ -52,6 +52,8 @@
   "rate": "रेटिंग दें",
   "food-in-your-bag": "आपके बैग में खाना",
   "clear-cart": "कार्ट साफ़ करें",
+  "clear-tip":"टिप साफ करें",
+
   "Add-Food-In-Your-Bag": "अपने बैग में खाना जोड़ें",
   "remove": "हटाएं",
   "edit": "संपादित करें",
@@ -123,5 +125,8 @@
   "You-Have-Not-Made-Any-Transactions-So-Far": "अब तक आपने कोई लेन-देन नहीं किया है।",
   "Refer-And-Earn": "रेफर और कमाएं",
   "Invite-your-friends": "अपने दोस्तों को जोड़ें और जब आपके दोस्त पहली बार ऑर्डर करते हैं, तो उसका इनाम पाएं।",
-  "Your-Referral-code": "आपका रेफरल कोड"
+  "Your-Referral-code": "आपका रेफरल कोड",
+  "filters": "फ़िल्टर",
+  "you-have-no-items-in-your-cart": "आपकी कार्ट में कोई आइटम नहीं है।",
+  "brows-Menu": "मेन्यू ब्राउज़ करें।"
 }

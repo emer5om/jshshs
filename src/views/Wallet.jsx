@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useState } from 'react'
 import CustomButton from '@/component/Buttons/CustomButton';
 import ProductCards from '@/component/Cards/ProductCards';
 import WalletRechargeModal from '@/component/Modals/WalletRechargeModal';
@@ -9,7 +8,6 @@ import WalletTransactions from '@/component/Transactions/WalletTransactions';
 import WalletWithdraw from '@/component/Transactions/WalletWithdraw';
 import { getUserData } from '@/events/getters';
 import { formatePrice } from '@/helpers/functonHelpers';
-
 import {
   Box,
   Card,
@@ -25,37 +23,12 @@ import {
   Typography,
   tabClasses
 } from '@mui/joy';
-
-import { useSelector, useDispatch } from "react-redux"
-import { get_settings } from '@/interceptor/routes';
-import { setUserSettings } from "@/store/reducers/userSettingsSlice"
+import React from 'react'
 
 const Wallet = ({ data }) => {
   const userData = getUserData()
-  const user_id = userData.id
+  const userBalance = userData.balance
   const [index, setIndex] = React.useState(0);
-
-  const dispatch = useDispatch()
-  const userSettings = useSelector((state) => state.userSettings)?.value;
-  console.log(userSettings)
-  const [userBalance, setUserBalance] = useState(userSettings.length > 0 ? userSettings?.user_data[0]?.balance : 0)
-
-  const getUserSettings = async () => {
-    const userSettings = await get_settings({ user_id })
-    setUserBalance(userSettings.data.user_data[0].balance)
-    dispatch(setUserSettings(userSettings.data))
-  }
-
-  useEffect(() => {
-    if (userSettings.length === 0) {
-      getUserSettings()
-    } else {
-      console.log(userSettings.user_data[0].balance)
-      setUserBalance(userSettings.user_data[0].balance)
-    }
-  }, [])
-
-
   return (
     <Grid container gap={2}>
       <Grid xs={12} md={12} >

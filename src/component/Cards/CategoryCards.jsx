@@ -3,13 +3,15 @@ import { AspectRatio, Box, Button, Card, CardContent, IconButton, Typography } f
 import React from 'react'
 import { useTheme } from '@mui/joy/styles';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Link from "next/link";
 
-const CategoryCards = ({ image, title, count }) => {
+const CategoryCards = ({ image, title, slug }) => {
     const theme = useTheme();
 
     return (
-        <>
-          <Card
+        <Link href={"/categories/" + slug}>
+
+            <Card
                 sx={{
                     px: 1,
                     width: "100%",
@@ -22,10 +24,12 @@ const CategoryCards = ({ image, title, count }) => {
                     py: 2,
                     "&:hover": {
                         cursor: "pointer", // Optional: Add pointer cursor
-                        backgroundColor: theme.palette.primary[50],
+                        backgroundColor: theme.palette.mode === "light" ? theme.palette.primary[50] :theme.palette.primary[700],
                         "& img": {
                             transform: "scale(1.07)", // Zoom-in effect on hover
-                        },
+                        }
+                        
+                        ,
                     },
                 }}
             >
@@ -62,7 +66,14 @@ const CategoryCards = ({ image, title, count }) => {
                         justifyContent={"center"}
                     >
                         <Typography fontWeight={"md"} fontSize={"md"}
-                            sx={{ textWrap: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}
+                            sx={{
+                                textWrap: "nowrap",
+                                textOverflow: "ellipsis",
+                                overflow: "hidden",
+                                color: theme.palette.text.secondary, // Initial color
+                                transition: "color 0.3s ease-in-out", // Smooth transition
+                                
+                            }}
                         >
                             {title}
                         </Typography>
@@ -71,8 +82,8 @@ const CategoryCards = ({ image, title, count }) => {
                         {/*</Typography>*/}
                     </Box>
                 </CardContent>
-            </Card>  
-        </>
+            </Card>
+        </Link>
     )
 }
 

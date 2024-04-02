@@ -8,6 +8,7 @@ import SectionHeading from '../SectionHeading/SectionHeading'
 
 import MapPin5LineIcon from "remixicon-react/MapPin5LineIcon"
 import ArrowRightCircleFillIcon from "remixicon-react/ArrowRightCircleFillIcon"
+import {validateView} from "@/helpers/authGuard";
 
 const ActiveOrders = () => {
   const theme = useTheme()
@@ -47,4 +48,4 @@ const ActiveOrders = () => {
   )
 }
 
-export default ActiveOrders
+export default validateView(ActiveOrders)

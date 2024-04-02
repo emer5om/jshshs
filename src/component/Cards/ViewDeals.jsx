@@ -2,13 +2,14 @@
 import React from 'react'
 import { Box, useTheme, Grid, Card, CardCover } from '@mui/joy'
 import Link from 'next/link';
+import {HeadTitle} from "@/component/HeadTitle";
 
 const ViewDeals = ({ images }) => {
     const theme = useTheme()
 
     return (
         <Box display={"flex"} flexDirection={"column"}>
-
+            <HeadTitle title={"hot-deals"} />
             <Grid container gap={3} mt={4}>
                 {images.map((item, index) => {
                     return (

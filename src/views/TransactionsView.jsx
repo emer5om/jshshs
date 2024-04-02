@@ -4,11 +4,13 @@ import React, { useState, useEffect } from 'react'
 import { Box, Card, CardContent, Chip, Typography, useTheme, Grid, CardCover } from '@mui/joy';
 import { format } from 'date-fns';
 import { get_transactions } from "@/interceptor/routes"
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import Transactions from '@/component/Cards/Transactions';
+import {useTranslation} from "react-i18next";
 
 
 const TransactionsView = () => {
+    const {t} = useTranslation()
 
     const currentDate = new Date();
     const [allTransactions, getAllTransactions] = useState([])
@@ -31,7 +33,7 @@ const TransactionsView = () => {
 
 
     return (
-        <Grid container spacing={2} ml={1}>
+        <Grid sx={{marginTop:1}} container spacing={2} ml={1} justifyContent={"start"}>
             {allTransactions.length > 0 &&
                 allTransactions.map((item, index) => {
                     return (
@@ -43,21 +45,21 @@ const TransactionsView = () => {
                 })
             }
             {allTransactions.length === 0 &&
-                <Grid xs={12} >
-                    <Card sx={{ border: 'none', maxWidth: "100%", display: "flex", alignItems: "center", justifyContent: 'center' }}>
-                        <CardContent >
-                            <Box component={"img"} src={"/images/assets/no-transactions.jpg"}
-                                height={400}
-                            ></Box>
-                            <Typography textAlign={"center"} fontSize={"xl"} fontWeight={"lg"} >
-                                No Transactions
-                            </Typography>
-                            <Typography textAlign={"center"} fontSize={"lg"} fontWeight={"md"} >
-                                You have not made any transactions so far.
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
+              <Grid xs={12} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+              <Box sx={{ maxWidth: "100%", display: "flex", alignItems: "center", justifyContent: 'center' }}>
+                  <Box sx={{ border: 'none', display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'center' }}>
+                      <img src={"/images/assets/no-transactions.svg"} height={400} />
+                      <Typography textAlign={"center"} fontSize={"xl"} fontWeight={"lg"} >
+                      {t("No-Transactions")}
+                      </Typography>
+                      <Typography textAlign={"center"} fontSize={"lg"} fontWeight={"md"} >
+                          {t("You-Have-Not-Made-Any-Transactions-So-Far")}
+                      </Typography>
+                  </Box>
+              </Box>
+          </Grid>
+          
+
             }
         </Grid>
     )

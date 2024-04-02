@@ -6,9 +6,11 @@ import Link from 'next/link';
 
 // icons
 import ArrowRightCircleFillIcon from 'remixicon-react/ArrowRightCircleFillIcon'
+import {useTranslation} from "react-i18next";
 
 const SectionHeading = ({ title, showMore = false, showMoreLink = "", color = "primary" }) => {
     const theme = useTheme()
+    const {t} = useTranslation()
     return (
         <Box
             display={"flex"}
@@ -40,7 +42,7 @@ const SectionHeading = ({ title, showMore = false, showMoreLink = "", color = "p
                                 textDecoration: "none",
                             }}
                             endDecorator={<ArrowRightCircleFillIcon />}>
-                            Show more
+                            {t("show-more")}
                         </Typography>
                     </Link>
                 </Box>

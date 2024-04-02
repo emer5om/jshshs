@@ -28,11 +28,21 @@ const cartSlice = createSlice({
                 state.variant_id= action.payload.variant_id
                 state.data= action.payload.data
         },
+        setCartInitial: (state, action) => {
+            state.total_quantity= initialState.total_quantity
+            state.sub_total= initialState.sub_total
+            state.tax_percentage= initialState.tax_percentage
+            state.tax_amount= initialState.tax_amount
+            state.overall_amount= initialState.overall_amount
+            state.total_arr= initialState.total_arr
+            state.variant_id= initialState.variant_id
+            state.data= initialState.data
+        }
 
     },
 });
 
-export const { setCart } = cartSlice.actions;
+export const { setCart ,setCartInitial} = cartSlice.actions;
 
 export default cartSlice.reducer;
 

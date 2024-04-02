@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, DialogContent, DialogTitle, FormControl, FormLabel, Input, Modal, ModalClose, ModalDialog, Stack, Textarea, Typography } from '@mui/joy';
 import { get_settings, send_withdraw_request } from '@/interceptor/routes';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { setUserSettings } from '@/store/reducers/userSettingsSlice';
 import { useDispatch } from 'react-redux';
 import { getUserData } from '@/events/getters';

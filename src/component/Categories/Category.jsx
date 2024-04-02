@@ -14,22 +14,15 @@ import { setCategories } from '../../store/reducers/categorySlice';
 
 // APIs
 import { get_categories } from "@/interceptor/routes"
+import { useTranslation } from "react-i18next";
 
 
-const Category = ({ data }) => {
+const Category = () => {
     const homeStoreData = useSelector((state) => state.homepage);
 
     const categories = homeStoreData.categories
-    // const getCategories = () => {
-    //     get_categories().then(res => {
-    //         dispatch(setCategories(res.data))
-    //     });
-    // }
-    // useEffect(() => {
-    //     if (categories.length === 0) {
-    //         getCategories()
-    //     }
-    // }, [])
+    const { t } = useTranslation()
+
 
 
     return (
@@ -38,12 +31,12 @@ const Category = ({ data }) => {
             {/* Heading */}
             <Box display={"flex"} flexDirection={"column"}>
                 <Box>
-                    <SectionHeading title={"Cuisine Crafted with care"} showMore={true} showMoreLink='/categories' />
+                    <SectionHeading title={t("cuisine-crafted-with-care")} showMore={true} showMoreLink='/categories' />
                 </Box>
 
                 <Grid container spacing={1} my={2} >
                     <Swiper
-                        slidesPerView={12}
+                        slidesPerView={1}
                         breakpoints={{
                             320: {
                                 slidesPerView: 1,
@@ -55,23 +48,28 @@ const Category = ({ data }) => {
                                 slidesPerView: 4
                             },
                             1024: {
-                                slidesPerView: 10,
-                                spaceBetween: 40
+                                slidesPerView: 6,
                             },
+                            1240: {
+                                slidesPerView: 10,
+                            },
+
+                            1440: {
+                                slidesPerView: 8,
+                                // spaceBetween: 40
+                            }
                         }}
                         spaceBetween={10}
-                        pagination={{ clickable: true }}
                         navigation={{ clickable: true }}
                         modules={[Autoplay, Pagination, Navigation]}
                         style={{ padding: "8px 0" }}
                     >
                         {categories.map((item, index) => {
+
                             return (
                                 <Grid xs={3} md={1} key={index}>
                                     <SwiperSlide key={index} style={{ width: "100px" }}>
-                                        <Box >
-                                            <CategoryCards image={item.image} title={item.name} count={0} />
-                                        </Box>
+                                        <CategoryCards image={item.image} title={item.name} slug={item.slug} count={0} />
                                     </SwiperSlide>
                                 </Grid>
                             )

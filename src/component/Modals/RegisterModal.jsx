@@ -5,7 +5,7 @@ import {
     FormControl, FormLabel, Input, ModalClose
 } from '@mui/joy';
 import { register } from "@/events/actions";
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 const RegisterModal = ({ openRegisterModal, setOpenRegisterModal, mobile }) => {
 
@@ -58,7 +58,7 @@ password:password
     const handleRegister = async () => {
         console.log(prefill)
         const userRegister = await register(prefill)
-        if (userRegister.error) {
+        if (userRegister?.error) {
             return toast.error(userRegister.message)
         } else {
             setOpenRegisterModal(false)

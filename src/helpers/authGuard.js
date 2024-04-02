@@ -1,16 +1,19 @@
+
 import {isLogged} from "@/events/getters";
-import { Router } from 'next/router'
+import dynamic from "next/dynamic";
+const UnAuth = dynamic(() => import('@/component/401'), {
+    ssr: false
+});
 
-const validateView = (View) => {
-    return View
-    // if(isLogged()){
-    //
-    // }
-    // Router.push('/home')
+
+
+export const validateView = (View) => {
+
+
+            return View
+
 
 }
 
 
-export default {
-    validateView
-}
+

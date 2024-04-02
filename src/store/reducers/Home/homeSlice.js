@@ -5,6 +5,8 @@ const initialState = {
     banner: [],
     sections: [],
     categories: [],
+    popularSections:[],
+    delightfullSections:[],
     update: false,
     offers: []
 };
@@ -25,6 +27,12 @@ const branchSlice = createSlice({
         },
         setHomeOffers: (state, action) => {
             state.offers = action.payload
+        },
+        setHomePopularSection: (state, action) => {
+            state.popularSections = action.payload
+        },
+        setHomeDelightfullSection: (state, action) => {
+            state.delightfullSections = action.payload
         }
 
     },
@@ -34,7 +42,9 @@ const branchSlice = createSlice({
 export const {setHomeBanner,
     setHomeSection,
     setHomeCategories,
-    setHomeOffers
+    setHomeOffers,
+    setHomePopularSection,
+    setHomeDelightfullSection
 } = branchSlice.actions;
 
 export default branchSlice.reducer;

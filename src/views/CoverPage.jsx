@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
   Box,
   Card,
@@ -14,13 +14,211 @@ import {
   Typography,
   Button,
   useTheme,
+  CircularProgress,
 } from "@mui/joy";
 
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { GpsFixed, LocationCity } from "@mui/icons-material";
 import Footer from "@/component/Footer/Index";
+import {useDispatch, useSelector} from "react-redux";
+import { useLoadScript } from "@react-google-maps/api";
+// import LoginModal from "@/component/Modals/LoginModal";
+
+import { setAddress as setNewAddress } from "@/store/reducers/selectedMapAddressSlice";
+
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-places-autocomplete";
+import toast from 'react-hot-toast';
+import { is_city_deliverable } from "@/interceptor/routes";
+import { changeBranchId } from "@/events/actions";
+import { useRouter } from "next/router";
+import {getSettings} from "@/store/reducers/settingsSlice";
+
+
 const CoverPage = () => {
   const theme = useTheme();
+  const [address, setAddress] = useState("");
+  // const [loginModalState, setLoginModalState] = useState(false);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const [location, setLocation] = useState(null);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
+    libraries: ["places"]
+  });
+    const settings = useSelector((state) => state.settings.value);
+    const [setting, setSettings] = React.useState(false);
+    useEffect(() => {
+
+        if(settings && settings?.web_settings.length != 0 ) setSettings(settings.web_settings[0])
+        console.log(setting)
+
+    }, [settings]);
+  const handleChange = (value) => {
+    setAddress(value);
+
+    console.log("value", value);
+  };
+
+  if (!isLoaded) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <Box textAlign="center">
+          <CircularProgress />
+          <Typography level="body2" mt={2}>
+            Loading...
+          </Typography>
+        </Box>
+      </Box>
+    );
+  }
+
+  const handleSelect = async (value) => {
+    setAddress(value); // Dispatching the setAddress action with the selected value
+
+    try {
+      const results = await geocodeByAddress(value);
+      const latLng = await getLatLng(results[0]);
+      console.log("Coordinates:", latLng);
+
+      const city = results[0].address_components.find((component) =>
+        component.types.includes("locality")
+      );
+
+      console.log("inside handleSelect");
+      console.log(city);
+
+      if (city.long_name) {
+        console.log("City:", city.long_name);
+        console.log(latLng);
+        try {
+          const { lat, lng } = latLng;
+
+          const delivery = await is_city_deliverable({
+            name: city.long_name,
+            latitude: lat,
+            longitude: lng,
+          });
+
+          // Assuming you have another action creator named setNewAddress from another slice
+          dispatch(setNewAddress({ city: city.long_name, lat: lat, lng: lng }));
+
+          if (delivery.error) {
+            // return toast.error(delivery.message);
+          } else {
+            const branch_id = delivery.data[0].branch_id;
+            changeBranchId({ branch_id });
+            console.log("asd");
+            await router.push("/home");
+          }
+        } catch (error) {
+          // return toast.error(error.message);
+        }
+      } else {
+        // return toast.error("Please Select City");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  // Function to fetch address from coordinates using a geocoding service (example)
+  const fetchAddressFromCoordinates = async (latitude, longitude) => {
+    console.log("fetchAddressFromCoordinates");
+    try {
+      // Make a request to a geocoding service API with latitude and longitude
+      const response = await fetch(
+        `https://geocoding-service.com?lat=${latitude}&lon=${longitude}`
+      );
+      // Parse the response as JSON
+      const data = await response.json();
+      // Extract address information from the response
+      console.log(data);
+      const address = data.address;
+      // Set the retrieved address in your component state or update it as needed
+      console.log(address);
+      setAddress(address);
+    } catch (error) {
+      console.error("Error fetching address:", error);
+    }
+  };
+
+  const handleGPS = () => {
+    console.log("clicked");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log("Latitude:", latitude);
+          console.log("Longitude:", longitude);
+          // Do something with the latitude and longitude values
+          try {
+            const results = await geocodeByAddress(`${latitude},${longitude}`);
+            if (results && results.length > 0) {
+              const address = results[0].formatted_address;
+
+              // You can extract city name or other relevant information from the address
+              const city = results[0].address_components.find((component) =>
+                component.types.includes("locality")
+              );
+
+              console.log(city);
+
+              setAddress(address);
+
+              if (city) {
+                console.log("City:", city.long_name);
+                let delivery;
+                try {
+                  delivery = await is_city_deliverable({
+                    name: city.long_name,
+                    latitude,
+                    longitude,
+                  });
+                  dispatch(
+                    setNewAddress({
+                      city: city.long_name,
+                      lat: latitude,
+                      lng: longitude,
+                    })
+                  );
+                  if (delivery.error) {
+                    // return toast.error(delivery.message)
+                  } else {
+                    const branch_id = delivery.data[0].branch_id;
+                    changeBranchId({ branch_id });
+                    console.log("asd");
+                    await router.push("/home");
+                    // return toast.success(delivery.message)
+                  }
+                } catch (error) {
+                  // return toast.error(error.message)
+                }
+              } else {
+                // return toast.error("Please Select City")
+              }
+            }
+          } catch (error) {
+            console.error("Error geocoding coordinates:", error);
+          }
+        },
+        (error) => {
+          console.error("Error getting location:", error.message);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
   return (
     <>
       <Box display="flex" position="relative" flexDirection="column">
@@ -44,15 +242,25 @@ const CoverPage = () => {
               height: "65px",
             }}
           >
+              {setting && (
             <img
-              src="/images/logo.png"
+              src={setting.logo}
               alt="eRestro Single Vendor Logo"
-              sx={{ maxWidth: "100%", maxHeight: "100%" }}
+              width={100}
+              sx={{ width: "80px", maxHeight: "100%" }}
             />
+              )}
           </Box>
 
           <Box>
-            <Button
+            {/* <LoginModal
+              loginModalState={loginModalState}
+              onClose={() => {
+                setLoginModalState(false);
+              }}
+            /> */}
+
+            {/* <Button
               variant={"solid"}
               color={"primary"}
               sx={{
@@ -65,8 +273,8 @@ const CoverPage = () => {
                 },
               }}
             >
-              Register
-            </Button>
+              Login
+            </Button> */}
           </Box>
         </Box>
 
@@ -104,7 +312,75 @@ const CoverPage = () => {
                   Passionate Craftsmanship
                 </Typography>
                 <Box sx={{ mb: 2, maxWidth: { md: "80%", xs: "100%" } }}>
-                  <Input
+                  <PlacesAutocomplete
+                    value={address}
+                    onChange={handleChange}
+                    onSelect={handleSelect}
+                  >
+                    {({
+                      getInputProps,
+                      suggestions,
+                      getSuggestionItemProps,
+                      loading,
+                    }) => (
+                      <div style={{ position: "relative" }}>
+                        <Input
+                          {...getInputProps({
+                            placeholder: "Choose a location",
+                            startDecorator: <LocationCity />,
+                            endDecorator: (
+                              <Box display="flex" alignItems="center" gap={1}>
+                                <IconButton onClick={() => handleGPS()}>
+                                  <GpsFixed />
+                                </IconButton>
+                                <Button onClick={() => handleSelect(address)}>
+                                  Search
+                                </Button>
+                              </Box>
+                            ),
+                            sx: { "--Input-minHeight": "50px" },
+                          })}
+                        />
+                        <div
+                          className="autocomplete-dropdown-container"
+                          style={{
+                            position: "absolute",
+                            top: "100%",
+                            left: 0,
+                            zIndex: 10,
+                            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Example box shadow
+                            borderRadius: "4px", // Example border radius
+                            // background: "#fff", // Example background color
+                            minWidth: "100%", // Example minimum width
+                            maxHeight: "200px", // Example maximum height
+                            overflowY: "auto", // Enable vertical scrolling if needed
+                          }}
+                        >
+                          {loading && <div>Loading...</div>}
+                          {suggestions.map((suggestion) => {
+                            const className = suggestion.active
+                              ? "suggestion-item--active"
+                              : "suggestion-item";
+                            return (
+                              <div
+                                {...getSuggestionItemProps(suggestion, {
+                                  className,
+                                  style: {
+                                    padding: "8px", // Example padding
+                                    borderBottom: "1px solid #ddd", // Example border
+                                  },
+                                })}
+                              >
+                                <span>{suggestion.description}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </PlacesAutocomplete>
+
+                  {/* <Input
                     startDecorator={<LocationCity />}
                     placeholder="Choose a location"
                     endDecorator={
@@ -118,22 +394,23 @@ const CoverPage = () => {
                     sx={{
                       "--Input-minHeight": "50px",
                     }}
-                  ></Input>
+                  ></Input> */}
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={12} md={6}>
+
+            <Grid item xs={12} md={6}  >
               <Card
                 sx={{
                   maxWidth: "100%",
                   height: { xs: "350px", md: "500px" },
                   border: 0,
+                  backgroundColor:"transparent"
                 }}
               >
                 <CardCover>
                   <img
-                    src="/images/cover_image_hero.png"
-                    loading="lazy"
+                    src="/coverpage/cover_image_hero.png"
                     alt=""
                     style={{
                       objectFit: "contain",
@@ -156,214 +433,251 @@ const CoverPage = () => {
           position: "relative",
         }}
       >
-        <Box   sx={{
-    position: "absolute",
-    top: "-115px",
-    left: "-620px",
-    width: "100%",
-    height: "70%",
-    [theme.breakpoints.down("md")]: {
-      top: "-50px",
-      left: "-220px",
-      width: "120%",
-      height: "auto",
-    },
-    [theme.breakpoints.down("sm")]: {
-      top: "-20px",
-      left: "-120px",
-      width: "150%",
-      height: "auto",
-    },
-  }}>
-        <img
-          src="/images/food-items-hero.svg"
-          alt="Your image"
-         style={ {width: "100%",
-         height: "100%"}}
-        />
+        <Box
+          sx={{
+            position: "absolute",
+            top: "-115px",
+            left: "-620px",
+            width: "100%",
+            height: "70%",
+            [theme.breakpoints.down("md")]: {
+              top: "-14%",
+              left: "-3%",
+              width: "21%",
+              height: "41%",
+            },
+            [theme.breakpoints.down("sm")]: {
+              top: "-92px",
+              left: "-8px",
+              width: "45%",
+              height: "21%",
+            },
+          }}
+        >
+          <img
+            src="/coverpage/food-items-hero.svg"
+            alt="Your image"
+            style={{ width: "100%", height: "100%" }}
+          />
         </Box>
-      
-      
-        <Box   sx={{
-    position: "absolute",
-    top: "-115px",
-    left: "-620px",
-    width: "100%",
-    height: "70%",
-    [theme.breakpoints.down("md")]: {
-      top: "-50px",
-      left: "-220px",
-      width: "120%",
-      height: "auto",
-    },
-    [theme.breakpoints.down("sm")]: {
-      top: "-20px",
-      left: "-120px",
-      width: "150%",
-      height: "auto",
-    },
-  }}>
-      
-        <img
-          src="/images/garlic-cover-page.svg"
-          alt="Your image"
-          style={{
+
+        <Box
+          sx={{
             position: "absolute",
             top: "-65px",
-            left: "915px",
-            width: "40%",
+            left: "88%",
+            width: "20%",
             height: "40%",
+            [theme.breakpoints.down("lg")]: {
+              top: "-11%",
+              left: "90%",
+              width: "12%",
+              zIndex: -99999,
+              height: "39%",
+            },
+            [theme.breakpoints.down("md")]: {
+              top: "33%",
+              left: "90%",
+              width: "14%",
+              height: "27%",
+            },
+            [theme.breakpoints.down("sm")]: {
+              top: "-20px",
+              left: "-120px",
+              width: "150%",
+              height: "auto",
+            },
           }}
-        />
+        >
+          <img
+            src="/coverpage/garlic-cover-page.svg"
+            alt="Your image"
+            style={{
+              position: "absolute",
 
-</Box>
-
-<Box   sx={{
-    position: "absolute",
-    top: "-115px",
-    left: "-620px",
-    width: "100%",
-            zIndex: -99999,
-    height: "70%",
-    [theme.breakpoints.down("md")]: {
-      top: "-50px",
-      left: "-220px",
-      width: "120%",
-            zIndex: -99999,
-      height: "auto",
-    },
-    [theme.breakpoints.down("sm")]: {
-      top: "-20px",
-      left: "-120px",
-      width: "150%",
-            zIndex: -99999,
-      height: "auto",
-    },
-  }}>
-        <img
-          src="/images/plant-cover.svg"
-          alt="Your image"
-          style={{
-            // position: "absolute",
-            // top: "-65px",
-            // left: "915px",
-            width: "100%",
-            height: "100%",
-          }}
-        />
+              width: "100%",
+              height: "100%",
+            }}
+          />
         </Box>
 
-        <Box   sx={{
-    position: "absolute",
-    top: "-115px",
-    left: "-620px",
-    width: "100%",
-            zIndex: -99999,
-    height: "70%",
-    [theme.breakpoints.down("md")]: {
-      top: "-50px",
-      left: "-220px",
-      width: "120%",
-            zIndex: -99999,
-      height: "auto",
-    },
-    [theme.breakpoints.down("sm")]: {
-      top: "-20px",
-      left: "-120px",
-      width: "150%",
-            zIndex: -99999,
-      height: "auto",
-    },
-  }}>
-        <img
-          src="/images/pleant2-cover-page.svg"
-          alt="Your image"
-          style={{
-            // position: "absolute",
-            // top: "450px",
-            // left: "1033px",
-            width: "100%",
-            height: "100%",
-            zIndex: -99999,
-          }}
-        />
-</Box>
-<Box   sx={{
-    position: "absolute",
-    top: "-115px",
-    left: "-620px",
-    width: "100%",
-    height: "70%",
-            zIndex: -99999,
-
-    [theme.breakpoints.down("md")]: {
-      top: "-50px",
-      left: "-220px",
-      width: "120%",
-      height: "auto",
-            zIndex: -99999,
-
-    },
-    [theme.breakpoints.down("sm")]: {
-      top: "-20px",
-      left: "-120px",
-      width: "150%",
-      height: "auto",
-            zIndex: -99999,
-
-    },
-  }}>
-        <img
-          src="/images/plant3-cover-image.svg"
-          alt="Your image"
-          style={{
-            // top: "485px",
-            // left: "206px",
+        <Box
+          sx={{
+            position: "absolute",
+            top: "-35px",
+            left: "430px",
             width: "40%",
-            height: "21%",
-          }}
-        />
+            zIndex: -99999,
+            height: "20%",
+            [theme.breakpoints.down("md")]: {
+              top: "41%",
+              left: "-13%",
+              width: "50%",
+              zIndex: -99999,
+              height: "10%",
+            },
+            [theme.breakpoints.down("sm")]: {
+              top: "447px",
+              left: "41px",
+              width: "13%",
+              zIndex: -99999,
+              height: "auto",
+            },
 
+            [theme.breakpoints.down("xs")]: {
+              top: "409px",
+              left: "41px",
+              width: "13%",
+              zIndex: -99999,
+              height: "auto",
+            },
+          }}
+        >
+          <img
+            src="/coverpage/plant-cover.svg"
+            alt="Your image"
+            style={{
+              // position: "absolute",
+              // top: "-65px",
+              // left: "915px",
+              width: "100%",
+              height: "100%",
+            }}
+          />
         </Box>
 
-        <Box   sx={{
-    position: "absolute",
-    top: "-115px",
-    left: "-620px",
-    width: "100%",
-    height: "70%",
-    zIndex: -99999,
+        <Box
+          sx={{
+            position: "absolute",
+            top: "464px",
+            left: "96%",
+            width: "16%",
+            zIndex: -99999,
+            height: "23%",
 
-    [theme.breakpoints.down("md")]: {
-      top: "-50px",
-      left: "-220px",
-      width: "120%",
-      height: "auto",
-      zIndex: -99999,
-
-    },
-    [theme.breakpoints.down("sm")]: {
-      top: "-20px",
-      left: "-120px",
-      width: "150%",
-      height: "auto",
-      zIndex: -99999,
-    },
-  }}>
-
-        <img
-          src="/images/leaves-cover-page.svg"
-          alt="Your image"
-          style={{
-            // position: "absolute",
-            // top: "449px",
-            // left: "-36px",
-            width: "100%",
-            height: "100%",
+            [theme.breakpoints.down("xl")]: {
+              top: "87%",
+              left: "98%",
+              width: "10%",
+              zIndex: -99999,
+              height: "22%",
+            },
+            [theme.breakpoints.down("lg")]: {
+              top: "87%",
+              left: "87%",
+              width: "15%",
+              zIndex: -99999,
+              height: "21%",
+            },
+            [theme.breakpoints.down("md")]: {
+              top: "94%",
+              left: "90%",
+              width: "13%",
+              zIndex: -99999,
+              height: "12%",
+            },
+            [theme.breakpoints.down("sm")]: {
+              top: "-95%",
+              left: "73%",
+              width: "30%",
+              zIndex: -99999,
+              height: "8%",
+            },
+            [theme.breakpoints.down("xs")]: {
+              top: "-10px",
+              left: "-80px",
+              width: "180%",
+              zIndex: -99999,
+              height: "auto",
+            },
           }}
-        />
+        >
+          <img
+            src="/coverpage/pleant2-cover-page.svg"
+            alt="Your image"
+            style={{
+              width: "100%",
+              height: "100%",
+              zIndex: -99999,
+            }}
+          />
+        </Box>
 
-</Box>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "338px",
+            left: "-735px",
+            width: "104%",
+            height: "30%",
+            zIndex: -99999,
+
+            [theme.breakpoints.down("md")]: {
+              top: "-50px",
+              left: "-220px",
+              width: "40%",
+              height: "auto",
+              zIndex: -99999,
+            },
+            [theme.breakpoints.down("sm")]: {
+              top: "-20px",
+              left: "-120px",
+              width: "150%",
+              height: "auto",
+              zIndex: -99999,
+            },
+          }}
+        >
+          <img
+            src="/coverpage/plant3-cover-image.svg"
+            alt="Your image"
+            style={{
+              // top: "485px",
+              // left: "206px",
+              width: "40%",
+              height: "21%",
+            }}
+          />
+        </Box>
+
+        <Box
+          sx={{
+            position: "absolute",
+            top: "339px",
+            left: "-690px",
+            width: "100%",
+            height: "30%",
+            zIndex: -99999,
+
+            [theme.breakpoints.down("md")]: {
+              top: "85%",
+              left: "-6%",
+              width: "11%",
+              height: "19%",
+              zIndex: -99999,
+            },
+            [theme.breakpoints.down("sm")]: {
+              top: "912px",
+              left: "-57px",
+              width: "35%",
+              height: "auto",
+              zIndex: -99999,
+            },
+          }}
+        >
+          <img
+            src="/coverpage/leaves-cover-page.svg"
+            alt="Your image"
+            style={{
+              // position: "absolute",
+              // top: "449px",
+              // left: "-36px",
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        </Box>
+
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <Box
@@ -432,14 +746,21 @@ const CoverPage = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2} columns={16} sx={{ flexGrow: 1 }}>
-              <Grid xs={8}>
-                <Box sx={{ Height: "400px" }}>
+          <Grid item xs={12} md={6} sm={12}>
+            <Grid
+              container
+              spacing={2}
+              columns={{ xs: 8, sm: 16, md: 16, lg: 16 }} // Adjusting number of columns for different screen sizes
+              sx={{ flexGrow: 1 }}
+            >
+              <Grid xs={16} sm={8} md={8}>
+                <Box sx={{ Height: "100%" }}>
                   {" "}
                   <Card
                     variant="solid"
                     sx={{
+                      height: "100%", // Ensure consistent card height
+
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
@@ -497,10 +818,12 @@ const CoverPage = () => {
                   </Card>
                 </Box>
               </Grid>
-              <Grid xs={8}>
+              <Grid xs={16} sm={8} md={8}>
                 <Card
                   variant="solid"
                   sx={{
+                    height: "100%", // Ensure consistent card height
+
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -509,7 +832,7 @@ const CoverPage = () => {
                     backgroundColor: "white", // White background using theme palette
                     borderRadius: 8, // Border radius
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Box shadow
-                    maxHeight: "400px", // Set max height
+                    maxHeight: "100%", // Set max height
                     overflow: "auto", // Enable overflow scrolling if content exceeds max height
                   }}
                 >
@@ -575,11 +898,18 @@ const CoverPage = () => {
               </Grid>
             </Grid>
 
-            <Grid container spacing={2} columns={16} sx={{ flexGrow: 1 }}>
-              <Grid xs={8}>
+            <Grid
+              container
+              spacing={2}
+              columns={{ xs: 8, sm: 16, md: 16, lg: 16 }}
+              sx={{ flexGrow: 1 }}
+            >
+              <Grid xs={16} sm={8} md={8}>
                 <Card
                   variant="solid"
                   sx={{
+                    height: "100%", // Ensure consistent card height
+
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -648,10 +978,12 @@ const CoverPage = () => {
                   </Typography>
                 </Card>
               </Grid>
-              <Grid xs={8}>
+              <Grid xs={16} sm={8} md={8}>
                 <Card
                   variant="solid"
                   sx={{
+                    height: "100%", // Ensure consistent card height
+
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -711,33 +1043,8 @@ const CoverPage = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Box>
 
-      {/* Footer */}
-      <Box
-        bgcolor={theme.palette.text.currency}
-        color="white"
-        p={2}
-        sx={{
-          textAlign: "center",
-          alignItems: "center",
-          width: "100%",
-          position: "fixed", // Fixed position to keep it at the bottom
-          bottom: 0, // Align it to the bottom of the viewport
-          left: 0, // Align it to the left of the viewport
-          right: 0, // Align it to the right of the viewport
-          zIndex: 9999, // Ensure it stays above other content
-          overflowX: "hidden", // Hide horizontal overflow
-        }}
-      >
-        {/* Add your footer content here */}
-        <Typography
-          variant="body2"
-          bgcolor={theme.palette.text.currency}
-          color={theme.palette.common.white}
-        >
-          &copy; 2024 Infinitie Technologies | All rights reserved
-        </Typography>
+        
       </Box>
     </>
   );

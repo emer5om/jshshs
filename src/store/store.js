@@ -10,7 +10,13 @@ import selectedMapAddressSlice from "@/store/reducers/selectedMapAddressSlice";
 import cartSlice from "@/store/reducers/cartSlice";
 import PageLoadingSlice from "@/store/reducers/pageLoadingSlice";
 import WalletSlice from "@/store/reducers/walletSlice";
+import favoritesSlice from "@/store/reducers/favoritesSlice";
+import promoCodeSlice from "@/store/reducers/promoCodeSlice";
+import userAddressesSlice from "@/store/reducers/userAddressesSlice";
+import selectedDeliverySlice from "@/store/reducers/selectedDeliverySlice";
 import userSettingsSlice from "@/store/reducers/userSettingsSlice";
+import darkModeReducer from "@/store/reducers/darkModeSlice";
+import rtlReducer from "@/store/reducers/rtlSlice";
 
 const persistConfig = {
   key: "root",
@@ -27,7 +33,14 @@ const rootReducer = combineReducers({
   cart: cartSlice,
   pageLoading: PageLoadingSlice,
   wallet: WalletSlice,
+  favorites: favoritesSlice,
+  promoCode: promoCodeSlice,
+  userAddresses: userAddressesSlice,
+  selectedDeliveryAddress: selectedDeliverySlice,
   userSettings: userSettingsSlice,
+  darkMode: darkModeReducer,
+  rtl: rtlReducer,
+
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

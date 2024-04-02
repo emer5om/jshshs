@@ -1,53 +1,82 @@
 "use client";
 
-import React from 'react'
-import { Box, Chip, Typography } from '@mui/joy'
+import React, { useEffect, useState } from 'react'
+import { Box, Chip, Typography,useTheme } from '@mui/joy'
 
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
+import Image from 'next/image';
+import { useSelector } from 'react-redux';
+import { get_settings } from '@/interceptor/routes';
+import { getUserData } from '@/events/getters';
+import { useTranslation } from 'react-i18next';
 
-import "@lottiefiles/lottie-player";
+
+// import "@lottiefiles/lottie-player";
 
 const Refer = () => {
+    const theme =  useTheme()
+    const userData = getUserData();
+    const [userRefer, setUserRefer] = useState([])
+    const {t} = useTranslation()
+
+    const userSettings = async () => {
+
+        const getUserSettingsX = await get_settings({ user_id: userData.id })
+        console.log(getUserSettingsX)
+        setUserRefer(getUserSettingsX.data.user_data)
+
+    }
+
+    useEffect(() => {
+        userSettings()
+    }, [])
 
 
-    // const handleCopyClick = async (value) => {
-    //     try {
-    //         await navigator.clipboard.writeText(value);
-    //         toast("Code Copied")
-    //     } catch (err) {
-    //         console.error('Failed to copy text:', err);
-    //     }
-    // };
+    const handleCopyClick = async (value) => {
+        try {
+            await navigator.clipboard.writeText(value);
+            toast("Code Copied")
+        } catch (err) {
+            console.error('Failed to copy text:', err);
+        }
+    };
 
     return (
-        <Box width={"100%"}>
+        <Box marginTop={4} width={"100%"}>
             <Box display={"flex"} alignItems={"center"} justifyContent={"center"} flexDirection={"column"} >
                 <Box maxWidth={"100%"} maxHeight={"100%"}>
                     <Box width={"100%"} height={"400px"}>
-                        <lottie-player
-                            autoplay
-                            loop
-                            mode="normal"
-                            src="/animations/refer.json"
+                        <Box
+                            component={"img"}
+                            src={"/images/assets/refer-and-earn.png"}
+                            height={"100%"}
+                            width={"100%"}
                         >
-                        </lottie-player>
+
+                        </Box>
                     </Box>
                 </Box>
-                <Box display={"flex"} alignItems={"center"} justifyContent={"center"} flexDirection={"column"} gap={1} textAlign={"center"}>
-                    <Typography fontSize={"xl"} fontWeight={"xl"} textColor={"text.menuText"}>
-                        Refer and Earn
+                <Box  display={"flex"} alignItems={"center"} justifyContent={"center"} flexDirection={"column"} gap={1} textAlign={"center"}>
+                    <Typography fontSize={"xl"} fontWeight={"xl"}  textColor={
+                  theme.palette.mode === "light"
+                    ? theme.palette.text.menuText
+                    : theme.palette.text.currency
+                }   >
+{t("Refer-And-Earn")}
                     </Typography>
                     <Typography fontSize={"lg"} fontWeight={"md"}>
-                        Invite your friends to join and get the reward as soon as your friend first order.
+                        {t("Invite-your-friends")}
                     </Typography>
                     <Typography fontSize={"md"} fontWeight={"md"}>
-                        Your Referral code
+                        {t("Your-Referral-code")}
                     </Typography>
-                    <Chip color="warning" sx={{ borderStyle: "dashed", borderWidth: "1px", borderRadius: "sm" }}
-                        // onClick={e => handleCopyClick("A2XYD3R7E0")}
-                    >
-                        A2XYD3R7E0
-                    </Chip>
+                    {userRefer[0]?.referral_code &&
+                        <Chip color="warning" sx={{ borderStyle: "dashed", borderWidth: "1px", borderRadius: "sm", cursor: "pointer" }}
+                            onClick={e => handleCopyClick(userRefer[0]?.referral_code)}
+                        >
+                            {userRefer[0]?.referral_code}
+                        </Chip>
+                    }
                 </Box>
             </Box>
         </Box>

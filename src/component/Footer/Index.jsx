@@ -1,29 +1,29 @@
 "use client";
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
-    Sheet,
     Container,
     Grid,
     Box,
-    Text,
-    Badge,
-    Avatar,
-    Button,
-    Divider,
     Typography,
-    Link,
     Stack,
-    ListItem,
-    List
 } from '@mui/joy';
-import { Img } from '@/component/Img';
+import Link from "next/link"
 import FacebookCircleLineIcon from 'remixicon-react/FacebookCircleLineIcon';
 import InstagramFillIcon from 'remixicon-react/InstagramFillIcon';
 import TwitterLineIcon from 'remixicon-react/TwitterLineIcon';
 import YoutubeLineIcon from 'remixicon-react/YoutubeLineIcon';
-
 import { useTheme } from '@mui/joy/styles';
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 const Index = () => {
+
+    const settings = useSelector((state) => state.settings.value);
+    const [setting, setSettings] = React.useState(false);
+    useEffect(() => {
+        if (settings && settings?.web_settings.length != 0) setSettings(settings.web_settings[0])
+    }, [settings]);
+    const { t } = useTranslation()
     const theme = useTheme();
     return (
         <Grid mt={8} container px={6} bgcolor={theme.palette.background.footer}>
@@ -34,48 +34,57 @@ const Index = () => {
                             <Grid xs={12} md={6}>
                                 <Box display={"flex"} alignItems={"flex-start"} flexDirection={"column"}>
                                     <Box display={"flex"} alignItems={"center"}>
-                                        <Img src="/images/erestro-light.svg" alt="" />
-                                        <Img src="/images/erestro-light-text.svg" alt="" />
+                                        <img
+                                            src={
+                                                setting ?
+                                                    setting.light_logo
+                                                    : "/images/logo-backend.png"
+                                            }
+                                            alt="logo"
+                                            height={50}
+                                            style={{ width: '100%' }}
+                                            loading="lazy"
+                                        />
                                     </Box>
                                     <Box mt={2}>
-                                        <Typography level="title-sm" textColor={"white"}>
-                                            Savor the artistry where every dish is a culinary masterpiece
+                                        <Typography level="title-sm" textColor={"white"} width={500}>
+                                            {setting && setting.app_short_description}
                                         </Typography>
                                     </Box>
                                 </Box>
                             </Grid>
                             <Grid xs={12} md={6} color={"white"} spacing={12} gap={12}>
-                                <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: { xs: "center", md: "baseline" } }} gap={{ xs: 2, md: 12 }}>
+                                <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: { xs: "center", md: "baseline" } }} gap={{ xs: 2 }}>
                                     {/* 1 */}
-                                    <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
-                                        <Typography
-                                            id="decorated-list-demo"
-                                            level="body-lg"
-                                            fontWeight={"bolder"}
-                                            mb={2}
-                                            textColor={"white"}
-                                        >
-                                            Useful Links
-                                        </Typography>
-                                        <Stack gap={2}>
-                                            <Typography textColor={"white"}>
-                                                About us
-                                            </Typography>
-                                            <Typography textColor={"white"}>
-                                                Events
-                                            </Typography>
-                                            <Typography textColor={"white"}>
-                                                Blogs
-                                            </Typography>
-                                            <Typography textColor={"white"}>
-                                                FAQ
-                                            </Typography>
+                                    {/*<Box sx={{ textAlign: { xs: "center", md: "left" } , minWidth:{md:"110px"} }}>*/}
+                                    {/*    <Typography*/}
+                                    {/*        id="decorated-list-demo"*/}
+                                    {/*        level="body-lg"*/}
+                                    {/*        fontWeight={"bolder"}*/}
+                                    {/*        mb={2}*/}
+                                    {/*        textColor={"white"}*/}
+                                    {/*    >*/}
+                                    {/*        Useful Links*/}
+                                    {/*    </Typography>*/}
+                                    {/*    <Stack gap={2}>*/}
+                                    {/*        <Typography textColor={"white"}>*/}
+                                    {/*            About us*/}
+                                    {/*        </Typography>*/}
+                                    {/*        <Typography textColor={"white"}>*/}
+                                    {/*            Events*/}
+                                    {/*        </Typography>*/}
+                                    {/*        <Typography textColor={"white"}>*/}
+                                    {/*            Blogs*/}
+                                    {/*        </Typography>*/}
+                                    {/*        <Typography textColor={"white"}>*/}
+                                    {/*            FAQ*/}
+                                    {/*        </Typography>*/}
 
-                                        </Stack>
-                                    </Box>
+                                    {/*    </Stack>*/}
+                                    {/*</Box>*/}
 
                                     {/* 2 */}
-                                    <Box mx={{ xs: 0, md: 8 }} sx={{ textAlign: { xs: "center", md: "left" } }}>
+                                    <Box mx={{ xs: 0, sm: 4, md: 5, lg: 12 }} sx={{ textAlign: { xs: "center", md: "left" }, minWidth: { md: "110px" } }}>
                                         <Typography
                                             id="decorated-list-demo"
                                             level="body-lg"
@@ -83,21 +92,43 @@ const Index = () => {
                                             mb={2}
                                             textColor={"white"}
                                         >
-                                            Main Menu
+                                            {t("main-menu")}
                                         </Typography>
                                         <Stack gap={2}>
-                                            <Typography textColor={"white"}>
-                                                Home
-                                            </Typography>
-                                            <Typography textColor={"white"}>
-                                                Office
-                                            </Typography>
-                                            <Typography textColor={"white"}>
-                                                Menus
-                                            </Typography>
-                                            <Typography textColor={"white"}>
-                                                Reservation
-                                            </Typography>
+                                            <Link href={"/home"} >
+                                                <Typography textColor={"white"}>
+                                                    {t("home")}
+                                                </Typography>
+                                            </Link>
+                                            <Link href={"/categories"} >
+                                                <Typography textColor={"white"}>
+
+                                                    {t("categories")}
+                                                </Typography>
+                                            </Link >
+                                            <Link href={"/terms-conditions"} >
+                                                <Typography textColor={"white"}>
+
+                                                    {t("terms-condition")}
+                                                </Typography>
+                                            </Link >
+                                            <Link href={"/privacy-policy"} >
+                                                <Typography textColor={"white"}>
+
+                                                    {t("privacy-policy")}
+                                                </Typography>
+                                            </Link >
+                                            <Link href={"/about"} >
+                                                <Typography textColor={"white"}>
+
+                                                    {t("about")}
+                                                </Typography>
+                                            </Link > <Link href={"/contact-us"} >
+                                                <Typography textColor={"white"}>
+
+                                                    {t("contact-us")}
+                                                </Typography>
+                                            </Link >
                                         </Stack>
                                     </Box>
 
@@ -110,20 +141,31 @@ const Index = () => {
                                             mb={2}
                                             textColor={"white"}
                                         >
-                                            Contact Us
+                                            {t("contact-us")}
                                         </Typography>
                                         <Stack gap={2}>
-                                            <Typography textColor={"white"} sx={{ textAlign: { xs: "center", md: "left" } }}>
-                                                example@mail.com
-                                            </Typography>
 
-                                            <Typography textColor={"white"} sx={{ textAlign: { xs: "center", md: "left" } }}>
-                                                +91 123 456 7890
+                                            {setting && setting.
+                                                support_email && (
 
-                                            </Typography>
-                                            <Typography textColor={"white"} sx={{ textAlign: { xs: "center", md: "left" } }}>
-                                                Social Media
-                                            </Typography>
+                                                    <Link href={"mailto:" + setting.support_email}>
+                                                        <Typography textColor={"white"}>
+                                                            {setting.support_email}
+                                                        </Typography>
+                                                    </Link>
+
+                                                )}
+                                            {setting && setting.
+                                                support_number && (
+
+                                                    <Link href={"tel:" + setting.support_number}>
+                                                        <Typography textColor={"white"}>
+                                                            {setting.support_number}
+                                                        </Typography>
+                                                    </Link>
+
+                                                )}
+
                                         </Stack>
                                     </Box>
 
@@ -134,28 +176,50 @@ const Index = () => {
 
                         <Grid container spacing={4} width={"100%"} color={"white"} >
                             <Grid xs={12} md={5}>
-                                <Box display={"flex"} gap={2} alignItems={"center"} >
-                                    <Box sx={{ border: "1px solid", p: 1, borderRadius: "100%" }} display={"flex"} alignItems={"center"}>
-                                        <FacebookCircleLineIcon />
-                                    </Box>
-                                    <Box sx={{ border: "1px solid", p: 1, borderRadius: "100%" }} display={"flex"} alignItems={"center"}>
-                                        <InstagramFillIcon />
-                                    </Box>
-                                    <Box sx={{ border: "1px solid", p: 1, borderRadius: "100%" }} display={"flex"} alignItems={"center"}>
-                                        <TwitterLineIcon />
-                                    </Box>
-                                    <Box sx={{ border: "1px solid", p: 1, borderRadius: "100%" }} display={"flex"} alignItems={"center"}>
-                                        <YoutubeLineIcon />
-                                    </Box>
+                                <Box display={"flex"} gap={2} alignItems={"center"} justifyContent={"center"} >
+                                    <Link href={setting.
+                                        facebook_link ? setting.
+                                        facebook_link : ""}>
+                                        <Box sx={{ border: "1px solid", borderRadius: "100%", color: "white" }} justifyContent={"center"} height={"35px"} width={"35px"} display={"flex"} alignItems={"center"}>
+
+                                            <FacebookCircleLineIcon size={25} />
+                                        </Box>
+                                    </Link>
+                                    <Link href={setting.
+                                        instagram_link ? setting.
+                                        instagram_link : ""
+                                    }>
+                                        <Box sx={{ border: "1px solid", borderRadius: "100%", color: "white" }} justifyContent={"center"} height={"35px"} width={"35px"} display={"flex"} alignItems={"center"}>
+                                            <InstagramFillIcon size={25}/>
+                                        </Box>
+                                    </Link>
+                                    <Link href={setting.
+                                        youtube_link ? setting.
+                                        youtube_link : ""
+                                    }>
+                                        <Box sx={{ border: "1px solid", borderRadius: "100%", color: "white" }} justifyContent={"center"} height={"35px"} width={"35px"} display={"flex"} alignItems={"center"}>
+                                            <TwitterLineIcon size={25} />
+                                        </Box>
+                                    </Link>
+                                    <Link href={setting.
+                                        youtube_link ? setting.
+                                        youtube_link : ""
+                                    }>
+                                        <Box sx={{ border: "1px solid", borderRadius: "100%", color: "white" }} justifyContent={"center"} height={"35px"} width={"35px"} display={"flex"} alignItems={"center"}>
+                                            <YoutubeLineIcon  />
+                                        </Box>
+                                    </Link>
                                 </Box>
                             </Grid>
                             <Grid xs={12} md={7}>
                                 <Typography textColor={"#ffff"} sx={{ textAlign: { xs: "center", md: "left" } }}>
-                                    Copyright &#169; 2023 Infinitie Technologies | All rights reserved
+                                    <div dangerouslySetInnerHTML={{ __html: setting && setting.copyright_details }} />
+
                                 </Typography>
                             </Grid>
                         </Grid>
                     </Box>
+
                 </Grid>
             </Container>
         </Grid>

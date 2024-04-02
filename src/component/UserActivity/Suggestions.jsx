@@ -15,6 +15,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
+import {validateView} from "@/helpers/authGuard";
 
 const Suggestions = ({ data }) => {
     const theme = useTheme()
@@ -46,4 +47,4 @@ const Suggestions = ({ data }) => {
     )
 }
 
-export default Suggestions
+export default validateView(Suggestions)

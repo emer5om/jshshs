@@ -1,16 +1,19 @@
 "use client"
 import React, { useState } from 'react'
-import { Box, Button, Modal, ModalClose, ModalDialog, DialogActions, DialogTitle, DialogContent, Stack, FormControl, FormLabel, Input, RadioGroup, List, ListItem, Radio } from '@mui/joy'
+import { Box, Button, Modal, ModalClose, ModalDialog, DialogActions, DialogTitle, DialogContent, Stack, FormControl, FormLabel, Input, RadioGroup, List, ListItem, Radio, Typography, Textarea } from '@mui/joy'
 import Stripe from '../PaymentGateways/Stripe';
 import { useSelector } from 'react-redux';
 import RazorpayCheckout from '../PaymentGateways/RazorpayCheckout';
 import PaypalCheckout from '../PaymentGateways/PaypalCheckout';
+import {payRazorpay} from "@/events/actions";
 
 const WalletRechargeModal = () => {
     const [open, setOpen] = useState(false);
     const [openStripe, setOpenStripe] = useState(false);
     const [openRazorPay, setOpenRazorPay] = useState(false);
     const [openPaypal, setOpenPaypal] = useState(false);
+    const [amount, setAmount] = useState(0)
+    const [message, setMessage] = useState("")
 
     let settings = useSelector((state) => state.settings);
     settings = settings.value.paymentMethod.payment_method
@@ -62,12 +65,14 @@ const WalletRechargeModal = () => {
                     <DialogContent>Recharge Wallet to use later!</DialogContent>
                     <Stack spacing={2}>
                         <FormControl>
-                            <FormLabel>Name</FormLabel>
-                            <Input autoFocus required />
+                            <FormLabel>
+                                <Typography> amount  </Typography>
+                            </FormLabel>
+                            <Input autoFocus required value={amount} onChange={e => setAmount(e.target.value)} />
                         </FormControl>
                         <FormControl>
-                            <FormLabel>Description</FormLabel>
-                            <Input required />
+                            <FormLabel>Message</FormLabel>
+                            <Textarea required value={message} onChange={e => setMessage(e.target.value)}></Textarea>
                         </FormControl>
 
                         <RadioGroup aria-label="Your plan" name="people"
@@ -153,12 +158,15 @@ const WalletRechargeModal = () => {
                     {openStripe &&
                         <Stripe />
                     }
+                    <Button onClick={() => {
+                        if(openRazorPay){
+                            payRazorpay("asd", amount)
+                        }
+                    }}>Pay</Button>
 
-                    {openRazorPay &&
-                        <RazorpayCheckout />
-                    }
+                    {/*<RazorpayCheckout />*/}
                     {openPaypal &&
-                        <PaypalCheckout />}
+                        <PaypalCheckout price={amount} type={"wallet"} />}
                 </ModalDialog>
             </Modal>
 

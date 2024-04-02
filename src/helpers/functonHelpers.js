@@ -2,6 +2,7 @@
 
 import { currencySettings } from "@/@core/config";
 import { store } from "@/store/store";
+import { getUserData } from "@/events/getters";
 
 export const formatePrice = (price) => {
   const currencySymbol =
@@ -11,7 +12,9 @@ export const formatePrice = (price) => {
     price = parseFloat(price);
   }
   // Format the number with the desired number of decimal places
-  const formattedPrice = price.toFixed(currencySettings.decimalPoints);
+  const formattedPrice = price
+    ? price?.toFixed(currencySettings.decimalPoints)
+    : "0.0";
 
   // Split the formatted price into integer and decimal parts
   const [integerPart, decimalPart] = formattedPrice.split(".");
@@ -93,17 +96,7 @@ export const isIncluded = (allItems, selectedItems, key = "id") => {
   );
 };
 
-export const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APPPID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID,
-};
-
-export const generateOrderID = () => {
+export const generateRandomOrderId = (maxValue = 4) => {
   const now = new Date();
   const year = now.getFullYear().toString().slice(2);
   const month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -117,4 +110,52 @@ export const generateOrderID = () => {
     .padStart(4, "0");
 
   return `${year}${month}${day}${hours}${minutes}${seconds}${randomDigits}`;
+};
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const month = monthNames[date.getMonth()];
+  const day = date.getDate();
+  const year = date.getFullYear();
+
+  const formattedDate = `${day}, ${month.toUpperCase()} ${year}`;
+  return formattedDate;
+};
+
+export const generateOrderId = () => {
+  const userdata = getUserData();
+  console.log(userdata.id);
+  const timestamp = new Date().getTime();
+  const randomInt = Math.floor(Math.random() * 900) + 100;
+  const order = `wallet-refill-user-${userdata.id}-${timestamp}-${randomInt}`;
+  console.log(order);
+  return order;
+};
+export const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APPPID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID,
+};
+
+export const getHeaderTitle = (title) => {
+  if (title) return title + " | eRestro";
+  else return "eRestro";
 };

@@ -1,278 +1,347 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, ModalClose, Sheet, Typography, Button, Box, ModalDialog } from '@mui/joy';
-import PhoneInput from 'react-phone-input-2';
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
-import { firebaseConfig } from "@/helpers/functonHelpers";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  Modal,
+  ModalClose,
+  ModalDialog,
+  Typography,
+  Button,
+  Box,
+  useTheme,
+} from "@mui/joy";
+import PhoneInput from "react-phone-input-2";
+import { getAuth, signInWithPhoneNumber } from "firebase/auth";
 import { useSelector } from "react-redux";
-import { toast } from 'react-toastify';
+import toast from "react-hot-toast";
+
 import OtpInput from "otp-input-react";
-import { login, register } from "@/events/actions";
-
-// APis
-import { verify_user } from "@/interceptor/routes"
-
-// CSS
-import 'react-phone-input-2/lib/material.css';
-// icons
-import { RiArrowLeftLine, RiTimer2Line } from '@remixicon/react';
-import RegisterModal from './RegisterModal';
+import { login } from "@/events/actions";
+import firebaseConfig from "@/@core/firebase";
+import { verify_user } from "@/interceptor/routes";
+import "react-phone-input-2/lib/material.css";
+import { RiArrowLeftLine, RiTimer2Line } from "@remixicon/react";
+import RegisterModal from "./RegisterModal";
+import { useTranslation } from "react-i18next";
 
 export default function LoginModal({ loginModalState, onClose }) {
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [isOTPLoading, setIsOTPLoading] = useState(false);
-    const [OTPReset, setOTPReset] = useState(false);
-    const authStoreData = useSelector((state) => state.authentication);
-    const countryCode = process.env.NEXT_PUBLIC_COUNTRY_CODE;
-    const [otp, setOtp] = useState('');
-    const [resendDisabled, setResendDisabled] = useState(false);
-    const [resendTime, setResendTime] = useState(0);
-    const [openRegisterModal, setOpenRegisterModal] = useState(false);
+  const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE;
+  const [state, setState] = useState({
+    phoneNumber: demoMode == "true" ? '+919876543212' : "",
+    isLoading: false,
+    isOTPLoading: false,
+    OTPReset: false,
+    otp: demoMode == "true" ? '123456' : "",
+    resendDisabled: false,
+    resendTime: 0,
+    openRegisterModal: false,
+    sendOtp: false,
+    verifyOtp: false,
+  });
 
-    useEffect(() => {
-        initializeRecaptchaVerifier();
-    }, []); // Initialize only once
+  const { t } = useTranslation();
+  const countryCode = process.env.NEXT_PUBLIC_COUNTRY_CODE;
+  const firebase = firebaseConfig();
 
-    const initializeRecaptchaVerifier = async () => {
-        try {
-            const app = await initializeApp(firebaseConfig);
-            const auth = await getAuth(app);
-            auth.languageCode = 'en';
+  const Auth = useSelector((state) => state.authentication);
+  const theme = useTheme();
 
-            if (!window.recaptchaVerifier) {
-                window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sign-in-button', {
-                    'size': 'invisible',
-                    callback: (response) => { },
-                    "expired-callback": () => { },
-                    auth,
-                });
-            }
-        } catch (error) {
-            console.error('Error initializing RecaptchaVerifier:', error);
-        }
-    };
+  useEffect(() => {
+    window.recaptchaVerifier = new firebase.firebase.auth.RecaptchaVerifier(
+      "sign-in-button",
+      {
+        size: "invisible",
+      }
+    );
+  }, [firebase.firebase.auth]);
 
-
-    const handleSendOTP = async () => {
-        try {
-            await initializeRecaptchaVerifier();
-            const app = await initializeApp(firebaseConfig);
-            const auth = await getAuth(app);
-            auth.languageCode = 'en';
-            const confirmationResult = await signInWithPhoneNumber(auth, `+${phoneNumber}`, window.recaptchaVerifier);
-            console.log(confirmationResult);
-            window.confirmationResult = confirmationResult;
-            setIsLoading(true);
-        } catch (error) {
-            setIsLoading(false);
-            toast.error(error.message);
-            console.error('Error during login:', error);
-            if (window.recaptchaVerifier) {
-                try {
-                    window.recaptchaVerifier.render().then((widgetId) => {
-                        window.recaptchaVerifier.recaptcha.reset();
-                        window.recaptchaVerifier.clear();
-                        // window.recaptchaVerifier.reset(widgetId);
-                    });
-                } catch (error) {
-                    console.log("recaptchaVerifier error on line 60", error);
-                }
-            }
-        }
-    };
-
-    useEffect(() => {
-        let interval;
-        if (resendDisabled) {
-            interval = setInterval(() => {
-                setResendTime(prevTime => prevTime - 1);
-            }, 1000);
-        }
-        return () => clearInterval(interval);
-    }, [resendDisabled]);
-
-    const handleResendOTP = async () => {
-        try {
-            await initializeRecaptchaVerifier();
-            // Your resend OTP logic...
-            // Disable resend button
-            setResendDisabled(true);
-            setResendTime(30); // Set timer back to 10 seconds
-            const app = await initializeApp(firebaseConfig);
-            const auth = await getAuth(app);
-            auth.languageCode = 'en';
-
-            // Reset previous confirmation result
-            window.confirmationResult = null;
-
-            // Initialize recaptchaVerifier if not already initialized
-            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'sign-in-button', {
-                'size': 'invisible',
-                'callback': (response) => {
-                    // reCAPTCHA solved, allow signInWithPhoneNumber.
-                    // onSignInSubmit();
-                }
-            });
-            // if (!window.recaptchaVerifier) {
-            // }
-
-            // Request new OTP
-            const confirmationResult = await signInWithPhoneNumber(auth, `+${phoneNumber}`, window.recaptchaVerifier);
-            console.log("New OTP sent");
-            window.confirmationResult = confirmationResult;
-
-            // Set a delay of 30 seconds before enabling the resend button again
-            setTimeout(() => {
-                setResendDisabled(false);
-            }, 30000);
-        } catch (error) {
-            toast.error(error.message);
-            console.error('Error during OTP resend:', error);
-            // Re-enable resend button on error
-            setResendDisabled(false);
-        }
-    };
-
-
-    const verifyUser = async () => {
-        try {
-            const number = phoneNumber.slice(2)
-            const verify = await verify_user({ mobile: number })
-            return verify
-        } catch (error) {
-            toast.error(error.message)
-            console.error("verify User Error:", error)
-            return { error: true }
-        }
+  const handleSendOTP = useCallback(async () => {
+    if (!state.phoneNumber) {
+      toast.error(t("please-enter-your-number"));
+      return;
     }
 
-    const handleOTPVerification = () => {
-        if (otp === "") {
-            toast.error("Please enter the verification code!");
-            return;
+    setState((prevState) => ({
+      ...prevState,
+      sendOtp: true,
+    }));
+
+    try {
+      const confirmationResult = await firebase.auth.signInWithPhoneNumber(
+        `+${state.phoneNumber}`,
+        window.recaptchaVerifier
+      );
+      if (confirmationResult) {
+        toast.success(t("otp-sent-successfully"));
+        window.confirmationResult = confirmationResult;
+        setState((prevState) => ({
+          ...prevState,
+          sendOtp: false,
+          isLoading: true,
+        }));
+      }
+    } catch (error) {
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        sendOtp: false,
+      }));
+      toast.error(error.message);
+    }
+  }, [state.phoneNumber, firebase.auth, t]);
+
+  useEffect(() => {
+    let interval;
+    if (state.resendDisabled) {
+      interval = setInterval(() => {
+        setState((prevState) => ({
+          ...prevState,
+          resendTime: prevState.resendTime - 1,
+        }));
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [state.resendDisabled]);
+
+  const handleResendOTP = useCallback(async () => {
+    try {
+      setState((prevState) => ({
+        ...prevState,
+        resendDisabled: true,
+        resendTime: 30,
+      }));
+      const appVerifier = window.recaptchaVerifier;
+
+      window.confirmationResult = null;
+
+      const confirmationResult = await firebase.auth.signInWithPhoneNumber(
+        `+${state.phoneNumber}`,
+        appVerifier
+      );
+
+      window.confirmationResult = confirmationResult;
+
+      setTimeout(() => {
+        setState((prevState) => ({ ...prevState, resendDisabled: false }));
+      }, 30000);
+    } catch (error) {
+      toast.error(error.message);
+      setState((prevState) => ({ ...prevState, resendDisabled: false }));
+    }
+  }, [state.phoneNumber, firebase.auth]);
+
+  const verifyUser = useCallback(async () => {
+    try {
+      const number = state.phoneNumber.slice(2);
+      const verify = await verify_user({ mobile: number });
+      return verify;
+    } catch (error) {
+      console.error("Verify User Error:", error);
+      return { error: true };
+    }
+  }, [state.phoneNumber]);
+
+  const handleOTPVerification = useCallback(async () => {
+    if (!state.otp) {
+      toast.error(t("please-enter-verification-code"));
+      return;
+    }
+
+    setState((prevState) => ({ ...prevState, verifyOtp: true }));
+    const number = state.phoneNumber.slice(2);
+
+    try {
+      await window.confirmationResult.confirm(state.otp);
+      const verify = await verifyUser();
+      if (verify.error) {
+        window.recaptchaVerifier.render().then((widgetId) => {
+          grecaptcha.reset(widgetId);
+        });
+        setState((prevState) => ({
+          ...prevState,
+          openRegisterModal: true,
+          verifyOtp: false,
+        }));
+      } else {
+        const userLogin = await login({ phoneNumber: number });
+        if (userLogin.error) {
+          toast.error(userLogin.message);
+        } else {
+          // toast.success(userLogin.message);
+          toast.success("Login Successfully");
+          onClose();
         }
+      }
+    } catch (err) {
+      setState((prevState) => ({ ...prevState, verifyOtp: false }));
+      toast.error(t("failed-to-verify-otp"));
+    }
+  }, [state.otp, state.phoneNumber, verifyUser, onClose, login, t]);
 
-        const number = phoneNumber.slice(2);
-        window.confirmationResult
-            .confirm(otp)
-            .then(async (res) => {
-                console.log(res);
-                const verify = await verifyUser()
-                if (verify.error) {
-                    setOpenRegisterModal(true)
-                } else {
-                    const userLogin = await login({ phoneNumber: number });
-                    if (userLogin.error) {
-                        toast.error(userLogin.message)
-                    } else {
-                        toast.success(userLogin.message)
-                        onClose()
+  return (
+    <Box>
+      <div id="sign-in-button"></div>
+      <Modal
+        aria-labelledby="modal-title"
+        aria-describedby="modal-desc"
+        open={loginModalState}
+        onClose={onClose}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}
+      >
+        <ModalDialog
+          aria-labelledby="modal-title"
+          aria-describedby="modal-desc"
+          open={loginModalState}
+          onClose={onClose}
+          size="lg"
+          sx={{ minWidth: { xs: "90%", sm: "70%",md:500 }}}
+        >
+          <ModalClose variant="plain" sx={{ m: 1 }} />
+          {!state.isLoading ? (
+            <>
+              <Typography fontSize="xl" fontWeight="lg" mb={1}>
+                {t("please-log-in-to-continue")}
+              </Typography>
+              <Box py={2} display="flex" flexDirection="column" gap={2}>
+               
+                <PhoneInput
+                  country={countryCode}
+                  inputClass="generalClass"
+                  placeholder={t("enter-phone-number")}
+                  value={state.phoneNumber}
+                  inputStyle={{
+                    width: "100%",
+                    height: "45px",
+                    backgroundColor:
+                      theme.palette.mode === "light"
+                        ? theme.palette.primary[50]
+                        : "#3B3B3B",
+                   
+                  }}
+                  onChange={(value) =>
+                    setState((prevState) => ({
+                      ...prevState,
+                      phoneNumber: value,
+                    }))
+                  }
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSendOTP();
+                    }
+                  }}
+                />
+
+                <Button
+                  variant="solid"
+                  color="primary"
+                  fullWidth
+                  onClick={handleSendOTP}
+                  disabled={state.sendOtp}
+                >
+                  {state.sendOtp ? t("loading") : t("login")}
+                </Button>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Typography fontSize="xl" fontWeight="lg" mb={1}>
+                {t("Enter-OTP")}
+              </Typography>
+              <Box
+                py={2}
+                mb={1}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                gap={2}
+                style={{ maxWidth: "100%", overflowX: "auto" }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleOTPVerification();
+                  }
+                }}
+              >
+                <OtpInput
+                  value={state.otp}
+                  onChange={(value) =>
+                    setState((prevState) => ({ ...prevState, otp: value }))
+                  }
+                  OTPLength={6}
+                  otpType="number"
+                  disabled={false}
+                  autoFocus={true}
+                  className="otp-container"
+                />
+              </Box>
+
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                gap={1}
+              >
+                <Button
+                  variant="outlined"
+                  color="warning"
+                  sx={{ width: { xs: "25%", md: "33%" } }}
+                  onClick={() => {
+                    if (window.recaptchaVerifier) {
+                      window.recaptchaVerifier.render().then((widgetId) => {
+                        grecaptcha.reset(widgetId);
+                      });
                     }
 
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-                // toast.error("Failed to verify OTP. Please try again later.");
-            });
-    };
-
-
-    return (
-        <Box>
-            <div id={"sign-in-button"}></div>
-            <Modal
-                aria-labelledby="modal-title"
-                aria-describedby="modal-desc"
-                open={loginModalState}
-                onClose={() => onClose()}
-                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            >
-                <ModalDialog size='lg' sx={{ width: { sm: "100%", md: 500 } }}>
-                    <ModalClose variant="plain" sx={{ m: 1 }} />
-                    <Typography
-                        fontSize={"xl"}
-                        fontWeight="lg"
-                        mb={1}
-                    >
-                        Please login to continue ordering
-                    </Typography>
-                    {isLoading === false ?
-                        <Box py={2} display={"flex"} flexDirection={"column"} gap={2}>
-                            <PhoneInput
-                                country={countryCode}
-                                inputClass='generalClass'
-                                placeholder="Enter phone number"
-                                value={phoneNumber}
-                                inputStyle={{ width: "100%", height: "45px" }}
-                                onChange={(value) => setPhoneNumber(value)}
-                            />
-                            <Button
-                                variant="solid"
-                                color="primary"
-                                fullWidth
-                                onClick={handleSendOTP}
-                                disabled={isLoading}
-                            >
-                                {isLoading ? 'Loading...' : 'Login'}
-                            </Button>
-                        </Box>
-                        :
-                        <Box>
-                            <Box py={2} mb={1} display={"flex"} alignItems={"center"} flexDirection={"column"} gap={2}>
-                                <OtpInput
-                                    value={otp}
-                                    onChange={setOtp}
-                                    OTPLength={6}
-                                    otpType="number"
-                                    disabled={false}
-                                    autoFocus={true}
-                                    className="opt-container"
-                                ></OtpInput>
-                            </Box>
-                            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} gap={1}>
-                                <Button
-                                    variant="outlined"
-                                    color="warning"
-                                    sx={{ width: "33%" }}
-                                    onClick={() => setIsLoading(false)}
-                                    startDecorator={
-                                        <RiArrowLeftLine />
-                                    }
-                                >
-                                    Go back
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    onClick={handleResendOTP}
-                                    disabled={isOTPLoading || resendDisabled}
-                                    startDecorator={
-                                        resendDisabled && <RiTimer2Line />
-                                    }
-                                >
-                                    Resend OTP {resendDisabled && `in ${resendTime} seconds`}
-                                </Button>
-                                <Button
-                                    variant="solid"
-                                    color="primary"
-                                    sx={{ width: "33%" }}
-                                    onClick={handleOTPVerification}
-                                    disabled={isOTPLoading}
-                                >
-                                    {isOTPLoading ? 'Loading...' : 'Verify'}
-                                </Button>
-                            </Box>
-                        </Box>
+                    setState((prevState) => ({
+                      ...prevState,
+                      isLoading: false,
+                      otp: "",
+                      isOTPLoading: false,
+                    }));
+                  }}
+                  startDecorator={<RiArrowLeftLine />}
+                >
+                  {t("go-Back")}
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleResendOTP}
+                  disabled={state.isOTPLoading || state.resendDisabled}
+                  startDecorator={state.resendDisabled && <RiTimer2Line />}
+                >
+                  {t("resend-otp")}{" "}
+                  {state.resendDisabled && `in ${state.resendTime} seconds`}
+                </Button>
+                <Button
+                  variant="solid"
+                  color="primary"
+                  sx={{ width: "33%" }}
+                  onClick={handleOTPVerification}
+                  disabled={state.verifyOtp}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleOTPVerification();
                     }
-                </ModalDialog>
-            </Modal>
+                  }}
+                >
+                  {state.verifyOtp ? t("loading") : t("verify")}
+                </Button>
+              </Box>
+            </>
+          )}
+        </ModalDialog>
+      </Modal>
 
-            {openRegisterModal &&
-                <RegisterModal openRegisterModal={openRegisterModal} setOpenRegisterModal={setOpenRegisterModal}
-                    mobile={phoneNumber} />
-            }
-        </Box>
-    );
+      {state.openRegisterModal && (
+        <RegisterModal
+          openRegisterModal={state.openRegisterModal}
+          setOpenRegisterModal={(value) =>
+            setState((prevState) => ({
+              ...prevState,
+              openRegisterModal: value,
+            }))
+          }
+          mobile={state.phoneNumber}
+        />
+      )}
+    </Box>
+  );
 }

@@ -2,7 +2,7 @@ import {store} from "@/store/store";
 import {useSelector} from "react-redux";
 
 export const getBranchId = () => {
-    return 7;
+    // return 7;
     const state = store.getState()
     return state.branch.id
 }
@@ -17,7 +17,8 @@ export const getAuthToken = () => {
 }
 
 export const getUserData = () => {
-    const authStoreData = useSelector((state) => state.authentication);
+
+    const authStoreData = store.getState().authentication;
     if(!authStoreData.isLogged){
         return false
     }

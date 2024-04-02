@@ -72,9 +72,9 @@ const UserLayout = ({ children }) => {
   return (
     <Grid container spacing={{ xs: 0, md: 1 }}>
       <Grid xs={12} md={3}>
-        <Card sx={{ border: "none", px: 0, width: "100%" }}>
+        <Card sx={{ border: "none", width: "100%" }}>
           <CardContent>
-            <Grid container spacing={{ md: 2, xs: 0 }}>
+            <Grid container >
               <Grid xs={12}>
                 <Box
                   bgcolor={"primary.400"}
@@ -196,7 +196,9 @@ const UserLayout = ({ children }) => {
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
-                            color={theme.palette.text.menuText}
+                            color={ theme.palette.mode === "light"
+                            ? theme.palette.text.menuText
+                            : theme.palette.text.currency}
                           />
                         </Box>
                       </ListItem>
@@ -272,8 +274,9 @@ const UserLayout = ({ children }) => {
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
-                            color={theme.palette.text.menuText}
-                          />
+ color={ theme.palette.mode === "light"
+ ? theme.palette.text.menuText
+ : theme.palette.text.currency}                          />
                         </Box>
                       </ListItem>
 
@@ -327,8 +330,9 @@ const UserLayout = ({ children }) => {
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
-                            color={theme.palette.text.menuText}
-                          />
+ color={ theme.palette.mode === "light"
+ ? theme.palette.text.menuText
+ : theme.palette.text.currency}                          />
                         </Box>
                       </ListItem>
 
@@ -401,8 +405,9 @@ const UserLayout = ({ children }) => {
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
-                            color={theme.palette.text.menuText}
-                          />
+ color={ theme.palette.mode === "light"
+ ? theme.palette.text.menuText
+ : theme.palette.text.currency}                          />
                         </Box>
                       </ListItem>
 
@@ -451,8 +456,9 @@ const UserLayout = ({ children }) => {
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
-                            color={theme.palette.text.menuText}
-                          />
+ color={ theme.palette.mode === "light"
+ ? theme.palette.text.menuText
+ : theme.palette.text.currency}                          />
                         </Box>
                       </ListItem>
                     </List>

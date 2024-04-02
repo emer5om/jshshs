@@ -23,6 +23,7 @@ import { setFavorites } from "@/store/reducers/favoritesSlice";
 // icons
 import StarFillIcon from "remixicon-react/StarFillIcon";
 import { RiHeartFill, RiHeartLine, RiHeartPulseLine } from "@remixicon/react";
+import { useTranslation } from "react-i18next";
 
 const FavItems = memo(({ data, handleRemove }) => {
   const theme = useTheme();
@@ -30,6 +31,7 @@ const FavItems = memo(({ data, handleRemove }) => {
   const userData = getUserData();
   const branchData = useSelector((state) => state.branch);
   const favorites = useSelector((state) => state.favorites.value);
+  const { t } = useTranslation();
 
   const authentication = userData === false ? false : true;
 
@@ -78,7 +80,7 @@ const FavItems = memo(({ data, handleRemove }) => {
         }
       } else {
         handleRemove(id);
-        console.log(id)
+        console.log(id);
         const removeFav = await removeFromFavorite({ type_id: id, branch_id });
         setIndeterminate(false);
 
@@ -105,6 +107,7 @@ const FavItems = memo(({ data, handleRemove }) => {
 
   const MemoizedProductModal = memo(ProductModal);
 
+
   const renderCards = useMemo(
     () =>
       data.length === 0 ? (
@@ -113,13 +116,14 @@ const FavItems = memo(({ data, handleRemove }) => {
           xs={12}
           textAlign="center"
           display="flex"
+          flexDirection={"column"}
           justifyContent="center"
           alignItems="center" // Center vertically
           maxHeight="600px"
           width={"100%"}
         >
           <img
-            src={"/fav.png"}
+            src={"/fav.webp"}
             alt="No Data"
             style={{
               maxHeight: "600px",
@@ -127,6 +131,12 @@ const FavItems = memo(({ data, handleRemove }) => {
               justifySelf: "center",
             }}
           />
+          <Typography textAlign={"center"} fontSize={"xl"} fontWeight={"lg"}>
+            {t("No-Favourites")}
+          </Typography>
+          <Typography textAlign={"center"} fontSize={"lg"} fontWeight={"md"}>
+            {t("you-don't-have-any-favorites-yet")}
+          </Typography>
         </Grid>
       ) : (
         data.map((item, index) => (

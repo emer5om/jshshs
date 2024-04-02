@@ -52,7 +52,7 @@
   "rate": "रेटिंग दें",
   "food-in-your-bag": "आपके बैग में खाना",
   "clear-cart": "कार्ट साफ़ करें",
-  "clear-tip":"टिप साफ करें",
+  "clear-tip": "टिप साफ करें",
 
   "Add-Food-In-Your-Bag": "अपने बैग में खाना जोड़ें",
   "remove": "हटाएं",
@@ -128,5 +128,8 @@
   "Your-Referral-code": "आपका रेफरल कोड",
   "filters": "फ़िल्टर",
   "you-have-no-items-in-your-cart": "आपकी कार्ट में कोई आइटम नहीं है।",
-  "brows-Menu": "मेन्यू ब्राउज़ करें।"
+  "brows-Menu": "मेन्यू ब्राउज़ करें।",
+
+  "No-Favourites": "कोई पसंदीदा आइटम नहीं",
+  "you-don't-have-any-favorites-yet": "अभी तक आपके पास कोई पसंदीदा आइटम नहीं हैं"
 }

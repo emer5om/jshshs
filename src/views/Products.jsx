@@ -151,7 +151,7 @@ const Products = ({ categoryId = 0 }) => {
       {!isLoading && products !== undefined && products.length === 0 && (
         <Box display={"flex"} justifyContent={"center"}>
           <img
-            src={"/product.png"}
+            src={"/product.webp"}
             alt="No Data"
             style={{
               maxHeight: "600px",
@@ -159,6 +159,7 @@ const Products = ({ categoryId = 0 }) => {
               justifySelf: "center",
             }}
           />{" "}
+          
         </Box>
       )}
 

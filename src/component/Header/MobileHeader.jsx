@@ -16,6 +16,7 @@ import {
   MenuItem,
   Select,
   Option,
+  Badge,
 } from "@mui/joy";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +33,7 @@ import {
   RiLayoutGrid2Fill,
   RiStackLine,
   RiGlobalLine,
-  RiTranslate
+  RiTranslate,
 } from "@remixicon/react";
 import Image from "next/image";
 import LoginModal from "@/component/Modals/LoginModal";
@@ -40,7 +41,6 @@ import { setLanguage } from "@/store/reducers/languageSlice";
 import { useTranslation } from "react-i18next";
 import { languages } from "@/i18n";
 import DarkModeToggle from "@/component/DarkModeToggleMobile";
-
 
 const MobileNavigation = () => {
   const { t, i18n } = useTranslation();
@@ -51,6 +51,7 @@ const MobileNavigation = () => {
   const theme = useTheme();
   const settings = useSelector((state) => state.settings);
   const dispatch = useDispatch();
+  const cartStoreData = useSelector((state) => state.cart);
 
   const [open, setOpen] = React.useState(false);
   // const [openSettings, setOpenSettings] = React.useState(false);
@@ -77,13 +78,12 @@ const MobileNavigation = () => {
   };
 
   return (
-    <Box sx={{marginBottom:{xs:"15px",sm:"10px"}} }>
+    <Box sx={{ marginBottom: { xs: "15px", sm: "10px" } }}>
       <Box
         display={"flex"}
         px={2}
         alignItems={"center"}
         justifyContent={"space-between"}
-
       >
         <Box component={Link} href={"/"} display={"flex"} alignItems={"center"}>
           <Box sx={{ width: "150px" }}>
@@ -100,8 +100,6 @@ const MobileNavigation = () => {
               loading="lazy"
             />
           </Box>
-
-
         </Box>
 
         <Box
@@ -180,7 +178,6 @@ const MobileNavigation = () => {
 
       <Drawer open={open} onClose={toggleDrawer(false)} size="lg">
         <DialogContent>
-
           <Box role="presentation" width={"100%"}>
             <Box
               width={"100%"}
@@ -227,7 +224,7 @@ const MobileNavigation = () => {
                   startDecorator={<RiDiscountPercentLine />}
                   onClick={toggleDrawer(false)}
                 >
-                  {t('offers')}
+                  {t("offers")}
                 </Typography>
                 <Typography
                   fontSize={"md"}
@@ -237,7 +234,7 @@ const MobileNavigation = () => {
                   startDecorator={<RiStackLine />}
                   onClick={toggleDrawer(false)}
                 >
-                  {t('products')}
+                  {t("products")}
                 </Typography>
                 {/* <Typography
                   fontSize={"md"}
@@ -254,10 +251,19 @@ const MobileNavigation = () => {
                   fontWeight={"lg"}
                   component={Link}
                   href={`/user/cart`}
-                  startDecorator={<RiShoppingBag4Line />}
+                  startDecorator={
+                    <Badge
+                      component={Link}
+                      href={"/user/cart"}
+                      badgeContent={cartStoreData.data.length}
+                    >
+                      <RiShoppingBag4Line                 color={theme.palette.text.primary}
+ />{" "}
+                    </Badge>
+                  }
                   onClick={toggleDrawer(false)}
                 >
-                  {t('cart')}
+                  {t("cart")}
                 </Typography>
                 {/* <Button
                   variant="text"
@@ -275,43 +281,44 @@ const MobileNavigation = () => {
 
                 <DarkModeToggle />
 
-
                 <Box>
                   <Dropdown>
                     <MenuButton
                       slots={{ root: IconButton }}
-                      slotProps={{ root: { variant: "plain", color: 'neutral' } }}
+                      slotProps={{
+                        root: { variant: "plain", color: "neutral" },
+                      }}
                     >
                       <Typography
                         fontSize={"md"}
                         fontWeight={"lg"}
                         startDecorator={<RiTranslate />}
                       >
-                        {t('languages')}
+                        {t("languages")}
                       </Typography>
                     </MenuButton>
                     <Menu sx={{ zIndex: 99999, width: "80%" }}>
-                      {Object.keys(languages).map(language => {
+                      {Object.keys(languages).map((language) => {
                         return (
-                          <MenuItem key={language} onClick={async () => {
-                            await i18n.changeLanguage(language)
-                            dispatch(setLanguage(language))
-                          }}>
+                          <MenuItem
+                            key={language}
+                            onClick={async () => {
+                              await i18n.changeLanguage(language);
+                              dispatch(setLanguage(language));
+                            }}
+                          >
                             {languages[language]}
-                          </MenuItem>)
+                          </MenuItem>
+                        );
                       })}
-
                     </Menu>
                   </Dropdown>
                 </Box>
-
               </Stack>
             </Box>
           </Box>
         </DialogContent>
       </Drawer>
-
-   
     </Box>
   );
 };

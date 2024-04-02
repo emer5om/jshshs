@@ -68,7 +68,7 @@ const MyOrders = () => {
         {/* Conditionally rendering when no orders are found */}
         {orders.length === 0 && (
             <Grid item xs={12} textAlign="center">
-                <img src={"/my-orders.png"} alt="No Orders" style={{ maxHeight: "600px"}}   />
+                <img src={"/my-orders.webp"} alt="No Orders" style={{ maxHeight: "600px"}}   />
             </Grid>
         )}
         {/* Load more button */}

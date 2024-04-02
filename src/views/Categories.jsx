@@ -10,7 +10,7 @@ const Categories = ({ data }) => {
         <Grid container maxWidth="100%" my={2} rowGap={0} spacing={2}>
         {data.length === 0 ? (
             <Grid item xs={12} textAlign="center" maxHeight={"600px"}  >
-                <img src={"/categaory.png"} alt="No Data" style={{ maxHeight: "600px"}} />
+                <img src={"/categaory.webp"} alt="No Data" style={{ maxHeight: "600px"}} />
             </Grid>
         ) : (
             data.map((item, index) => (

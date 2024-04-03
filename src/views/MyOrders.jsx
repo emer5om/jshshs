@@ -6,6 +6,7 @@ import UserOrderCard from '@/component/Cards/UserOrderCard';
 import api from "@/interceptor/api";
 import {RiAlertFill} from "@remixicon/react";
 import {logout} from "@/events/actions";
+import { useTranslation } from "react-i18next";
 
 
 // icons
@@ -17,6 +18,8 @@ const MyOrders = () => {
     const [query, setQuery] = useState(initialQuery)
     const [total, setTotal] = useState(0)
     const [loading, setLoading] = useState(false)
+    const { t } = useTranslation();
+
     useEffect(() => {
         request()
     }, [query]);
@@ -77,7 +80,7 @@ const MyOrders = () => {
                 <Button onClick={() => {
                     setQuery({...query, offset: query.offset + query.limit})
                 }} disabled={loading}>
-                    {loading ? "Please wait" : "Load More"}
+                    {loading ? `${t("please-wait")}` : `${t("load-more")}`}
                 </Button>
             </Grid>
         )}

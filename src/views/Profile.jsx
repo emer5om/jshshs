@@ -12,12 +12,12 @@ import {
   Sheet,
   Textarea,
   Typography,
-  useTheme
+  useTheme,
 } from "@mui/joy";
 import PhoneInput from "react-phone-input-2";
 import dayjs from "dayjs";
 import { updateUserData } from "@/events/actions";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 // icons
 import { RiPencilLine } from "@remixicon/react";
@@ -26,38 +26,38 @@ import CustomButton from "@/component/Buttons/CustomButton";
 
 // import 'react-phone-input-2/lib/style.css'
 import "react-phone-input-2/lib/material.css";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 const Profile = () => {
   const countryCode = process.env.NEXT_PUBLIC_COUNTRY_CODE;
   const [image, setImage] = useState(""); // State to hold the selected image
 
-  const theme = useTheme()
+  const theme = useTheme();
 
-// Assuming 'image' is stored under 'user' slice of state in Redux
-const imageFromRedux = useSelector(state => state.authentication.userData.image);
+  // Assuming 'image' is stored under 'user' slice of state in Redux
+  const imageFromRedux = useSelector(
+    (state) => state.authentication.userData.image
+  );
 
-// Use a default image if imageFromRedux is not available
-const defaultImage = "https://ui-avatars.com/api/?background=random";
-const image1 = imageFromRedux || defaultImage;
+  // Use a default image if imageFromRedux is not available
+  const defaultImage = "https://ui-avatars.com/api/?background=random";
+  const image1 = imageFromRedux || defaultImage;
 
-// Assuming 'prefillData' is stored under 'user' slice of state in Redux
-const prefillData = useSelector(state => state.authentication.userData);
+  // Assuming 'prefillData' is stored under 'user' slice of state in Redux
+  const prefillData = useSelector((state) => state.authentication.userData);
 
+  const [prefill, setPrefill] = useState({
+    first_name: prefillData.username || "james",
+    last_name: prefillData.last_name || "carter",
+    email: prefillData.email || "test.user@mail.com",
+    country: prefillData.country_code || "in",
+    phone: prefillData.mobile || "+919876543210",
+    date_of_birth: prefillData.date_of_birth || dayjs("15-07-1999"),
+    gender: prefillData.gender || "male",
+  });
 
-const [prefill, setPrefill] = useState({
-  first_name: prefillData.username || "james",
-  last_name: prefillData.last_name || "carter",
-  email: prefillData.email || "test.user@mail.com",
-  country: prefillData.country_code || "in",
-  phone: prefillData.mobile || "+919876543210",
-  date_of_birth: prefillData.date_of_birth || dayjs("15-07-1999"),
-  gender: prefillData.gender || "male",
-});
-
-useEffect(() => {
-  setImage(image1);
-}, [image1]);
-
+  useEffect(() => {
+    setImage(image1);
+  }, [image1]);
 
   const imageRef = useRef(null); // Reference to the file input element
 
@@ -103,10 +103,10 @@ useEffect(() => {
       gender: prefill.gender,
     };
 
-   // Add image data if it's available
-if (imageRef.current.files[0]) {
-    formData.image = imageRef.current.files[0];
-  }
+    // Add image data if it's available
+    if (imageRef.current.files[0]) {
+      formData.image = imageRef.current.files[0];
+    }
     // Call the updateUserData function to save the data
     updateUserData(formData)
       .then((response) => {
@@ -119,48 +119,49 @@ if (imageRef.current.files[0]) {
       });
   };
 
-  const {t} = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <Box width={"100%"}>
       <Grid container>
-        <Grid xs={12}>
+        <Grid mt={2} xs={12}>
           <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
             <Box>
-            <Box height={150}>
-      <Avatar
-        alt="Profile Picture"
-        src={image}
-        sx={{
-          height: "150px",
-          width: "150px",
-        }}
-      />
-      {/* Hidden file input */}
-      <input
-        ref={imageRef}
-        type="file"
-        accept="image/*"
-        style={{ display: "none" }}
-        onChange={handleImageChange}
-      />
-      <Box
-        width={"25%"}
-        position={"relative"}
-        right={"-70%"}
-        top={"-50px"}
-        bgcolor={"primary.300"}
-        borderRadius={"50%"}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        p={1}
-      >
-        <RiPencilLine     style={{ cursor: 'pointer' }} // Set cursor style to pointer
-      onClick={handleClick}
- />
-      </Box>
-    </Box>
+              <Box height={150}>
+                <Avatar
+                  alt="Profile Picture"
+                  src={image}
+                  sx={{
+                    height: "150px",
+                    width: "150px",
+                  }}
+                />
+                {/* Hidden file input */}
+                <input
+                  ref={imageRef}
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                />
+                <Box
+                  width={"25%"}
+                  position={"relative"}
+                  right={"-70%"}
+                  top={"-50px"}
+                  bgcolor={"primary.300"}
+                  borderRadius={"50%"}
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  p={1}
+                >
+                  <RiPencilLine
+                    style={{ cursor: "pointer" }} // Set cursor style to pointer
+                    onClick={handleClick}
+                  />
+                </Box>
+              </Box>
               <Box
                 display={"flex"}
                 justifyContent={"center"}
@@ -228,9 +229,9 @@ if (imageRef.current.files[0]) {
                   disableDropdown
                   inputClass="generalClass"
                   placeholder="Enter phone number"
-                  value={prefill.country + prefill.phone} 
+                  value={prefill.country + prefill.phone}
                   // {...addValueProps(`country`+`phone`)}
-                  
+
                   inputStyle={{
                     width: "100%",
                     height: "45px",
@@ -238,11 +239,10 @@ if (imageRef.current.files[0]) {
                       theme.palette.mode === "light"
                         ? theme.palette.primary[50]
                         : "#3B3B3B",
-                   
                   }}
                 />
               </Grid>
-              
+
               {/* <Grid xs={12} md={6}>
                 <FormLabel sx={{ mb: 1, color: "text.tertiary" }}>
                   Date of Birth

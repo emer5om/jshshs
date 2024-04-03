@@ -24,7 +24,11 @@ import { Rating } from "react-simple-star-rating";
 
 // icons
 
-import { RiAlertFill, RiArrowRightCircleFill, RiStarFill } from "@remixicon/react";
+import {
+  RiAlertFill,
+  RiArrowRightCircleFill,
+  RiStarFill,
+} from "@remixicon/react";
 import { BorderStyle } from "@mui/icons-material";
 import CustomButton from "../Buttons/CustomButton";
 import Link from "next/link";
@@ -74,11 +78,8 @@ const UserOrderCard = ({
         message: message,
       });
 
-
-      if (setRating.error)
-        toast.error(setRating.message);
-      else
-        toast.success(setRating.message);
+      if (setRating.error) toast.error(setRating.message);
+      else toast.success(setRating.message);
 
       console.log("Rating submitted successfully");
     } catch (error) {
@@ -136,14 +137,14 @@ const UserOrderCard = ({
                 status == "pending"
                   ? "neutral"
                   : status == "preparing" || status == "confirmed"
-                    ? "warning"
-                    : status == "delivered"
-                      ? "success"
-                      : status == "cancelled"
-                        ? "danger"
-                        : status === "out for delivery"
-                          ? "primary"
-                          : "neutral"
+                  ? "warning"
+                  : status == "delivered"
+                  ? "success"
+                  : status == "cancelled"
+                  ? "danger"
+                  : status === "out for delivery"
+                  ? "primary"
+                  : "neutral"
               }
               sx={{ borderRadius: "sm" }}
             >
@@ -182,13 +183,7 @@ const UserOrderCard = ({
                 alt="veg-non-veg.icon"
               />
             </Box>
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-
-              gap={1}
-              width={"100%"}
-            >
+            <Box display={"flex"} alignItems={"center"} gap={1} width={"100%"}>
               <Typography
                 fontSize={"md"}
                 fontWeight={"lg"}
@@ -196,7 +191,8 @@ const UserOrderCard = ({
                   theme.palette.mode === "light"
                     ? theme.palette.text.menuText
                     : theme.palette.text.currency
-                }              >
+                }
+              >
                 {" "}
                 {qty ?? 0} x{" "}
               </Typography>
@@ -207,7 +203,7 @@ const UserOrderCard = ({
                   theme.palette.mode === "light"
                     ? theme.palette.text.menuText
                     : theme.palette.text.currency
-                }   
+                }
                 textOverflow={"ellipsis"}
                 overflow={"hidden"}
                 sx={{ textWrap: "nowrap", maxWidth: "85%" }}
@@ -224,11 +220,13 @@ const UserOrderCard = ({
             display={"flex"}
             justifyContent={"center"}
           >
-            <RiArrowRightCircleFill  color={
-                  theme.palette.mode === "light"
-                    ? theme.palette.text.menuText
-                    : theme.palette.text.currency
-                }   />
+            <RiArrowRightCircleFill
+              color={
+                theme.palette.mode === "light"
+                  ? theme.palette.text.menuText
+                  : theme.palette.text.currency
+              }
+            />
           </Box>
         </Box>
         <Box
@@ -247,8 +245,9 @@ const UserOrderCard = ({
               theme.palette.mode === "light"
                 ? theme.palette.text.menuText
                 : theme.palette.text.currency
-            }             >
-            Total Pay
+            }
+          >
+            {t("total-pay")}
           </Typography>
           <Typography
             fontSize={"md"}
@@ -292,17 +291,25 @@ const UserOrderCard = ({
             {t("confirmation")}
           </DialogTitle>
           <Divider sx={{ alignSelf: "center", width: "100%" }} />
-          <DialogContent>Are you sure you want to Cancel?</DialogContent>
+          <DialogContent>{t("Are-you-sure-you-want-to-Cancel")}</DialogContent>
 
-          <DialogActions sx={{ display: "flex", justifyContent: "start", alignItems: "start", width: "100%" }}>
+          <DialogActions
+            sx={{
+              display: "flex",
+              justifyContent: "start",
+              alignItems: "start",
+              width: "100%",
+            }}
+          >
             <Textarea
               name="Soft"
               placeholder={t("add-reason")}
               variant="soft"
               minRows={4}
               value={reason}
-              onChange={e => setReason(e.target.value)}
-              sx={{ width: "100%" }} />
+              onChange={(e) => setReason(e.target.value)}
+              sx={{ width: "100%" }}
+            />
           </DialogActions>
 
           <DialogActions>
@@ -332,7 +339,7 @@ const UserOrderCard = ({
                 }
               }}
             >
-              {loading ? "Please Wait" : "Yes"}
+              {loading ? `${t("please-wait")}` : `${t("yes")}`}
             </Button>
             <Button
               variant="outlined"
@@ -340,8 +347,7 @@ const UserOrderCard = ({
               disabled={loading}
               onClick={() => setOpen(false)}
             >
-              Cancel
-            </Button>
+{t("cancel")}            </Button>
           </DialogActions>
         </ModalDialog>
       </Modal>
@@ -350,7 +356,7 @@ const UserOrderCard = ({
         <ModalDialog variant="soft" role="alertdialog" size="lg">
           <ModalClose />
           <DialogTitle sx={{ alignItems: "center" }}>
-            <RiStarFill /> Rate Product
+            <RiStarFill /> {t("rate-product")}
           </DialogTitle>
           <Divider sx={{ alignSelf: "center", width: "100%" }} />
           <DialogContent>
@@ -373,10 +379,12 @@ const UserOrderCard = ({
               <Typography
                 fontSize={"md"}
                 fontWeight={"lg"}
-                textColor={"text.menuText"}
-                textOverflow={"ellipsis"}
-                overflow={"hidden"}
-                sx={{ textWrap: "nowrap", maxWidth: "85%" }}
+                textColor={
+                  theme.palette.mode === "light"
+                    ? theme.palette.text.menuText
+                    : theme.palette.text.currency
+                }
+                sx={{ maxWidth: "85%" }}
               >
                 {name ?? "Item Name"}
               </Typography>
@@ -407,7 +415,7 @@ const UserOrderCard = ({
               disabled={loading}
               onClick={() => setOpenReview(false)}
             >
-              Cancel
+              {t("cancel")}
             </Button>
           </DialogActions>
         </ModalDialog>

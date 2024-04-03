@@ -46,7 +46,7 @@ function SearchModal({ displayStyle = "icon" }) {
         }
     };
     return (
-        <Box display={"flex"} sx={{width:"40px"}} >
+        <Box display={"flex"} sx={{ width: { sm: "100%", md: "40px" } }}        >
 
             {displayStyle === "icon" ?
 

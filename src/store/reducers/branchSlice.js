@@ -13,7 +13,6 @@ const branchSlice = createSlice({
     reducers: {
         setBranchId: (state, action) => {
 
-            console.log("red", action.payload)
             state.id = action.payload;
           
         },

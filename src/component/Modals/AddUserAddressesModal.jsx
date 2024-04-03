@@ -110,7 +110,6 @@ const AddUserAddressesModal = ({
                 is_default: false, // Set is_default to false when unchecked
             });
         }
-        console.log(prefill)
     };
 
     const handleMapClick = async (event) => {
@@ -122,7 +121,6 @@ const AddUserAddressesModal = ({
         try {
             const results = await geocodeByAddress(`${latitude},${longitude}`);
             if (results && results.length > 0) {
-                console.log(results[0])
                 const address = results[0].formatted_address;
                 const city = results[0].address_components.find(component =>
                     component.types.includes('locality')
@@ -130,7 +128,6 @@ const AddUserAddressesModal = ({
                 const postalCOde = results[0].address_components.find(component =>
                     component.types.includes('postal_code')
                 )?.long_name;
-                console.log(postalCOde)
                 if (city) {
                     setPrefill({
                         ...prefill,
@@ -150,7 +147,6 @@ const AddUserAddressesModal = ({
     };
 
     const handleAddAddress = async () => {
-        console.log("inside add address");
         setPrefill({
             ...prefill,
             is_default: is_default_checked
@@ -170,7 +166,6 @@ const AddUserAddressesModal = ({
                 const getAddress = await getUserAddress({ user_id: userData.id })
 
                 if (!getAddress.error) {
-                    console.log("address")
                     dispatch(setUserAddresses(getAddress.data))
                     setOpen(false)
                 }

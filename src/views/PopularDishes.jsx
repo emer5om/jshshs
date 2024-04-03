@@ -14,7 +14,6 @@ const PopularDishes = () => {
 
     const handleViewChange = (alignment) => {
         // Do something with the alignment value
-        console.log('Alignment changed to:', alignment);
         // You can perform any other logic or state updates here
     };
 
@@ -25,16 +24,13 @@ const PopularDishes = () => {
     };
 
     const onCategorySelection = (value, text) => {
-        console.log(value)
-        console.log(text)
+     
     };
 
     const onTypeSelection = (value) => {
-        console.log(value)
     };
 
     const onPriceSelection = (value) => {
-        console.log(value)
     };
 
     return (

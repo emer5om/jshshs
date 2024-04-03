@@ -36,8 +36,7 @@ const Favorites = ({ data }) => {
   const handleRemove = (id) => {
     const filteredItems = favorites.filter((item) => item.id !== id);
 
-    console.log("favorites",favorites);
-    console.log("remove filteredItems", filteredItems);
+
     setFavoriteItems(filteredItems);
     dispatch(setFavorites(filteredItems));
   };

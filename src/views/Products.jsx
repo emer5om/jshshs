@@ -68,7 +68,6 @@ const Products = ({ categoryId = 0 }) => {
 
   const handleViewChange = (alignment) => {
     // Do something with the alignment value
-    console.log("Alignment changed to:", alignment);
     // You can perform any other logic or state updates here
   };
 
@@ -82,7 +81,6 @@ const Products = ({ categoryId = 0 }) => {
   };
 
   const onTypeSelection = (value) => {
-    console.log(value);
     if (value == "Veg") {
       setVegetarian(1);
       setIndicatorType("Veg");
@@ -96,7 +94,6 @@ const Products = ({ categoryId = 0 }) => {
   };
 
   const onPriceSelection = (value) => {
-    console.log(value);
     if (value == "Low to High") {
       setOrder("asc");
     } else if (value == "High to Low") {

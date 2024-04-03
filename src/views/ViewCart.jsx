@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+
 import {
   AspectRatio,
   Box,
@@ -20,6 +21,11 @@ import {
   Textarea,
   IconButton,
   Input,
+  Modal,
+  ModalDialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/joy";
 
 // icons
@@ -39,6 +45,7 @@ import {
   RiHandCoinLine,
   RiCheckLine as CheckIcon,
   RiArrowRightLine,
+  RiAlertLine,
 } from "@remixicon/react";
 import CustomButton from "@/component/Buttons/CustomButton";
 import Link from "next/link";
@@ -61,7 +68,9 @@ const ViewCart = () => {
   const [tip, setTip] = useState(0);
   const [customTip, setCustomTip] = useState(1);
   const [customTipInputValue, setCustomTipInputValue] = useState(1);
+  const [openConfirm, setOpenConfirm] = useState(false);
   const [open, setOpen] = useState(false);
+
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const userData = getUserData();
@@ -210,13 +219,44 @@ const ViewCart = () => {
                     </Box>
                     <Typography
                       sx={{ cursor: "pointer" }}
-                      onClick={() => removeItemFromCart(branch_id)}
+                      onClick={() => setOpenConfirm(true)}
                       fontSize={"md"}
                       fontWeight={"lg"}
                       textColor={"danger.solidBg"}
                     >
                       {t("clear-cart")}
                     </Typography>
+
+                    <Modal open={openConfirm} onClose={() => setOpenConfirm(false)}>
+                      <ModalDialog variant="outlined" role="alertdialog">
+                        <DialogTitle>
+                          <RiAlertLine />
+                          {t("confirmation")}
+                        </DialogTitle>
+                        <Divider />
+                        <DialogContent>
+                          {t("cart-remove-warning")}
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            variant="solid"
+                            color="danger"
+                            onClick={() => {
+                              setOpenConfirm(false);
+                              removeItemFromCart(branch_id)                            }}
+                          >
+                            {t("remove-cart")}
+                          </Button>
+                          <Button
+                            variant="plain"
+                            color="neutral"
+                            onClick={() => setOpenConfirm(false)}
+                          >
+                            {t("cancel")}
+                          </Button>
+                        </DialogActions>
+                      </ModalDialog>
+                    </Modal>
                   </CardActions>
 
                   <CardContent sx={{ px: { md: 4, xs: 1 } }}>
@@ -628,7 +668,6 @@ const ViewCart = () => {
                     {promoCode.length > 0 && (
                       <>
                         <Box>
-                          {console.log(promoCode)}
                           <Box
                             display={"flex"}
                             alignItems={"center"}
@@ -824,84 +863,87 @@ const ViewCart = () => {
               )}
 
               <Grid xs={12} width={"100%"}>
-                <Card orientation="vertical" sx={{ px: 1 }}>
-                  <CardActions
-                    orientation="horizontal"
-                    sx={{
-                      pt: 0,
-                      pb: 0,
-                      px: 1,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Box
-                      display={"flex"}
-                      alignItems={"center"}
-                      justifyContent={"start"}
-                      gap={1}
+                <Link href="/user/coupons">
+                  <Card orientation="vertical" sx={{ px: 1 }}>
+                    <CardActions
+                      orientation="horizontal"
+                      sx={{
+                        pt: 0,
+                        pb: 0,
+                        px: 1,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
                     >
-                      <RiCoupon2Line
-                        color={
-                          theme.palette.mode === "light"
-                            ? theme.palette.text.menuText
-                            : theme.palette.text.currency
-                        }
-                      />
+                      <Box
+                        display={"flex"}
+                        alignItems={"center"}
+                        justifyContent={"start"}
+                        gap={1}
+                      >
+                        <RiCoupon2Line
+                          color={
+                            theme.palette.mode === "light"
+                              ? theme.palette.text.menuText
+                              : theme.palette.text.currency
+                          }
+                        />
+                        <Typography
+                          textColor={
+                            theme.palette.mode === "light"
+                              ? "text.menuText"
+                              : "text.secondary"
+                          }
+                          fontSize={"md"}
+                          fontWeight={"lg"}
+                        >
+                          {" "}
+                          {t("add-coupon")}{" "}
+                        </Typography>
+                      </Box>
+
                       <Typography
+                        component={Link}
+                        href={"/user/coupons"}
                         textColor={
                           theme.palette.mode === "light"
                             ? "text.menuText"
                             : "text.secondary"
                         }
-                        fontSize={"md"}
-                        fontWeight={"lg"}
+                        fontSize={"sm"}
+                        fontWeight={"md"}
                       >
                         {" "}
-                        {t("add-coupon")}{" "}
+                        {t("view-all")}{" "}
                       </Typography>
-                    </Box>
-                    <Typography
-                      component={Link}
-                      href={"/user/coupons"}
-                      textColor={
-                        theme.palette.mode === "light"
-                          ? "text.menuText"
-                          : "text.secondary"
-                      }
-                      fontSize={"sm"}
-                      fontWeight={"md"}
-                    >
-                      {" "}
-                      {t("view-all")}{" "}
-                    </Typography>
-                  </CardActions>
-                  {promoCode.length > 0 && (
-                    <CardContent
-                      orientation="vertical"
-                      sx={{ px: { md: 4, xs: 2 } }}
-                    >
-                      <Divider sx={{ my: 1, width: "100%" }} />
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
+                    </CardActions>
+                    {promoCode.length > 0 && (
+                      <CardContent
+                        orientation="vertical"
+                        sx={{ px: { md: 4, xs: 2 } }}
                       >
-                        <Box>{promoCode[0]?.promo_code}</Box>
-                        <Button
-                          variant="text"
-                          sx={{ color: "red" }}
-                          onClick={() => dispatch(setPromoCode([]))}
+                        <Divider sx={{ my: 1, width: "100%" }} />
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
                         >
-                          {t("remove")}
-                        </Button>
-                      </Box>
-                    </CardContent>
-                  )}
-                </Card>
+                          <Box>{promoCode[0]?.promo_code}</Box>
+                          <Button
+                            variant="text"
+                            sx={{ color: "red" }}
+                            onClick={() => dispatch(setPromoCode([]))}
+                          >
+                            {t("remove")}
+                          </Button>
+                        </Box>
+                      </CardContent>
+                    )}
+                  </Card>
+                </Link>
               </Grid>
 
               {deliveryType === "Delivery" && (
@@ -1022,10 +1064,7 @@ const ViewCart = () => {
                               endDecorator={
                                 <Button
                                   onClick={(e) => {
-                              
-                               
-                                      setCustomTip(customTipInputValue);
-                                    
+                                    setCustomTip(customTipInputValue);
                                   }}
                                   sx={{ maxWidth: "fit-content" }}
                                 >

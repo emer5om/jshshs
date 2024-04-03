@@ -138,11 +138,9 @@ export const formatDate = (dateString) => {
 
 export const generateOrderId = () => {
   const userdata = getUserData();
-  console.log(userdata.id);
   const timestamp = new Date().getTime();
   const randomInt = Math.floor(Math.random() * 900) + 100;
   const order = `wallet-refill-user-${userdata.id}-${timestamp}-${randomInt}`;
-  console.log(order);
   return order;
 };
 export const firebaseConfig = {

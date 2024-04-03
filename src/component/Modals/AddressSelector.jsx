@@ -31,7 +31,6 @@ const AddressSelector = () => {
 
   const handleAddressSelection = () => {
     const address = userAddresses?.find((item) => item.id === selectedAddress);
-    // console.log(address)
     dispatch(setDeliveryAddress(address))
     setOpen(false)
   }

@@ -63,6 +63,8 @@ const ProductModal = ({
 
   const [price, setPrice] = useState(0);
   const [priceOriginal, setPriceOriginal] = useState(0);
+  const [specialPrice, setSpecialPrice] = useState(0);
+
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
@@ -101,13 +103,15 @@ const ProductModal = ({
       const special_price =
         parseCustomFloat(selectedVariant.special_price) + extraPrice;
       const price = parseCustomFloat(selectedVariant.price) + extraPrice;
+      setSpecialPrice(special_price);
+      console.log("special price", specialPrice);
+      console.log("price", price);
       if (special_price === 0) {
-        setPrice(price * qty);
-        setPriceOriginal(price)
+        setPrice(price);
+        setPriceOriginal(price);
       } else {
-        setPrice(special_price * qty);
-        setPriceOriginal(special_price)
-
+        setPrice(price);
+        setPriceOriginal(price);
       }
     }
   };
@@ -319,7 +323,27 @@ const ProductModal = ({
                       textColor={"text.currency"}
                       mb={1}
                     >
-                    {formatePrice(priceOriginal)}  {qty>1 ? ` | ${formatePrice(price)} x ${qty}` : ""}
+                      {specialPrice > 0 ? (
+                        <Typography
+                          sx={{ textDecoration: "line-through" }}
+                          textColor={theme.palette.text.currency}
+                          fontSize={theme.fontSize.xs}
+                          fontWeight={theme.fontWeight.sm}
+                        >
+                          {formatePrice(priceOriginal)}
+                        </Typography>
+                      ) : (
+                        ""
+                      )}
+
+{specialPrice > 0 ? `${formatePrice(specialPrice)} ${qty > 1 ? `| ${formatePrice(specialPrice * qty)} x ${qty}` : ""}` : `${formatePrice(price)} ${qty > 1 ? `| ${formatePrice(price * qty)} x ${qty}` : ""}`}
+
+                      {/* {specialPrice > 0
+                        ? `${formatePrice(specialPrice)}  ${formatePrice(
+                            specialPrice * qty
+                          )} x ${qty}`
+                        : `${formatePrice(price * qty)} x ${qty}`} */}
+
                     </Typography>
                   </CardContent>
                 </Card>

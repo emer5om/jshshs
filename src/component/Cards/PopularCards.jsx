@@ -211,6 +211,7 @@ const PopularCards = React.memo(({ data, showHeadline = "true" }) => {
                         />
                         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
                             <Box display={"flex"} alignItems={"center"} gap={1}>
+                              
                                 {item.variants && item.variants[0]?.special_price > 0 ?
                                     <Typography sx={{  textDecoration: "line-through" }} textColor={ theme.palette.text.currency} fontSize={theme.fontSize.xs} fontWeight={theme.fontWeight.sm}>
                                         {formatePrice(item.variants[0]?.price)}
@@ -221,6 +222,7 @@ const PopularCards = React.memo(({ data, showHeadline = "true" }) => {
                                         formatePrice(item.variants[0]?.special_price)
                                         : formatePrice(item.variants[0]?.price))}
                                 </Typography>
+
                             </Box>
                             <Box display={"flex"} alignItems={"center"} gap={1}>
                                 <RiStarFill size={theme.fontSize.sm} color={theme.palette.warning[500]} />

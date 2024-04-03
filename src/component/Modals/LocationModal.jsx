@@ -76,7 +76,6 @@ const LocationModal = () => {
         );
 
         if (city) {
-          console.log("City:", city.long_name);
           let delivery;
           try {
             delivery = await is_city_deliverable({
@@ -130,9 +129,7 @@ const LocationModal = () => {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
 
-      // console.log()
       const completeAddress = extractAddress(results[0]);
-      console.log(latLng);
       setSelectedAddress(results[0].formatted_address);
       setSelectedLocation(latLng);
 
@@ -167,7 +164,6 @@ const LocationModal = () => {
         return toast.error(error.message);
       }
 
-      console.log(delivery);
     } catch (error) {
       console.error("Error selecting place: ", error);
     }
@@ -178,8 +174,6 @@ const LocationModal = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          console.log("Latitude:", latitude);
-          console.log("Longitude:", longitude);
           // Do something with the latitude and longitude values
           setSelectedLocation({ lat: latitude, lng: longitude });
           try {
@@ -193,7 +187,6 @@ const LocationModal = () => {
               );
 
               if (city) {
-                console.log("City:", city.long_name);
                 let delivery;
                 try {
                   delivery = await is_city_deliverable({

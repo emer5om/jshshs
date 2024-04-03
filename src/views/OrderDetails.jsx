@@ -44,7 +44,6 @@ const OrderDetails = ({ queryConstants }) => {
       const orderDetails = await getOrders({ id });
       if (!orderDetails.error) {
         if (orderDetails.data.length > 0) setOrder(orderDetails.data[0]);
-        console.log(orderDetails.data[0]);
       }
     } catch (error) {
       console.error("error occurred while getting order details:", error);

@@ -26,10 +26,11 @@ const DelightfulDishes = ({ data }) => {
 
                         return (
                             <Grid xs={12} md={6} lg={4} key={index}>
-                                <ProductCards  image={item.image_sm} discount={discount} categoryName={item.category_name} title={item.name} discountedPrice={item.
-                                    variants[0].special_price != 0 ? item.variants[0]
-                                    .special_price  : item.variants[0]
-                                    .price} price={ item.min_max_price.max_price} type={item.type} product={item}/>
+                                <ProductCards  image={item.image_sm} discount={discount} categoryName={item.category_name} title={item.name} 
+                                
+                                discountedPrice={item.variants[0].special_price != 0 ? item.variants[0].special_price  : item.variants[0].price}
+                                    price={ item.variants[0]?.price}
+                                     type={item.type} product={item}/>
                             </Grid>
                         )
                     })}

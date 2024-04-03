@@ -35,9 +35,7 @@ const MyOrders = () => {
 
         api.post("/get_orders", formData).then(res => {
             setLoading(false)
-            console.log(res.data)
-            console.log(query.offset*query.limit)
-            console.log(res.data.data.length)
+        
             if(orders.length <= query.offset*query.limit) {
                 setOrders([...orders, ...res.data.data])
                 setTotal(res.data.total)

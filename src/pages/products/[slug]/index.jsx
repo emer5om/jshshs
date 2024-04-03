@@ -17,7 +17,6 @@ const index = () => {
 
     const router = useRouter()
     useEffect(() => {
-        console.log(search)
         if(router.query.slug){
             setSlug(router.query.slug)
         }

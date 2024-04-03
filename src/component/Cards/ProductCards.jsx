@@ -85,9 +85,7 @@ const ProductCards = ({
                 fontSize={"md"}
                 fontWeight={"lg"}
                 textColor={
-                  theme.palette.mode === "light"
-                    ? "background.body"
-                    : ""
+                  theme.palette.mode === "light" ? "background.body" : ""
                 }
               >
                 {discount}% OFF
@@ -142,7 +140,21 @@ const ProductCards = ({
               {title}
             </Typography>
           </Box>
-          <Box>
+          <Box display={"flex"} alignItems={"center"} gap={1}>
+            
+            {
+              discountedPrice  < price&&
+              <Typography
+              sx={{ textDecoration: "line-through" }}
+              textColor={theme.palette.text.currency}
+              fontSize={theme.fontSize.xs}
+              fontWeight={theme.fontWeight.sm}
+            >
+              {formatePrice(price)}
+            </Typography>
+            }
+     
+
             <Typography
               fontSize={"md"}
               fontWeight={"xl"}
@@ -155,7 +167,7 @@ const ProductCards = ({
           <Box display={"flex"} flexDirection={"row"} justifyContent={"end"}>
             <ProductModal
               image={image}
-              title={name}
+              title={title}
               description={product.short_description}
               variants={product.variants}
               rating={product.rating}

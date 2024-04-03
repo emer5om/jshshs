@@ -22,7 +22,6 @@ const Refer = () => {
     const userSettings = async () => {
 
         const getUserSettingsX = await get_settings({ user_id: userData.id })
-        console.log(getUserSettingsX)
         setUserRefer(getUserSettingsX.data.user_data)
 
     }

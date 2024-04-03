@@ -154,12 +154,10 @@ export const updateUserData = async (data) => {
   formData.append("username", data.first_name);
   formData.append("image", data.image);
 
-  console.log(data.image);
-  console.log(formData);
+ 
 
   try {
     const res = await api.post("/update_user", formData);
-    console.log(res.data);
     store.dispatch(updateUserInfo(res.data.data));
     return res;
   } catch (error) {
@@ -174,7 +172,6 @@ export const setProductRating = async (data) => {
   formData.append("rating", data.rating);
   formData.append("comment", data.message);
 
-  console.log(data);
 
   try {
     const res = await api.post("/set_product_rating", formData);
@@ -207,7 +204,6 @@ export const removeItemFromCart = async (
 export const deleteItemFromCart = (id) => {
   const state = store.getState();
   const currentCart = state.cart;
-  console.log(currentCart);
 };
 
 export const setPageLoader = (state) => {

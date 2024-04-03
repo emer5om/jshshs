@@ -10,7 +10,6 @@ import { setDeliveryAddress } from "../../store/reducers/selectedDeliverySlice"
 
 
 const PaypalCheckout = ({ price, type, message, deliveryType, isModalOpen, closeModal }) => {
-    console.log(price)
     const userData = getUserData()
     const dispatch = useDispatch()
     const paymentMethods = useSelector((state) => state.settings)?.value?.paymentMethod?.payment_method;
@@ -26,7 +25,6 @@ const PaypalCheckout = ({ price, type, message, deliveryType, isModalOpen, close
     promo_code = promo_code.length > 0 ? promo_code.promo_code : ""
 
     const paypalCurrency = paymentMethods.currency_code
-    console.log(paypalCurrency)
 
     const is_self_pick_up = deliveryType == "Pick Up" ? 1 : 0
 
@@ -54,7 +52,6 @@ const PaypalCheckout = ({ price, type, message, deliveryType, isModalOpen, close
         try {
             const details = await actions.order.capture();
             setPaidFor(true);
-            console.log('Transaction completed by', details);
 
 
             if (type === "wallet") {
@@ -91,7 +88,6 @@ const PaypalCheckout = ({ price, type, message, deliveryType, isModalOpen, close
                         cartStoreData.variant_id.join(', ');
                     const qty = cartStoreData.data.map(document => document.qty).join(', ');
 
-                    console.log(product_variant_id);
 
 
                     const place_order = await placeOrder({
@@ -111,7 +107,6 @@ const PaypalCheckout = ({ price, type, message, deliveryType, isModalOpen, close
                         is_self_pick_up,
                     })
 
-                    console.log(place_order);
 
                     if (!place_order.error) {
                         updateUserCart();

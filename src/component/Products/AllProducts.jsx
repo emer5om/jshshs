@@ -91,7 +91,7 @@ const AllProducts = ({ queryConstants }) => {
                         }}
                         disabled={loading}
                     >
-                        Show more
+                        {t("show-more")}
                     </Button>
                 )}
             </Box>

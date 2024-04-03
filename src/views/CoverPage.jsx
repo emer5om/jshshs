@@ -55,13 +55,11 @@ const CoverPage = () => {
     useEffect(() => {
 
         if(settings && settings?.web_settings.length != 0 ) setSettings(settings.web_settings[0])
-        console.log(setting)
 
     }, [settings]);
   const handleChange = (value) => {
     setAddress(value);
 
-    console.log("value", value);
   };
 
   if (!isLoaded) {
@@ -88,18 +86,13 @@ const CoverPage = () => {
     try {
       const results = await geocodeByAddress(value);
       const latLng = await getLatLng(results[0]);
-      console.log("Coordinates:", latLng);
 
       const city = results[0].address_components.find((component) =>
         component.types.includes("locality")
       );
 
-      console.log("inside handleSelect");
-      console.log(city);
 
       if (city.long_name) {
-        console.log("City:", city.long_name);
-        console.log(latLng);
         try {
           const { lat, lng } = latLng;
 
@@ -117,7 +110,6 @@ const CoverPage = () => {
           } else {
             const branch_id = delivery.data[0].branch_id;
             changeBranchId({ branch_id });
-            console.log("asd");
             await router.push("/home");
           }
         } catch (error) {
@@ -132,7 +124,6 @@ const CoverPage = () => {
   };
   // Function to fetch address from coordinates using a geocoding service (example)
   const fetchAddressFromCoordinates = async (latitude, longitude) => {
-    console.log("fetchAddressFromCoordinates");
     try {
       // Make a request to a geocoding service API with latitude and longitude
       const response = await fetch(
@@ -141,10 +132,8 @@ const CoverPage = () => {
       // Parse the response as JSON
       const data = await response.json();
       // Extract address information from the response
-      console.log(data);
       const address = data.address;
       // Set the retrieved address in your component state or update it as needed
-      console.log(address);
       setAddress(address);
     } catch (error) {
       console.error("Error fetching address:", error);
@@ -152,13 +141,10 @@ const CoverPage = () => {
   };
 
   const handleGPS = () => {
-    console.log("clicked");
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          console.log("Latitude:", latitude);
-          console.log("Longitude:", longitude);
           // Do something with the latitude and longitude values
           try {
             const results = await geocodeByAddress(`${latitude},${longitude}`);
@@ -170,12 +156,10 @@ const CoverPage = () => {
                 component.types.includes("locality")
               );
 
-              console.log(city);
 
               setAddress(address);
 
               if (city) {
-                console.log("City:", city.long_name);
                 let delivery;
                 try {
                   delivery = await is_city_deliverable({
@@ -195,7 +179,6 @@ const CoverPage = () => {
                   } else {
                     const branch_id = delivery.data[0].branch_id;
                     changeBranchId({ branch_id });
-                    console.log("asd");
                     await router.push("/home");
                     // return toast.success(delivery.message)
                   }

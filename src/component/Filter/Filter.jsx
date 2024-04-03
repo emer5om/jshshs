@@ -323,7 +323,6 @@ const Filter = ({
             <RadioGroup
               value={price || ""}
               onChange={(event) => {
-                console.log(event.target.value)
                 setFood(event.target.value);
               }}
             >

@@ -80,7 +80,6 @@ const FavItems = memo(({ data, handleRemove }) => {
         }
       } else {
         handleRemove(id);
-        console.log(id);
         const removeFav = await removeFromFavorite({ type_id: id, branch_id });
         setIndeterminate(false);
 

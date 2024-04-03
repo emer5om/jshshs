@@ -29,8 +29,7 @@ const HomePage = () => {
   
   useEffect(() => {
     const rootHtml = document.getElementById("root-html");
-    console.log("rootHTML");
-    console.log(rootHtml);
+
     if (rootHtml) {
       rootHtml.setAttribute("dir", "auto");
     }

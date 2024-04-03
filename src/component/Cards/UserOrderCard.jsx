@@ -81,7 +81,7 @@ const UserOrderCard = ({
       if (setRating.error) toast.error(setRating.message);
       else toast.success(setRating.message);
 
-      console.log("Rating submitted successfully");
+      // console.log("Rating submitted successfully");
     } catch (error) {
       // Handle error
       console.error("Error while submitting rating:", error);

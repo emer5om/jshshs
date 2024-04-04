@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect} from 'react'
 import { Box } from '@mui/joy';
-import BreadCrumb from '@/component/BreadCrumb/BreadCrumb';
+// import BreadCrumb from '@/component/BreadCrumb/BreadCrumb';
 import dynamic from "next/dynamic";
 import {validateView} from "@/helpers/authGuard";
 import {useRouter} from "next/router";
@@ -13,7 +13,9 @@ const ViewCart = dynamic(() => import('@/views/ViewCart'), {
     ssr: false
 });
 
-
+const BreadCrumb = dynamic(() => import("@/component/BreadCrumb/BreadCrumb"), {
+    ssr: false
+  });
 
 const index = () => {
     const router = useRouter()
@@ -22,6 +24,7 @@ const index = () => {
             router.replace("/")
         }
     }, [])
+
     const {t} = useTranslation()
     return (
         <Box width={"100%"}>

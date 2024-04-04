@@ -227,7 +227,10 @@ const ViewCart = () => {
                       {t("clear-cart")}
                     </Typography>
 
-                    <Modal open={openConfirm} onClose={() => setOpenConfirm(false)}>
+                    <Modal
+                      open={openConfirm}
+                      onClose={() => setOpenConfirm(false)}
+                    >
                       <ModalDialog variant="outlined" role="alertdialog">
                         <DialogTitle>
                           <RiAlertLine />
@@ -243,7 +246,8 @@ const ViewCart = () => {
                             color="danger"
                             onClick={() => {
                               setOpenConfirm(false);
-                              removeItemFromCart(branch_id)                            }}
+                              removeItemFromCart(branch_id);
+                            }}
                           >
                             {t("remove-cart")}
                           </Button>
@@ -674,10 +678,13 @@ const ViewCart = () => {
                             justifyContent={"space-between"}
                           >
                             <Typography
-                              textColor={"text.menuText"}
-                              fontWeight={"md"}
+  textColor={
+    theme.palette.mode === "light"
+      ? "text.menuText"
+      : "text.secondary"
+  }                              fontWeight={"md"}
                             >
-                              Coupon Discount
+                              {t("coupon-discount")}
                             </Typography>
                             <Typography
                               textColor={"text.currency"}
@@ -1175,6 +1182,8 @@ const ViewCart = () => {
                 py: 2,
                 width: { xs: "100%", md: "50%", lg: "30%" },
                 color: mainColor,
+                
+             
                 fontSize: "md",
               }}
               onClick={() => setOpen(true)}

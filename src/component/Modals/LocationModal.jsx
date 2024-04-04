@@ -16,6 +16,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/joy";
+import debounce from 'lodash.debounce';
+
 import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import { RiCrosshair2Fill, RiMapPinFill } from "@remixicon/react";
 import PlacesAutocomplete, {
@@ -59,7 +61,10 @@ const LocationModal = () => {
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
+
   const handleMapClick = async (event) => {
+    console.log("handleMapClick");
+
     setSelectedLocation({ lat: event.latLng.lat(), lng: event.latLng.lng() });
 
     const latitude = event.latLng.lat();
@@ -92,7 +97,7 @@ const LocationModal = () => {
               onBranchIdChange({
                 branch_id,
               });
-              setOpen(false);
+              // setOpen(false);
 
               return toast.success(delivery.message);
             }
@@ -107,6 +112,57 @@ const LocationModal = () => {
       console.error("Error geocoding coordinates:", error);
     }
   };
+
+  const handleMapDrag =  (event) => {
+
+    setSelectedLocation({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+
+    // const latitude = event.latLng.lat();
+    // const longitude = event.latLng.lng();
+
+    // try {
+    //   const results = await geocodeByAddress(`${latitude},${longitude}`);
+    //   if (results && results.length > 0) {
+    //     const address = results[0].formatted_address;
+
+    //     // You can extract city name or other relevant information from the address
+    //     const city = results[0].address_components.find((component) =>
+    //       component.types.includes("locality")
+    //     );
+
+    //     if (city) {
+    //       let delivery;
+    //       try {
+    //         delivery = await is_city_deliverable({
+    //           name: city.long_name,
+    //           latitude,
+    //           longitude,
+    //         });
+    //         dispatch(setNewAddress({ city: city.long_name }));
+    //         if (delivery.error) {
+    //           return toast.error(delivery.message);
+    //         } else {
+    //           const branch_id = delivery.data[0].branch_id;
+    //           dispatch(setBranchId(branch_id));
+    //           onBranchIdChange({
+    //             branch_id,
+    //           });
+    //           // setOpen(false);
+
+    //           return toast.success(delivery.message);
+    //         }
+    //       } catch (error) {
+    //         return toast.error(error.message);
+    //       }
+    //     } else {
+    //       return toast.error("Please Select City");
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.error("Error geocoding coordinates:", error);
+    // }
+  };
+
 
   const mapOptions = {
     streetViewControl: false, // Hide street view control
@@ -231,6 +287,10 @@ const LocationModal = () => {
     setAddress(newAddress);
   };
 
+
+  const debouncedHandleMapClick = debounce(handleMapClick, 500); // Debounce delay in milliseconds
+
+
   return (
     <>
       <Button
@@ -342,6 +402,7 @@ const LocationModal = () => {
           </Grid>
           <Grid container spacing={2} sx={{ flexGrow: 1, mt: 2 }}>
             <Grid xs={12}>
+
               <GoogleMap
                 mapContainerStyle={{
                   width: isMd ? "100%" : "100%",
@@ -349,13 +410,14 @@ const LocationModal = () => {
                 }} // Adjust map height and width
                 center={selectedLocation} // Set center based on selected location
                 zoom={zoomLevel}
-                onClick={handleMapClick} // Add onClick event handler to the map
+                onClick={debouncedHandleMapClick} // Add onClick event handler to the map
                 options={mapOptions} // Set map options
               >
                 <zoomControl /> Show zoom controls
-                <MarkerF position={selectedLocation} />
-                {/* Display marker at selected location */}
+                <MarkerF onDragEnd={(e) => handleMapDrag(e)} position={selectedLocation} draggable={true} />
               </GoogleMap>
+
+
             </Grid>
           </Grid>
           <DialogActions>

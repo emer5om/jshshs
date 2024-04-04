@@ -13,7 +13,10 @@ import {
   MenuItem,
   Typography,
   useTheme,
+  ListItemDecorator,
+  Apps,
 } from "@mui/joy";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
@@ -95,7 +98,6 @@ const Header = () => {
         <Grid
           container
           spacing={4}
-
           maxWidth={"100%"}
           width={"100%"}
           alignItems={"center"}
@@ -131,7 +133,7 @@ const Header = () => {
               </Box>
               <Box
                 display={"flex"}
-                gap={{ md:2,lg:4 }}
+                gap={{ md: 2, lg: 4 }}
                 alignItems={"center"}
                 justifyContent={"center"}
               >
@@ -140,7 +142,8 @@ const Header = () => {
                     {t("home")}
                   </Typography>
                 </Link>
-                <NavMenuButton
+
+                {/* <NavMenuButton
                   label="Apps"
                   open={menuIndex === 0}
                   onOpen={() => setMenuIndex(0)}
@@ -174,7 +177,57 @@ const Header = () => {
                     {t("menu")}
                     <ArrowDownSLineIcon color={theme.palette.primary[500]} />
                   </Typography>
-                </NavMenuButton>
+                </NavMenuButton> */}
+
+                <Dropdown>
+                  <MenuButton
+                    slotProps={{ root: { variant: "plain", color: "neutral" } }}
+                    sx={{
+                      bgcolor: "transparent",
+                      border: "none",
+                      "&:hover": {
+                        bgcolor: "neutral.plainHoverBg", 
+                      },
+
+                    }}
+                  >
+                    <Typography
+                      fontSize={20}
+                      fontWeight={"bolder"}
+                      display={"flex"}
+                      alignItems={"center"}
+                      gap={1}
+                    >
+                      {t("menu")}
+                      <ArrowDownSLineIcon color={theme.palette.primary[500]} />
+                    </Typography>
+                  </MenuButton>
+
+                  <Menu
+                    invertedColors
+                    aria-labelledby="apps-menu-demo"
+                    sx={{
+                      "--List-padding": "0.5rem",
+                      "--ListItemDecorator-size": "3rem",
+                      display: "grid",
+                      gridTemplateColumns: "repeat(4, 190px)",
+                      gap: 1,
+                      right: "100px", // Adjust the value to your preference
+
+                    }}
+                  >
+                    {categories.map((category) => (
+                      <Grid xs={4} key={category.slug}>
+                        <Link href={"/categories/" + category.slug}>
+                          <MenuItem sx={{ borderRadius: "md" }} {...itemProps}>
+                            {category.name}
+                          </MenuItem>
+                        </Link>
+                      </Grid>
+                    ))}
+                  </Menu>
+                </Dropdown>
+
                 <Link href="/products" underline="none" color="inherit">
                   <Typography fontSize={20} fontWeight={"bolder"}>
                     {t("products")}
@@ -382,9 +435,9 @@ const Header = () => {
                     sx={{
                       "&:hover .MuiTypography-root": {
                         color:
-                        theme.palette.mode === "light"
-                          ? theme.palette.text.menuText
-                          : theme.palette.text.secondary,
+                          theme.palette.mode === "light"
+                            ? theme.palette.text.menuText
+                            : theme.palette.text.secondary,
                       },
                     }}
                   >
@@ -404,9 +457,10 @@ const Header = () => {
                     sx={{
                       "&:hover .MuiTypography-root": {
                         color:
-                        theme.palette.mode === "light"
-                          ? theme.palette.text.menuText
-                          : theme.palette.text.secondary,                      },
+                          theme.palette.mode === "light"
+                            ? theme.palette.text.menuText
+                            : theme.palette.text.secondary,
+                      },
                     }}
                   >
                     <Typography

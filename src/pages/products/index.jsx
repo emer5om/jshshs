@@ -11,6 +11,8 @@ import dynamic from "next/dynamic";
 const Products = dynamic(() => import("@/views/Products"), {
   ssr: false
 });
+
+
 const BreadCrumb = dynamic(() => import("@/component/BreadCrumb/BreadCrumb"), {
   ssr: false
 });

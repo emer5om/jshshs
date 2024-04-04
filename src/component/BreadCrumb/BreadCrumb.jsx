@@ -2,7 +2,7 @@
 
 import { Box, Breadcrumbs, Typography, useTheme } from "@mui/joy";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
 // Pass pages in array
 import Home4FillIcon from "remixicon-react/Home4FillIcon";
@@ -13,10 +13,14 @@ const BreadCrumb = ({ page }) => {
   const theme = useTheme();
   const { t } = useTranslation();
 
+
+  
+
   return (
-    <div>
       <Box
-        backgroundColor={theme.palette.background.level2}
+        backgroundColor={theme.palette.mode === "light"
+        ? theme.palette.neutral[200]
+        : theme.palette.neutral[700]}
         px={2}
         py={1}
         borderRadius={"var(--border-radius-sm)"}
@@ -43,10 +47,10 @@ const BreadCrumb = ({ page }) => {
                 textColor={
                   !isLastItem
                     ? theme.palette.mode === "light"
-                      ? "#3B3B3B"
+                      ? "text.currency"
                       :  "text.currency"
-                    : theme.palette.mode === "light"
-                    ? "#3B3B3B" 
+                    : theme.palette.mode === "dark"
+                    ? "primary" 
                     : "text.secondary"
                 }
                 fontWeight={"xl"}
@@ -59,7 +63,6 @@ const BreadCrumb = ({ page }) => {
           })}
         </Breadcrumbs>
       </Box>
-    </div>
   );
 };
 

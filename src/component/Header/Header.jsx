@@ -179,7 +179,7 @@ const Header = () => {
                   </Typography>
                 </NavMenuButton> */}
 
-                <Dropdown>
+                <Dropdown >
                   <MenuButton
                     slotProps={{ root: { variant: "plain", color: "neutral" } }}
                     sx={{
@@ -204,6 +204,7 @@ const Header = () => {
                   </MenuButton>
 
                   <Menu
+                  placement="bottom-end"
                     invertedColors
                     aria-labelledby="apps-menu-demo"
                     sx={{
@@ -212,8 +213,6 @@ const Header = () => {
                       display: "grid",
                       gridTemplateColumns: "repeat(4, 190px)",
                       gap: 1,
-                      right: "100px", // Adjust the value to your preference
-
                     }}
                   >
                     {categories.map((category) => (

@@ -1,14 +1,16 @@
 "use client"
 import React from 'react'
 import { Box } from '@mui/joy';
-import BreadCrumb from '@/component/BreadCrumb/BreadCrumb';
+
 import Favorites from '@/views/Favorites';
 import { validateView } from "@/helpers/authGuard";
 import dynamic from "next/dynamic";
 import { HeadTitle } from "@/component/HeadTitle";
 import { useTranslation } from 'react-i18next';
 
-
+const BreadCrumb = dynamic(() => import("@/component/BreadCrumb/BreadCrumb"), {
+    ssr: false
+  });
 
 const UserLayout = dynamic(() => import('@/pages/user/UserLayout'), {
     ssr: false

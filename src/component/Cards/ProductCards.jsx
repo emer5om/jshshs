@@ -102,7 +102,7 @@ const ProductCards = ({
                 component={"img"}
                 src={
                   product.indicator === "1"
-                    ? "/images/icons/veg.png"
+                    ? "/images/icons/Veg.svg"
                     : "/images/icons/non-veg.jpg"
                 }
                 alt="veg-non-veg.icon"

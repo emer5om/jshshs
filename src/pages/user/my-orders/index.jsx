@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect } from 'react'
 import { Box } from '@mui/joy'
-import BreadCrumb from '@/component/BreadCrumb/BreadCrumb'
+
 import MyOrders from '@/views/MyOrders';
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -13,7 +13,9 @@ const UserLayout = dynamic(() => import('@/pages/user/UserLayout'), {
     ssr: false
 });
 
-
+const BreadCrumb = dynamic(() => import("@/component/BreadCrumb/BreadCrumb"), {
+    ssr: false
+  });
 
 
 const index = () => {

@@ -22,6 +22,7 @@ const Favorites = ({ data }) => {
     try {
       const favorites = await getFavorites({ branch_id });
       dispatch(setFavorites(favorites.data));
+      console.log(favorites)
       setFavoriteItems(favorites.data);
       // console.log(favorites)
     } catch (error) {
@@ -34,11 +35,15 @@ const Favorites = ({ data }) => {
   }, []);
 
   const handleRemove = (id) => {
+
+    console.log("inside handleRemove");
+    console.log(id);
+    console.log(favoriteItems);
     const filteredItems = favorites.filter((item) => item.id !== id);
-
-
     setFavoriteItems(filteredItems);
     dispatch(setFavorites(filteredItems));
+    console.log(favoriteItems);
+
   };
 
   return (

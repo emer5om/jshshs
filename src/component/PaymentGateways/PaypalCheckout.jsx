@@ -7,6 +7,7 @@ import { updateUserCart } from '@/events/actions';
 import { getUserData } from '@/events/getters';
 import toast from 'react-hot-toast';
 import { setDeliveryAddress } from "../../store/reducers/selectedDeliverySlice"
+import { useRouter } from 'next/router';
 
 
 const PaypalCheckout = ({ price, type, message, deliveryType, isModalOpen, closeModal }) => {
@@ -15,6 +16,7 @@ const PaypalCheckout = ({ price, type, message, deliveryType, isModalOpen, close
     const paymentMethods = useSelector((state) => state.settings)?.value?.paymentMethod?.payment_method;
     const cartStoreData = useSelector((state) => state.cart);
     const branchData = useSelector((state) => state.branch);
+    const router = useRouter();
 
     const branch_id = branchData.id
 
@@ -114,6 +116,7 @@ const PaypalCheckout = ({ price, type, message, deliveryType, isModalOpen, close
                         isModalOpen(false)
                         toast.success(place_order.message)
                         dispatch(setDeliveryAddress())
+                        router.push('/orderplaced'); // Replace '/success' with your actual success page path
 
                     }
                     else {

@@ -2,7 +2,7 @@ import Profile from '@/views/Profile'
 import React from 'react'
 // import UserLayout from '../UserLayout'
 import { Box } from '@mui/joy'
-import BreadCrumb from '@/component/BreadCrumb/BreadCrumb'
+
 import {validateView} from "@/helpers/authGuard";
 import dynamic from "next/dynamic";
 import {HeadTitle} from "@/component/HeadTitle";
@@ -10,7 +10,9 @@ import {useTranslation} from "react-i18next";
 const UserLayout = dynamic(() => import('@/pages/user/UserLayout'), {
     ssr: false
 });
-
+const BreadCrumb = dynamic(() => import("@/component/BreadCrumb/BreadCrumb"), {
+    ssr: false
+  });
 
 const index = () => {
 

@@ -3,7 +3,7 @@ import Profile from '@/views/Profile'
 
 import React from 'react'
 import { Box, Grid } from '@mui/joy'
-import BreadCrumb from '@/component/BreadCrumb/BreadCrumb'
+
 import Wallet from '@/views/Wallet'
 import Transactions from '@/component/Cards/Transactions'
 import TransactionsView from '@/views/TransactionsView'
@@ -15,7 +15,9 @@ const UserLayout = dynamic(() => import('@/pages/user/UserLayout'), {
     ssr: false
 });
 
-
+const BreadCrumb = dynamic(() => import("@/component/BreadCrumb/BreadCrumb"), {
+    ssr: false
+  });
 
 import { useTranslation } from "react-i18next";
 

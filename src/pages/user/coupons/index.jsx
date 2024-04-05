@@ -1,11 +1,14 @@
 "use client"
 import React from 'react'
 import { Box, Grid } from '@mui/joy';
-import BreadCrumb from '@/component/BreadCrumb/BreadCrumb';
+import dynamic from "next/dynamic";
+
 import Coupons from '@/views/Coupons';
 import {validateView} from "@/helpers/authGuard";
 
-
+const BreadCrumb = dynamic(() => import("@/component/BreadCrumb/BreadCrumb"), {
+    ssr: false
+  });
 
 
 const index = () => {

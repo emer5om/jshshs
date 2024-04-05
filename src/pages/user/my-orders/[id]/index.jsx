@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Box } from '@mui/joy'
-import BreadCrumb from '@/component/BreadCrumb/BreadCrumb'
+
 import Address from '@/views/Address';
 import MyOrders from '@/views/MyOrders';
 // import UserLayout from '../../UserLayout';
@@ -14,7 +14,10 @@ import { HeadTitle } from "@/component/HeadTitle";
 import dynamic from "next/dynamic"
 import { useTranslation } from 'react-i18next';
 
-
+const BreadCrumb = dynamic(() => import("@/component/BreadCrumb/BreadCrumb"), {
+    ssr: false
+  });
+  
 const OrderDetails = dynamic(() => import('@/views/OrderDetails'), {
     ssr: false
 });

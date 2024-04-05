@@ -170,7 +170,7 @@ const OrderDetails = ({ queryConstants }) => {
                         component={"img"}
                         src={
                           item.indicator == "1"
-                            ? "/images/icons/veg.png"
+                            ? "/images/icons/Veg.svg"
                             : "/images/icons/non-veg.jpg"
                         }
                         alt="veg-non-veg.icon"

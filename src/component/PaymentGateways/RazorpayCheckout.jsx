@@ -4,17 +4,19 @@ import react, { useEffect } from 'react';
 import { generateOrderId, generateRandomOrderId } from '@/helpers/functonHelpers';
 import { addTransaction, razorpay_create_order, placeOrder } from '@/interceptor/routes';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '@mui/joy';
+import { Box, Button } from '@mui/joy';
 import { removeItemFromCart, updateUserCart } from '@/events/actions';
 import { getUserData } from '@/events/getters';
 import { setDeliveryAddress } from "../../store/reducers/selectedDeliverySlice"
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
 
 export default function RazorpayCheckout({ price, type, message, isModalOpen, closeModal, deliveryType }) {
     const paymentMethods = useSelector((state) => state.settings)?.value?.paymentMethod?.payment_method;
     const keyID = paymentMethods.razorpay_key_id
 
     const userData = getUserData()
+    const router = useRouter();
 
     const cartStoreData = useSelector((state) => state.cart);
     const branchData = useSelector((state) => state.branch);
@@ -88,6 +90,8 @@ export default function RazorpayCheckout({ price, type, message, isModalOpen, cl
                                 updateUserCart();
                                 dispatch(setDeliveryAddress())
                                 toast.success(place_order.message)
+                                router.push('/orderplaced'); // Replace '/success' with your actual success page path
+
                             }
                         },
 
@@ -102,6 +106,7 @@ export default function RazorpayCheckout({ price, type, message, isModalOpen, cl
 
                 }
 
+             
 
             }
 
@@ -120,9 +125,9 @@ export default function RazorpayCheckout({ price, type, message, isModalOpen, cl
 
     return (
         <>
-            <div>
+            <Box width={"100%"}>
                 <Button fullWidth variant='soft' onClick={() => handlePayment()}> Place Order </Button>
-            </div>
+            </Box>
         </>
     );
 }

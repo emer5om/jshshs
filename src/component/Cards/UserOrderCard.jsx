@@ -177,7 +177,7 @@ const UserOrderCard = ({
                 component={"img"}
                 src={
                   type === "veg"
-                    ? "/images/icons/veg.png"
+                    ? "/images/icons/Veg.svg"
                     : "/images/icons/non-veg.jpg"
                 }
                 alt="veg-non-veg.icon"

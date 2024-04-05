@@ -130,7 +130,7 @@ const PopularCards = React.memo(({ data, showHeadline = "true" }) => {
                     }}>
                         <Box px={1.5} py={1} >
                             <Image
-                                src={item.indicator == 1 ? "/images/icons/veg.png" : "/images/icons/non-veg.jpg"}
+                                src={item.indicator == 1 ? "/images/icons/Veg.svg" : "/images/icons/non-veg.jpg"}
                                 alt='veg-non-veg.icon'
                                 width={18}
                                 height={18}

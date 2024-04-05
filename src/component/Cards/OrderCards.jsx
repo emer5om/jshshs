@@ -32,7 +32,7 @@ const OrderCards = ({ image, type, title, titleQty, others, daysAgo }) => {
                             <Box
                                 width={"20px"}
                                 component={"img"}
-                                src={type === "veg" ? "/images/icons/veg.png" : "/images/icons/non-veg.jpg"}
+                                src={type === "veg" ? "/images/icons/Veg.svg" : "/images/icons/non-veg.jpg"}
                                 alt='veg-non-veg.icon'
                             >
                             </Box>

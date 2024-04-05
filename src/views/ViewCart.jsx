@@ -308,7 +308,7 @@ const ViewCart = () => {
                                 <Box maxWidth={"10%"}>
                                   <Box
                                     component={"img"}
-                                    src={"/images/icons/veg.png"}
+                                    src={"/images/icons/Veg.svg"}
                                     width={"20px"}
                                   ></Box>
                                 </Box>

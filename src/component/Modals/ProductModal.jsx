@@ -148,7 +148,8 @@ const ProductModal = ({
                   fontWeight={"md"}
                   mb={1}
                   textColor={currencyColor}
-                 
+                  width={30}
+
                 >
                   {/* {t("edit")} */}
                   <RiPencilLine color={currencyColor} />

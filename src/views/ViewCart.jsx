@@ -9,7 +9,6 @@ import {
   CardActions,
   CardContent,
   Chip,
-  Divider,
   Grid,
   List,
   ListItem,
@@ -26,6 +25,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  ListItemDecorator,
+  Divider,
 } from "@mui/joy";
 
 // icons
@@ -351,6 +352,21 @@ const ViewCart = () => {
                                     mt={1}
                                     gap={2}
                                   >
+                                    <Typography
+                                      fontSize={"md"}
+                                      fontWeight={"lg"}
+                                      mb={1}
+                                      textColor={currencyColor}
+                                    >
+                                      {currencySymbol}
+                                      {item.price}
+                                    </Typography>
+                                    <Divider
+                                      orientation="vertical"
+                                      variant="middle"
+                                      flexItem
+                                    />
+
                                     {cartStoreData.data[
                                       index
                                     ].product_details[0].variants.map(
@@ -359,16 +375,28 @@ const ViewCart = () => {
                                           cartStoreData.data[index]
                                             .product_variant_id;
 
-                                        if (value.id == variantId) {
+                                        if (value.id === variantId) {
                                           return (
-                                            <Typography
-                                              fontSize={"sm"}
-                                              fontWeight={"md"}
-                                              mb={1}
-                                              textColor={currencyColor}
-                                            >
-                                              {value.variant_values}
-                                            </Typography>
+                                            <>
+                                              {value.variant_values && (
+                                                <Typography
+                                                  fontSize={"sm"}
+                                                  fontWeight={"md"}
+                                                  mb={1}
+                                                  textColor={currencyColor}
+                                                >
+                                                  {value.variant_values}
+                                                </Typography>
+                                              )}
+
+                                              {value.variant_values && (
+                                                <Divider
+                                                  orientation="vertical"
+                                                  variant="middle"
+                                                  flexItem
+                                                />
+                                              )}
+                                            </>
                                           );
                                         }
                                       }
@@ -396,49 +424,90 @@ const ViewCart = () => {
                                       buttonVariant="text"
                                       currentQty={item.qty}
                                     />
+                                    {/* vertical Divider */}
 
-                                    <Typography
-                                      sx={{
-                                        cursor: "pointer",
-                                      }}
-                                      onClick={(e) => {
-                                        handleRemoveItem(
-                                          item.product_variant_id,
-                                          item.cart_id
-                                        );
-                                      }}
-                                      fontSize={"sm"}
-                                      fontWeight={"md"}
-                                      mb={1}
-                                      textColor={"danger.solidBg"}
-                                      alignItems={"center"}
-                                    >
-                                      <RiDeleteBinLine />
-                                    </Typography>
+                                    <Divider
+                                      orientation="vertical"
+                                      variant="middle"
+                                      flexItem
+                                    />
+                                    <Box sx={{ margin: "0.5em" }}>
+                                      {" "}
+                                      {/* Add margin to create spacing around the Typography */}
+                                      <Typography
+                                        onClick={(e) => {
+                                          handleRemoveItem(
+                                            item.product_variant_id,
+                                            item.cart_id
+                                          );
+                                        }}
+                                        sx={{
+                                          width: { xs: 18, md: 24 },
+                                          cursor: "pointer",
+                                        }}
+                                        fontSize={"sm"}
+                                        fontWeight={"md"}
+                                        mb={1}
+                                        textColor={"danger.solidBg"}
+                                        alignItems={"center"}
+                                      >
+                                        <RiDeleteBinLine />
+                                      </Typography>
+                                    </Box>
                                   </Box>
-                                  {/* <Box>
+                                  <Box>
+                                    {item.product_details[0]
+                                      .product_add_ons[0] && (
+                                      <>
+                                        <Typography
+                                          textColor={"primary"}
+                                          fontWeight={600}
+                                        >
+                                          {t("extra-add-ons")}
+                                        </Typography>
+                                        {item.product_details[0].product_add_ons.map(
+                                          (addOn, index) => {
+                                            return (
+                                              <React.Fragment key={index}>
+                                                <Typography
+                                                  textColor={"primary"}
+                                                  fontWeight={100}
+                                                >
+                                                  {addOn.title} {"    "}
+                                                  {currencySymbol}
+                                                  {addOn.price}
+                                                </Typography>
+                                              </React.Fragment>
+                                            );
+                                          }
+                                        )}
+                                      </>
+                                    )}
+
+                                    {/* 
                                     <Typography
                                       textColor={"primary"}
                                       fontWeight={600}
                                     >
-                                      Extra Add on
+                                      Extra Add ons
                                     </Typography>
-                                    {cartStoreData.data.map((item, index) =>
-                                      // Assuming item.product_details[0].product_add_ons is an array
-                                      item.product_details[0].product_add_ons.map(
-                                        (add_on, addOnIndex) => (
-                                          // Returning Typography component for each add_on
-                                          <Typography
-                                            key={addOnIndex}
-                                            textColor="primary"
-                                            fontWeight={600}
-                                          >
-                                            {add_on.title}
-                                          </Typography>
-                                        )
-                                      )
-                                    )}
-                                  </Box> */}
+                                    {item.product_details[0].product_add_ons.map(
+                                      (item, index) => {
+                                        console.log(item);
+                                        return (
+                                          <>
+                                         
+                                         <Typography
+                                      textColor={"primary"}
+                                      fontWeight={50}
+                                    >
+                                                {item.title}
+                                    </Typography>
+                                          </>
+                                        );
+                                      }
+                                    )} */}
+                                  </Box>
                                 </Box>
 
                                 <Box

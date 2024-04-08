@@ -55,7 +55,7 @@ const HomePage = () => {
       )}
 
       {/* Delightful Dishes */}
-      <Box>
+      <Box sx={{display:"flex", justifyContent:"center"}} >
         <DelightfulDishes
           data={homeStoreData.delightfullSections}
         ></DelightfulDishes>

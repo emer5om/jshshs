@@ -23,7 +23,7 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import Notification4LineIcon from "remixicon-react/Notification4LineIcon";
 import ShoppingBag3LineIcon from "remixicon-react/ShoppingBag3LineIcon";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
-import ArrowRightLine from "remixicon-react/ArrowRightLineIcon"
+import ArrowRightLine from "remixicon-react/ArrowRightLineIcon";
 import NavMenuButton from "./NavMenuButton";
 import Link from "next/link";
 import Image from "next/image";
@@ -48,9 +48,11 @@ import { useTranslation } from "react-i18next";
 import { languages } from "@/i18n";
 import { logout } from "@/events/actions";
 import DarkModeToggle from "@/component/DarkModeToggle";
+import { useColorScheme } from "@mui/joy/styles";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
+  const { mode, setMode, systemMode } = useColorScheme();
 
   const router = useRouter();
   useEffect(() => {
@@ -62,6 +64,13 @@ const Header = () => {
   }, []);
   const settings = useSelector((state) => state.settings);
   const city = useSelector((state) => state.selectedCity.value);
+  const Thememode = useSelector((state) => state.darkMode.value);
+
+  const logoSrc =
+    Thememode === "dark"
+      ? settings.value.web_settings[0].light_logo
+      : settings.value.web_settings[0].logo;
+
   const dispatch = useDispatch();
 
   const authStoreData = useSelector((state) => state.authentication);
@@ -106,11 +115,7 @@ const Header = () => {
             <Grid xs={3} display="flex" alignItems="center">
               <Link href="/home" underline="none" color="inherit">
                 <Image
-                  src={
-                    settings?.value?.logo
-                      ? settings.value.web_settings[0].logo
-                      : settings.value.web_settings[0].light_logo
-                  }
+                  src={logoSrc}
                   alt="logo"
                   height={50}
                   width={0}
@@ -215,7 +220,10 @@ const Header = () => {
                     }}
                   >
                     <Link href="/categories" underline="none" color="inherit">
-                      <MenuItem sx={{ borderRadius: "md" }}>{t("see-all")}<ArrowRightLine color={theme.palette.primary[500]}/></MenuItem>
+                      <MenuItem sx={{ borderRadius: "md" }}>
+                        {t("see-all")}
+                        <ArrowRightLine color={theme.palette.primary[500]} />
+                      </MenuItem>
                     </Link>
 
                     {categories.map((category) => (
@@ -417,7 +425,7 @@ const Header = () => {
                     sx={{
                       "&:hover .MuiTypography-root": {
                         color:
-                          theme.palette.mode === "light"
+                          theme.palette.Thememode === "light"
                             ? theme.palette.text.menuText
                             : theme.palette.text.secondary,
                       },
@@ -437,7 +445,7 @@ const Header = () => {
                     sx={{
                       "&:hover .MuiTypography-root": {
                         color:
-                          theme.palette.mode === "light"
+                          theme.palette.Thememode === "light"
                             ? theme.palette.text.menuText
                             : theme.palette.text.secondary,
                       },
@@ -459,7 +467,7 @@ const Header = () => {
                     sx={{
                       "&:hover .MuiTypography-root": {
                         color:
-                          theme.palette.mode === "light"
+                          theme.palette.Thememode === "light"
                             ? theme.palette.text.menuText
                             : theme.palette.text.secondary,
                       },

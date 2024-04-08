@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -16,11 +16,12 @@ import {
   useTheme,
   CircularProgress,
 } from "@mui/joy";
+import { useColorScheme } from "@mui/joy/styles";
 
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { GpsFixed, LocationCity } from "@mui/icons-material";
 import Footer from "@/component/Footer/Index";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoadScript } from "@react-google-maps/api";
 // import LoginModal from "@/component/Modals/LoginModal";
 
@@ -30,12 +31,11 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import { is_city_deliverable } from "@/interceptor/routes";
 import { changeBranchId } from "@/events/actions";
 import { useRouter } from "next/router";
-import {getSettings} from "@/store/reducers/settingsSlice";
-
+import { getSettings } from "@/store/reducers/settingsSlice";
 
 const CoverPage = () => {
   const theme = useTheme();
@@ -43,24 +43,40 @@ const CoverPage = () => {
   // const [loginModalState, setLoginModalState] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
+  const { mode, setMode, systemMode } = useColorScheme();
 
   const [location, setLocation] = useState(null);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
-    libraries: ["places"]
+    libraries: ["places"],
   });
-    const settings = useSelector((state) => state.settings.value);
-    const [setting, setSettings] = React.useState(false);
-    useEffect(() => {
-
-        if(settings && settings?.web_settings.length != 0 ) setSettings(settings.web_settings[0])
-
-    }, [settings]);
+  const settings = useSelector((state) => state.settings.value);
+  const [setting, setSettings] = React.useState(false);
+  useEffect(() => {
+    if (settings && settings?.web_settings.length != 0)
+      setSettings(settings.web_settings[0]);
+  }, [settings]);
   const handleChange = (value) => {
     setAddress(value);
-
   };
+
+  // const mode = useSelector((state) => state.darkMode.value);
+
+  let logoSrc;
+
+  if (systemMode) {
+    logoSrc =
+      systemMode === "dark"
+        ? settings?.web_settings[0]?.light_logo
+        : settings?.web_settings[0]?.logo;
+  } else if (
+    (logoSrc =
+      mode === "dark"
+        ? settings?.web_settings[0]?.light_logo
+        : settings?.web_settings[0]?.logo)
+  )
+ 
 
   if (!isLoaded) {
     return (
@@ -90,7 +106,6 @@ const CoverPage = () => {
       const city = results[0].address_components.find((component) =>
         component.types.includes("locality")
       );
-
 
       if (city.long_name) {
         try {
@@ -155,7 +170,6 @@ const CoverPage = () => {
               const city = results[0].address_components.find((component) =>
                 component.types.includes("locality")
               );
-
 
               setAddress(address);
 
@@ -225,14 +239,14 @@ const CoverPage = () => {
               height: "65px",
             }}
           >
-              {setting && (
-            <img
-              src={setting.logo}
-              alt="eRestro Single Vendor Logo"
-              width={100}
-              sx={{ width: "80px", maxHeight: "100%" }}
-            />
-              )}
+            {setting && (
+              <img
+                src={logoSrc}
+                alt="eRestro Single Vendor Logo"
+                width={100}
+                sx={{ width: "80px", maxHeight: "100%" }}
+              />
+            )}
           </Box>
 
           <Box>
@@ -382,13 +396,13 @@ const CoverPage = () => {
               </Box>
             </Grid>
 
-            <Grid item xs={12} md={6}  >
+            <Grid item xs={12} md={6}>
               <Card
                 sx={{
                   maxWidth: "100%",
                   height: { xs: "350px", md: "500px" },
                   border: 0,
-                  backgroundColor:"transparent"
+                  backgroundColor: "transparent",
                 }}
               >
                 <CardCover>
@@ -1026,8 +1040,6 @@ const CoverPage = () => {
             </Grid>
           </Grid>
         </Grid>
-
-        
       </Box>
     </>
   );

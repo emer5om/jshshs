@@ -52,6 +52,15 @@ const MobileNavigation = () => {
   const settings = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const cartStoreData = useSelector((state) => state.cart);
+  const mode = useSelector((state) => state.darkMode.value);
+
+  const logoSrc =
+    mode === "dark"
+      ? settings.value.web_settings[0].light_logo
+      : settings.value.web_settings[0].logo;
+
+
+
 
   const [open, setOpen] = React.useState(false);
   // const [openSettings, setOpenSettings] = React.useState(false);
@@ -89,9 +98,7 @@ const MobileNavigation = () => {
           <Box sx={{ width: "150px" }}>
             <Image
               src={
-                settings?.value?.logo
-                  ? settings.value.logo[0]
-                  : "/images/logo-backend.png"
+                logoSrc
               }
               alt="logo"
               height={50}

@@ -539,7 +539,7 @@ const UserLayout = ({ children }) => {
                     justifyContent={"center"}
                     p={1}
                   >
-                    <RiMapPin2Line
+                    <RiFilePaper2Line
                       color={
                         path === "/user/my-orders"
                           ? "white"

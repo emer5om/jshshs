@@ -24,6 +24,13 @@ import Notification4LineIcon from "remixicon-react/Notification4LineIcon";
 import ShoppingBag3LineIcon from "remixicon-react/ShoppingBag3LineIcon";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import ArrowRightLine from "remixicon-react/ArrowRightLineIcon";
+
+
+import {
+
+  RiMapPin2Line,
+
+} from "@remixicon/react";
 import NavMenuButton from "./NavMenuButton";
 import Link from "next/link";
 import Image from "next/image";
@@ -461,6 +468,7 @@ const Header = () => {
                       {t("my-orders")}
                     </Typography>
                   </MenuItem>
+               
                   <MenuItem
                     component={Link}
                     href={"/user/favourites"}
@@ -479,6 +487,28 @@ const Header = () => {
                       startDecorator={<RiHeartLine size={theme.fontSize.lg} />}
                     >
                       {t("favourites")}
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    href="/user/address"
+                    sx={{
+                      "&:hover .MuiTypography-root": {
+                        color:
+                          theme.palette.Thememode === "light"
+                            ? theme.palette.text.menuText
+                            : theme.palette.text.secondary,
+                      },
+                    }}
+                  >
+                    <Typography
+                      fontSize={"sm"}
+                      fontWeight={"md"}
+                      startDecorator={
+                        <RiMapPin2Line size={theme.fontSize.lg} />
+                      }
+                    >
+                      {t("address")}
                     </Typography>
                   </MenuItem>
                   <MenuItem

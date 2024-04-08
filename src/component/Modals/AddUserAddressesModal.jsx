@@ -59,6 +59,7 @@ const AddUserAddressesModal = ({
 
     const [open, setOpen] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState({ lat: 23.2420, lng: 69.6669 });
+    
     const [is_default_checked, set_is_default_checked] = useState(isDefault == "0" ? false : true);
 
     const dispatch = useDispatch();
@@ -197,7 +198,7 @@ const AddUserAddressesModal = ({
                     }}
                     onClick={() => setOpen(true)}
                 >
-                    <RiMapPinAddFill />
+                    <RiMapPinAddFill style={{marginRight:5}} />
                     {t("add-address")}
                 </Box>
             }

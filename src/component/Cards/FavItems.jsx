@@ -63,6 +63,36 @@ const FavItems = memo(({ data, handleRemove }) => {
     },
   }));
 
+  // const handleFavChange = useCallback(
+  //   async (value, id) => {
+  //     if (authentication === false) {
+  //       return toast.error("Please Login First!");
+  //     }
+  //     setIndeterminate(true);
+  //     if (value) {
+  //       const add_fav = await addToFavorite({ type_id: id, branch_id });
+  //       setIndeterminate(false);
+
+  //       if (add_fav.error) {
+  //         toast.error(add_fav.message);
+  //       } else {
+  //         toast.success(add_fav.message);
+  //       }
+  //     } else {
+  //       handleRemove(id);
+  //       const removeFav = await removeFromFavorite({ type_id: id, branch_id });
+  //       setIndeterminate(false);
+
+  //       if (removeFav.error) {
+  //         toast.error(removeFav.message);
+  //       } else {
+  //         toast.success(removeFav.message);
+  //       }
+  //     }
+  //   },
+  //   [branch_id, authentication]
+  // );
+
   const handleFavChange = useCallback(
     async (value, id) => {
       if (authentication === false) {
@@ -72,25 +102,25 @@ const FavItems = memo(({ data, handleRemove }) => {
       if (value) {
         const add_fav = await addToFavorite({ type_id: id, branch_id });
         setIndeterminate(false);
-
+  
         if (add_fav.error) {
           toast.error(add_fav.message);
         } else {
           toast.success(add_fav.message);
         }
       } else {
-        handleRemove(id);
         const removeFav = await removeFromFavorite({ type_id: id, branch_id });
         setIndeterminate(false);
-
+  
         if (removeFav.error) {
           toast.error(removeFav.message);
         } else {
           toast.success(removeFav.message);
+          handleRemove(id); // Call handleRemove here
         }
       }
     },
-    [branch_id, authentication]
+    [branch_id, authentication, handleRemove]
   );
 
   const handleCheckboxChange = useCallback(

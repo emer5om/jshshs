@@ -36,10 +36,11 @@ const Category = () => {
 
                 <Grid container spacing={1} my={2} >
                     <Swiper
-                        slidesPerView={1}
+                        slidesPerView={2}
                         breakpoints={{
+                      
                             320: {
-                                slidesPerView: 1,
+                                slidesPerView: 2,
                             },
                             425: {
                                 slidesPerView: 2

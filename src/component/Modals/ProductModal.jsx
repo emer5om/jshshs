@@ -104,8 +104,7 @@ const ProductModal = ({
         parseCustomFloat(selectedVariant.special_price) + extraPrice;
       const price = parseCustomFloat(selectedVariant.price) + extraPrice;
       setSpecialPrice(special_price);
-      console.log("special price", specialPrice);
-      console.log("price", price);
+  
       if (special_price === 0) {
         setPrice(price);
         setPriceOriginal(price);
@@ -138,6 +137,7 @@ const ProductModal = ({
               />
             ) : (
               <Button
+              sx={{p:0}}
                 onClick={() => {
                   setOpen(true);
                 }}
@@ -148,9 +148,10 @@ const ProductModal = ({
                   fontWeight={"md"}
                   mb={1}
                   textColor={currencyColor}
-                  endDecorator={<RiPencilLine color={currencyColor} />}
+                 
                 >
-                  {t("edit")}
+                  {/* {t("edit")} */}
+                  <RiPencilLine color={currencyColor} />
                 </Typography>
               </Button>
             )}

@@ -12,7 +12,7 @@ const index = () => {
     return (
         <Box>
             <Box>
-                <BreadCrumb page={[{ name: t("categories"), link: "#" }]} />
+                {/* <BreadCrumb page={[{ name: t("categories"), link: "#" }]} /> */}
             </Box>
            <CategoriesPage />
         </Box>

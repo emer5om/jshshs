@@ -23,7 +23,7 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import Notification4LineIcon from "remixicon-react/Notification4LineIcon";
 import ShoppingBag3LineIcon from "remixicon-react/ShoppingBag3LineIcon";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
-
+import ArrowRightLine from "remixicon-react/ArrowRightLineIcon"
 import NavMenuButton from "./NavMenuButton";
 import Link from "next/link";
 import Image from "next/image";
@@ -109,7 +109,7 @@ const Header = () => {
                   src={
                     settings?.value?.logo
                       ? settings.value.web_settings[0].logo
-                      : "/images/logo-backend.png"
+                      : settings.value.web_settings[0].light_logo
                   }
                   alt="logo"
                   height={50}
@@ -179,16 +179,15 @@ const Header = () => {
                   </Typography>
                 </NavMenuButton> */}
 
-                <Dropdown >
+                <Dropdown>
                   <MenuButton
                     slotProps={{ root: { variant: "plain", color: "neutral" } }}
                     sx={{
                       bgcolor: "transparent",
                       border: "none",
                       "&:hover": {
-                        bgcolor: "neutral.plainHoverBg", 
+                        bgcolor: "neutral.plainHoverBg",
                       },
-
                     }}
                   >
                     <Typography
@@ -204,7 +203,7 @@ const Header = () => {
                   </MenuButton>
 
                   <Menu
-                  placement="bottom-end"
+                    placement="bottom-end"
                     invertedColors
                     aria-labelledby="apps-menu-demo"
                     sx={{
@@ -215,6 +214,10 @@ const Header = () => {
                       gap: 1,
                     }}
                   >
+                    <Link href="/categories" underline="none" color="inherit">
+                      <MenuItem sx={{ borderRadius: "md" }}>{t("see-all")}<ArrowRightLine color={theme.palette.primary[500]}/></MenuItem>
+                    </Link>
+
                     {categories.map((category) => (
                       <Grid xs={4} key={category.slug}>
                         <Link href={"/categories/" + category.slug}>

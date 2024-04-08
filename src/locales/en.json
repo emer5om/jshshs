@@ -144,5 +144,8 @@
   "rate-product":"Rate Product",
   "Are-you-sure-you-want-to-Cancel":"Are you sure you want to Cancel?",
   "please-wait":"Please Wait",
-  "load-more":"Load More"
+  "load-more":"Load More",
+  "see-all":"See All",
+  "select-address":"Select Address",
+  "please-select-delivery-address":"Please Select Delivery address"
 }

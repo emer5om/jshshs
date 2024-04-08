@@ -53,7 +53,6 @@
   "food-in-your-bag": "आपके बैग में खाना",
   "clear-cart": "कार्ट साफ़ करें",
   "clear-tip": "टिप साफ करें",
-
   "Add-Food-In-Your-Bag": "अपने बैग में खाना जोड़ें",
   "remove": "हटाएं",
   "edit": "संपादित करें",
@@ -130,22 +129,23 @@
   "you-have-no-items-in-your-cart": "आपकी कार्ट में कोई आइटम नहीं है।",
   "brows-Menu": "मेन्यू ब्राउज़ करें।",
   "add-reason": "कृपया अपने आदेश रद्द करने का कारण दर्ज करें।",
-
   "No-Favourites": "कोई पसंदीदा आइटम नहीं",
   "you-don't-have-any-favorites-yet": "अभी तक आपके पास कोई पसंदीदा आइटम नहीं हैं",
-  "select-Delivery-Address":"डिलीवरी पता का चयन करें",
+  "select-Delivery-Address": "डिलीवरी पता का चयन करें",
   "Fill-in-the-Address": "पता भरें",
   "Fill-in-the-Area": "क्षेत्र भरें",
   "Fill-in-the-City": "शहर भरें",
   "Fill-in-the-Pincode": "पिनकोड भरें",
   "Fill-in-the-Landmark": "ब्रांडमार्क भरें",
-  "rate-product":"प्रोडक्ट की रेटिंग",
-  "Are-you-sure-you-want-to-Cancel":"क्या आप निश्चित हैं कि आप रद्द करना चाहते हैं?",
-  "please-wait":"कृपया प्रतीक्षा करें।"
-  ,
-  "load-more":"और लोड करें",
+  "rate-product": "प्रोडक्ट की रेटिंग",
+  "Are-you-sure-you-want-to-Cancel": "क्या आप निश्चित हैं कि आप रद्द करना चाहते हैं?",
+  "please-wait": "कृपया प्रतीक्षा करें।",
+  "load-more": "और लोड करें",
   "remove-cart": "कार्ट हटाएं",
-  "cart-remove-warning": "क्या आप वाकई इस कार्ट को हटाना चाहते हैं!"
+  "cart-remove-warning": "क्या आप वाकई इस कार्ट को हटाना चाहते हैं!",
+  "see-all": "सभी देखें",
+  "select-address":"पता चुनें",
+  "please-select-delivery-address":"कृपया वितरण पता चुनें"
 
 
 }

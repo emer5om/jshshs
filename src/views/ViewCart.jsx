@@ -46,6 +46,7 @@ import {
   RiCheckLine as CheckIcon,
   RiArrowRightLine,
   RiAlertLine,
+  RiDeleteBinLine,
 } from "@remixicon/react";
 import CustomButton from "@/component/Buttons/CustomButton";
 import Link from "next/link";
@@ -70,6 +71,8 @@ const ViewCart = () => {
   const [customTipInputValue, setCustomTipInputValue] = useState(1);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const [openAddressSelect, setOpenAddressSelect] = useState(false);
 
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
@@ -345,6 +348,7 @@ const ViewCart = () => {
                                       xs: "center",
                                       md: "start",
                                     }}
+                                    mt={1}
                                     gap={2}
                                   >
                                     {cartStoreData.data[
@@ -407,10 +411,34 @@ const ViewCart = () => {
                                       fontWeight={"md"}
                                       mb={1}
                                       textColor={"danger.solidBg"}
+                                      alignItems={"center"}
                                     >
-                                      {t("remove")}
+                                      <RiDeleteBinLine />
                                     </Typography>
                                   </Box>
+                                  {/* <Box>
+                                    <Typography
+                                      textColor={"primary"}
+                                      fontWeight={600}
+                                    >
+                                      Extra Add on
+                                    </Typography>
+                                    {cartStoreData.data.map((item, index) =>
+                                      // Assuming item.product_details[0].product_add_ons is an array
+                                      item.product_details[0].product_add_ons.map(
+                                        (add_on, addOnIndex) => (
+                                          // Returning Typography component for each add_on
+                                          <Typography
+                                            key={addOnIndex}
+                                            textColor="primary"
+                                            fontWeight={600}
+                                          >
+                                            {add_on.title}
+                                          </Typography>
+                                        )
+                                      )
+                                    )}
+                                  </Box> */}
                                 </Box>
 
                                 <Box
@@ -663,7 +691,8 @@ const ViewCart = () => {
                         {t("total")}
                       </Typography>
                       <Typography textColor={"text.currency"} fontWeight={"lg"}>
-                        {formatePrice(cartStoreData.overall_amount)}
+                        {/* {formatePrice(cartStoreData.overall_amount)} */}
+                        {formatePrice(finalTotal)}
                       </Typography>
                     </Box>
                     <Divider sx={{ my: 1 }} />
@@ -678,11 +707,12 @@ const ViewCart = () => {
                             justifyContent={"space-between"}
                           >
                             <Typography
-  textColor={
-    theme.palette.mode === "light"
-      ? "text.menuText"
-      : "text.secondary"
-  }                              fontWeight={"md"}
+                              textColor={
+                                theme.palette.mode === "light"
+                                  ? "text.menuText"
+                                  : "text.secondary"
+                              }
+                              fontWeight={"md"}
                             >
                               {t("coupon-discount")}
                             </Typography>
@@ -749,6 +779,13 @@ const ViewCart = () => {
             <Grid container gap={3} sx={{ flexGrow: 1 }}>
               {deliveryType === "Delivery" && (
                 <Grid xs={12} width={"100%"}>
+                  <AddressSelector
+                    openAddressSelect={openAddressSelect}
+                    setOpenAddressSelect={(val) => {
+                      console.log(val);
+                      setOpenAddressSelect(val);
+                    }}
+                  />
                   <Card orientation="vertical" sx={{ px: 1 }}>
                     <CardActions
                       orientation="horizontal"
@@ -760,6 +797,7 @@ const ViewCart = () => {
                         alignItems: "center",
                         justifyContent: "space-between",
                       }}
+                      onClick={() => setOpenAddressSelect(true)}
                     >
                       <Box
                         display={"flex"}
@@ -787,18 +825,31 @@ const ViewCart = () => {
                           {t("delivery-address")}{" "}
                         </Typography>
                       </Box>
-
-                      <AddressSelector />
+                      <Button
+                        variant="text"
+                        color="neutral"
+                        onClick={() => setOpenAddressSelect(true)}
+                      >
+                        <Typography
+                          textColor={
+                            theme.palette.mode === "light"
+                              ? "text.menuText"
+                              : "text.secondary"
+                          }
+                        >
+                          {t("select-address")}
+                        </Typography>
+                      </Button>
                     </CardActions>
 
                     <CardContent
                       orientation="vertical"
                       sx={{ px: { md: 4, xs: 2 } }}
                     >
-                      <Divider sx={{ my: 1, width: "100%" }} />
+                      <Divider sx={{ mb: 1, width: "100%" }} />
                       <Box>
                         <Box display={"flex"} flexDirection={"column"} gap={1}>
-                          {selectedDeliveryAddress ? (
+                          {selectedDeliveryAddress?.id ? (
                             <Box>
                               <Box
                                 display={"flex"}
@@ -820,48 +871,15 @@ const ViewCart = () => {
                                   {selectedDeliveryAddress.address}
                                 </Typography>
                               </Box>
-                              <Divider sx={{ mt: 0.5 }} />
                             </Box>
                           ) : (
-                            ""
-                          )}
-
-                          <Box display={"flex"} alignItems={"center"} gap={1}>
-                            <Box
-                              display={"flex"}
-                              alignItems={"center"}
-                              gap={0.5}
-                            >
-                              <Avatar
-                                alt="Remy Sharp"
-                                src={userData.image}
-                                size="sm"
-                              />
-                              <Typography
-                                fontSize={"md"}
-                                fontWeight={"md"}
-                                textColor={
-                                  theme.palette.mode === "light"
-                                    ? "text.menuText"
-                                    : "text.secondary"
-                                }
-                              >
-                                {userData.username}
-                              </Typography>
-                            </Box>
-                            <Divider orientation="vertical" />
                             <Typography
-                              fontSize={"md"}
-                              fontWeight={"md"}
-                              textColor={
-                                theme.palette.mode === "light"
-                                  ? "text.menuText"
-                                  : "text.secondary"
-                              }
+                              fontWeight={600}
+                              textColor={theme.palette.danger[500]}
                             >
-                              {userData.mobile}
+                              {t("please-select-delivery-address")}
                             </Typography>
-                          </Box>
+                          )}
                         </Box>
                       </Box>
                     </CardContent>
@@ -1182,8 +1200,7 @@ const ViewCart = () => {
                 py: 2,
                 width: { xs: "100%", md: "50%", lg: "30%" },
                 color: mainColor,
-                
-             
+
                 fontSize: "md",
               }}
               onClick={() => setOpen(true)}

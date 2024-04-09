@@ -9,6 +9,8 @@ import ListCards from "../Cards/ListCards";
 import { getFavorites, } from "@/interceptor/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { setFavorites } from "@/store/reducers/favoritesSlice";
+import { getUserData } from "@/events/getters";
+import toast from "react-hot-toast";
 
 // todo: add API data here
 
@@ -16,6 +18,8 @@ const DelightfulDishes = ({ data }) => {
   const branchData = useSelector((state) => state.branch);
   const branch_id = branchData.id;
   const dispatch = useDispatch();
+  const userData = getUserData();
+  const authentication = userData === false ? false : true;
 
   const favorites = useSelector((state) => state.favorites)?.value;
 
@@ -23,21 +27,28 @@ const DelightfulDishes = ({ data }) => {
 
   // Fetch user's favorites when the component mounts
   useEffect(() => {
-    async function fetchFavorites() {
-      try {
-        const favorites = await getFavorites({ branch_id });
-        setFavoriteItems(favorites.data);
-        console.log(favorites.data);
-        console.log("favorites.data");
-        dispatch(setFavorites(favorites.data));
+    if (authentication === false) {
+            // return toast.error("Please Login First!");
+          setFavoriteItems([])
+          dispatch(setFavorites([]));
 
-      } catch (error) {
-        console.error("Error fetching favorites:", error);
-      }
-    }
+          } else{
+            async function fetchFavorites() {
+              try {
+                const favorites = await getFavorites({ branch_id });
+                setFavoriteItems(favorites.data);
+                dispatch(setFavorites(favorites.data));
+        
+              } catch (error) {
+                console.error("Error fetching favorites:", error);
+              }
+            }
+    fetchFavorites(); 
 
-    fetchFavorites();
-  }, []);
+          }
+   
+
+  }, [authentication]);
 
   
   const handleRemove = (id) => {
@@ -48,11 +59,8 @@ const DelightfulDishes = ({ data }) => {
       // Filter out the removed item from the Redux state
       const updatedFavorites = favorites.filter((item) => item.id !== id);
       console.log("Updated favorites:");
-console.log(favorites);
       dispatch(setFavorites(updatedFavorites));
-      console.log("Updated favorites:");
       setFavoriteItems(updatedFavorites);
-      console.log(updatedFavorites);
     } catch (error) {
       console.error("Error in handleRemove:", error);
     }
@@ -73,7 +81,6 @@ console.log(favorites);
           {data.map((item, index) => {
             const discount = item.min_max_price.discount_in_percentage;
 
-            console.log(item);
             return (
               <Grid xs={12} md={6} lg={4} key={index}>
                 <ProductCards

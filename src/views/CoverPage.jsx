@@ -70,13 +70,12 @@ const CoverPage = () => {
       systemMode === "dark"
         ? settings?.web_settings[0]?.light_logo
         : settings?.web_settings[0]?.logo;
-  } else if (
-    (logoSrc =
+  } else if (mode) {
+    logoSrc =
       mode === "dark"
         ? settings?.web_settings[0]?.light_logo
-        : settings?.web_settings[0]?.logo)
-  )
- 
+        : settings?.web_settings[0]?.logo;
+  }
 
   if (!isLoaded) {
     return (

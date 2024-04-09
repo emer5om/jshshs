@@ -396,7 +396,7 @@ const ViewCart = () => {
                                               )}
 
                                               {value.variant_values && (
-                                                  <Box
+                                                <Box
                                                   style={{
                                                     display: "flex",
                                                     alignItems: "center",
@@ -453,7 +453,13 @@ const ViewCart = () => {
                                         style={{ height: 20 }} // Adjust the height as needed
                                       />
                                     </Box>
-                                    <Box sx={{ margin: "0.5em",display:"flex" , alignItems:"center" }}>
+                                    <Box
+                                      sx={{
+                                        margin: "0.5em",
+                                        display: "flex",
+                                        alignItems: "center",
+                                      }}
+                                    >
                                       {" "}
                                       {/* Add margin to create spacing around the Typography */}
                                       <Typography
@@ -871,7 +877,6 @@ const ViewCart = () => {
                   <AddressSelector
                     openAddressSelect={openAddressSelect}
                     setOpenAddressSelect={(val) => {
-                      console.log(val);
                       setOpenAddressSelect(val);
                     }}
                   />

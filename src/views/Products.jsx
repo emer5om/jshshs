@@ -55,10 +55,7 @@ const Products = ({ categoryId = 0 }) => {
     async function fetchFavorites() {
       try {
         const favorites = await getFavorites({ branch_id });
-        console.log(favorites);
         setFavoriteItems(favorites.data);
-        console.log(favorites.data);
-        console.log("favorites.data");
         dispatch(setFavorites(favorites.data));
       } catch (error) {
         console.error("Error fetching favorites:", error);
@@ -138,16 +135,11 @@ const Products = ({ categoryId = 0 }) => {
 
   const handleRemove = (id) => {
     try {
-      console.log("inside handleRemove");
-      console.log("id => ", id);
 
-      console.log(favorites);
 
       const updatedFavorites = favorites.filter((item) => item.id !== id);
       dispatch(setFavorites(updatedFavorites));
-      console.log("Updated favorites:");
       setFavoriteItems(updatedFavorites);
-      console.log(updatedFavorites);
     } catch (error) {
       console.error("Error in handleRemove:", error);
     }
@@ -155,8 +147,6 @@ const Products = ({ categoryId = 0 }) => {
 
   const handleAdd = (id) => {
     try {
-      console.log("inside handleAdd");
-      console.log("id => ", id);
   
       // Check if the item is already in the favorites array
       const isItemInFavorites = favorites.some((item) => item.id === id);
@@ -167,8 +157,6 @@ const Products = ({ categoryId = 0 }) => {
         const updatedFavorites = [...favorites, newFavorite];
         dispatch(setFavorites(updatedFavorites));
         setFavoriteItems(updatedFavorites);
-        console.log("Updated favorites:");
-        console.log(updatedFavorites);
       } else {
         console.log("Item is already in favorites");
       }

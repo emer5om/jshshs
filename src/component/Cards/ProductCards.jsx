@@ -44,7 +44,6 @@ const ProductCards = ({
   data,
   handleRemove
 }) => {
-  console.log(id);
 
   const theme = useTheme();
   const userData = getUserData();
@@ -69,7 +68,10 @@ const ProductCards = ({
       }, {});
       setCheckedItems(initialCheckedItems);
     }
-  }, [userData, data]);
+    
+  }, [data]);
+
+
 
   const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
     "& .MuiCheckbox-checkbox": {
@@ -82,10 +84,18 @@ const ProductCards = ({
     },
   }));
 
+
+  useEffect(() => {
+setCheckedItems([]);
+
+  }, [authentication])
+  
+
   const handleFavChange = useCallback(
     async (value, id) => {
       if (authentication === false) {
         return toast.error("Please Login First!");
+
       }
       setIndeterminate(true);
       if (value) {
@@ -106,6 +116,7 @@ const ProductCards = ({
         } else {
           toast.success(removeFav.message);
           handleRemove(id); // Call handleRemove here
+
         }
       }
     },
@@ -114,14 +125,19 @@ const ProductCards = ({
 
   const handleCheckboxChange = useCallback(
     (id, checked) => {
+      if (authentication === false) {
+          return toast.error("Please Login First!");
+      }
+  
       setCheckedItems((prevCheckedItems) => ({
         ...prevCheckedItems,
         [id]: checked,
       }));
       handleFavChange(checked, id);
     },
-    [handleFavChange]
+    [authentication, handleFavChange]
   );
+  
 
   return (
     <Card

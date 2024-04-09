@@ -75,8 +75,8 @@ const Header = () => {
 
   const logoSrc =
     Thememode === "dark"
-      ? settings.value.web_settings[0].light_logo
-      : settings.value.web_settings[0].logo;
+      ? settings?.value?.web_settings[0]?.light_logo
+      : settings?.value?.web_settings[0]?.logo;
 
   const dispatch = useDispatch();
 

@@ -23,9 +23,7 @@ const Favorites = ({ data }) => {
     try {
       const favorites = await getFavorites({ branch_id });
       dispatch(setFavorites(favorites.data));
-      console.log(favorites);
       setFavoriteItems(favorites.data);
-      // console.log(favorites)
     } catch (error) {
       console.error("error in fav:", error);
     }
@@ -37,15 +35,11 @@ const Favorites = ({ data }) => {
 
   const handleRemove = (id) => {
     try {
-      console.log("inside handleRemove");
-      console.log("id => ", id);
 
       // Filter out the removed item from the Redux state
       const updatedFavorites = favorites.filter((item) => item.id !== id);
       dispatch(setFavorites(updatedFavorites));
-      console.log("Updated favorites:");
       setFavoriteItems(updatedFavorites);
-      console.log(updatedFavorites);
     } catch (error) {
       console.error("Error in handleRemove:", error);
     }

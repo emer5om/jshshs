@@ -21,10 +21,10 @@ const Index = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   return (
-    <Grid mt={8} container px={6} bgcolor={theme.palette.background.footer}>
+    <Grid mt={8} container sx={{px:{xs:1,sm:4, md:4}}} bgcolor={theme.palette.background.footer}>
       <Grid
         xs={12}
-        sx={{ height: "100%", padding: 2, color: "white", width: "100%" }}
+        sx={{ height: "100%", padding: {xs:1,sm:2}, color: "white", width: "100%" }}
       >
         <Box sx={{ marginTop: 8, textAlign: { xs: "center", md: "left" } }}>
           <Grid container spacing={4} m={0} width={"100%"} color={"white"}>

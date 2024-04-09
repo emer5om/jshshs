@@ -29,7 +29,7 @@ import { addToFavorite, removeFromFavorite } from "@/interceptor/routes";
 import { RiHeartFill, RiHeartLine, RiHeartPulseLine } from "@remixicon/react";
 import { getUserData } from "@/events/getters";
 
-const ListCards = ({ data }) => {
+const ListCards = ({ handleAdd,favoriteItems,handleRemove,data }) => {
   const theme = useTheme();
 
   const userData = getUserData();
@@ -41,7 +41,7 @@ const ListCards = ({ data }) => {
 
   const [checkedItems, setCheckedItems] = useState(
     userData !== false
-      ? data.reduce((acc, item) => {
+      ? favoriteItems.reduce((acc, item) => {
           acc[item.id] = item.is_favorite == 1;
           return acc;
         }, {})
@@ -73,6 +73,7 @@ const ListCards = ({ data }) => {
           toast.error(add_fav.message);
         } else {
           toast.success(add_fav.message);
+          handleAdd(id)
         }
       } else {
         const removeFav = await removeFromFavorite({ type_id: id, branch_id });
@@ -82,6 +83,7 @@ const ListCards = ({ data }) => {
           toast.error(removeFav.message);
         } else {
           toast.success(removeFav.message);
+          handleRemove(id)
         }
       }
     },
@@ -100,92 +102,106 @@ const ListCards = ({ data }) => {
   );
 
   return (
+ 
+
     <Box>
       <Grid container spacing={2} sx={{ flexGrow: 1 }}>
         {data.map((item, index) => {
+          const discountedPrice =
+            item.variants[0].special_price != 0
+              ? item.variants[0].special_price
+              : item.variants[0].price;
+          const discount = item.min_max_price.discount_in_percentage;
+const specialPrice = item.variants[0].special_price != 0
+          const price = item.variants[0]?.price;
           return (
             <Grid xs={12} md={4} key={index}>
               <Card
-                key={index}
-                orientation="horizontal"
                 variant="outlined"
                 sx={{
-                  width: "100%",
-                  height: { xs: "250px", md: "200px" },
-                  borderRadius: "md",
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  transition: "transform 0.3s ease-in-out",
                   "&:hover": {
+                    boxShadow: "md",
+                    borderColor: "neutral.outlinedHoverBorder",
                     backgroundColor:
                       theme.palette.mode === "light"
                         ? theme.palette.primary[50]
                         : theme.palette.primary[700],
-                    "& .img": {
-                      transform: "scale(1.07)",
-                    },
-                    boxShadow:
-                      "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
                   },
-                  transition: "transform 0.3s ease-in-out",
                 }}
               >
-                <CardOverflow sx={{ alignItems: "center" }}>
-                  <Box
-                    maxWidth={"100px"}
-                    height={"100px"}
-                    borderRadius={"50%"}
-                    display={"flex"}
-                    alignItems={"center"}
-                    justifyContent={"center"}
-                    ml={1}
-                  >
+                <Box display={"flex"} gap={2}>
+                  <Box maxWidth={150} maxHeight={150}>
                     <Box
                       component={"img"}
-                      className="img"
                       src={item.image_sm}
                       srcSet={`${item.image_sm} 2x`}
                       loading="lazy"
                       alt=""
-                      borderRadius={"md"}
-                      height={"100%"}
                       width={"100%"}
-                      sx={{ transition: "transform 0.3s ease-in-out" }} // Smooth transition
-                    />
+                      height={"100%"}
+                      borderRadius={"md"}
+                      minHeight={150}
+                      minWidth={150}
+                      sx={{
+                        objectFit: "cover",
+                        background:
+                          "linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0) 60%), linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 30%)",
+                        [theme.breakpoints.down("sm")]: {
+                          minHeight: 80,
+                          minWidth: 80,
+                        },
+                        [theme.breakpoints.between("sm", "md")]: {
+                          minHeight: 150,
+                          minWidth: 150,
+                        },
+                      }}
+                    ></Box>
+                    {discount && specialPrice != 0 && (
+                    <Box position={"absolute"} top={"75%"} left={"5%"}>
+                      <Typography
+                        fontSize={"md"}
+                        fontWeight={"lg"}
+                        textColor={
+                          theme.palette.mode === "light"
+                            ? "background.body"
+                            : ""
+                        }
+                      >
+                        {discount}% OFF
+                      </Typography>
+                    </Box>
+                     )} 
                   </Box>
-                </CardOverflow>
-                <CardContent sx={{ maxWidth: { xs: "50%", md: "80%" } }}>
-                  <Box>
-                    <Box>
+
+                  <Box width={"100%"}>
+                    <Box display={"flex"} alignItems={"center"} width={"100%"}>
                       <Box
                         display={"flex"}
                         alignItems={"center"}
                         width={"100%"}
-                        gap={2}
+                        gap={1}
                       >
+                        <Box
+                          width={"20px"}
+                          component={"img"}
+                          src={
+                            item.indicator === "1"
+                              ? "/images/icons/Veg.svg"
+                              : "/images/icons/non-veg.jpg"
+                          }
+                          alt="veg-non-veg.icon"
+                        ></Box>
+
                         <Box
                           display={"flex"}
                           alignItems={"center"}
                           width={"100%"}
-                          gap={1}
                         >
-                          <Box
-                            width={"20px"}
-                            component={"img"}
-                            src={
-                              item.indicator == 1
-                                ? "/images/icons/Veg.svg"
-                                : "/images/icons/non-veg.jpg"
-                            }
-                            alt="veg-non-veg.icon"
-                          ></Box>
-
-                          <Box
-                            display={"flex"}
-                            alignItems={"center"}
-                            width={"100%"}
-                            gap={0.5}
-                          >
-                            <StarFillIcon color={theme.palette.warning[400]} />
-                            <Typography> {item.rating} </Typography>
-                          </Box>
+                          <StarFillIcon color={theme.palette.warning[400]} />
+                          <Typography> {item.rating ?? 0} </Typography>
                         </Box>
                         <Box>
                           <StyledCheckbox
@@ -214,90 +230,63 @@ const ListCards = ({ data }) => {
                           />
                         </Box>
                       </Box>
+                    
+                    </Box>
 
-                      <Box my={2}>
-                        <Typography
-                          fontSize={theme.fontSize.sm}
-                          fontWeight={theme.fontWeight.md}
-                          textColor={"text.currency"}
-                          textTransform={"capitalize"}
-                        >
-                          {item.category_name}
-                        </Typography>
-                        <Typography
-                          fontSize={theme.fontSize.md}
-                          fontWeight={theme.fontWeight.lg}
-                          sx={{
-                            textOverflow: "ellipsis",
-                            width: "100%",
-                            textWrap: "nowrap",
-                            overflow: "hidden",
-                            mb: 1,
-                          }}
-                        >
-                          {item.name}
-                        </Typography>
-                        <Typography
-                          textOverflow={"ellipsis"}
-                          overflow={"hidden"}
-                          sx={{
-                            color: theme.palette.text.description,
-                            textWrap: "nowrap",
-                          }}
-                          fontSize={theme.fontSize.sm}
-                          fontWeight={theme.fontWeight.md}
-                        >
-                          {item.short_description}
-                        </Typography>
-                      </Box>
-
-                      <Box
-                        display={"flex"}
-                        flexDirection={{ xs: "column", md: "row" }}
-                        alignItems={"center"}
-                        justifyContent={"space-between"}
-                        width={"100%"}
+                    <Box mt={1}>
+                      <Typography
+                        fontSize={"sm"}
+                        fontWeight={"md"}
+                        textColor={"text.tertiary"}
                       >
-                        <Box display={"flex"} alignItems={"center"} gap={1}>
-                          {item.variants[0]?.special_price > 0 ? (
-                            <Typography
-                              sx={{
-                                color: theme.palette.text.tertiary,
-                                textDecoration: "line-through",
-                              }}
-                              fontSize={theme.fontSize.xs}
-                              fontWeight={theme.fontWeight.sm}
-                            >
-                              {formatePrice(item.variants[0]?.price)}
-                            </Typography>
-                          ) : (
-                            ""
-                          )}
-                          <Typography
-                            sx={{ color: theme.palette.text.currency }}
-                            fontSize={theme.fontSize.md}
-                            fontWeight={theme.fontWeight.lg}
-                          >
-                            {item.variants[0]?.special_price > 0
-                              ? formatePrice(item.variants[0]?.special_price)
-                              : formatePrice(item.variants[0]?.price)}
-                          </Typography>
-                        </Box>
-                        <Box display={"flex"} alignItems={"center"} gap={1}>
-                          <ProductModal
-                            image={item.image_sm}
-                            title={index.name}
-                            rating={item.rating}
-                            description={item.short_description}
-                            variants={item.variants}
-                            addOns={item.product_add_ons}
-                            simple={item.type}
-                          />
-                        </Box>
-                      </Box>
+                        {item.category_name}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography fontSize={"lg"} fontWeight={"md"}>
+                        {item.name}
+                      </Typography>
+                    </Box>
+                    <Box display={"flex"} alignItems={"center"} gap={1}>
+                      {discountedPrice < price && (
+                      <Typography
+                        sx={{ textDecoration: "line-through" }}
+                        textColor={theme.palette.text.currency}
+                        fontSize={theme.fontSize.xs}
+                        fontWeight={theme.fontWeight.sm}
+                      >
+                        {formatePrice(price)}
+                      </Typography>
+                       )}
+
+                      <Typography
+                        fontSize={"md"}
+                        fontWeight={"xl"}
+                        textColor={"text.currency"}
+                      >
+                        {formatePrice(
+                          discountedPrice ? discountedPrice : price
+                        )}
+                      </Typography>
+                    </Box>
+
+                    <Box
+                      display={"flex"}
+                      flexDirection={"row"}
+                      justifyContent={"end"}
+                    >
+                      <ProductModal
+                        image={item.image_sm}
+                        title={item.name}
+                        description={item.short_description}
+                        variants={item.variants}
+                        rating={item.rating}
+                        simple={item.type == "simple_product"}
+                        addOns={item.product_add_ons}
+                      />
                     </Box>
                   </Box>
-                </CardContent>
+                </Box>
               </Card>
             </Grid>
           );

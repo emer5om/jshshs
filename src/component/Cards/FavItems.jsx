@@ -26,6 +26,7 @@ import { RiHeartFill, RiHeartLine, RiHeartPulseLine } from "@remixicon/react";
 import { useTranslation } from "react-i18next";
 
 const FavItems = memo(({ data, handleRemove }) => {
+
   const theme = useTheme();
   const dispatch = useDispatch();
   const userData = getUserData();
@@ -40,7 +41,7 @@ const FavItems = memo(({ data, handleRemove }) => {
 
   const [checkedItems, setCheckedItems] = useState({});
   const [isUserDataAvailable, setIsUserDataAvailable] = useState(false);
-
+  
   useEffect(() => {
     if (userData !== false) {
       setIsUserDataAvailable(true);
@@ -371,6 +372,7 @@ const FavItems = memo(({ data, handleRemove }) => {
       handleRemove,
     ]
   );
+
 
   return (
     <Box

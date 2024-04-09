@@ -14,6 +14,7 @@ import FavItems from "../component/Cards/FavItems";
 const Favorites = ({ data }) => {
   const branchData = useSelector((state) => state.branch);
   const favorites = useSelector((state) => state.favorites)?.value;
+
   const [favoriteItems, setFavoriteItems] = useState([]);
   const branch_id = branchData.id;
   const dispatch = useDispatch();

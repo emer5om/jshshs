@@ -29,7 +29,7 @@ import { formatePrice } from '@/helpers/functonHelpers';
 import { getUserData } from '@/events/getters';
 import { useTranslation } from "react-i18next";
 
-const PopularCards = React.memo(({ data, showHeadline = "true" }) => {
+const PopularCards = React.memo(({handleRemove,favoriteItems, handleAdd,data, showHeadline = "true" }) => {
     const theme = useTheme()
 
     const userData = getUserData()
@@ -42,7 +42,7 @@ const PopularCards = React.memo(({ data, showHeadline = "true" }) => {
 
     const [checkedItems, setCheckedItems] = useState(
         userData !== false ?
-            data.reduce((acc, item) => {
+        favoriteItems.reduce((acc, item) => {
                 acc[item.id] = item.is_favorite == 1;
                 return acc;
             }, {}
@@ -77,6 +77,8 @@ const PopularCards = React.memo(({ data, showHeadline = "true" }) => {
                     toast.error(add_fav.message);
                 } else {
                     toast.success(add_fav.message);
+                handleAdd(id)
+
                 }
             } else {
                 const removeFav = await removeFromFavorite({ type_id: id, branch_id });
@@ -86,6 +88,7 @@ const PopularCards = React.memo(({ data, showHeadline = "true" }) => {
                     toast.error(removeFav.message);
                 } else {
                     toast.success(removeFav.message);
+                    handleRemove(id)
                 }
             }
         },

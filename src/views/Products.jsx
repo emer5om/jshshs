@@ -1,20 +1,27 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { get_products } from "@/interceptor/routes";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  addToFavorite,
+  getFavorites,
+  get_products,
+  removeFromFavorite,
+} from "@/interceptor/routes";
 import { Box, Button } from "@mui/joy";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import PopularCards from "@/component/Cards/PopularCards";
 import ListCards from "@/component/Cards/ListCards";
 import Filter from "@/component/Filter/Filter";
-
+import { setFavorites } from "@/store/reducers/favoritesSlice";
 import Pagination from "replace-js-pagination";
 import { useTranslation } from "react-i18next";
 import Skeleton from "@/component/Skeleton/Skeleton";
+import { getUserData } from "@/events/getters";
 
 const Products = ({ categoryId = 0 }) => {
   const { t } = useTranslation();
+  const favorites = useSelector((state) => state.favorites)?.value;
 
   const branchData = useSelector((state) => state.branch);
 
@@ -33,7 +40,33 @@ const Products = ({ categoryId = 0 }) => {
   const [activePage, setActivePage] = useState(1);
   const [initialLimit, setInitialLimit] = useState(12); // Initial limit for the "Load More" feature
   const [end, setEnd] = useState(false);
+  const dispatch = useDispatch();
+
+  const [favoriteItems, setFavoriteItems] = useState([]);
+  const userData = getUserData();
+
+  const authentication = userData === false ? false : true;
+
   const branch_id = branchData.id;
+  const [indeterminate, setIndeterminate] = useState(false);
+
+  // Fetch user's favorites when the component mounts
+  useEffect(() => {
+    async function fetchFavorites() {
+      try {
+        const favorites = await getFavorites({ branch_id });
+        console.log(favorites);
+        setFavoriteItems(favorites.data);
+        console.log(favorites.data);
+        console.log("favorites.data");
+        dispatch(setFavorites(favorites.data));
+      } catch (error) {
+        console.error("Error fetching favorites:", error);
+      }
+    }
+
+    fetchFavorites();
+  }, []);
 
   const getProducts = async () => {
     try {
@@ -103,10 +136,98 @@ const Products = ({ categoryId = 0 }) => {
     }
   };
 
+  const handleRemove = (id) => {
+    try {
+      console.log("inside handleRemove");
+      console.log("id => ", id);
+
+      console.log(favorites);
+
+      const updatedFavorites = favorites.filter((item) => item.id !== id);
+      dispatch(setFavorites(updatedFavorites));
+      console.log("Updated favorites:");
+      setFavoriteItems(updatedFavorites);
+      console.log(updatedFavorites);
+    } catch (error) {
+      console.error("Error in handleRemove:", error);
+    }
+  };
+
+  const handleAdd = (id) => {
+    try {
+      console.log("inside handleAdd");
+      console.log("id => ", id);
+  
+      // Check if the item is already in the favorites array
+      const isItemInFavorites = favorites.some((item) => item.id === id);
+  
+      if (!isItemInFavorites) {
+        // If the item is not in the favorites array, add it
+        const newFavorite = { id, is_favorite: 1 };
+        const updatedFavorites = [...favorites, newFavorite];
+        dispatch(setFavorites(updatedFavorites));
+        setFavoriteItems(updatedFavorites);
+        console.log("Updated favorites:");
+        console.log(updatedFavorites);
+      } else {
+        console.log("Item is already in favorites");
+      }
+    } catch (error) {
+      console.error("Error in handleAdd:", error);
+    }
+  };
+
+  const handleFavChange = useCallback(
+    async (value, id) => {
+      if (authentication === false) {
+        return toast.error("Please Login First!");
+      }
+
+      setIndeterminate(true);
+      if (value) {
+        const add_fav = await addToFavorite({ type_id: id, branch_id });
+        setIndeterminate(false);
+
+        if (add_fav.error) {
+          toast.error(add_fav.message);
+        } else {
+          toast.success(add_fav.message);
+        }
+      } else {
+        const removeFav = await removeFromFavorite({ type_id: id, branch_id });
+        setIndeterminate(false);
+
+        if (removeFav.error) {
+          toast.error(removeFav.message);
+        } else {
+          toast.success(removeFav.message);
+          handleRemove(id);
+        }
+      }
+    },
+    [branch_id]
+  );
+
+
+
   const handleLoadMore = () => {
     setInitialLimit(initialLimit + 12); // Increase the initialLimit by 10 (or any other desired value)
     // setOffset(offset + initialLimit); // Update the offset based on the current offset and initialLimit
   };
+
+
+  const updateFavoriteItems = (id, isFavorite) => {
+    setFavoriteItems((prevFavoriteItems) => {
+      if (isFavorite) {
+        // If the item is being marked as favorite, add it to the favoriteItems array
+        return [...prevFavoriteItems, { id, is_favorite: 1 }];
+      } else {
+        // If the item is being removed from favorites, filter it out from the favoriteItems array
+        return prevFavoriteItems.filter((item) => item.id !== id);
+      }
+    });
+  };
+
 
   return (
     <Box>
@@ -125,9 +246,26 @@ const Products = ({ categoryId = 0 }) => {
 
           <Box>
             {view === "gallery" ? (
-              <PopularCards data={products} showHeadline={false} />
+              <PopularCards
+                favoriteItems={favoriteItems}
+                handleRemove={handleRemove}
+                data={products}
+                handleFavChange={handleFavChange}
+                showHeadline={false}
+                updateFavoriteItems={updateFavoriteItems}
+                handleAdd={handleAdd}
+
+              />
             ) : (
-              <ListCards data={products} />
+              <ListCards
+                favoriteItems={favoriteItems}
+                handleFavChange={handleFavChange}
+                handleRemove={handleRemove}
+                data={products}
+                updateFavoriteItems={updateFavoriteItems}
+                handleAdd={handleAdd}
+
+              />
             )}
           </Box>
           <Box
@@ -156,7 +294,6 @@ const Products = ({ categoryId = 0 }) => {
               justifySelf: "center",
             }}
           />{" "}
-          
         </Box>
       )}
 

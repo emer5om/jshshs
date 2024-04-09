@@ -10,6 +10,7 @@ import { getBranchId, isLogged } from "@/events/getters";
 import { updateUserCart, updateUserAddresses, updateUserSettings } from "@/events/actions";
 
 export const onAppLoad = async () => {
+  localStorage.removeItem("persist:root")
   if (isLogged()) {
     updateUserCart(), updateUserAddresses(), updateUserSettings();
   }

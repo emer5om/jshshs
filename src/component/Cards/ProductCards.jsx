@@ -10,31 +10,119 @@ import {
   Chip,
   Box,
   CardActions,
+  styled,
+  Checkbox,
 } from "@mui/joy";
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import CustomButton from "../Buttons/CustomButton";
 
 // icons
 
 import StarFillIcon from "remixicon-react/StarFillIcon";
 import HeartLineIcon from "remixicon-react/HeartLineIcon";
-import { RiHeartFill } from "@remixicon/react";
 import ProductModal from "../Modals/ProductModal";
 import { formatePrice } from "@/helpers/functonHelpers";
+import { getUserData } from "@/events/getters";
+import { useSelector } from "react-redux";
+import { RiHeartFill, RiHeartLine, RiHeartPulseLine } from "@remixicon/react";
+import toast from "react-hot-toast";
+
+import { addToFavorite, removeFromFavorite } from "@/interceptor/routes";
 
 const ProductCards = ({
   image,
   type,
   rating,
-  isLiked,
   categoryName,
   title,
   price,
   discountedPrice,
   discount,
   product,
+  specialPrice,
+  id,
+  data,
+  handleRemove
 }) => {
+  console.log(id);
+
   const theme = useTheme();
+  const userData = getUserData();
+  const branchData = useSelector((state) => state.branch);
+  const favorites = useSelector((state) => state.favorites.value);
+
+  const authentication = userData === false ? false : true;
+
+  const branch_id = branchData.id;
+  const [indeterminate, setIndeterminate] = useState(false);
+
+  const [checkedItems, setCheckedItems] = useState({});
+
+  const [isUserDataAvailable, setIsUserDataAvailable] = useState(false);
+
+  useEffect(() => {
+    if (userData !== false) {
+      setIsUserDataAvailable(true);
+      const initialCheckedItems = data.reduce((acc, item) => {
+        acc[item.id] = item.is_favorite == 1;
+        return acc;
+      }, {});
+      setCheckedItems(initialCheckedItems);
+    }
+  }, [userData, data]);
+
+  const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
+    "& .MuiCheckbox-checkbox": {
+      padding: 0,
+      border: "none",
+      backgroundColor: "transparent",
+      "&:hover": {
+        backgroundColor: "transparent",
+      },
+    },
+  }));
+
+  const handleFavChange = useCallback(
+    async (value, id) => {
+      if (authentication === false) {
+        return toast.error("Please Login First!");
+      }
+      setIndeterminate(true);
+      if (value) {
+        const add_fav = await addToFavorite({ type_id: id, branch_id });
+        setIndeterminate(false);
+  
+        if (add_fav.error) {
+          toast.error(add_fav.message);
+        } else {
+          toast.success(add_fav.message);
+        }
+      } else {
+        const removeFav = await removeFromFavorite({ type_id: id, branch_id });
+        setIndeterminate(false);
+  
+        if (removeFav.error) {
+          toast.error(removeFav.message);
+        } else {
+          toast.success(removeFav.message);
+          handleRemove(id); // Call handleRemove here
+        }
+      }
+    },
+    [branch_id, authentication, handleRemove]
+  );
+
+  const handleCheckboxChange = useCallback(
+    (id, checked) => {
+      setCheckedItems((prevCheckedItems) => ({
+        ...prevCheckedItems,
+        [id]: checked,
+      }));
+      handleFavChange(checked, id);
+    },
+    [handleFavChange]
+  );
+
   return (
     <Card
       variant="outlined"
@@ -79,7 +167,7 @@ const ProductCards = ({
               },
             }}
           ></Box>
-          {discount != 0 && (
+          {discount && specialPrice != 0 && (
             <Box position={"absolute"} top={"75%"} left={"5%"}>
               <Typography
                 fontSize={"md"}
@@ -112,8 +200,31 @@ const ProductCards = ({
                 <StarFillIcon color={theme.palette.warning[400]} />
                 <Typography> {rating ?? 0} </Typography>
               </Box>
+              <Box>
+                        <StyledCheckbox
+                          overlay={false}
+                          color="warning"
+                          checked={checkedItems[id] || false}
+                          onChange={(e) =>
+                            handleCheckboxChange(id, e.target.checked)
+                          }
+                          indeterminateIcon={<RiHeartPulseLine size={"20px"} />}
+                          uncheckedIcon={
+                            <RiHeartLine
+                              size={"20px"}
+                              color={theme.palette.danger[500]}
+                            />
+                          }
+                          checkedIcon={
+                            <RiHeartFill
+                              size={"20px"}
+                              color={theme.palette.danger[500]}
+                            />
+                          }
+                        />
+                      </Box>
             </Box>
-            {isLiked != undefined && (
+            {/* {isLiked != undefined && (
               <Box>
                 {isLiked ? (
                   <RiHeartFill color={theme.palette.danger[500]} />
@@ -121,7 +232,7 @@ const ProductCards = ({
                   <HeartLineIcon color={theme.palette.background.footer} />
                 )}
               </Box>
-            )}
+            )} */}
 
             {/* images and other data */}
           </Box>
@@ -141,19 +252,16 @@ const ProductCards = ({
             </Typography>
           </Box>
           <Box display={"flex"} alignItems={"center"} gap={1}>
-            
-            {
-              discountedPrice  < price&&
+            {discountedPrice < price && (
               <Typography
-              sx={{ textDecoration: "line-through" }}
-              textColor={theme.palette.text.currency}
-              fontSize={theme.fontSize.xs}
-              fontWeight={theme.fontWeight.sm}
-            >
-              {formatePrice(price)}
-            </Typography>
-            }
-     
+                sx={{ textDecoration: "line-through" }}
+                textColor={theme.palette.text.currency}
+                fontSize={theme.fontSize.xs}
+                fontWeight={theme.fontWeight.sm}
+              >
+                {formatePrice(price)}
+              </Typography>
+            )}
 
             <Typography
               fontSize={"md"}

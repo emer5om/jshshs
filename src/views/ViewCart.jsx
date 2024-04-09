@@ -349,7 +349,6 @@ const ViewCart = () => {
                                       xs: "center",
                                       md: "start",
                                     }}
-                                    mt={1}
                                     gap={2}
                                   >
                                     <Typography
@@ -358,14 +357,21 @@ const ViewCart = () => {
                                       mb={1}
                                       textColor={currencyColor}
                                     >
-                                      {currencySymbol}
-                                      {item.price}
+                                      {formatePrice(item.price)}
                                     </Typography>
-                                    <Divider
-                                      orientation="vertical"
-                                      variant="middle"
-                                      flexItem
-                                    />
+                                    <Box
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <Divider
+                                        orientation="vertical"
+                                        variant="middle"
+                                        flexItem
+                                        style={{ height: 20 }} // Adjust the height as needed
+                                      />
+                                    </Box>
 
                                     {cartStoreData.data[
                                       index
@@ -390,11 +396,19 @@ const ViewCart = () => {
                                               )}
 
                                               {value.variant_values && (
-                                                <Divider
-                                                  orientation="vertical"
-                                                  variant="middle"
-                                                  flexItem
-                                                />
+                                                  <Box
+                                                  style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                  }}
+                                                >
+                                                  <Divider
+                                                    orientation="vertical"
+                                                    variant="middle"
+                                                    flexItem
+                                                    style={{ height: 20 }} // Adjust the height as needed
+                                                  />
+                                                </Box>
                                               )}
                                             </>
                                           );
@@ -426,12 +440,20 @@ const ViewCart = () => {
                                     />
                                     {/* vertical Divider */}
 
-                                    <Divider
-                                      orientation="vertical"
-                                      variant="middle"
-                                      flexItem
-                                    />
-                                    <Box sx={{ margin: "0.5em" }}>
+                                    <Box
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <Divider
+                                        orientation="vertical"
+                                        variant="middle"
+                                        flexItem
+                                        style={{ height: 20 }} // Adjust the height as needed
+                                      />
+                                    </Box>
+                                    <Box sx={{ margin: "0.5em",display:"flex" , alignItems:"center" }}>
                                       {" "}
                                       {/* Add margin to create spacing around the Typography */}
                                       <Typography
@@ -447,7 +469,6 @@ const ViewCart = () => {
                                         }}
                                         fontSize={"sm"}
                                         fontWeight={"md"}
-                                        mb={1}
                                         textColor={"danger.solidBg"}
                                         alignItems={"center"}
                                       >
@@ -474,8 +495,7 @@ const ViewCart = () => {
                                                   fontWeight={100}
                                                 >
                                                   {addOn.title} {"    "}
-                                                  {currencySymbol}
-                                                  {addOn.price}
+                                                  {formatePrice(addOn.price)}
                                                 </Typography>
                                               </React.Fragment>
                                             );

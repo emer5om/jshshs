@@ -146,7 +146,6 @@ const ProductModal = ({
                 <Typography
                   fontSize={"sm"}
                   fontWeight={"md"}
-                  mb={1}
                   textColor={currencyColor}
                   width={30}
 

@@ -3,13 +3,9 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Card,
-  TextField,
   IconButton,
-  SearchIcon,
   Input,
-  InputAdornment,
   CardCover,
-  Avatar,
   Grid,
   Typography,
   Button,
@@ -36,6 +32,7 @@ import { is_city_deliverable } from "@/interceptor/routes";
 import { changeBranchId } from "@/events/actions";
 import { useRouter } from "next/router";
 import { getSettings } from "@/store/reducers/settingsSlice";
+import DarkModeToggle from "@/component/DarkModeToggle";
 
 const CoverPage = () => {
   const theme = useTheme();
@@ -248,30 +245,9 @@ const CoverPage = () => {
             )}
           </Box>
 
-          <Box>
-            {/* <LoginModal
-              loginModalState={loginModalState}
-              onClose={() => {
-                setLoginModalState(false);
-              }}
-            /> */}
+          <DarkModeToggle/>
 
-            {/* <Button
-              variant={"solid"}
-              color={"primary"}
-              sx={{
-                py: 1,
-                borderRadius: "var(--border-radius-lg)",
-                color: theme.palette.text.primary, // Change the text color to white
-                // Adjust the value as needed for the desired roundness
-                "&.MuiButton-contained": {
-                  borderRadius: "var(--border-radius-lg)", // Ensure rounded corners for contained state as well
-                },
-              }}
-            >
-              Login
-            </Button> */}
-          </Box>
+    
         </Box>
 
         {/* Hero Section */}

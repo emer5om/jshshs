@@ -109,7 +109,7 @@ export const OfferCards = ({
               addOns={product.product_add_ons}
             />
 
-            <Box sx={{display:"flex",alignItems:"center",gap:0.5}}>
+            <Box sx={{display:"flex",flexWrap:"wrap",alignItems:"center",gap:0.5}}>
 
             {specialPrice < price ? (
               <Typography

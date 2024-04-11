@@ -46,7 +46,7 @@ function DarkModeToggle() {
     >
       {isDarkMode == "dark" ? (
         <Box display={"flex"} justifyContent={"center"}>
-          <SunFillIcon
+          <SunFillIcon color={mode == "dark" ? "white" : "black" }
             size={"25px"}
             style={{ marginRight: "5px", paddingLeft: "0px" }}
           />
@@ -57,7 +57,7 @@ function DarkModeToggle() {
       ) : (
         <Box display={"flex"} justifyContent={"center"}>
 
-        <MoonFillIcon size={"22px"}  style={{ marginRight: "5px", paddingLeft: "0px" }} />
+        <MoonFillIcon color={mode == "light" ? "black" : "white" } size={"22px"}  style={{ marginRight: "5px", paddingLeft: "0px" }} />
         <Typography fontSize={"md"} fontWeight={"lg"}>
         {t("dark")}
 

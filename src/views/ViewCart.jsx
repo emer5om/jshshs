@@ -139,6 +139,8 @@ const ViewCart = () => {
     finalTotal = baseAmount + parseFloat(tip);
   }
 
+  
+
   return (
     <Box>
       {cartStoreData.data.length > 0 && (

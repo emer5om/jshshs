@@ -51,6 +51,7 @@ function SearchModal({ displayStyle = "icon" }) {
             {displayStyle === "icon" ?
 
                 <RiSearch2Line
+                color={theme.palette.mode === "dark" ? "white" : "black" }
                     style={{ cursor: 'pointer',width:"40px" }}
                     size={"20px"} onClick={() => {
                         setOpen(true)

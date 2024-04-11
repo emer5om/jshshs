@@ -57,7 +57,7 @@ const ProductCards = ({
 
   useEffect(() => {
     if (userData !== false) {
-      const initialCheckedItems = data.reduce((acc, item) => {
+      const initialCheckedItems = data?.reduce((acc, item) => {
         acc[item.id] = item.is_favorite == 1;
         return acc;
       }, {});

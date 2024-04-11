@@ -31,7 +31,7 @@ const BackToTop = () => {
 
     return (
         <Box
-            sx={{
+            sx={{zIndex:99999999,
                 position: 'fixed',
                 bottom: 15,
                 right: 15,

@@ -26,7 +26,7 @@ const Index = () => {
         xs={12}
         sx={{ height: "100%", padding: {xs:1,sm:2}, color: "white", width: "100%" }}
       >
-        <Box sx={{ marginTop: 8, textAlign: { xs: "center", md: "left" } }}>
+        <Box sx={{ marginTop: {xs:2}, textAlign: { xs: "center", md: "left" } }}>
           <Grid container spacing={4} m={0} width={"100%"} color={"white"}>
             <Grid xs={12} md={6}>
               <Box

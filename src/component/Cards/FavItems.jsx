@@ -94,9 +94,13 @@ const FavItems = memo(({ data, handleRemove }) => {
   //   [branch_id, authentication]
   // );
 
+  
+
   const handleFavChange = useCallback(
     async (value, id) => {
       if (authentication === false) {
+    console.log("clicked handleFavChange")
+
         return toast.error("Please Login First!");
       }
       setIndeterminate(true);

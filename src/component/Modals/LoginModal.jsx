@@ -25,7 +25,7 @@ import { useTranslation } from "react-i18next";
 export default function LoginModal({ loginModalState, onClose }) {
   const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE;
   const [state, setState] = useState({
-    phoneNumber: demoMode == "true" ? '+919876543212' : "",
+    phoneNumber: demoMode == "true" ? '+919876543210' : "",
     isLoading: false,
     isOTPLoading: false,
     OTPReset: false,

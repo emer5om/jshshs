@@ -23,7 +23,7 @@ const Offers = ({ data, showMore = true }) => {
         )}
       </Box>
 
-      <Box>
+      <Box display={"flex"} justifyContent={"center"}>
         <Grid container spacing={2} sx={{ flexGrow: 1 }}>
           {data.product_details.map((item, index) => {
             const discount = item.min_max_price.discount_in_percentage;

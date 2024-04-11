@@ -42,9 +42,8 @@ const ProductCards = ({
   specialPrice,
   id,
   data,
-  handleRemove
+  handleRemove,
 }) => {
-
   const theme = useTheme();
   const userData = getUserData();
   const branchData = useSelector((state) => state.branch);
@@ -53,25 +52,18 @@ const ProductCards = ({
   const authentication = userData === false ? false : true;
 
   const branch_id = branchData.id;
-  const [indeterminate, setIndeterminate] = useState(false);
 
   const [checkedItems, setCheckedItems] = useState({});
 
-  const [isUserDataAvailable, setIsUserDataAvailable] = useState(false);
-
   useEffect(() => {
     if (userData !== false) {
-      setIsUserDataAvailable(true);
       const initialCheckedItems = data.reduce((acc, item) => {
         acc[item.id] = item.is_favorite == 1;
         return acc;
       }, {});
       setCheckedItems(initialCheckedItems);
     }
-    
   }, [data]);
-
-
 
   const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
     "& .MuiCheckbox-checkbox": {
@@ -84,24 +76,18 @@ const ProductCards = ({
     },
   }));
 
-
   useEffect(() => {
-setCheckedItems([]);
-
-  }, [authentication])
-  
+    setCheckedItems([]);
+  }, [authentication]);
 
   const handleFavChange = useCallback(
     async (value, id) => {
       if (authentication === false) {
         return toast.error("Please Login First!");
-
       }
-      setIndeterminate(true);
       if (value) {
         const add_fav = await addToFavorite({ type_id: id, branch_id });
-        setIndeterminate(false);
-  
+
         if (add_fav.error) {
           toast.error(add_fav.message);
         } else {
@@ -109,14 +95,12 @@ setCheckedItems([]);
         }
       } else {
         const removeFav = await removeFromFavorite({ type_id: id, branch_id });
-        setIndeterminate(false);
-  
+
         if (removeFav.error) {
           toast.error(removeFav.message);
         } else {
           toast.success(removeFav.message);
           handleRemove(id); // Call handleRemove here
-
         }
       }
     },
@@ -126,9 +110,9 @@ setCheckedItems([]);
   const handleCheckboxChange = useCallback(
     (id, checked) => {
       if (authentication === false) {
-          return toast.error("Please Login First!");
+        return toast.error("Please Login First!");
       }
-  
+
       setCheckedItems((prevCheckedItems) => ({
         ...prevCheckedItems,
         [id]: checked,
@@ -137,7 +121,6 @@ setCheckedItems([]);
     },
     [authentication, handleFavChange]
   );
-  
 
   return (
     <Card
@@ -157,7 +140,7 @@ setCheckedItems([]);
       }}
     >
       <Box display={"flex"} gap={2}>
-        <Box maxWidth={150} maxHeight={150}>
+        <Box position={"relative"} maxWidth={150} maxHeight={150}>
           <Box
             component={"img"}
             src={image}
@@ -217,28 +200,26 @@ setCheckedItems([]);
                 <Typography> {rating ?? 0} </Typography>
               </Box>
               <Box>
-                        <StyledCheckbox
-                          overlay={false}
-                          color="warning"
-                          checked={checkedItems[id] || false}
-                          onChange={(e) =>
-                            handleCheckboxChange(id, e.target.checked)
-                          }
-                          indeterminateIcon={<RiHeartPulseLine size={"20px"} />}
-                          uncheckedIcon={
-                            <RiHeartLine
-                              size={"20px"}
-                              color={theme.palette.danger[500]}
-                            />
-                          }
-                          checkedIcon={
-                            <RiHeartFill
-                              size={"20px"}
-                              color={theme.palette.danger[500]}
-                            />
-                          }
-                        />
-                      </Box>
+                <StyledCheckbox
+                  overlay={false}
+                  color="warning"
+                  checked={checkedItems[id] || false}
+                  onChange={(e) => handleCheckboxChange(id, e.target.checked)}
+                  indeterminateIcon={<RiHeartPulseLine size={"20px"} />}
+                  uncheckedIcon={
+                    <RiHeartLine
+                      size={"20px"}
+                      color={theme.palette.danger[500]}
+                    />
+                  }
+                  checkedIcon={
+                    <RiHeartFill
+                      size={"20px"}
+                      color={theme.palette.danger[500]}
+                    />
+                  }
+                />
+              </Box>
             </Box>
             {/* {isLiked != undefined && (
               <Box>
@@ -263,7 +244,10 @@ setCheckedItems([]);
             </Typography>
           </Box>
           <Box>
-            <Typography fontSize={"lg"} fontWeight={"md"}>
+            <Typography
+              sx={{ fontSize: { xs: "sm", md: "lg" } }}
+              fontWeight="md"
+            >
               {title}
             </Typography>
           </Box>

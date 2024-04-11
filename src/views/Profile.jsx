@@ -27,6 +27,7 @@ import CustomButton from "@/component/Buttons/CustomButton";
 // import 'react-phone-input-2/lib/style.css'
 import "react-phone-input-2/lib/material.css";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 const Profile = () => {
   const countryCode = process.env.NEXT_PUBLIC_COUNTRY_CODE;
   const [image, setImage] = useState(""); // State to hold the selected image
@@ -112,10 +113,12 @@ const Profile = () => {
       .then((response) => {
         // Handle successful response
         console.log("Data saved successfully:", response);
+        toast.success(response.data.message)
       })
       .catch((error) => {
         // Handle error
         console.error("Error while saving data:", error);
+        toast.error(error.message)
       });
   };
 

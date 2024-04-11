@@ -26,7 +26,7 @@ const HomePage = () => {
   const authStoreData = useSelector((state) => state.authentication);
 
   const homeStoreData = useSelector((state) => state.homepage);
-  
+
   useEffect(() => {
     const rootHtml = document.getElementById("root-html");
 
@@ -34,7 +34,6 @@ const HomePage = () => {
       rootHtml.setAttribute("dir", "auto");
     }
   }, []);
-
 
   return (
     <Box>
@@ -55,7 +54,7 @@ const HomePage = () => {
       )}
 
       {/* Delightful Dishes */}
-      <Box sx={{display:"flex", justifyContent:"center"}} >
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         <DelightfulDishes
           data={homeStoreData.delightfullSections}
         ></DelightfulDishes>
@@ -77,9 +76,9 @@ const HomePage = () => {
 
       <MobileAppSection />
 
-      {/*<Box>*/}
+      {/* <Box>*/}
       {/*    <SpecificItem data={specificProductData} />*/}
-      {/*</Box>*/}
+      {/*</Box> */}
     </Box>
   );
 };

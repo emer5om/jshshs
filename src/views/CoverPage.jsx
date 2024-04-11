@@ -117,17 +117,17 @@ const CoverPage = () => {
           dispatch(setNewAddress({ city: city.long_name, lat: lat, lng: lng }));
 
           if (delivery.error) {
-            // return toast.error(delivery.message);
+            return toast.error(delivery.message);
           } else {
             const branch_id = delivery.data[0].branch_id;
             changeBranchId({ branch_id });
             await router.push("/home");
           }
         } catch (error) {
-          // return toast.error(error.message);
+          return toast.error(error.message);
         }
       } else {
-        // return toast.error("Please Select City");
+        return toast.error("Please Select City");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -185,18 +185,18 @@ const CoverPage = () => {
                     })
                   );
                   if (delivery.error) {
-                    // return toast.error(delivery.message)
+                    return toast.error(delivery.message)
                   } else {
                     const branch_id = delivery.data[0].branch_id;
                     changeBranchId({ branch_id });
                     await router.push("/home");
-                    // return toast.success(delivery.message)
+                    return toast.success(delivery.message)
                   }
                 } catch (error) {
-                  // return toast.error(error.message)
+                  return toast.error(error.message)
                 }
               } else {
-                // return toast.error("Please Select City")
+                return toast.error("Please Select City")
               }
             }
           } catch (error) {

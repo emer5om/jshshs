@@ -12,21 +12,24 @@ import { setFavorites } from "@/store/reducers/favoritesSlice";
 import { getUserData } from "@/events/getters";
 import toast from "react-hot-toast";
 
-// todo: add API data here
 
 const DelightfulDishes = ({ data }) => {
   const branchData = useSelector((state) => state.branch);
   const branch_id = branchData.id;
+  
   const dispatch = useDispatch();
+
   const userData = getUserData();
+
   const authentication = userData === false ? false : true;
 
   const favorites = useSelector((state) => state.favorites)?.value;
 
   const [favoriteItems, setFavoriteItems] = useState([]);
 
-  // Fetch user's favorites when the component mounts
+  
   useEffect(() => {
+    console.log("re rendering");
     if (authentication === false) {
             // return toast.error("Please Login First!");
           setFavoriteItems([])
@@ -34,6 +37,7 @@ const DelightfulDishes = ({ data }) => {
 
           } else{
             async function fetchFavorites() {
+              console.log("getting fav");
               try {
                 const favorites = await getFavorites({ branch_id });
                 setFavoriteItems(favorites.data);
@@ -68,14 +72,14 @@ const DelightfulDishes = ({ data }) => {
 
   const { t } = useTranslation();
   return (
-    <Box my={2} display={"flex"} flexDirection={"column"} gap={2}>
+    <Box my={2} display={"flex"} justifyContent={"center"} flexDirection={"column"} gap={2}>
       <SectionHeading
         title={t("delightfull-dishes")}
         showMore={true}
         showMoreLink="/products"
       />
 
-      <Box mt={4}>
+      <Box mt={4} display={"flex"} justifyContent={"center"}>
         <Grid container spacing={2}>
           {/* <ListCards data={data} /> */}
           {data.map((item, index) => {

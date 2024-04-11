@@ -10,14 +10,18 @@ import { getFavorites } from "@/interceptor/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { setFavorites } from "../store/reducers/favoritesSlice";
 import FavItems from "../component/Cards/FavItems";
+import { getUserData } from "@/events/getters";
 
 const Favorites = ({ data }) => {
   const branchData = useSelector((state) => state.branch);
   const favorites = useSelector((state) => state.favorites)?.value;
+  const userData = getUserData();
 
   const [favoriteItems, setFavoriteItems] = useState([]);
   const branch_id = branchData.id;
   const dispatch = useDispatch();
+
+  const authentication = userData === false ? false : true;
 
   const get_favorites = async () => {
     try {
@@ -29,13 +33,23 @@ const Favorites = ({ data }) => {
     }
   };
 
+  // Fetch user's favorites when the component mounts
   useEffect(() => {
-    get_favorites();
-  }, []);
+    if (authentication === false) {
+      // return toast.error("Please Login First!");
+      setFavoriteItems([]);
+      dispatch(setFavorites([]));
+    } else {
+      get_favorites();
+    }
+  }, [authentication]);
+
+  // useEffect(() => {
+  //   get_favorites();
+  // }, []);
 
   const handleRemove = (id) => {
     try {
-
       // Filter out the removed item from the Redux state
       const updatedFavorites = favorites.filter((item) => item.id !== id);
       dispatch(setFavorites(updatedFavorites));

@@ -24,7 +24,7 @@ const index = () => {
 
     return (
 
-        <Box>
+        <Box >
             {slug && (
                 <>
                     <HeadTitle title={"products"} />
@@ -34,7 +34,7 @@ const index = () => {
                     </Box>
 
 
-                    <Box>
+                    <Box display={"flex"} justifyContent={"center"}>
                         <Products categoryId={slug} />
                     </Box>
                 </>

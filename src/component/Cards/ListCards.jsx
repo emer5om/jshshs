@@ -12,7 +12,7 @@ import {
   styled,
   Checkbox,
 } from "@mui/joy";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 // icons
 
@@ -21,16 +21,18 @@ import StarFillIcon from "remixicon-react/StarFillIcon";
 import CustomButton from "../Buttons/CustomButton";
 import ProductModal from "../Modals/ProductModal";
 import { formatePrice } from "@/helpers/functonHelpers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import toast from "react-hot-toast";
 
-import { addToFavorite, removeFromFavorite } from "@/interceptor/routes";
+import { addToFavorite, getFavorites, removeFromFavorite } from "@/interceptor/routes";
 import { RiHeartFill, RiHeartLine, RiHeartPulseLine } from "@remixicon/react";
 import { getUserData } from "@/events/getters";
+import { setFavorites } from "@/store/reducers/favoritesSlice";
 
-const ListCards = ({ handleAdd,favoriteItems,handleRemove,data }) => {
+const ListCards = ({ handleAdd,handleRemove,data }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const userData = getUserData();
   const branchData = useSelector((state) => state.branch);
@@ -38,15 +40,11 @@ const ListCards = ({ handleAdd,favoriteItems,handleRemove,data }) => {
 
   const branch_id = branchData.id;
   const [indeterminate, setIndeterminate] = useState(false);
+  const [favoriteItems, setFavoriteItems] = useState([]);
 
-  const [checkedItems, setCheckedItems] = useState(
-    userData !== false
-      ? favoriteItems.reduce((acc, item) => {
-          acc[item.id] = item.is_favorite == 1;
-          return acc;
-        }, {})
-      : false
-  );
+  const [checkedItems, setCheckedItems] = useState({});
+
+
   const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
     "& .MuiCheckbox-checkbox": {
       // Add your custom styles here
@@ -58,6 +56,48 @@ const ListCards = ({ handleAdd,favoriteItems,handleRemove,data }) => {
       },
     },
   }));
+
+  useEffect(() => {
+    console.log(favoriteItems);
+    if (userData !== false) {
+      const initialCheckedItems = favoriteItems.reduce((acc, item) => {
+        acc[item.id] = item.is_favorite == 1;
+        return acc;
+      }, {});
+      setCheckedItems(initialCheckedItems);
+    }
+    
+  }, [favoriteItems]);
+
+
+     
+    
+  useEffect(() => {
+    console.log("re rendering");
+    if (authentication == false) {
+            // return toast.error("Please Login First!");
+          setFavoriteItems([])
+          dispatch(setFavorites([]));
+          setCheckedItems({})
+          console.log("logg out");
+          } else{
+            async function fetchFavorites() {
+              console.log("getting fav");
+              try {
+                const favorites = await getFavorites({ branch_id });
+                setFavoriteItems(favorites.data);
+                dispatch(setFavorites(favorites.data));
+        
+              } catch (error) {
+                console.error("Error fetching favorites:", error);
+              }
+            }
+    fetchFavorites(); 
+
+          }
+   
+
+  }, [authentication]);
 
   const handleFavChange = useCallback(
     async (value, id) => {
@@ -90,16 +130,20 @@ const ListCards = ({ handleAdd,favoriteItems,handleRemove,data }) => {
     [branch_id]
   );
 
-  const handleCheckboxChange = useCallback(
-    (id, checked) => {
-      setCheckedItems((prevCheckedItems) => ({
-        ...prevCheckedItems,
-        [id]: checked,
-      }));
-      handleFavChange(checked, id);
-    },
-    [handleFavChange]
-  );
+    const handleCheckboxChange = useCallback(
+        (id, checked) => {
+          if (authentication === false) {
+            return toast.error("Please Login First!");
+          }
+      
+          setCheckedItems((prevCheckedItems) => ({
+            ...prevCheckedItems,
+            [id]: checked,
+          }));
+          handleFavChange(checked, id);
+        },
+        [authentication, handleFavChange]
+      );
 
   return (
  

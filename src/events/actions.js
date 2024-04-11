@@ -63,7 +63,7 @@ export const logout = async () => {
     const auth = await getAuth(app);
     await auth.signOut();
   } catch (err) {}
-  await Router.push("/home");
+  // await Router.push("/home");
   await store.dispatch(setCartInitial(false));
   store.dispatch(setLogout(false));
 };

@@ -64,6 +64,7 @@ import PaymentModal from "@/component/Modals/PaymentModal";
 import AddressSelector from "@/component/Modals/AddressSelector";
 import { getUserData } from "@/events/getters";
 import { useTranslation } from "react-i18next";
+import ThrottledQuantitySelector from "@/component/ThrottledQuantitySelector";
 
 const ViewCart = () => {
   const [deliveryType, setDeliveryType] = useState("Delivery");
@@ -72,15 +73,12 @@ const ViewCart = () => {
   const [customTipInputValue, setCustomTipInputValue] = useState(1);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [open, setOpen] = useState(false);
-
   const [openAddressSelect, setOpenAddressSelect] = useState(false);
-
   const [message, setMessage] = useState("");
+
   const dispatch = useDispatch();
   const userData = getUserData();
-
   const theme = useTheme();
-
   const mainColor = theme.palette.text.menuText;
   const currencyColor = theme.palette.text.currency;
 
@@ -96,6 +94,11 @@ const ViewCart = () => {
   const currencySymbol = useSelector(
     (state) => state.settings.value.currency[0]
   );
+
+  const handleChange = (quantity) => {
+    // Handle quantity change here
+    console.log("Quantity changed to:", quantity);
+  };
 
   const { t } = useTranslation();
 
@@ -147,18 +150,13 @@ const ViewCart = () => {
       clearTimeout(throttleTimeout);
     }
 
-    console.log(type); // Check the type received
     // Update quantity based on the type, ensuring it's not less than 1
     if (type === "increment") {
-      console.log(typeof quantity);
       updateQuantity((prevQuantity) => prevQuantity + 1);
-      console.log("increment updated",quantity);
-
     } else if (type === "decrement" && quantity > 1) {
       // Only decrement if quantity is greater than 1
       updateQuantity((prevQuantity) => {
         const newQuantity = prevQuantity - 1;
-        console.log("updated",newQuantity);
         return newQuantity < 1 ? 1 : newQuantity;
       });
     }
@@ -167,12 +165,10 @@ const ViewCart = () => {
     const timeout = setTimeout(() => {
       // Log the corresponding action after 2 seconds
       if (type === "increment") {
-        console.log("Increment action");
         const newCart = { ...cartStoreData };
 
         newCart.data = newCart.data.map((item, i) => {
           if (i === index) {
-            console.log("increment", quantity + 1);
             manageQty(item.product_variant_id, quantity + 1);
           }
 
@@ -181,29 +177,28 @@ const ViewCart = () => {
 
         dispatch(setCart(newCart));
       } else if (type === "decrement") {
-        console.log("Decrement action");
         const newCart = { ...cartStoreData };
         newCart.data = newCart.data.map((item, i) => {
           if (i === index) {
             const newQuantity = quantity - 1;
             const decrementedQuantity = newQuantity < 1 ? 1 : newQuantity;
-      
+
             // Decrement qty
-            console.log("decrement", decrementedQuantity);
             manageQty(item.product_variant_id, decrementedQuantity);
           }
           return item;
         });
         dispatch(setCart(newCart));
       }
-    }, 800); // 2000 milliseconds = 2 seconds
+    }, 800);
 
     setThrottleTimeout(timeout);
   };
 
-  const [quantity, setQuantity] = useState(parseInt(cartStoreData.total_quantity, 10));
+  const [quantity, setQuantity] = useState(
+    parseInt(cartStoreData.total_quantity, 10)
+  );
 
-console.log(cartStoreData.total_quantity);
   return (
     <Box>
       {cartStoreData.data.length > 0 && (
@@ -717,54 +712,13 @@ console.log(cartStoreData.total_quantity);
                                   </IconButton>
                                 </Box> */}
 
-                                <Box
-                                  border={"1px solid"}
-                                  borderColor={theme.palette.primary[400]}
-                                  borderRadius={"md"}
-                                  display={"flex"}
-                                  alignItems={"center"}
-                                  justifyContent={"space-between"}
-                                  minWidth={"fit-content"}
-                                >
-                                  <IconButton
-                                    onClick={() =>
-                                      handleClick("decrement", setQuantity, index)
-                                    }
-                                  >
-                                    <RiSubtractLine
-                                      color={
-                                        theme.palette.mode === "light"
-                                          ? theme.palette.text.menuText
-                                          : theme.palette.text.currency
-                                      }
-                                    />
-                                  </IconButton>
-
-                                  <Typography
-                                    fontSize={"sm"}
-                                    fontWeight={"md"}
-                                    color={
-                                      theme.palette.mode === "light"
-                                        ? theme.palette.text.menuText
-                                        : theme.palette.text.currency
-                                    }
-                                  >
-                                {quantity}
-                                  </Typography>
-                                  <IconButton
-                                    onClick={() =>
-                                      handleClick("increment", setQuantity, index)
-                                    }
-                                  >
-                                    <RiAddLine
-                                      color={
-                                        theme.palette.mode === "light"
-                                          ? theme.palette.text.menuText
-                                          : theme.palette.text.currency
-                                      }
-                                    />
-                                  </IconButton>
-                                </Box>
+                                <ThrottledQuantitySelector
+                                  initialValue={parseInt(item.qty)}
+                                  onChange={handleChange}
+                                  manageQty={manageQty}
+                                  productVariantId={item.product_variant_id}
+                                />
+                               
                               </CardContent>
                             </Card>
                           </Box>

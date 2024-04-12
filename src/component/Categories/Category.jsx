@@ -34,7 +34,7 @@ const Category = () => {
                     <SectionHeading title={t("cuisine-crafted-with-care")} showMore={true} showMoreLink='/categories' />
                 </Box>
 
-                <Grid container spacing={1} my={2} >
+                <Grid direction={"ltr"} container spacing={1} my={2} >
                     <Swiper
                         slidesPerView={2}
                         breakpoints={{

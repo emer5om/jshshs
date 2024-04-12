@@ -41,6 +41,7 @@ import { setLanguage } from "@/store/reducers/languageSlice";
 import { useTranslation } from "react-i18next";
 import { languages } from "@/i18n";
 import DarkModeToggle from "@/component/DarkModeToggleMobile";
+import RTLModeToggle from "../RTLToggleMobile";
 
 const MobileNavigation = () => {
   const { t, i18n } = useTranslation();
@@ -287,6 +288,7 @@ const MobileNavigation = () => {
                 </Button> */}
 
                 <DarkModeToggle />
+                <RTLModeToggle/>
 
                 <Box>
                   <Dropdown>

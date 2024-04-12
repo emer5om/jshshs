@@ -26,7 +26,7 @@ const DealsCards = ({ images }) => {
                 showMoreLink="/offers"
             />
 
-            <Grid container gap={3} mt={4} display={"flex"} justifyContent="center">
+            <Grid direction={"ltr"} container gap={3} mt={4} display={"flex"} justifyContent="center">
                 <Swiper
                     className={'wi-100'}
                     slidesPerView={1}

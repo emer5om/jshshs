@@ -19,7 +19,7 @@ import Link from "next/link";
 
 const HeadSlider = ({ images = [1, 2, 3] }, isLoading) => {
   return (
-    <Box>
+    <Box sx={{direction:"ltr"}}>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -42,7 +42,8 @@ const HeadSlider = ({ images = [1, 2, 3] }, isLoading) => {
             <SwiperSlide key={index}>
               <Link href={link}>
                 <Card
-                  sx={{
+                
+                  sx={{ direction:"ltr",
                     minHeight: { xs: 150, md: 472 },
                   }}
                 >

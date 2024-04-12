@@ -27,14 +27,16 @@ const HomePage = () => {
 
   const homeStoreData = useSelector((state) => state.homepage);
 
+  
+  const layoutDirection = useSelector((state) => state.rtl.layoutDirection);
+
+
+  console.log("inside index.js",layoutDirection);
+
   useEffect(() => {
-    const rootHtml = document.getElementById("root-html");
-
-    if (rootHtml) {
-      rootHtml.setAttribute("dir", "auto");
-    }
-  }, []);
-
+    document.documentElement.setAttribute('dir', layoutDirection); // Update HTML dir attribute
+  }, [])
+  
   return (
     <Box>
       <HeadTitle title={"home"} />

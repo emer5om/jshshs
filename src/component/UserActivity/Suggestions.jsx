@@ -26,7 +26,7 @@ const Suggestions = ({ data }) => {
             <Box display={"flex"} flexDirection={"column"} gap={2}>
                 <SectionHeading title={"Because You Ordered"}></SectionHeading>
 
-                <Box>
+                <Box direction={"ltr"} >
                     <Swiper
                         spaceBetween={30}
                         centeredSlides={true}

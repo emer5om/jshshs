@@ -12,6 +12,9 @@ import { getSettings } from "@/store/reducers/settingsSlice";
 import Head from "next/head";
 
 export default function Home() {
+
+
+
   const router = useRouter();
   useEffect(() => {
     const branchId = getBranchId();
@@ -26,6 +29,8 @@ export default function Home() {
     if (settings && settings?.web_settings.length != 0)
       setSettings(settings.web_settings[0]);
   }, [settings]);
+
+
 
 
   return (

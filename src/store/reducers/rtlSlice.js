@@ -2,15 +2,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isRTL: false,
+  layoutDirection: 'ltr',
 };
 
 const rtlSlice = createSlice({
   name: 'rtl',
   initialState,
   reducers: {
-    toggleRTL: (state) => {
-      state.isRTL = !state.isRTL;
+    toggleRTL: (state, action) => {
+      state.layoutDirection = action.payload; // Update layout direction based on the payload
     },
   },
 });

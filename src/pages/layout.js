@@ -39,6 +39,8 @@ export default function RootLayout({ children }) {
     onAppLoad();
   }, []);
 
+  
+
   return (
     <>
       <Head>

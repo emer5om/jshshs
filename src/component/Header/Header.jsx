@@ -20,17 +20,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
-import Notification4LineIcon from "remixicon-react/Notification4LineIcon";
+import TextDirectionLIcon from "remixicon-react/TextDirectionLIcon";
+import TextDirectionRIcon from "remixicon-react/TextDirectionRIcon";
 import ShoppingBag3LineIcon from "remixicon-react/ShoppingBag3LineIcon";
 import ArrowDownSLineIcon from "remixicon-react/ArrowDownSLineIcon";
 import ArrowRightLine from "remixicon-react/ArrowRightLineIcon";
 
-
-import {
-
-  RiMapPin2Line,
-
-} from "@remixicon/react";
+import { RiMapPin2Line } from "@remixicon/react";
 import NavMenuButton from "./NavMenuButton";
 import Link from "next/link";
 import Image from "next/image";
@@ -56,10 +52,10 @@ import { languages } from "@/i18n";
 import { logout } from "@/events/actions";
 import DarkModeToggle from "@/component/DarkModeToggle";
 import { useColorScheme } from "@mui/joy/styles";
+import { toggleRTL } from "@/store/reducers/rtlSlice";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
-  const { mode, setMode, systemMode } = useColorScheme();
 
   const router = useRouter();
   useEffect(() => {
@@ -104,6 +100,14 @@ const Header = () => {
         });
       }
     }, 200);
+  };
+
+  const layoutDirection = useSelector((state) => state.rtl.layoutDirection);
+
+  const toggleLayoutDirection = () => {
+    const newDirection = layoutDirection === "ltr" ? "rtl" : "ltr";
+    document.documentElement.setAttribute("dir", newDirection); // Update HTML dir attribute
+    dispatch(toggleRTL(newDirection)); // Dispatch action with new direction
   };
 
   const theme = useTheme();
@@ -308,6 +312,14 @@ const Header = () => {
 
             <SearchModal displayStyle={"icon"} />
 
+            <IconButton onClick={toggleLayoutDirection} color="inherit" sx={{}}>
+              {layoutDirection == "rtl" ? (
+                <TextDirectionRIcon size={"20px"} />
+              ) : (
+                <TextDirectionLIcon size={"20px"} />
+              )}
+            </IconButton>
+
             <Badge
               component={Link}
               href={"/user/cart"}
@@ -468,7 +480,7 @@ const Header = () => {
                       {t("my-orders")}
                     </Typography>
                   </MenuItem>
-               
+
                   <MenuItem
                     component={Link}
                     href={"/user/favourites"}

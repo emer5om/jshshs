@@ -9,7 +9,18 @@
   --border-radius-lg: 20px;
   --border-radius-xl: 25px;
   --joy-fontFamily-body: "Quicksand", sans-serif !important;
+  --text-direction: ltr; /* Default text direction */
+
 }
+
+
+
+
+/* #root-html { */
+  /* --text-direction: ltr; Override text direction for RTL */
+  /* direction: ltr; */
+/* } */
+
 /* Define basic scrollbar styles */
 /* Width */
 ::-webkit-scrollbar {

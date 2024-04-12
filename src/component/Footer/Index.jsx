@@ -26,7 +26,7 @@ const Index = () => {
         xs={12}
         sx={{ height: "100%", padding: {xs:1,sm:2}, color: "white", width: "100%" }}
       >
-        <Box sx={{ marginTop: {xs:2}, textAlign: { xs: "center", md: "left" } }}>
+        <Box sx={{ marginTop: {xs:2 }, textAlign: { xs: "center", md: "left" } }}>
           <Grid container spacing={4} m={0} width={"100%"} color={"white"}>
             <Grid xs={12} md={6}>
               <Box
@@ -35,14 +35,15 @@ const Index = () => {
                 flexDirection={"column"}
               >
                 <Box display={"flex"} alignItems={"center"}>
-                  <img
-                    src={setting.light_logo}
-                    alt="logo"
-                    height={50}
-                    style={{ width: "100%" }}
-                    loading="lazy"
-                  />
-                </Box>
+  <img
+    src={setting.light_logo}
+    alt="logo"
+    height={50}
+    style={{ maxWidth: "100%" }} // Set maxWidth to prevent stretching
+    loading="lazy"
+  />
+</Box>
+
                 <Box mt={2}>
                   <Typography level="title-sm" textColor={"white"}>
                     {setting && setting.app_short_description}

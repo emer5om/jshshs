@@ -139,8 +139,71 @@ const ViewCart = () => {
     finalTotal = baseAmount + parseFloat(tip);
   }
 
-  
+  const [throttleTimeout, setThrottleTimeout] = useState(null); // Define throttleTimeout state
 
+  const handleClick = (type, updateQuantity, index) => {
+    // If throttleTimeout is set, clear it to reset the timer
+    if (throttleTimeout) {
+      clearTimeout(throttleTimeout);
+    }
+
+    console.log(type); // Check the type received
+    // Update quantity based on the type, ensuring it's not less than 1
+    if (type === "increment") {
+      console.log(typeof quantity);
+      updateQuantity((prevQuantity) => prevQuantity + 1);
+      console.log("increment updated",quantity);
+
+    } else if (type === "decrement" && quantity > 1) {
+      // Only decrement if quantity is greater than 1
+      updateQuantity((prevQuantity) => {
+        const newQuantity = prevQuantity - 1;
+        console.log("updated",newQuantity);
+        return newQuantity < 1 ? 1 : newQuantity;
+      });
+    }
+
+    // Set timeout to reset click count after 2 seconds
+    const timeout = setTimeout(() => {
+      // Log the corresponding action after 2 seconds
+      if (type === "increment") {
+        console.log("Increment action");
+        const newCart = { ...cartStoreData };
+
+        newCart.data = newCart.data.map((item, i) => {
+          if (i === index) {
+            console.log("increment", quantity + 1);
+            manageQty(item.product_variant_id, quantity + 1);
+          }
+
+          return item;
+        });
+
+        dispatch(setCart(newCart));
+      } else if (type === "decrement") {
+        console.log("Decrement action");
+        const newCart = { ...cartStoreData };
+        newCart.data = newCart.data.map((item, i) => {
+          if (i === index) {
+            const newQuantity = quantity - 1;
+            const decrementedQuantity = newQuantity < 1 ? 1 : newQuantity;
+      
+            // Decrement qty
+            console.log("decrement", decrementedQuantity);
+            manageQty(item.product_variant_id, decrementedQuantity);
+          }
+          return item;
+        });
+        dispatch(setCart(newCart));
+      }
+    }, 800); // 2000 milliseconds = 2 seconds
+
+    setThrottleTimeout(timeout);
+  };
+
+  const [quantity, setQuantity] = useState(parseInt(cartStoreData.total_quantity, 10));
+
+console.log(cartStoreData.total_quantity);
   return (
     <Box>
       {cartStoreData.data.length > 0 && (
@@ -538,7 +601,22 @@ const ViewCart = () => {
                                   </Box>
                                 </Box>
 
-                                <Box
+                                {/* <Button
+                                  onClick={() =>
+                                    handleClick("increment", setQuantity, index)
+                                  }
+                                >
+                                  Increment
+                                </Button>
+                                <Button
+                                  onClick={() =>
+                                    handleClick("decrement", setQuantity, index)
+                                  }
+                                >
+                                  Decrement
+                                </Button>
+                                {quantity} */}
+                                {/* <Box
                                   border={"1px solid"}
                                   borderColor={theme.palette.primary[400]}
                                   borderRadius={"md"}
@@ -628,6 +706,55 @@ const ViewCart = () => {
                                         (parseInt(item.qty) + 1).toString()
                                       );
                                     }}
+                                  >
+                                    <RiAddLine
+                                      color={
+                                        theme.palette.mode === "light"
+                                          ? theme.palette.text.menuText
+                                          : theme.palette.text.currency
+                                      }
+                                    />
+                                  </IconButton>
+                                </Box> */}
+
+                                <Box
+                                  border={"1px solid"}
+                                  borderColor={theme.palette.primary[400]}
+                                  borderRadius={"md"}
+                                  display={"flex"}
+                                  alignItems={"center"}
+                                  justifyContent={"space-between"}
+                                  minWidth={"fit-content"}
+                                >
+                                  <IconButton
+                                    onClick={() =>
+                                      handleClick("decrement", setQuantity, index)
+                                    }
+                                  >
+                                    <RiSubtractLine
+                                      color={
+                                        theme.palette.mode === "light"
+                                          ? theme.palette.text.menuText
+                                          : theme.palette.text.currency
+                                      }
+                                    />
+                                  </IconButton>
+
+                                  <Typography
+                                    fontSize={"sm"}
+                                    fontWeight={"md"}
+                                    color={
+                                      theme.palette.mode === "light"
+                                        ? theme.palette.text.menuText
+                                        : theme.palette.text.currency
+                                    }
+                                  >
+                                {quantity}
+                                  </Typography>
+                                  <IconButton
+                                    onClick={() =>
+                                      handleClick("increment", setQuantity, index)
+                                    }
                                   >
                                     <RiAddLine
                                       color={

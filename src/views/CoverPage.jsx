@@ -185,18 +185,18 @@ const CoverPage = () => {
                     })
                   );
                   if (delivery.error) {
-                    return toast.error(delivery.message)
+                    return toast.error(delivery.message);
                   } else {
                     const branch_id = delivery.data[0].branch_id;
                     changeBranchId({ branch_id });
                     await router.push("/home");
-                    return toast.success(delivery.message)
+                    return toast.success(delivery.message);
                   }
                 } catch (error) {
-                  return toast.error(error.message)
+                  return toast.error(error.message);
                 }
               } else {
-                return toast.error("Please Select City")
+                return toast.error("Please Select City");
               }
             }
           } catch (error) {
@@ -245,9 +245,7 @@ const CoverPage = () => {
             )}
           </Box>
 
-          <DarkModeToggle/>
-
-    
+          <DarkModeToggle />
         </Box>
 
         {/* Hero Section */}
@@ -521,37 +519,37 @@ const CoverPage = () => {
         <Box
           sx={{
             position: "absolute",
-            top: "464px",
-            left: "96%",
+            top: "210%",
+            left: "117%",
             width: "16%",
             zIndex: -99999,
             height: "23%",
 
             [theme.breakpoints.down("xl")]: {
-              top: "87%",
-              left: "98%",
+              top: "192%",
+              left: "87%",
               width: "10%",
               zIndex: -99999,
               height: "22%",
             },
             [theme.breakpoints.down("lg")]: {
-              top: "87%",
+              top: "192%",
               left: "87%",
               width: "15%",
               zIndex: -99999,
               height: "21%",
             },
             [theme.breakpoints.down("md")]: {
-              top: "94%",
+              top: "168%",
               left: "90%",
               width: "13%",
               zIndex: -99999,
               height: "12%",
             },
             [theme.breakpoints.down("sm")]: {
-              top: "-95%",
-              left: "73%",
-              width: "30%",
+              top: "149%",
+              left: "87%",
+              width: "17%",
               zIndex: -99999,
               height: "8%",
             },
@@ -720,6 +718,7 @@ const CoverPage = () => {
 
           <Grid item xs={12} md={6} sm={12}>
             <Grid
+            m={0}
               container
               spacing={2}
               columns={{ xs: 8, sm: 16, md: 16, lg: 16 }} // Adjusting number of columns for different screen sizes
@@ -871,6 +870,7 @@ const CoverPage = () => {
             </Grid>
 
             <Grid
+            m={0}
               container
               spacing={2}
               columns={{ xs: 8, sm: 16, md: 16, lg: 16 }}

@@ -32,6 +32,7 @@ export const OfferCards = ({
   product,
   handleRemove,
   data,
+  discountedPrice,
 }) => {
   if (typeof price == "string") {
     price = parseFloat(price);
@@ -47,7 +48,6 @@ export const OfferCards = ({
 
   const [checkedItems, setCheckedItems] = useState({});
 
-
   useEffect(() => {
     if (userData !== false) {
       const initialCheckedItems = data?.reduce((acc, item) => {
@@ -62,7 +62,7 @@ export const OfferCards = ({
     "& .MuiCheckbox-checkbox": {
       padding: 0,
       border: "none",
-      zIndex:99,  
+      zIndex: 99,
       backgroundColor: "transparent",
       "&:hover": {
         backgroundColor: "transparent",
@@ -94,9 +94,8 @@ export const OfferCards = ({
           toast.error(removeFav.message);
         } else {
           toast.success(removeFav.message);
-          
-          console.log(typeof handleRemove);
 
+          console.log(typeof handleRemove);
         }
       }
     },
@@ -171,7 +170,7 @@ export const OfferCards = ({
             justifyContent={"space-between"}
             width={"100%"}
           >
-            {discount ? (
+            {discount && specialPrice != 0 ? (
               <>
                 <Typography textColor="neutral.300">{discount}% OFF</Typography>
               </>
@@ -228,7 +227,9 @@ export const OfferCards = ({
                 gap: 0.5,
               }}
             >
-              {specialPrice < price ? (
+              
+              
+              {discount != 0 && (
                 <Typography
                   sx={{ textDecoration: "line-through" }}
                   textColor={theme.palette.warning[400]}
@@ -237,9 +238,9 @@ export const OfferCards = ({
                 >
                   {formatePrice(price)}
                 </Typography>
-              ) : (
-                ""
               )}
+
+
 
               {specialPrice > 0 ? (
                 <Typography

@@ -55,7 +55,7 @@ function SpecificCategory({ image, title, ratings, price, discountedPrice }) {
 
                             <Box display={"flex"} alignItems={"end"} gap={2} width={"100%"} >
                                 <Typography fontSize={"sm"} fontWeight={"md"} textColor={"neutral.500"} sx={{ textDecoration: "line-through" }}>
-                                    {discountedPrice > 0 && price}
+                                    {discountedPrice != 0 && price}
                                 </Typography>
                                 <Typography fontSize={"md"} fontWeight={"xl"} textColor={"text.currency"}>
                                     {discountedPrice > 0 ? discountedPrice : price}

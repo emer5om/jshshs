@@ -147,5 +147,7 @@
   "load-more":"Load More",
   "see-all":"See All",
   "select-address":"Select Address",
-  "please-select-delivery-address":"Please Select Delivery address"
+  "please-select-delivery-address":"Please Select Delivery address",
+  "left-to-right":"left to Right",
+  "right-to-left":"Right to Left"
 }

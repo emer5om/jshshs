@@ -221,17 +221,7 @@ const ProductCards = ({
                 />
               </Box>
             </Box>
-            {/* {isLiked != undefined && (
-              <Box>
-                {isLiked ? (
-                  <RiHeartFill color={theme.palette.danger[500]} />
-                ) : (
-                  <HeartLineIcon color={theme.palette.background.footer} />
-                )}
-              </Box>
-            )} */}
-
-            {/* images and other data */}
+           
           </Box>
 
           <Box mt={1}>

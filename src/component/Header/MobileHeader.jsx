@@ -42,6 +42,7 @@ import { useTranslation } from "react-i18next";
 import { languages } from "@/i18n";
 import DarkModeToggle from "@/component/DarkModeToggleMobile";
 import RTLModeToggle from "../RTLToggleMobile";
+import { toggleRTL } from "@/store/reducers/rtlSlice";
 
 const MobileNavigation = () => {
   const { t, i18n } = useTranslation();
@@ -57,8 +58,8 @@ const MobileNavigation = () => {
 
   const logoSrc =
     mode === "dark"
-      ? settings.value.web_settings[0].light_logo
-      : settings.value.web_settings[0].logo;
+      ? settings?.value?.web_settings[0]?.light_logo
+      : settings?.value?.web_settings[0]?.logo;
 
 
 
@@ -314,6 +315,8 @@ const MobileNavigation = () => {
                             onClick={async () => {
                               await i18n.changeLanguage(language);
                               dispatch(setLanguage(language));
+                              document.documentElement.setAttribute("dir", i18n.dir()); 
+                              dispatch(toggleRTL(i18n.dir()))
                             }}
                           >
                             {languages[language]}

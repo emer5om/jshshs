@@ -17,9 +17,6 @@ import {
   Apps,
 } from "@mui/joy";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-
 import TextDirectionLIcon from "remixicon-react/TextDirectionLIcon";
 import TextDirectionRIcon from "remixicon-react/TextDirectionRIcon";
 import ShoppingBag3LineIcon from "remixicon-react/ShoppingBag3LineIcon";
@@ -30,7 +27,6 @@ import { RiMapPin2Line } from "@remixicon/react";
 import NavMenuButton from "./NavMenuButton";
 import Link from "next/link";
 import Image from "next/image";
-import SmallNotificationCard from "../Cards/SmallNotificationCard";
 import {
   RiFilePaper2Line,
   RiGlobalLine,
@@ -159,42 +155,6 @@ const Header = () => {
                   </Typography>
                 </Link>
 
-                {/* <NavMenuButton
-                  label="Apps"
-                  open={menuIndex === 0}
-                  onOpen={() => setMenuIndex(0)}
-                  onLeaveMenu={createHandleLeaveMenu(0)}
-                  menu={
-                    <Menu onClose={() => setMenuIndex(null)}>
-                      <Grid container spacing={2} width={"100%"} p={2}>
-                        {categories.map((category) => (
-                          <Grid xs={4} key={category.slug}>
-                            <Link href={"/categories/" + category.slug}>
-                              <MenuItem
-                                sx={{ borderRadius: "md" }}
-                                {...itemProps}
-                              >
-                                {category.name}
-                              </MenuItem>
-                            </Link>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Menu>
-                  }
-                >
-                  <Typography
-                    fontSize={20}
-                    fontWeight={"bolder"}
-                    display={"flex"}
-                    alignItems={"center"}
-                    gap={1}
-                  >
-                    {t("menu")}
-                    <ArrowDownSLineIcon color={theme.palette.primary[500]} />
-                  </Typography>
-                </NavMenuButton> */}
-
                 <Dropdown>
                   <MenuButton
                     slotProps={{ root: { variant: "plain", color: "neutral" } }}
@@ -272,44 +232,6 @@ const Header = () => {
           justifyContent={"end"}
         >
           <Box display={"inline-flex"} alignItems={"center"} gap={2}>
-            {/*<Dropdown>*/}
-            {/*    <MenuButton*/}
-            {/*        slots={{ root: IconButton }}*/}
-            {/*        slotProps={{ root: { variant: "text", color: 'neutral', } }}*/}
-            {/*    >*/}
-            {/*        <Notification4LineIcon size={"20px"} />*/}
-            {/*    </MenuButton>*/}
-            {/*    <Menu sx={{*/}
-            {/*        width: 450, p: 2, bgcolor: "rgba(211, 211, 211, 0.5)",*/}
-            {/*        '& .MuiMenuItem-root:last-child:hover': {*/}
-            {/*            backgroundColor: 'transparent',*/}
-            {/*            fontWeight: "lg",*/}
-            {/*            color: "primary.500"*/}
-            {/*        }*/}
-            {/*    }}>*/}
-            {/*        {notificationData.map((item) => {*/}
-            {/*            return (*/}
-            {/*                <MenuItem key={item.id}>*/}
-            {/*                    <SmallNotificationCard*/}
-            {/*                        image={item.image}*/}
-            {/*                        title={item.title}*/}
-            {/*                        description={item.description}*/}
-            {/*                    />*/}
-            {/*                </MenuItem>*/}
-            {/*            )*/}
-            {/*        })}*/}
-            {/*        <MenuItem component={Link} href='#' sx={{*/}
-            {/*            display: "flex",*/}
-            {/*            alignItems: "flex-end",*/}
-            {/*            justifyContent: "end",*/}
-            {/*            fontWeight: "md",*/}
-            {/*            '&:hover': { backgroundColor: "transparent" },*/}
-            {/*        }}>*/}
-            {/*            Show More*/}
-            {/*        </MenuItem>*/}
-            {/*    </Menu>*/}
-            {/*</Dropdown>*/}
-
             <SearchModal displayStyle={"icon"} />
 
             <IconButton onClick={toggleLayoutDirection} color="inherit" sx={{}}>
@@ -348,6 +270,8 @@ const Header = () => {
                       onClick={async () => {
                         await i18n.changeLanguage(language);
                         dispatch(setLanguage(language));
+                        document.documentElement.setAttribute("dir", i18n.dir()); 
+                        dispatch(toggleRTL(i18n.dir()))
                       }}
                     >
                       {languages[language]}
@@ -517,7 +441,7 @@ const Header = () => {
                       fontSize={"sm"}
                       fontWeight={"md"}
                       startDecorator={
-                        <RiMapPin2Line size={theme.fontSize.lg} />
+                        <RiMapPin2Line  size={theme.fontSize.lg} />
                       }
                     >
                       {t("address")}

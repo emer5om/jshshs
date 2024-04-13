@@ -1,6 +1,6 @@
 "use client";
 import react, { useEffect } from "react";
-import { Box, Container, Grid, Typography } from "@mui/joy";
+import { Box, Container, Grid, Typography, useTheme } from "@mui/joy";
 import CoverPage from "@/views/CoverPage";
 import { getBranchId } from "@/events/getters";
 import { useRouter } from "next/router";
@@ -10,10 +10,14 @@ import MobileAppSection from "@/component/AppDownload";
 import { useSelector } from "react-redux";
 import { getSettings } from "@/store/reducers/settingsSlice";
 import Head from "next/head";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
+  
+  const { t, i18n } = useTranslation();
 
 
+console.log("Direction i18n",i18n.dir());
 
   const router = useRouter();
   useEffect(() => {
@@ -29,9 +33,6 @@ export default function Home() {
     if (settings && settings?.web_settings.length != 0)
       setSettings(settings.web_settings[0]);
   }, [settings]);
-
-
-
 
   return (
     <>

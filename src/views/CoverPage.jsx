@@ -103,12 +103,14 @@ const CoverPage = () => {
         component.types.includes("locality")
       );
 
-      if (city.long_name) {
+      console.log(city);
+
+      if (city?.long_name) {
         try {
           const { lat, lng } = latLng;
 
           const delivery = await is_city_deliverable({
-            name: city.long_name,
+            name: city?.long_name,
             latitude: lat,
             longitude: lng,
           });
@@ -117,6 +119,7 @@ const CoverPage = () => {
           dispatch(setNewAddress({ city: city.long_name, lat: lat, lng: lng }));
 
           if (delivery.error) {
+            console.log(delivery);
             return toast.error(delivery.message);
           } else {
             const branch_id = delivery.data[0].branch_id;
@@ -130,7 +133,7 @@ const CoverPage = () => {
         return toast.error("Please Select City");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.log("Error:", error);
     }
   };
   // Function to fetch address from coordinates using a geocoding service (example)
@@ -718,7 +721,7 @@ const CoverPage = () => {
 
           <Grid item xs={12} md={6} sm={12}>
             <Grid
-            m={0}
+              m={0}
               container
               spacing={2}
               columns={{ xs: 8, sm: 16, md: 16, lg: 16 }} // Adjusting number of columns for different screen sizes
@@ -870,7 +873,7 @@ const CoverPage = () => {
             </Grid>
 
             <Grid
-            m={0}
+              m={0}
               container
               spacing={2}
               columns={{ xs: 8, sm: 16, md: 16, lg: 16 }}

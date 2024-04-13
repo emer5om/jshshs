@@ -29,7 +29,6 @@ const DelightfulDishes = ({ data }) => {
 
   
   useEffect(() => {
-    console.log("re rendering");
     if (authentication === false) {
             // return toast.error("Please Login First!");
           setFavoriteItems([])
@@ -37,7 +36,6 @@ const DelightfulDishes = ({ data }) => {
 
           } else{
             async function fetchFavorites() {
-              console.log("getting fav");
               try {
                 const favorites = await getFavorites({ branch_id });
                 setFavoriteItems(favorites.data);

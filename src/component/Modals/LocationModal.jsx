@@ -299,7 +299,7 @@ const LocationModal = () => {
         onClick={() => setOpen(true)}
         sx={{ p: 0, minWidth: "30px" }}
       >
-        <RiMapPinFill />
+        <RiMapPinFill  color={theme.palette.mode == "dark" ? "white" : "black" } />
       </Button>
 
       <Typography

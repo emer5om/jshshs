@@ -86,6 +86,11 @@ const NewItems = ({ data, showMore = true }) => {
                       item.variants[0].special_price > 0 &&
                       item.variants[0].special_price
                     }
+                    discountedPrice={
+                      item.variants[0].special_price != 0
+                        ? item.variants[0].special_price
+                        : item.variants[0].price
+                    }
                     shape="rectangle"
                     handleRemove={handleRemove}
                     data={favoriteItems}

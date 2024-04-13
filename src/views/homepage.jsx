@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { isLogged } from "@/events/getters";
 import { HeadTitle } from "@/component/HeadTitle";
 import MobileAppSection from "@/component/AppDownload";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
   const authStoreData = useSelector((state) => state.authentication);
@@ -36,6 +37,12 @@ const HomePage = () => {
   useEffect(() => {
     document.documentElement.setAttribute('dir', layoutDirection); // Update HTML dir attribute
   }, [])
+
+
+  const { t, i18n } = useTranslation();
+
+
+  console.log("Direction i18n",i18n.dir());
   
   return (
     <Box>

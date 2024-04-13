@@ -145,7 +145,11 @@
   "cart-remove-warning": "क्या आप वाकई इस कार्ट को हटाना चाहते हैं!",
   "see-all": "सभी देखें",
   "select-address":"पता चुनें",
-  "please-select-delivery-address":"कृपया वितरण पता चुनें"
+  "please-select-delivery-address":"कृपया वितरण पता चुनें",
+  "right-to-left": "दाएं से बाएं",
+  "left-to-right": "बाएं से दाएं"
+
+
 
 
 }

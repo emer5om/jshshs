@@ -172,7 +172,7 @@ export const OfferCards = ({
           >
             {discount && specialPrice != 0 ? (
               <>
-                <Typography textColor="neutral.300">{discount}% OFF</Typography>
+                <Typography textColor="neutral.300">{discount}% {t('off')}</Typography>
               </>
             ) : (
               <div></div>

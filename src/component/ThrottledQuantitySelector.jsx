@@ -48,7 +48,7 @@ import { RiSubtractLine, RiAddLine } from "@remixicon/react";
       manageQty(productVariantId, decrementedQuantity);
         }
 
-    }, 800);
+    }, 1000);
 
     setThrottleTimeout(timeout);
   };

@@ -10,15 +10,19 @@
   --border-radius-xl: 25px;
   --joy-fontFamily-body: "Quicksand", sans-serif !important;
   --text-direction: ltr; /* Default text direction */
-
 }
 
+[dir="rtl"] .remixicon-icon {
+  transform: scaleX(-1);
+}
 
-
+[dir="rtl"] .remixicon {
+  transform: scaleX(-1);
+}
 
 /* #root-html { */
-  /* --text-direction: ltr; Override text direction for RTL */
-  /* direction: ltr; */
+/* --text-direction: ltr; Override text direction for RTL */
+/* direction: ltr; */
 /* } */
 
 /* Define basic scrollbar styles */
@@ -41,12 +45,10 @@
 ::-moz-scrollbar-track {
   background: #f1f1f1; /* For Firefox */
   border-radius: 10px;
-
 }
 ::-ms-scrollbar-track {
   background: #f1f1f1; /* For Internet Explorer/Edge */
   border-radius: 10px;
-
 }
 
 /* Handle */
@@ -73,7 +75,6 @@
 ::-ms-scrollbar-thumb:hover {
   background: #555; /* For Internet Explorer/Edge */
 }
-
 
 * {
   box-sizing: border-box;
@@ -115,7 +116,6 @@ a {
     font-size: 24px !important; /* Adjust the size as per your requirement */
   }
 }
-
 
 .swiper-pagination-bullet {
   background: var(--joy-palette-primary-500) !important;
@@ -213,23 +213,22 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .otp-container input:focus {
   outline: none; /* Remove default focus outline if desired */
-  border-color: var(--joy-palette-primary-500); /* Change border color on focus */
+  border-color: var(
+    --joy-palette-primary-500
+  ); /* Change border color on focus */
   box-shadow: var(--joy-shadowRing, 0 0 #000),
-  0px 1px 2px 0px
-    rgba(var(--joy-shadowChannel, 21 21 21) / var(--joy-shadowOpacity, 0.08)); /* Add a box shadow for visual emphasis */
+    0px 1px 2px 0px
+      rgba(var(--joy-shadowChannel, 21 21 21) / var(--joy-shadowOpacity, 0.08)); /* Add a box shadow for visual emphasis */
 }
 
 /* Media query for small screens */
 @media screen and (max-width: 425px) {
   .otp-container input {
-    margin-right: 5px !important; 
+    margin-right: 5px !important;
   }
 }
-
-
 
 html[data-joy-color-scheme="dark"] .special-label {
   background: var(--joy-palette-background-surface) !important;
   color: white;
 }
-

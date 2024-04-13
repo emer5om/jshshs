@@ -144,11 +144,11 @@ const Coupons = () => {
                         fontSize={"md"}
                         fontWeight={"lg"}
                       >
-                        GET UPTO {item.discount}
+                        {t("get-upto")} {item.discount}
                         {item.discount_type === "percentage"
                           ? "%"
                           : currencySymbol}{" "}
-                        OFF
+                        {t('off')}
                       </Typography>
                       <Typography
                         textColor={"text.currency"}

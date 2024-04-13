@@ -214,7 +214,7 @@ const specialPrice = item.variants[0].special_price != 0
                             : ""
                         }
                       >
-                        {discount}% OFF
+                        {discount}% {t('off')}
                       </Typography>
                     </Box>
                      )} 

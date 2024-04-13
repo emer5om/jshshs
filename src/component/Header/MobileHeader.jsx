@@ -198,6 +198,7 @@ const MobileNavigation = () => {
               p={1}
             >
               <RiArrowRightLine
+                className="remixicon"
                 size={theme.fontSize.xl4}
                 fontWeight={"bolder"}
                 onClick={toggleDrawer(false)}

@@ -236,9 +236,15 @@ const Header = () => {
 
             <IconButton onClick={toggleLayoutDirection} color="inherit" sx={{}}>
               {layoutDirection == "rtl" ? (
-                <TextDirectionRIcon size={"20px"} />
+                <TextDirectionRIcon
+                  color={theme.palette.mode == "dark" ? "white" : "black"}
+                  size={"20px"}
+                />
               ) : (
-                <TextDirectionLIcon size={"20px"} />
+                <TextDirectionLIcon
+                  color={theme.palette.mode == "dark" ? "white" : "black"}
+                  size={"20px"}
+                />
               )}
             </IconButton>
 
@@ -270,8 +276,11 @@ const Header = () => {
                       onClick={async () => {
                         await i18n.changeLanguage(language);
                         dispatch(setLanguage(language));
-                        document.documentElement.setAttribute("dir", i18n.dir()); 
-                        dispatch(toggleRTL(i18n.dir()))
+                        document.documentElement.setAttribute(
+                          "dir",
+                          i18n.dir()
+                        );
+                        dispatch(toggleRTL(i18n.dir()));
                       }}
                     >
                       {languages[language]}
@@ -441,7 +450,7 @@ const Header = () => {
                       fontSize={"sm"}
                       fontWeight={"md"}
                       startDecorator={
-                        <RiMapPin2Line  size={theme.fontSize.lg} />
+                        <RiMapPin2Line size={theme.fontSize.lg} />
                       }
                     >
                       {t("address")}

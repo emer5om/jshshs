@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 function RTLModeToggle() {
   const dispatch = useDispatch();
 
-  const {t }= useTranslation();
+  const {t}= useTranslation();
 
   const theme = useTheme();
 

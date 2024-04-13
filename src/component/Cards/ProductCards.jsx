@@ -28,6 +28,7 @@ import { RiHeartFill, RiHeartLine, RiHeartPulseLine } from "@remixicon/react";
 import toast from "react-hot-toast";
 
 import { addToFavorite, removeFromFavorite } from "@/interceptor/routes";
+import { t } from "i18next";
 
 const ProductCards = ({
   image,
@@ -175,7 +176,7 @@ const ProductCards = ({
                   theme.palette.mode === "light" ? "background.body" : ""
                 }
               >
-                {discount}% OFF
+                {discount}% {t('off')}
               </Typography>
             </Box>
           )}

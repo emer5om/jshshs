@@ -20,6 +20,12 @@
   transform: scaleX(-1);
 }
 
+[dir="rtl"] .swiper {
+  direction: ltr;
+
+}
+
+
 /* #root-html { */
 /* --text-direction: ltr; Override text direction for RTL */
 /* direction: ltr; */

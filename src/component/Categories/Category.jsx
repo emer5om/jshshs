@@ -23,6 +23,7 @@ const Category = () => {
     const categories = homeStoreData.categories
     const { t } = useTranslation()
 
+    const layoutDirection = useSelector((state) => state.rtl.layoutDirection);
 
 
     return (
@@ -62,6 +63,8 @@ const Category = () => {
                         }}
                         spaceBetween={10}
                         navigation={{ clickable: true }}
+                        autoplay={{ reverseDirection: layoutDirection == "rtl" && true, }}
+
                         modules={[Autoplay, Pagination, Navigation]}
                         style={{ padding: "8px 0" }}
                     >

@@ -12,10 +12,12 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { useTranslation } from "react-i18next";
 import ProductModal from "@/component/Modals/ProductModal";
 import { getProducts } from "@/repository/productsRepo";
+import { useSelector } from 'react-redux';
 
 const DealsCards = ({ images }) => {
 
     const { t } = useTranslation()
+    const layoutDirection = useSelector((state) => state.rtl.layoutDirection);
 
     return (
 
@@ -46,6 +48,8 @@ const DealsCards = ({ images }) => {
                     }}
                     spaceBetween={10}
                     pagination={{ clickable: true, dynamicBullets: true }}
+                    autoplay={{ reverseDirection: layoutDirection == "rtl" && true, }}
+
                     navigation={{ clickable: true }}
                     modules={[Autoplay, Pagination, Navigation]}
                     style={{ padding: "8px 0" }}

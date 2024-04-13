@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -16,10 +16,19 @@ import "swiper/swiper-bundle.css";
 import "swiper/css/navigation";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+
+
+
 
 const HeadSlider = ({ images = [1, 2, 3] }, isLoading) => {
+  const layoutDirection = useSelector((state) => state.rtl.layoutDirection);
+  
+
+
+
   return (
-    <Box sx={{direction:"ltr"}}>
+    <Box>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -27,7 +36,7 @@ const HeadSlider = ({ images = [1, 2, 3] }, isLoading) => {
         loop={true}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        autoplay={{ delay: 3000 }}
+        autoplay={{ delay: 3000, reverseDirection: layoutDirection == "rtl" && true, }}
         style={{
           borderRadius: "var(--border-radius-xl)",
 

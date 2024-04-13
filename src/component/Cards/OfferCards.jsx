@@ -95,7 +95,6 @@ export const OfferCards = ({
         } else {
           toast.success(removeFav.message);
 
-          console.log(typeof handleRemove);
         }
       }
     },
@@ -229,7 +228,7 @@ export const OfferCards = ({
             >
               
               
-              {discount != 0 && (
+              {specialPrice != 0 && (
                 <Typography
                   sx={{ textDecoration: "line-through" }}
                   textColor={theme.palette.warning[400]}

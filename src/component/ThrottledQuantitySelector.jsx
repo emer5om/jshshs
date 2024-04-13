@@ -9,7 +9,6 @@ import { RiSubtractLine, RiAddLine } from "@remixicon/react";
   const [throttleTimeout, setThrottleTimeout] = useState(null);
   const theme = useTheme();
 
-  console.log(productVariantId);
 
   const handleClick = (type) => {
     if (throttleTimeout) {
@@ -25,7 +24,7 @@ import { RiSubtractLine, RiAddLine } from "@remixicon/react";
        // Update quantity based on the type, ensuring it's not less than 1
        if (type === "increment") {
         setQuantity((prevQuantity) => prevQuantity + 1);
-      } else if (type === "decrement" && quantity > 1) {
+      } else if (type === "decrement" && quantity >= 1) {
         // Only decrement if quantity is greater than 1
         setQuantity((prevQuantity) => {
           const newQuantity = prevQuantity - 1;
@@ -35,7 +34,6 @@ import { RiSubtractLine, RiAddLine } from "@remixicon/react";
 
 
     const timeout = setTimeout(() => {
-      onChange(quantity);
 
       if (type === "increment") {
       manageQty(productVariantId, quantity + 1);
@@ -44,11 +42,13 @@ import { RiSubtractLine, RiAddLine } from "@remixicon/react";
       const newQuantity = quantity - 1;
       const decrementedQuantity = quantity < 1 ? 1 : quantity;
 
+      console.log(newQuantity);
+        console.log("decrement",decrementedQuantity - 1);
       // Decrement qty
-      manageQty(productVariantId, decrementedQuantity);
+      manageQty(productVariantId,  decrementedQuantity - 1);
         }
 
-    }, 1000);
+    }, 800);
 
     setThrottleTimeout(timeout);
   };

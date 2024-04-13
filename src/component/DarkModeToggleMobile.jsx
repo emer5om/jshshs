@@ -40,15 +40,16 @@ function DarkModeToggle() {
 
   return (
     <IconButton
+    
       onClick={handleToggle}
       color="inherit"
-      sx={{ justifyContent: "start" }}
+      sx={{ justifyContent: "start" , paddingInline:0}}
     >
       {isDarkMode == "dark" ? (
-        <Box display={"flex"} justifyContent={"center"}>
+        <Box gap={0.5} display={"flex"} justifyContent={"center"}>
           <SunFillIcon color={mode == "dark" ? "white" : "black" }
             size={"25px"}
-            style={{ marginRight: "5px", paddingLeft: "0px" }}
+            style={{  paddingLeft: "0px" }}
           />
           <Typography fontSize={"md"} fontWeight={"lg"}>
             {t("light")}
@@ -57,7 +58,7 @@ function DarkModeToggle() {
       ) : (
         <Box display={"flex"} justifyContent={"center"}>
 
-        <MoonFillIcon color={mode == "light" ? "black" : "white" } size={"22px"}  style={{ marginRight: "5px", paddingLeft: "0px" }} />
+        <MoonFillIcon color={mode == "light" ? "black" : "white" } size={"22px"}  style={{  paddingLeft: "0px" }} />
         <Typography fontSize={"md"} fontWeight={"lg"}>
         {t("dark")}
 

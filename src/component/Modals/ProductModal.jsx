@@ -59,7 +59,6 @@ const ProductModal = ({
   const [selectedVariant, setSelectedVariant] = useState(variants[0]);
 
   const cartStoreData = useSelector((state) => state.cart);
-  // console.log(cartStoreData?.data[0]?.addon_ids);
 
   const [price, setPrice] = useState(0);
   const [priceOriginal, setPriceOriginal] = useState(0);
@@ -102,14 +101,20 @@ const ProductModal = ({
 
       const special_price =
         parseCustomFloat(selectedVariant.special_price) + extraPrice;
+
+
+        const special_price1 =
+        parseCustomFloat(selectedVariant.special_price)
+
       const price = parseCustomFloat(selectedVariant.price) + extraPrice;
-      setSpecialPrice(special_price);
-  
-      if (special_price === 0) {
+
+
+      if ( parseCustomFloat(selectedVariant.special_price) == 0) {
         setPrice(price);
         setPriceOriginal(price);
       } else {
         setPrice(price);
+        setSpecialPrice(special_price);
         setPriceOriginal(price);
       }
     }
@@ -137,7 +142,7 @@ const ProductModal = ({
               />
             ) : (
               <Button
-              sx={{p:0}}
+                sx={{ p: 0 }}
                 onClick={() => {
                   setOpen(true);
                 }}
@@ -148,7 +153,6 @@ const ProductModal = ({
                   fontWeight={"md"}
                   textColor={currencyColor}
                   width={30}
-
                 >
                   {/* {t("edit")} */}
                   <RiPencilLine color={currencyColor} />
@@ -324,7 +328,7 @@ const ProductModal = ({
                       textColor={"text.currency"}
                       mb={1}
                     >
-                      {specialPrice > 0 ? (
+                      {specialPrice != 0 ? (
                         <Typography
                           sx={{ textDecoration: "line-through" }}
                           textColor={theme.palette.text.currency}
@@ -337,14 +341,17 @@ const ProductModal = ({
                         ""
                       )}
 
-{specialPrice > 0 ? `${formatePrice(specialPrice)} ${qty > 1 ? `| ${formatePrice(specialPrice * qty)} x ${qty}` : ""}` : `${formatePrice(price)} ${qty > 1 ? `| ${formatePrice(price * qty)} x ${qty}` : ""}`}
-
-                      {/* {specialPrice > 0
-                        ? `${formatePrice(specialPrice)}  ${formatePrice(
-                            specialPrice * qty
-                          )} x ${qty}`
-                        : `${formatePrice(price * qty)} x ${qty}`} */}
-
+                      {specialPrice != 0
+                        ? `${formatePrice(specialPrice)} ${
+                            qty > 1
+                              ? `| ${formatePrice(specialPrice * qty)} x ${qty}`
+                              : ""
+                          }`
+                        : `${formatePrice(price)} ${
+                            qty > 1
+                              ? `| ${formatePrice(price * qty)} x ${qty}`
+                              : ""
+                          }`}
                     </Typography>
                   </CardContent>
                 </Card>

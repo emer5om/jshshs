@@ -95,10 +95,7 @@ const ViewCart = () => {
     (state) => state.settings.value.currency[0]
   );
 
-  const handleChange = (quantity) => {
-    // Handle quantity change here
-    console.log("Quantity changed to:", quantity);
-  };
+
 
   const { t } = useTranslation();
 
@@ -142,62 +139,62 @@ const ViewCart = () => {
     finalTotal = baseAmount + parseFloat(tip);
   }
 
-  const [throttleTimeout, setThrottleTimeout] = useState(null); // Define throttleTimeout state
+  // const [throttleTimeout, setThrottleTimeout] = useState(null); // Define throttleTimeout state
 
-  const handleClick = (type, updateQuantity, index) => {
-    // If throttleTimeout is set, clear it to reset the timer
-    if (throttleTimeout) {
-      clearTimeout(throttleTimeout);
-    }
+  // const handleClick = (type, updateQuantity, index) => {
+  //   // If throttleTimeout is set, clear it to reset the timer
+  //   if (throttleTimeout) {
+  //     clearTimeout(throttleTimeout);
+  //   }
 
-    // Update quantity based on the type, ensuring it's not less than 1
-    if (type === "increment") {
-      updateQuantity((prevQuantity) => prevQuantity + 1);
-    } else if (type === "decrement" && quantity > 1) {
-      // Only decrement if quantity is greater than 1
-      updateQuantity((prevQuantity) => {
-        const newQuantity = prevQuantity - 1;
-        return newQuantity < 1 ? 1 : newQuantity;
-      });
-    }
+  //   // Update quantity based on the type, ensuring it's not less than 1
+  //   if (type === "increment") {
+  //     updateQuantity((prevQuantity) => prevQuantity + 1);
+  //   } else if (type === "decrement" && quantity > 1) {
+  //     // Only decrement if quantity is greater than 1
+  //     updateQuantity((prevQuantity) => {
+  //       const newQuantity = prevQuantity - 1;
+  //       return newQuantity < 1 ? 1 : newQuantity;
+  //     });
+  //   }
 
-    // Set timeout to reset click count after 2 seconds
-    const timeout = setTimeout(() => {
-      // Log the corresponding action after 2 seconds
-      if (type === "increment") {
-        const newCart = { ...cartStoreData };
+  //   // Set timeout to reset click count after 2 seconds
+  //   const timeout = setTimeout(() => {
+  //     // Log the corresponding action after 2 seconds
+  //     if (type === "increment") {
+  //       const newCart = { ...cartStoreData };
 
-        newCart.data = newCart.data.map((item, i) => {
-          if (i === index) {
-            manageQty(item.product_variant_id, quantity + 1);
-          }
+  //       newCart.data = newCart.data.map((item, i) => {
+  //         if (i === index) {
+  //           manageQty(item.product_variant_id, quantity + 1);
+  //         }
 
-          return item;
-        });
+  //         return item;
+  //       });
 
-        dispatch(setCart(newCart));
-      } else if (type === "decrement") {
-        const newCart = { ...cartStoreData };
-        newCart.data = newCart.data.map((item, i) => {
-          if (i === index) {
-            const newQuantity = quantity - 1;
-            const decrementedQuantity = newQuantity < 1 ? 1 : newQuantity;
+  //       dispatch(setCart(newCart));
+  //     } else if (type === "decrement") {
+  //       const newCart = { ...cartStoreData };
+  //       newCart.data = newCart.data.map((item, i) => {
+  //         if (i === index) {
+  //           const newQuantity = quantity - 1;
+  //           const decrementedQuantity = newQuantity < 1 ? 1 : newQuantity;
 
-            // Decrement qty
-            manageQty(item.product_variant_id, decrementedQuantity);
-          }
-          return item;
-        });
-        dispatch(setCart(newCart));
-      }
-    }, 800);
+  //           // Decrement qty
+  //           manageQty(item.product_variant_id, decrementedQuantity);
+  //         }
+  //         return item;
+  //       });
+  //       dispatch(setCart(newCart));
+  //     }
+  //   }, 800);
 
-    setThrottleTimeout(timeout);
-  };
+  //   setThrottleTimeout(timeout);
+  // };
 
-  const [quantity, setQuantity] = useState(
-    parseInt(cartStoreData.total_quantity, 10)
-  );
+  // const [quantity, setQuantity] = useState(
+  //   parseInt(cartStoreData.total_quantity, 10)
+  // );
 
   return (
     <Box>
@@ -714,7 +711,6 @@ const ViewCart = () => {
 
                                 <ThrottledQuantitySelector
                                   initialValue={parseInt(item.qty)}
-                                  onChange={handleChange}
                                   manageQty={manageQty}
                                   productVariantId={item.product_variant_id}
                                 />

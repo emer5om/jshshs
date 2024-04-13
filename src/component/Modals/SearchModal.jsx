@@ -42,11 +42,11 @@ function SearchModal({ displayStyle = "icon" }) {
             // Set a new timeout to perform search after 500ms (adjust as needed)
             timerRef.current = setTimeout(() => {
                 handleSearch(query);
-            }, 500);
+            }, 1000);
         }
     };
     return (
-        <Box display={"flex"} sx={{ width: { sm: "100%", md: "40px" } }}        >
+        <Box display={"flex"} sx={{ minWidth: { sm: "100%", md: "18px" } }}        >
 
             {displayStyle === "icon" ?
 

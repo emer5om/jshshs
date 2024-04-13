@@ -6,7 +6,7 @@ import CircularSkeleton from "@/component/Skeleton/CircularSkeleton";
 import api from "@/interceptor/api";
 
 const initialQuery = { limit: 500, offset: 0 };
-const Categories = () => {
+const   Categories = () => {
 
     const [loading, setLoading] = useState(true);
     const [query, setQuery] = useState(initialQuery);
@@ -37,7 +37,7 @@ const Categories = () => {
 
 
   return (
-    <Grid container display={"flex"} justifyContent={"center"} maxWidth="100%" my={2} rowGap={0} spacing={2}>
+    <Grid container display={"flex"} mx={0} justifyContent={"center"} maxWidth="100%" my={2} rowGap={0} spacing={2}>
       {loading ? (
         // Loading state
         <CircularSkeleton />

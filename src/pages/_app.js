@@ -5,6 +5,7 @@ import { I18nextProvider } from 'react-i18next';
 import '@etchteam/next-pagination/dist/index.css'
 
 export default function App({ Component, pageProps }) {
+
   return <I18nextProvider i18n={i18n}>
     <RootLayout>
       <Component {...pageProps} />

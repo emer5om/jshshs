@@ -194,7 +194,6 @@ const MobileNavigation = () => {
               display={"flex"}
               alignItems={"center"}
               mt={1}
-              mr={2}
               p={1}
             >
               <RiArrowRightLine
@@ -296,6 +295,7 @@ const MobileNavigation = () => {
                   <Dropdown>
                     <MenuButton
                       slots={{ root: IconButton }}
+                      sx={{paddingInline:0}}
                       slotProps={{
                         root: { variant: "plain", color: "neutral" },
                       }}

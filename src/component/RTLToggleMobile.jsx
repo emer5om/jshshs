@@ -26,13 +26,13 @@ function RTLModeToggle() {
     <IconButton
       onClick={toggleLayoutDirection}
       color="inherit"
-      sx={{ justifyContent: "start" }}
+      sx={{ justifyContent: "start",paddingInline:0 }}
     >
       {layoutDirection == "rtl" ? (
         <Box display={"flex"} justifyContent={"center"}>
           <TextDirectionLIcon
             color={theme.palette.mode == "dark" ? "white" : "black"}
-            style={{ marginRight: "5px", paddingLeft: "0px" }}
+            style={{  paddingLeft: "0px" }}
           />
           <Typography fontSize={"md"} fontWeight={"lg"}>
             {t("left-to-right")}
@@ -43,7 +43,7 @@ function RTLModeToggle() {
           <TextDirectionRIcon
             color={theme.palette.mode == "dark" ? "white" : "black"}
             size={"25px"}
-            style={{ marginRight: "5px", paddingLeft: "0px" }}
+            style={{  paddingLeft: "0px" }}
           />
           <Typography fontSize={"md"} fontWeight={"lg"}>
             {t("right-to-left")}

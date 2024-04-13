@@ -29,10 +29,13 @@ import { addToFavorite, getFavorites, removeFromFavorite } from "@/interceptor/r
 import { RiHeartFill, RiHeartLine, RiHeartPulseLine } from "@remixicon/react";
 import { getUserData } from "@/events/getters";
 import { setFavorites } from "@/store/reducers/favoritesSlice";
+import { useTranslation } from "react-i18next";
 
 const ListCards = ({ handleAdd,handleRemove,data }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
+
+  const {t} = useTranslation()
 
   const userData = getUserData();
   const branchData = useSelector((state) => state.branch);

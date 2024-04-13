@@ -10,14 +10,8 @@ import MobileAppSection from "@/component/AppDownload";
 import { useSelector } from "react-redux";
 import { getSettings } from "@/store/reducers/settingsSlice";
 import Head from "next/head";
-import { useTranslation } from "react-i18next";
 
 export default function Home() {
-  
-  const { t, i18n } = useTranslation();
-
-
-console.log("Direction i18n",i18n.dir());
 
   const router = useRouter();
   useEffect(() => {

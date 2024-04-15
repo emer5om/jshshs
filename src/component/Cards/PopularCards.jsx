@@ -54,16 +54,13 @@ const PopularCards = React.memo(
   
     
     useEffect(() => {
-      console.log("re rendering");
       if (authentication == false) {
               // return toast.error("Please Login First!");
             setFavoriteItems([])
             dispatch(setFavorites([]));
             setCheckedItems({})
-            console.log("logg out");
             } else{
               async function fetchFavorites() {
-                console.log("getting fav");
                 try {
                   const favorites = await getFavorites({ branch_id });
                   setFavoriteItems(favorites.data);
@@ -94,12 +91,9 @@ const PopularCards = React.memo(
     
     const handleRemove = (id) => {
       try {
-        console.log("inside handleRemove");
-        console.log("id => ", id);
   
         // Filter out the removed item from the Redux state
         const updatedFavorites = favorites.filter((item) => item.id !== id);
-        console.log("Updated favorites:");
         dispatch(setFavorites(updatedFavorites));
         setFavoriteItems(updatedFavorites);
       } catch (error) {

@@ -83,16 +83,13 @@ const Products = ({ categoryId = 0 }) => {
 
 
   useEffect(() => {
-    console.log("re rendering");
     if (authentication === false) {
             // return toast.error("Please Login First!");
-            console.log("removing data from redux");
           setFavoriteItems([])
           dispatch(setFavorites([]));
 
           } else{
             async function fetchFavorites() {
-              console.log("getting fav");
               try {
                 const favorites = await getFavorites({ branch_id });
                 setFavoriteItems(favorites.data);

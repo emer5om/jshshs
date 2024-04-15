@@ -42,8 +42,6 @@ import { RiSubtractLine, RiAddLine } from "@remixicon/react";
       const newQuantity = quantity - 1;
       const decrementedQuantity = quantity < 1 ? 1 : quantity;
 
-      console.log(newQuantity);
-        console.log("decrement",decrementedQuantity - 1);
       // Decrement qty
       manageQty(productVariantId,  decrementedQuantity - 1);
         }

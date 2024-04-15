@@ -44,7 +44,6 @@ const NewItems = ({ data, showMore = true }) => {
 
   const handleRemove = (id) => {
     try {
-      console.log("inside handle reomve");
       // Filter out the removed item from the Redux state
       const updatedFavorites = favorites.filter((item) => item.id !== id);
       dispatch(setFavorites(updatedFavorites));

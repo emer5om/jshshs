@@ -61,7 +61,6 @@ const ListCards = ({ handleAdd,handleRemove,data }) => {
   }));
 
   useEffect(() => {
-    console.log(favoriteItems);
     if (userData !== false) {
       const initialCheckedItems = favoriteItems.reduce((acc, item) => {
         acc[item.id] = item.is_favorite == 1;
@@ -76,16 +75,14 @@ const ListCards = ({ handleAdd,handleRemove,data }) => {
      
     
   useEffect(() => {
-    console.log("re rendering");
+   
     if (authentication == false) {
             // return toast.error("Please Login First!");
           setFavoriteItems([])
           dispatch(setFavorites([]));
           setCheckedItems({})
-          console.log("logg out");
           } else{
             async function fetchFavorites() {
-              console.log("getting fav");
               try {
                 const favorites = await getFavorites({ branch_id });
                 setFavoriteItems(favorites.data);

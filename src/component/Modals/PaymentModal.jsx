@@ -69,7 +69,6 @@ const PaymentModal = ({
   const dispatch = useDispatch();
 
   const is_self_pick_up = deliveryType == "Pick Up" ? 1 : 0;
-  console.log(deliveryType);
 
   let methods = [];
 
@@ -114,7 +113,6 @@ const PaymentModal = ({
   };
 
   const handlePaymentOrder = async () => {
-    console.log(is_self_pick_up);
     if (is_self_pick_up === 0 && !selectedDeliveryAddress) {
       return toast.error("Please Select Address before processing ahead!");
     }

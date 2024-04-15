@@ -55,12 +55,9 @@ const DelightfulDishes = ({ data }) => {
   
   const handleRemove = (id) => {
     try {
-      console.log("inside handleRemove");
-      console.log("id => ", id);
 
       // Filter out the removed item from the Redux state
       const updatedFavorites = favorites.filter((item) => item.id !== id);
-      console.log("Updated favorites:");
       dispatch(setFavorites(updatedFavorites));
       setFavoriteItems(updatedFavorites);
     } catch (error) {

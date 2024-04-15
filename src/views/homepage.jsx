@@ -25,36 +25,23 @@ import { useTranslation } from "react-i18next";
 import { useLoadScript } from "@react-google-maps/api";
 
 const HomePage = () => {
-
-
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
     libraries: ["places"],
   });
-  
 
   const authStoreData = useSelector((state) => state.authentication);
 
   const homeStoreData = useSelector((state) => state.homepage);
 
-  
   const layoutDirection = useSelector((state) => state.rtl.layoutDirection);
 
-
-  console.log("inside index.js",layoutDirection);
-
   useEffect(() => {
-    document.documentElement.setAttribute('dir', layoutDirection); // Update HTML dir attribute
-  }, [])
-
-
-
-
-  
+    document.documentElement.setAttribute("dir", layoutDirection); // Update HTML dir attribute
+  }, []);
 
   if (!isLoaded) {
-    console.log("Map is not loaded yet");
-    return null; 
+    return null;
   }
 
   return (

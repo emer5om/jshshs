@@ -56,13 +56,11 @@ password:password
     }
 
     const handleRegister = async () => {
-        console.log(prefill)
         const userRegister = await register(prefill)
         if (userRegister?.error) {
             return toast.error(userRegister?.message)
         } else {
             setOpenRegisterModal(false)
-            console.log(userRegister?.message);
             return toast.success(userRegister?.message)
         }
     }

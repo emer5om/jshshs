@@ -63,7 +63,6 @@ const LocationModal = () => {
 
 
   const handleMapClick = async (event) => {
-    console.log("handleMapClick");
 
     setSelectedLocation({ lat: event.latLng.lat(), lng: event.latLng.lng() });
 

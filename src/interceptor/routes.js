@@ -259,7 +259,6 @@ export const getFavorites = async ({
   formData.append("limit", limit);
   formData.append("offset", offset);
 
-  console.log("getting fav");
   let response = await api.post("/get_favorites", formData);
   return response.data;
 };

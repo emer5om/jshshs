@@ -13,7 +13,6 @@ const About = () => {
     useEffect(() => {
 
         if (settings && settings?.web_settings.length != 0) setSettings(settings.about_us[0])
-        console.log(setting)
 
     }, [settings]);
 

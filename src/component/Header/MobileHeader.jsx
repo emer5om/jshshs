@@ -17,9 +17,16 @@ import {
   Select,
   Option,
   Badge,
+  ModalClose,
+  DialogTitle,
+  Sheet,
+  Divider,
+  FormControl,
 } from "@mui/joy";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
+import ExchangeDollarLineIcon from "remixicon-react/FileListLineIcon";
+import { logout } from "@/events/actions";
 
 // icons
 import MenuFillIcon from "remixicon-react/MenuFillIcon";
@@ -34,6 +41,10 @@ import {
   RiStackLine,
   RiGlobalLine,
   RiTranslate,
+  RiUser3Line,
+  RiHeartLine,
+  RiMapPin2Line,
+  RiShutDownLine,
 } from "@remixicon/react";
 import Image from "next/image";
 import LoginModal from "@/component/Modals/LoginModal";
@@ -43,10 +54,12 @@ import { languages } from "@/i18n";
 import DarkModeToggle from "@/component/DarkModeToggleMobile";
 import RTLModeToggle from "../RTLToggleMobile";
 import { toggleRTL } from "@/store/reducers/rtlSlice";
+import { useRouter } from "next/router";
 
 const MobileNavigation = () => {
   const { t, i18n } = useTranslation();
   const authStoreData = useSelector((state) => state.authentication);
+  const router = useRouter();
 
   const [loginModalState, setLoginModalState] = useState(false);
 
@@ -62,6 +75,8 @@ const MobileNavigation = () => {
       : settings?.value?.web_settings[0]?.logo;
 
   const [open, setOpen] = React.useState(false);
+  const [openProfile, setOpenProfile] = React.useState(false);
+
   // const [openSettings, setOpenSettings] = React.useState(false);
 
   const toggleDrawer = (inOpen) => (event) => {
@@ -74,7 +89,19 @@ const MobileNavigation = () => {
 
     setOpen(inOpen);
   };
-  
+  const toggleDrawerProfile = (isOpen) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    console.log(isOpen);
+
+    setOpenProfile(isOpen);
+  };
+
   const toggleSettingsDrawer = (inOpen) => (event) => {
     if (
       event.type === "keydown" &&
@@ -145,8 +172,9 @@ const MobileNavigation = () => {
           ) : (
             <>
               <Box
-                component={Link}
-                href={"/user/profile"}
+                // component={Link}
+                // href={"/user/profile"}
+                onClick={toggleDrawerProfile(true)}
                 display={"flex"}
                 alignItems={"center"}
                 gap={2}
@@ -241,7 +269,7 @@ const MobileNavigation = () => {
                 >
                   {t("products")}
                 </Typography>
-              
+
                 <Typography
                   fontSize={"md"}
                   fontWeight={"lg"}
@@ -322,9 +350,101 @@ const MobileNavigation = () => {
         </DialogContent>
       </Drawer>
 
+      <Drawer open={openProfile} sx={{width:"100%"}} size="lg" onClose={() => setOpenProfile(false)}>
+        <DialogContent sx={{width:"100%"}}>
+          <Box role="presentation" width={"100%"}>
+            <Box
+              width={"100%"}
+              justifyContent={"end"}
+              display={"flex"}
+              alignItems={"center"}
+              mt={1}
+              p={1}
+            >
+              <RiArrowRightLine
+                className="remixicon"
+                size={theme.fontSize.xl4}
+                fontWeight={"bolder"}
+                onClick={toggleDrawerProfile(false)}
+              />
+            </Box>
 
+            <Box
+              width={"100%"}
+              justifyContent={"center"}
+              display={"flex"}
+              alignItems={"left"}
+              textAlign={"start"}
+              my={4}
+              px={4}
+            >
+              <Stack spacing={4} width={"100%"}>
+                {/* {['categories', 'offers', 'notifications']} */}
+                <Typography
+                  fontSize={"md"}
+                  fontWeight={"lg"}
+                  component={Link}
+                  href="/user/profile"
+                  startDecorator={<RiUser3Line />}
+                  onClick={toggleDrawerProfile(false)}
+                >
+                  {t("my-profile")}
+                </Typography>
+                <Typography
+                  fontSize={"md"}
+                  fontWeight={"lg"}
+                  component={Link}
+                  href={"/user/favourites"}
+                  startDecorator={<RiHeartLine />}
+                  onClick={toggleDrawerProfile(false)}
+                >
+                  {t("favourites")}
+                </Typography>
+                <Typography
+                  fontSize={"md"}
+                  fontWeight={"lg"}
+                  component={Link}
+                  href={"/user/transactions"}
+                  startDecorator={<ExchangeDollarLineIcon />}
+                  onClick={toggleDrawerProfile(false)}
+                >
+                  {t("transactions")}
+                </Typography>
 
+                <Typography
+                  fontSize={"md"}
+                  fontWeight={"lg"}
+                  component={Link}
+                  href={"/user/address"}
+                  startDecorator={
+                    <RiMapPin2Line color={theme.palette.text.primary} />
+                  }
+                  onClick={toggleDrawerProfile(false)}
+                >
+                  {t("addresses")}
+                </Typography>
 
+                <Typography
+                  fontSize={"md"}
+                  fontWeight={"lg"}
+                  component={Link}
+                  href={"/user/address"}
+                  startDecorator={
+                    <RiShutDownLine color={theme.palette.text.primary} />
+                  }
+                  onClick={() => {
+                    toggleDrawerProfile(false);
+                    router.replace("/");
+                    logout();
+                  }}
+                >
+                  {t("logout")}
+                </Typography>
+              </Stack>
+            </Box>
+          </Box>
+        </DialogContent>
+      </Drawer>
     </Box>
   );
 };

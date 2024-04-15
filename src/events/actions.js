@@ -226,7 +226,6 @@ export const payRazorpay = async (order_id, amount) => {
     name: settings.web_settings[0].site_title,
     receipt: order_id,
     handler: (res) => {
-      console.log(res);
       // Handle successful payment here
     },
     notes: {

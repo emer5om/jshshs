@@ -48,7 +48,7 @@ const CoverPage = () => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
     libraries: ["places"],
   });
-  
+
   const settings = useSelector((state) => state.settings.value);
   const [setting, setSettings] = React.useState(false);
   useEffect(() => {
@@ -104,7 +104,6 @@ const CoverPage = () => {
         component.types.includes("locality")
       );
 
-      console.log(city);
 
       if (city?.long_name) {
         try {
@@ -120,7 +119,6 @@ const CoverPage = () => {
           dispatch(setNewAddress({ city: city.long_name, lat: lat, lng: lng }));
 
           if (delivery.error) {
-            console.log(delivery);
             return toast.error(delivery.message);
           } else {
             const branch_id = delivery.data[0].branch_id;

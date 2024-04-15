@@ -61,9 +61,6 @@ const MobileNavigation = () => {
       ? settings?.value?.web_settings[0]?.light_logo
       : settings?.value?.web_settings[0]?.logo;
 
-
-
-
   const [open, setOpen] = React.useState(false);
   // const [openSettings, setOpenSettings] = React.useState(false);
 
@@ -77,6 +74,7 @@ const MobileNavigation = () => {
 
     setOpen(inOpen);
   };
+  
   const toggleSettingsDrawer = (inOpen) => (event) => {
     if (
       event.type === "keydown" &&
@@ -99,9 +97,7 @@ const MobileNavigation = () => {
         <Box component={Link} href={"/"} display={"flex"} alignItems={"center"}>
           <Box sx={{ width: "150px" }}>
             <Image
-              src={
-                logoSrc
-              }
+              src={logoSrc}
               alt="logo"
               height={50}
               width={0}
@@ -245,16 +241,7 @@ const MobileNavigation = () => {
                 >
                   {t("products")}
                 </Typography>
-                {/* <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={`/user/notifications`}
-                  startDecorator={<RiNotificationLine />}
-                  onClick={toggleDrawer(false)}
-                >
-                  {t('notifications')}
-                </Typography> */}
+              
                 <Typography
                   fontSize={"md"}
                   fontWeight={"lg"}
@@ -266,8 +253,7 @@ const MobileNavigation = () => {
                       href={"/user/cart"}
                       badgeContent={cartStoreData.data.length}
                     >
-                      <RiShoppingBag4Line                 color={theme.palette.text.primary}
- />{" "}
+                      <RiShoppingBag4Line color={theme.palette.text.primary} />{" "}
                     </Badge>
                   }
                   onClick={toggleDrawer(false)}
@@ -289,13 +275,13 @@ const MobileNavigation = () => {
                 </Button> */}
 
                 <DarkModeToggle />
-                <RTLModeToggle/>
+                <RTLModeToggle />
 
                 <Box>
                   <Dropdown>
                     <MenuButton
                       slots={{ root: IconButton }}
-                      sx={{paddingInline:0}}
+                      sx={{ paddingInline: 0 }}
                       slotProps={{
                         root: { variant: "plain", color: "neutral" },
                       }}
@@ -316,8 +302,11 @@ const MobileNavigation = () => {
                             onClick={async () => {
                               await i18n.changeLanguage(language);
                               dispatch(setLanguage(language));
-                              document.documentElement.setAttribute("dir", i18n.dir()); 
-                              dispatch(toggleRTL(i18n.dir()))
+                              document.documentElement.setAttribute(
+                                "dir",
+                                i18n.dir()
+                              );
+                              dispatch(toggleRTL(i18n.dir()));
                             }}
                           >
                             {languages[language]}
@@ -332,6 +321,10 @@ const MobileNavigation = () => {
           </Box>
         </DialogContent>
       </Drawer>
+
+
+
+
     </Box>
   );
 };

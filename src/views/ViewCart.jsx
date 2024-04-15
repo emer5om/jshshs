@@ -95,8 +95,6 @@ const ViewCart = () => {
     (state) => state.settings.value.currency[0]
   );
 
-
-
   const { t } = useTranslation();
 
   const handleRemoveItem = async (id, cart_id) => {
@@ -341,13 +339,15 @@ const ViewCart = () => {
                                 p: 0,
                               }}
                             >
-                              <Box maxWidth={"40%"} 
-                               sx={{
-                                '@media screen and (max-width: 900px)': {
-                                  maxWidth:"70% !important"
-                                }
-                              }}
-                              position={"relative"}>
+                              <Box
+                                maxWidth={"40%"}
+                                sx={{
+                                  "@media screen and (max-width: 900px)": {
+                                    maxWidth: "70% !important",
+                                  },
+                                }}
+                                position={"relative"}
+                              >
                                 <Box
                                   component={"img"}
                                   src={item.image}
@@ -357,26 +357,24 @@ const ViewCart = () => {
                                   width={"70px"}
                                   sx={{
                                     borderRadius: "md",
-                                    '@media screen and (max-width: 900px)': {
-                                      width:"150px !important"
-                                    }
+                                    "@media screen and (max-width: 900px)": {
+                                      width: "150px !important",
+                                    },
                                   }}
-                                
                                 ></Box>
-                                  <Box
-                                    component={"img"}
-                                    src={"/images/icons/Veg.svg"}
-                                    width={"20px"}
-                                    top={"8%"}
-                                    left={"6%"}
-                                    position={"absolute"}
-                                    sx={{
-                                      '@media screen and (min-width: 900px)': {
-                                        visibility:"hidden",
-                                       
-                                      }
-                                    }}
-                                  ></Box>
+                                <Box
+                                  component={"img"}
+                                  src={"/images/icons/Veg.svg"}
+                                  width={"20px"}
+                                  top={"8%"}
+                                  left={"6%"}
+                                  position={"absolute"}
+                                  sx={{
+                                    "@media screen and (min-width: 900px)": {
+                                      visibility: "hidden",
+                                    },
+                                  }}
+                                ></Box>
                               </Box>
                               <CardContent
                                 sx={{
@@ -396,9 +394,9 @@ const ViewCart = () => {
                                     src={"/images/icons/Veg.svg"}
                                     width={"20px"}
                                     sx={{
-                                      '@media screen and (max-width: 900px)': {
-                                        display: 'none'
-                                      }
+                                      "@media screen and (max-width: 900px)": {
+                                        display: "none",
+                                      },
                                     }}
                                   ></Box>
                                 </Box>
@@ -743,7 +741,6 @@ const ViewCart = () => {
                                   manageQty={manageQty}
                                   productVariantId={item.product_variant_id}
                                 />
-                               
                               </CardContent>
                             </Card>
                           </Box>

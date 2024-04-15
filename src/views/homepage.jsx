@@ -22,8 +22,17 @@ import { isLogged } from "@/events/getters";
 import { HeadTitle } from "@/component/HeadTitle";
 import MobileAppSection from "@/component/AppDownload";
 import { useTranslation } from "react-i18next";
+import { useLoadScript } from "@react-google-maps/api";
 
 const HomePage = () => {
+
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
+    libraries: ["places"],
+  });
+  
+
   const authStoreData = useSelector((state) => state.authentication);
 
   const homeStoreData = useSelector((state) => state.homepage);
@@ -39,11 +48,15 @@ const HomePage = () => {
   }, [])
 
 
-  const { t, i18n } = useTranslation();
 
 
-  console.log("Direction i18n",i18n.dir());
   
+
+  if (!isLoaded) {
+    console.log("Map is not loaded yet");
+    return null; 
+  }
+
   return (
     <Box>
       <HeadTitle title={"home"} />

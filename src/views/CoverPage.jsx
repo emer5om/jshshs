@@ -48,6 +48,7 @@ const CoverPage = () => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
     libraries: ["places"],
   });
+  
   const settings = useSelector((state) => state.settings.value);
   const [setting, setSettings] = React.useState(false);
   useEffect(() => {

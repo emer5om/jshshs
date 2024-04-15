@@ -14,6 +14,7 @@ import Loader from "@/component/Loader";
 import Head from "next/head";
 import { Toaster } from "react-hot-toast";
 import BackToTop from "@/component/Buttons/BackToTop";
+import Script from 'next/script';
 
 
 
@@ -46,11 +47,11 @@ export default function RootLayout({ children }) {
   return (
     <>
       <Head>
-        <script
+        {/* <script
+          async
           src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}&libraries=places`}
           type="text/javascript"
-          async
-        />
+        /> */}
       </Head>
       <CssVarsProvider defaultMode="system" theme={theme}   dir={"rtl"}>
         

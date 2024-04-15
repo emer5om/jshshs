@@ -341,7 +341,13 @@ const ViewCart = () => {
                                 p: 0,
                               }}
                             >
-                              <Box maxWidth={"40%"}>
+                              <Box maxWidth={"40%"} 
+                               sx={{
+                                '@media screen and (max-width: 900px)': {
+                                  maxWidth:"70% !important"
+                                }
+                              }}
+                              position={"relative"}>
                                 <Box
                                   component={"img"}
                                   src={item.image}
@@ -351,8 +357,26 @@ const ViewCart = () => {
                                   width={"70px"}
                                   sx={{
                                     borderRadius: "md",
+                                    '@media screen and (max-width: 900px)': {
+                                      width:"150px !important"
+                                    }
                                   }}
+                                
                                 ></Box>
+                                  <Box
+                                    component={"img"}
+                                    src={"/images/icons/Veg.svg"}
+                                    width={"20px"}
+                                    top={"8%"}
+                                    left={"6%"}
+                                    position={"absolute"}
+                                    sx={{
+                                      '@media screen and (min-width: 900px)': {
+                                        visibility:"hidden",
+                                       
+                                      }
+                                    }}
+                                  ></Box>
                               </Box>
                               <CardContent
                                 sx={{
@@ -371,6 +395,11 @@ const ViewCart = () => {
                                     component={"img"}
                                     src={"/images/icons/Veg.svg"}
                                     width={"20px"}
+                                    sx={{
+                                      '@media screen and (max-width: 900px)': {
+                                        display: 'none'
+                                      }
+                                    }}
                                   ></Box>
                                 </Box>
                                 <Box

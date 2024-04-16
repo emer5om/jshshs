@@ -9,6 +9,7 @@ import {useTranslation} from "react-i18next";
 
 const index = () => {
     const {t} = useTranslation()
+    console.log("categories index.jsx");
     return (
         <Box>
             <Box>

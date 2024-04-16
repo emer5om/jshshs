@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 
 import { setPromoCode } from "../store/reducers/promoCodeSlice";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 const Coupons = () => {
   const theme = useTheme();
@@ -34,6 +35,8 @@ const Coupons = () => {
 
   const branch_id = branchData.id;
   const currencySymbol = settings?.currency[0];
+
+  const {t} = useTranslation()
 
   const get_promo_codes = async () => {
     try {

@@ -138,9 +138,7 @@ a {
   color: var(--joy-palette-background-footer);
 }
 
-.MuiTypography-root {
-  text-transform: capitalize;
-}
+
 
 .react-tel-input .form-control:focus {
   border-color: var(

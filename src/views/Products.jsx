@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { get_products } from "@/interceptor/routes";
-import { Box, Button } from "@mui/joy";
+import { Box, Button, CircularProgress } from "@mui/joy";
 import { useDispatch, useSelector } from "react-redux";
 import PopularCards from "@/component/Cards/PopularCards";
 import ListCards from "@/component/Cards/ListCards";
@@ -23,6 +23,7 @@ const Products = ({ categoryId = 0 }) => {
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingSeeMore, setIsLoadingSeeMore] = useState(false);
   // const [limit, setLimit] = useState(18)
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState("");
@@ -99,8 +100,10 @@ const Products = ({ categoryId = 0 }) => {
 
   useEffect(() => {
     getProducts();
-  }, [offset, search, vegetarian, category_id, order, initialLimit]);
+  }, [ search, vegetarian, category_id, order]);
 
+
+  
   const onViewChangeWrapper = (alignment) => {
     setView(alignment);
   };
@@ -161,10 +164,40 @@ const Products = ({ categoryId = 0 }) => {
     }
   };
 
-  const handleLoadMore = () => {
-    setInitialLimit(initialLimit + 12); // Increase the initialLimit by 10 (or any other desired value)
-    // setOffset(offset + initialLimit); // Update the offset based on the current offset and initialLimit
+  // const handleLoadMore = () => {
+  //   setInitialLimit(initialLimit + 12); // Increase the initialLimit by 10 (or any other desired value)
+  //   // setOffset(offset + initialLimit); // Update the offset based on the current offset and initialLimit
+  // };
+
+
+  const handleLoadMore = async () => {
+    try {
+      setIsLoadingSeeMore(true); // Set loading state to true to display loader
+      const productResponse = await get_products({
+        branch_id,
+        limit: initialLimit,
+        offset: offset + initialLimit, // Increment the offset to fetch the next set of products
+        search,
+        vegetarian: vegetarian ?? "",
+        category_id: category_id > 0 ? category_id : 0,
+        filter_by: order === "" ? "" : filter_by,
+        order,
+      });
+  
+      if (productResponse.data.length > 0) {
+        setProducts((prevProducts) => [...prevProducts, ...productResponse.data]); // Concatenate new products with previous ones
+        if (productResponse.data.length !== initialLimit) {
+          setEnd(true);
+        }
+      }
+    } catch (error) {
+      console.error("Error while fetching more products:", error);
+    } finally {
+      setIsLoadingSeeMore(false); // Set loading state to false after fetching products
+    }
   };
+  
+
 
   return (
     <Box display={"flex"} justifyContent={"center"}>
@@ -206,9 +239,13 @@ const Products = ({ categoryId = 0 }) => {
           ></Box>
           {!end && (
             <Box display="flex" justifyContent="center" mt={4}>
-              <Button disabled={isLoading} onClick={handleLoadMore}>
-                {t("show-more")}
+              <Button disabled={isLoadingSeeMore} onClick={handleLoadMore}>
+               
+              {isLoadingSeeMore ? <CircularProgress variant="solid" sx={{fontSize:"200px"}}/> : t("show-more")}
+
               </Button>
+            
+
             </Box>
           )}
         </Box>

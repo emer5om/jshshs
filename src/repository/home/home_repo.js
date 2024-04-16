@@ -66,7 +66,7 @@ export const updateHomeCategories = async (branch_id) => {
   form.append("limit", 100);
   form.append("offset", 0);
 
-  get_categories();
+  // get_categories();
   const res = await api.post("/get_categories", form);
   if (res.data.error) {
     return navigateErrorPage(res.data);

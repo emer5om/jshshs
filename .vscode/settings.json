@@ -147,5 +147,25 @@
         "हटाना",
         "हमसे",
         "हमारे"
-    ]
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#70b574",
+        "activityBar.background": "#70b574",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#ebeaf4",
+        "activityBarBadge.foreground": "#15202b",
+        "commandCenter.border": "#15202b99",
+        "sash.hoverBorder": "#70b574",
+        "statusBar.background": "#539f57",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#427d45",
+        "statusBarItem.remoteBackground": "#539f57",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#539f57",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#539f5799",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#539f57"
 }

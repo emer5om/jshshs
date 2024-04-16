@@ -1,48 +1,86 @@
 "use client";
 import CategoryCards from "@/component/Cards/CategoryCards";
-import { Box, CircularProgress, Grid } from "@mui/joy";
+import { Box, CircularProgress, Grid, Button } from "@mui/joy";
 import React, { useEffect, useState } from "react";
 import CircularSkeleton from "@/component/Skeleton/CircularSkeleton";
 import api from "@/interceptor/api";
+import { useTranslation } from "react-i18next";
 
-const initialQuery = { limit: 500, offset: 0 };
-const   Categories = () => {
+const initialQuery = { limit: 10, offset: 0 };
 
-    const [loading, setLoading] = useState(true);
-    const [query, setQuery] = useState(initialQuery);
-    const [result, setResult] = useState([]);
-  
-    const request = () => {
-      const formData = new FormData();
-      Object.keys(query).map((item) => {
-        formData.append(item, query[item]);
-      });
-      formData.append("branch_id", "7");
-      api
-        .post("/get_categories", formData)
-        .then((res) => {
-          setResult(res.data.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching categories:", error);
-          setLoading(false);
-        });
+const Categories = () => {
+  const [loading, setLoading] = useState(true);
+  const [result, setResult] = useState([]);
+  const [endReached, setEndReached] = useState(false);
+  const [isLoadingSeeMore, setIsLoadingSeeMore] = useState(false);
+
+  const {t} = useTranslation()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("branch_id", "7");
+        formData.append("limit", initialQuery.limit);
+        formData.append("offset", initialQuery.offset);
+
+        const response = await api.post("/get_categories", formData);
+        const data = response.data.data;
+
+        if (data.length === 0) {
+          setEndReached(true);
+        } else {
+          setResult(data);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setLoading(false);
+      }
     };
-  
-    useEffect(() => {
-      request();
-    }, [query]);
-  
 
+    fetchData();
+  }, []);
+
+  const handleLoadMore = async () => {
+    try {
+      setIsLoadingSeeMore(true);
+      const formData = new FormData();
+      formData.append("branch_id", "7");
+      formData.append("limit", initialQuery.limit);
+      formData.append("offset", result.length);
+
+      const response = await api.post("/get_categories", formData);
+      const data = response.data.data;
+
+      if (data.length === 0) {
+        setEndReached(true);
+      } else {
+        setResult((prevResult) => [...prevResult, ...data]);
+      }
+    } catch (error) {
+      console.error("Error fetching more categories:", error);
+    } finally {
+      setIsLoadingSeeMore(false);
+    }
+  };
 
   return (
-    <Grid container display={"flex"} mx={0} justifyContent={"center"} maxWidth="100%" my={2} rowGap={0} spacing={2}>
+    <>
+    <Grid
+      container
+      display={"flex"}
+      mx={0}
+      justifyContent={"center"}
+      maxWidth="100%"
+      my={2}
+      rowGap={0}
+      spacing={2}
+    >
       {loading ? (
-        // Loading state
         <CircularSkeleton />
       ) : result.length === 0 ? (
-        // No data state
         <Grid item xs={12} textAlign="center" maxHeight={"600px"}>
           <img
             src={"/categaory.webp"}
@@ -51,19 +89,40 @@ const   Categories = () => {
           />
         </Grid>
       ) : (
-        // Render categories
-        result.map((item, index) => (
-          <Grid item xs={6} md={2} key={index}>
-            <CategoryCards
-              image={item.image}
-              title={item.name}
-              count={item.count}
-              slug={item.slug}
-            />
-          </Grid>
-        ))
+        <>
+          {result.map((item, index) => (
+            <Grid item xs={6} md={2} key={index}>
+              <CategoryCards
+                image={item.image}
+                title={item.name}
+                count={item.count}
+                slug={item.slug}
+              />
+            </Grid>
+          ))}
+         
+        </>
+        
       )}
+      
     </Grid>
+    {!endReached && (
+ 
+
+ <Box display="flex" justifyContent="center" mt={4}>
+   <Button disabled={isLoadingSeeMore} onClick={handleLoadMore}>
+     {isLoadingSeeMore ? (
+       <CircularProgress
+         variant="solid"
+         sx={{ fontSize: "200px" }}
+       />
+     ) : (
+       t("show-more")
+     )}
+   </Button>
+ </Box>
+)}
+</>
   );
 };
 

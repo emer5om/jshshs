@@ -13,7 +13,7 @@ import { setCategories } from '../../store/reducers/categorySlice';
 
 
 // APIs
-import { get_categories } from "@/interceptor/routes"
+// import { get_categories } from "@/interceptor/routes"
 import { useTranslation } from "react-i18next";
 
 

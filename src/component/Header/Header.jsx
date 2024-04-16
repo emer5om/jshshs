@@ -248,16 +248,20 @@ const Header = () => {
               )}
             </IconButton>
 
-            <Badge
-              component={Link}
-              href={"/user/cart"}
-              badgeContent={cartStoreData.data.length}
-            >
-              <ShoppingBag3LineIcon
-                size={"20px"}
-                color={theme.palette.text.primary}
-              />
-            </Badge>
+            {authStoreData.isLogged ? (
+              <Badge
+                component={Link}
+                href={"/user/cart"}
+                badgeContent={cartStoreData.data.length}
+              >
+                <ShoppingBag3LineIcon
+                  size={"20px"}
+                  color={theme.palette.text.primary}
+                />
+              </Badge>
+            ) : (
+              null
+            )}
 
             <DarkModeToggle />
 

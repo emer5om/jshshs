@@ -213,7 +213,7 @@ const Filter = ({
                       key={item.name}
                       sx={{
                         boxShadow: "none",
-                        "&:hover": { bgcolor: "background.level1" },
+                        "&:hover": { bgcolor: "background.level2" },
                       }}
                     >
                       <CardContent>
@@ -279,7 +279,7 @@ const Filter = ({
                       key={item.name}
                       sx={{
                         boxShadow: "none",
-                        "&:hover": { bgcolor: "background.level1" },
+                        "&:hover": { bgcolor: "background.level2" },
                       }}
                     >
                       <CardContent>

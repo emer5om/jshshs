@@ -342,11 +342,17 @@ const ViewCart = () => {
                               <Box
                                 maxWidth={"40%"}
                                 sx={{
+                                  display: { xs: "flex", md: "inherit" },
                                   "@media screen and (max-width: 900px)": {
-                                    maxWidth: "70% !important",
+                                    maxWidth: "100% !important",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    width: "100%",
                                   },
                                 }}
                                 position={"relative"}
+                                display={"flex"}
+                                gap={1}
                               >
                                 <Box
                                   component={"img"}
@@ -354,24 +360,43 @@ const ViewCart = () => {
                                   srcSet={item.image}
                                   loading="lazy"
                                   alt=""
-                                  width={"70px"}
                                   sx={{
                                     borderRadius: "md",
-                                    "@media screen and (max-width: 900px)": {
-                                      width: "150px !important",
+                                    width: {
+                                      xs: "80px", // Width for extra small screens
+                                      sm: "150px", // Width for small screens
                                     },
                                   }}
                                 ></Box>
+                                <Typography
+                                  textColor={
+                                    theme.palette.mode === "light"
+                                      ? "text.menuText"
+                                      : "text.secondary"
+                                  }
+                                  fontSize={"sm"}
+                                  fontWeight={"lg"}
+                                  width={{ md: "85%", xs: "100%" }}
+                                  sx={{
+                                    "@media screen and (min-width: 900px)": {
+                                      display: "none",
+                                    },
+                                  }}
+                                >
+                                  {item.name}
+                                </Typography>
+
                                 <Box
                                   component={"img"}
                                   src={"/images/icons/Veg.svg"}
-                                  width={"20px"}
-                                  top={"8%"}
-                                  left={"6%"}
                                   position={"absolute"}
                                   sx={{
+                                    width: { xs: "15px" },
+                                    top: { xs: "9%" },
+                                    left: { xs: "2%" },
                                     "@media screen and (min-width: 900px)": {
                                       visibility: "hidden",
+                                      width: "10px",
                                     },
                                   }}
                                 ></Box>
@@ -386,6 +411,7 @@ const ViewCart = () => {
                                   },
                                   textAlign: { xs: "center", md: "left" },
                                   gap: 1,
+                                  width: { xs: "100%" },
                                 }}
                               >
                                 <Box maxWidth={"10%"}>
@@ -404,13 +430,21 @@ const ViewCart = () => {
                                   display={"flex"}
                                   justifyContent={"space-between"}
                                   flexDirection={"column"}
-                                  width={"80%"}
+                                  sx={{
+                                    width: {
+                                      xs: "100%", // Width for extra small screens
+                                      sm: "80%", // Width for medium screens
+                                    },
+                                  }}
                                 >
                                   <Box
                                     display={"flex"}
                                     alignItems={"center"}
                                     gap={1}
                                     maxWidth={"100%"}
+                                    sx={{
+                                      display: { xs: "none", md: "inherit" },
+                                    }}
                                   >
                                     <Typography
                                       textColor={
@@ -443,6 +477,7 @@ const ViewCart = () => {
                                     >
                                       {formatePrice(item.price)}
                                     </Typography>
+
                                     <Box
                                       style={{
                                         display: "flex",
@@ -472,6 +507,12 @@ const ViewCart = () => {
                                                 <Typography
                                                   fontSize={"sm"}
                                                   fontWeight={"md"}
+                                                  sx={{
+                                                    textAlign: {
+                                                      xs: "left",
+                                                      md: "center",
+                                                    },
+                                                  }}
                                                   mb={1}
                                                   textColor={currencyColor}
                                                 >
@@ -566,13 +607,16 @@ const ViewCart = () => {
                                       </Typography>
                                     </Box>
                                   </Box>
-                                  <Box>
+                                  <Box sx={{ textAlign: { xs: "left" } }}>
                                     {item.product_details[0]
                                       .product_add_ons[0] && (
                                       <>
                                         <Typography
                                           textColor={"primary"}
                                           fontWeight={600}
+                                          sx={{
+                                            fontSize: { xs: "sm", md: "md" },
+                                          }}
                                         >
                                           {t("extra-add-ons")}
                                         </Typography>
@@ -583,8 +627,14 @@ const ViewCart = () => {
                                                 <Typography
                                                   textColor={"primary"}
                                                   fontWeight={100}
+                                                  sx={{
+                                                    fontSize: {
+                                                      xs: "sm",
+                                                      md: "md",
+                                                    },
+                                                  }}
                                                 >
-                                                  {addOn.title} {"    "}
+                                                  {addOn.title} {"    "}| {" "}
                                                   {formatePrice(addOn.price)}
                                                 </Typography>
                                               </React.Fragment>

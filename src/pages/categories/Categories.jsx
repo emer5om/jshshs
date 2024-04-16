@@ -2,7 +2,6 @@
 import NewItems from "@/component/Products/NewItems";
 import Categories from "@/views/Categories";
 import { Box } from "@mui/joy";
-import React, { useEffect, useState } from "react";
 import api from "@/interceptor/api";
 import { HeadTitle } from "@/component/HeadTitle";
 import dynamic from "next/dynamic";
@@ -15,9 +14,13 @@ const BreadCrumb = dynamic(() => import("@/component/BreadCrumb/BreadCrumb"), {
 const CategoriesPage = () => {
     const {t} = useTranslation()
 
+
+    console.log("categories categories.jsx");
+
+
   return (
     <Box>
-      {/* <HeadTitle title={"categories"} /> */}
+      <HeadTitle title={"categories"} />
 
       <Box mb={4}>
                 <BreadCrumb page={[{ name: t("categories"), link: "#" }]} />

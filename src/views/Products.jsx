@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  get_products,
-} from "@/interceptor/routes";
+import { get_products } from "@/interceptor/routes";
 import { Box, Button } from "@mui/joy";
 import { useDispatch, useSelector } from "react-redux";
 import PopularCards from "@/component/Cards/PopularCards";
@@ -15,7 +13,6 @@ import Skeleton from "@/component/Skeleton/Skeleton";
 import { getUserData } from "@/events/getters";
 
 import { useRouter } from "next/router";
-
 
 const Products = ({ categoryId = 0 }) => {
   const { t } = useTranslation();
@@ -81,32 +78,24 @@ const Products = ({ categoryId = 0 }) => {
     }
   };
 
-
   useEffect(() => {
     if (authentication === false) {
-            // return toast.error("Please Login First!");
-          setFavoriteItems([])
-          dispatch(setFavorites([]));
-
-          } else{
-            async function fetchFavorites() {
-              try {
-                const favorites = await getFavorites({ branch_id });
-                setFavoriteItems(favorites.data);
-                dispatch(setFavorites(favorites.data));
-        
-              } catch (error) {
-                console.error("Error fetching favorites:", error);
-              }
-            }
-    fetchFavorites(); 
-
-          }
-   
-
+      // return toast.error("Please Login First!");
+      setFavoriteItems([]);
+      dispatch(setFavorites([]));
+    } else {
+      async function fetchFavorites() {
+        try {
+          const favorites = await getFavorites({ branch_id });
+          setFavoriteItems(favorites.data);
+          dispatch(setFavorites(favorites.data));
+        } catch (error) {
+          console.error("Error fetching favorites:", error);
+        }
+      }
+      fetchFavorites();
+    }
   }, [authentication]);
-
-
 
   useEffect(() => {
     getProducts();
@@ -207,7 +196,6 @@ const Products = ({ categoryId = 0 }) => {
                 handleRemove={handleRemove}
                 data={products}
                 handleAdd={handleAdd}
-                
               />
             )}
           </Box>

@@ -469,7 +469,8 @@ const UserLayout = ({ children }) => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid xs={12} md={9}>
+
+      <Grid sx={{marginTop:{xs:2,sm:2,md:0}}}  xs={12} md={9}>
         <Grid container>
           <Grid xs={12} width={"100%"}>
             <Card sx={{ border: "none", px: 0 }}>

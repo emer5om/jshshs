@@ -156,7 +156,7 @@ const Index = () => {
                     display={"flex"}
                     alignItems={"center"}
                   >
-                    <FacebookCircleLineIcon size={25} />
+                    <FacebookCircleLineIcon className="noRotate" size={25} />
                   </Box>
                 </Link>
                 <Link
@@ -174,7 +174,7 @@ const Index = () => {
                     display={"flex"}
                     alignItems={"center"}
                   >
-                    <InstagramFillIcon size={25} />
+                    <InstagramFillIcon className="noRotate" size={25} />
                   </Box>
                 </Link>
                 <Link href={setting.youtube_link ? setting.youtube_link : ""}>
@@ -190,7 +190,7 @@ const Index = () => {
                     display={"flex"}
                     alignItems={"center"}
                   >
-                    <TwitterLineIcon size={25} />
+                    <TwitterLineIcon className="noRotate" size={25} />
                   </Box>
                 </Link>
                 <Link href={setting.youtube_link ? setting.youtube_link : ""}>
@@ -206,7 +206,7 @@ const Index = () => {
                     display={"flex"}
                     alignItems={"center"}
                   >
-                    <YoutubeLineIcon />
+                    <YoutubeLineIcon className="noRotate" />
                   </Box>
                 </Link>
               </Box>

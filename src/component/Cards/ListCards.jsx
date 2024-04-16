@@ -11,6 +11,7 @@ import {
   useTheme,
   styled,
   Checkbox,
+  CardCover,
 } from "@mui/joy";
 import React, { useCallback, useEffect, useState } from "react";
 
@@ -159,7 +160,7 @@ const ListCards = ({ handleAdd,handleRemove,data }) => {
 const specialPrice = item.variants[0].special_price != 0
           const price = item.variants[0]?.price;
           return (
-            <Grid xs={12} md={4} key={index}>
+            <Grid xs={12} md={6} lg={4} key={index}>
               <Card
                 variant="outlined"
                 sx={{
@@ -177,7 +178,10 @@ const specialPrice = item.variants[0].special_price != 0
                 }}
               >
                 <Box display={"flex"} gap={2}>
-                  <Box maxWidth={150} maxHeight={150}>
+                  <Box
+                      position={"relative"}
+                  
+                  maxWidth={150} maxHeight={150}>
                     <Box
                       component={"img"}
                       src={item.image_sm}
@@ -202,7 +206,18 @@ const specialPrice = item.variants[0].special_price != 0
                           minWidth: 150,
                         },
                       }}
-                    ></Box>
+                    >
+
+
+                      
+                    </Box>
+                    <CardCover
+        sx={{
+          background:
+"linear-gradient(to top, rgba(0,0,0,0.1), rgba(0,0,0,0) 77px),linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 90px)"
+        }}
+      />
+
                     {discount && specialPrice != 0 && (
                     <Box position={"absolute"} top={"75%"} left={"5%"}>
                       <Typography
@@ -218,9 +233,11 @@ const specialPrice = item.variants[0].special_price != 0
                       </Typography>
                     </Box>
                      )} 
+
+
                   </Box>
 
-                  <Box width={"100%"}>
+                  <Box width={"100%"} overflow={"hidden"}>
                     <Box display={"flex"} alignItems={"center"} width={"100%"}>
                       <Box
                         display={"flex"}
@@ -234,7 +251,7 @@ const specialPrice = item.variants[0].special_price != 0
                           src={
                             item.indicator === "1"
                               ? "/images/icons/Veg.svg"
-                              : "/images/icons/non-veg.jpg"
+                              : "/images/icons/Non_veg.svg"
                           }
                           alt="veg-non-veg.icon"
                         ></Box>
@@ -243,6 +260,7 @@ const specialPrice = item.variants[0].special_price != 0
                           display={"flex"}
                           alignItems={"center"}
                           width={"100%"}
+                          gap={0.4}
                         >
                           <StarFillIcon color={theme.palette.warning[400]} />
                           <Typography> {item.rating ?? 0} </Typography>
@@ -286,8 +304,8 @@ const specialPrice = item.variants[0].special_price != 0
                         {item.category_name}
                       </Typography>
                     </Box>
-                    <Box>
-                      <Typography fontSize={"lg"} fontWeight={"md"}>
+                    <Box  >
+                      <Typography noWrap sx={{ wordBreak: "break-word" }} overflow={"hidden"} fontSize={"lg"} fontWeight={"md"}>
                         {item.name}
                       </Typography>
                     </Box>

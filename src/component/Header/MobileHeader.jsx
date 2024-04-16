@@ -45,6 +45,7 @@ import {
   RiHeartLine,
   RiMapPin2Line,
   RiShutDownLine,
+  RiFilePaper2Line,
 } from "@remixicon/react";
 import Image from "next/image";
 import LoginModal from "@/component/Modals/LoginModal";
@@ -389,6 +390,16 @@ const MobileNavigation = () => {
                   onClick={toggleDrawerProfile(false)}
                 >
                   {t("my-profile")}
+                </Typography>
+                <Typography
+                  fontSize={"md"}
+                  fontWeight={"lg"}
+                  component={Link}
+                  href={"/user/my-orders"}
+                  startDecorator={<RiFilePaper2Line />}
+                  onClick={toggleDrawerProfile(false)}
+                >
+                    {t("my-orders")}
                 </Typography>
                 <Typography
                   fontSize={"md"}

@@ -173,14 +173,14 @@ const FavItems = memo(({ data, handleRemove }) => {
         </Grid>
       ) : (
         data.map((item, index) => (
-          <Grid xs={12} md={4} key={index}>
+          <Grid xs={12} md={6} key={index}>
             <Card
               key={index}
               orientation="horizontal"
               variant="outlined"
               sx={{
                 width: "100%",
-                height: { xs: "250px", md: "200px" },
+                maxHeight: { xs: "250px", md: "200px" },
                 borderRadius: "md",
                 "&:hover": {
                   backgroundColor:
@@ -220,7 +220,7 @@ const FavItems = memo(({ data, handleRemove }) => {
                   />
                 </Box>
               </CardOverflow>
-              <CardContent sx={{ maxWidth: { xs: "50%", md: "80%" } }}>
+              <CardContent sx={{ maxWidth: { xs: "80%", md: "80%" } }}>
                 <Box>
                   <Box>
                     <Box display={"flex"} alignItems={"center"} width={"100%"}>
@@ -236,7 +236,7 @@ const FavItems = memo(({ data, handleRemove }) => {
                           src={
                             item.indicator == 1
                               ? "/images/icons/Veg.svg"
-                              : "/images/icons/non-veg.jpg"
+                              : "/images/icons/Non_veg.svg"
                           }
                           alt="veg-non-veg.icon"
                         />

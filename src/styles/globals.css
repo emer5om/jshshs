@@ -25,7 +25,9 @@
 
 }
 
-
+[dir="rtl"] .noRotate {
+  transform: scaleX(1);
+}
 
 
 /* Define basic scrollbar styles */

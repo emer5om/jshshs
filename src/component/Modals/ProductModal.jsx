@@ -67,6 +67,7 @@ const ProductModal = ({
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
+
   useEffect(() => {
     const variantId = cartStoreData.data[index]?.product_variant_id;
     cartStoreData.data[index]?.product_details[0].variants.map((value) => {
@@ -80,6 +81,8 @@ const ProductModal = ({
       return toast.error(t("please-log-in-to-continue"));
     }
     setLoading(true);
+    setOpen(false);
+
     const state = await add_to_cart({
       product_variant_id: selectedVariant.id,
       qty: qty,
@@ -89,7 +92,6 @@ const ProductModal = ({
     if (!state) {
       return;
     }
-    setOpen(false);
   };
 
   const getPrice = () => {

@@ -22,13 +22,11 @@
 
 [dir="rtl"] .swiper {
   direction: ltr;
-
 }
 
 [dir="rtl"] .noRotate {
   transform: scaleX(1);
 }
-
 
 /* Define basic scrollbar styles */
 /* Width */
@@ -138,8 +136,6 @@ a {
   color: var(--joy-palette-background-footer);
 }
 
-
-
 .react-tel-input .form-control:focus {
   border-color: var(
     --_Input-focusedHighlight,
@@ -234,4 +230,17 @@ input[type="search"]::-webkit-search-cancel-button {
 html[data-joy-color-scheme="dark"] .special-label {
   background: var(--joy-palette-background-surface) !important;
   color: white;
+}
+
+.InputModalFocus {
+  --Input-focused: 1;
+  tabindex:1
+}
+
+
+
+div > .MUIInput.Mui-disabled {
+  /* CSS styles for the input element */
+  background-color: var(--joy-palette-neutral-softBg) !important; 
+  color: var(--variant-softColor, var(--joy-palette-neutral-softColor, var(--joy-palette-neutral-700, #32383E)));
 }

@@ -98,7 +98,6 @@ const MobileNavigation = () => {
       return;
     }
 
-    console.log(isOpen);
 
     setOpenProfile(isOpen);
   };

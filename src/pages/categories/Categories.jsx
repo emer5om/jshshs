@@ -15,7 +15,6 @@ const CategoriesPage = () => {
     const {t} = useTranslation()
 
 
-    console.log("categories categories.jsx");
 
 
   return (

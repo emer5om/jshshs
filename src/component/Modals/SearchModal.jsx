@@ -37,10 +37,12 @@ function SearchModal({ displayStyle = "icon" }) {
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
+
   const theme = useTheme();
   const { t } = useTranslation();
 
-  const inputRef = useRef(null);
+  const inputRef = useRef();
   const timerRef = useRef(null);
 
   const handleSearch = debounce((searchQuery) => {
@@ -50,6 +52,14 @@ function SearchModal({ displayStyle = "icon" }) {
       setProducts(res.data);
     });
   }, 250);
+
+  useEffect(() => {
+    if (open) {
+      setIsFocused(true);
+    } else {
+      setIsFocused(false);
+    }
+  }, [open]);
 
   const handleInputChange = (e) => {
     const query = e.target.value;
@@ -65,6 +75,7 @@ function SearchModal({ displayStyle = "icon" }) {
       }, 1000);
     }
   };
+
   return (
     <Box display={"flex"} sx={{ minWidth: { sm: "100%", md: "18px" } }}>
       {displayStyle === "icon" ? (
@@ -136,11 +147,13 @@ function SearchModal({ displayStyle = "icon" }) {
             }}
           >
             <Input
-              value={searchQuery}
+          className={isFocused ? "InputModalFocus" : "inputModal"}
+          value={searchQuery}
               onChange={handleInputChange}
               placeholder={t("search-products")}
-              sx={{ mb: 2 }}
+              sx={{ mb: 2, "--Input-focused:": 1 }}
               type="search"
+              autoFocus={true}
               startDecorator={
                 <Box
                   sx={{ display: { xs: "flex", md: "none" } }}
@@ -149,8 +162,8 @@ function SearchModal({ displayStyle = "icon" }) {
                   <RiArrowLeftLine />
                 </Box>
               }
-              ref={inputRef}
             />
+
 
             {products.length > 0 ? (
               <Grid
@@ -187,9 +200,8 @@ function SearchModal({ displayStyle = "icon" }) {
                 fontSize={"lg"}
                 fontWeight={"xl"}
                 textTransform={"none !important"} // Set text transform to none
-
               >
-                Search Food as per your liking{" "}
+                {t("search-food-as-per-your-liking")}
               </Typography>
             )}
           </DialogContent>

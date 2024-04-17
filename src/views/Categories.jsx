@@ -6,7 +6,7 @@ import CircularSkeleton from "@/component/Skeleton/CircularSkeleton";
 import api from "@/interceptor/api";
 import { useTranslation } from "react-i18next";
 
-const initialQuery = { limit: 10, offset: 0 };
+const initialQuery = { limit: 6, offset: 0 };
 
 const Categories = () => {
   const [loading, setLoading] = useState(true);
@@ -28,6 +28,8 @@ const Categories = () => {
         const response = await api.post("/get_categories", formData);
         const data = response.data.data;
 
+        console.log(response.data.total);
+
         if (data.length === 0) {
           setEndReached(true);
         } else {
@@ -42,6 +44,7 @@ const Categories = () => {
 
     fetchData();
   }, []);
+
 
   const handleLoadMore = async () => {
     try {

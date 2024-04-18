@@ -76,6 +76,7 @@ const ProductModal = ({
       }
     });
   }, []);
+  
   const addTocart = async () => {
     if (!isLogged()) {
       return toast.error(t("please-log-in-to-continue"));

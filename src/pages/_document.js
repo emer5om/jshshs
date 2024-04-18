@@ -4,13 +4,7 @@ import { useEffect } from "react";
 import Script from "next/script";
 
 export default function Document() {
-  // useEffect(() => {
-  //   const rootHtml = document.getElementById("root-html");
 
-  //   if (rootHtml) {
-  //     rootHtml.setAttribute("dir", "rtl");
-  //   }
-  // }, []);
 
 
 

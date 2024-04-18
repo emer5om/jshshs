@@ -95,6 +95,8 @@ export const add_to_cart = async ({
   Object.keys(data).map((key) => {
     formData.append(key, data[key]);
   });
+
+
   try {
     const response = await api.post("/manage_cart", formData);
 
@@ -111,6 +113,12 @@ export const add_to_cart = async ({
   }
   // setPageLoader(true)
 };
+
+
+
+
+
+
 
 export const updateUserCart = async () => {
   const formData = new FormData();

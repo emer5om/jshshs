@@ -364,28 +364,33 @@ const LocationModal = () => {
                   getSuggestionItemProps,
                   loading,
                 }) => (
-                  <div>
+                  <>
                     <Input
                       {...getInputProps({
                         placeholder: t("enter-address"),
                         className: "location-search-input",
                       })}
                     />
-                    <div className="autocomplete-dropdown-container">
-                      {loading && <div>Loading...</div>}
+                    <div className="autocomplete-dropdown-container"
+                    
+                    style={{
+                      overflowY: "auto", // Enable vertical scrolling if needed
+                    }}
+                    >
+                      {loading && <>Loading...</>}
                       {suggestions.map((suggestion, index) => {
                         const className = suggestion.active
                           ? "suggestion-item--active"
                           : "suggestion-item";
                         // inline style for demonstration purpose
-                        const style = suggestion.active
-                          ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                          : { backgroundColor: "#ffffff", cursor: "pointer" };
+                        // const style = suggestion.active
+                        //   ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                        //   : { backgroundColor: "#ffffff", cursor: "pointer" };
                         return (
                           <div
                             {...getSuggestionItemProps(suggestion, {
                               className,
-                              style,
+                              // style,
                             })}
                             key={index}
                           >
@@ -394,7 +399,7 @@ const LocationModal = () => {
                         );
                       })}
                     </div>
-                  </div>
+                  </>
                 )}
               </PlacesAutocomplete>
             </Grid>

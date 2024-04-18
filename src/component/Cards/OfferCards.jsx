@@ -174,7 +174,7 @@ export const OfferCards = ({
                 <Typography textColor="neutral.300">{discount}% {t('off')}</Typography>
               </>
             ) : (
-              <div></div>
+              null
             )}
           </Box>
 

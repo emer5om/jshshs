@@ -56,9 +56,9 @@ function DarkModeToggle() {
           </Typography>
         </Box>
       ) : (
-        <Box display={"flex"} justifyContent={"center"}>
+        <Box gap={0.5} display={"flex"} justifyContent={"center"}>
 
-        <MoonFillIcon color={mode == "light" ? "black" : "white" } size={"22px"}  style={{  paddingLeft: "0px" }} />
+        <MoonFillIcon  color={mode == "light" ? "black" : "white" } size={"25px"}  style={{  paddingLeft: "0px" }} />
         <Typography fontSize={"md"} fontWeight={"lg"}>
         {t("dark")}
 

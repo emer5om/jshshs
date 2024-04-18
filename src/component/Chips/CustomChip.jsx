@@ -3,7 +3,7 @@ import React from 'react'
 
 const CustomChip = () => {
     return (
-        <div>CustomChip</div>
+        <>CustomChip</>
     )
 }
 

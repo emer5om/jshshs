@@ -8,7 +8,7 @@ import CustomButton from '../Buttons/CustomButton';
 const OrderCards = ({ image, type, title, titleQty, others, daysAgo }) => {
     const theme = useTheme()
     return (
-        <div>
+        <>
 
             <Card
                 variant="outlined"
@@ -59,7 +59,7 @@ const OrderCards = ({ image, type, title, titleQty, others, daysAgo }) => {
                 </CardContent>
             </Card>
 
-        </div>
+        </>
     )
 }
 

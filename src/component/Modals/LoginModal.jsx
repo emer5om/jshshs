@@ -25,11 +25,11 @@ import { useTranslation } from "react-i18next";
 export default function LoginModal({ loginModalState, onClose }) {
   const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE;
   const [state, setState] = useState({
-    phoneNumber: demoMode == "true" ? '+919876543210' : "",
+    phoneNumber: demoMode == "true" ? "+919876543210" : "",
     isLoading: false,
     isOTPLoading: false,
     OTPReset: false,
-    otp: demoMode == "true" ? '123456' : "",
+    otp: demoMode == "true" ? "123456" : "",
     resendDisabled: false,
     resendTime: 0,
     openRegisterModal: false,
@@ -184,7 +184,7 @@ export default function LoginModal({ loginModalState, onClose }) {
         aria-describedby="modal-desc"
         open={loginModalState}
         onClose={onClose}
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <ModalDialog
           aria-labelledby="modal-title"
@@ -192,7 +192,7 @@ export default function LoginModal({ loginModalState, onClose }) {
           open={loginModalState}
           onClose={onClose}
           size="lg"
-          sx={{ minWidth: { xs: "90%", sm: "70%",md:500 }}}
+          sx={{ minWidth: { xs: "90%", sm: "70%", md: 500 } }}
         >
           <ModalClose variant="plain" sx={{ m: 1 }} />
           {!state.isLoading ? (
@@ -201,7 +201,6 @@ export default function LoginModal({ loginModalState, onClose }) {
                 {t("please-log-in-to-continue")}
               </Typography>
               <Box py={2} display="flex" flexDirection="column" gap={2}>
-               
                 <PhoneInput
                   country={countryCode}
                   inputClass="generalClass"
@@ -214,7 +213,6 @@ export default function LoginModal({ loginModalState, onClose }) {
                       theme.palette.mode === "light"
                         ? theme.palette.primary[50]
                         : "#3B3B3B",
-                   
                   }}
                   onChange={(value) =>
                     setState((prevState) => ({

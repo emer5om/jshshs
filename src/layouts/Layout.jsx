@@ -39,7 +39,7 @@ const layout = ({children}) => {
 
 
     return (
-        <div>
+        <>
             <Container maxWidth={"xl2"}>
                 {setting && (
                     <Head>
@@ -75,7 +75,7 @@ const layout = ({children}) => {
                 {/* need to put  contents only within container */}
             </Container>
             <Footer/>
-        </div>
+        </>
     )
 }
 

@@ -609,7 +609,7 @@ const ViewCart = () => {
                                   </Box>
                                   <Box sx={{ textAlign: { xs: "left" } }}>
                                     {item.product_details[0]
-                                      .product_add_ons[0] && (
+                                      .variants[0].add_ons_data.length ? (
                                       <>
                                         <Typography
                                           textColor={"primary"}
@@ -620,7 +620,7 @@ const ViewCart = () => {
                                         >
                                           {t("extra-add-ons")}
                                         </Typography>
-                                        {item.product_details[0].product_add_ons.map(
+                                        {item.product_details[0].variants[0].add_ons_data.map(
                                           (addOn, index) => {
                                             return (
                                               <React.Fragment key={index}>
@@ -642,149 +642,15 @@ const ViewCart = () => {
                                           }
                                         )}
                                       </>
-                                    )}
+                                    )
+                                  :(null)
+                                  }
 
-                                    {/* 
-                                    <Typography
-                                      textColor={"primary"}
-                                      fontWeight={600}
-                                    >
-                                      Extra Add ons
-                                    </Typography>
-                                    {item.product_details[0].product_add_ons.map(
-                                      (item, index) => {
-                                        console.log(item);
-                                        return (
-                                          <>
-                                         
-                                         <Typography
-                                      textColor={"primary"}
-                                      fontWeight={50}
-                                    >
-                                                {item.title}
-                                    </Typography>
-                                          </>
-                                        );
-                                      }
-                                    )} */}
+                                
                                   </Box>
                                 </Box>
 
-                                {/* <Button
-                                  onClick={() =>
-                                    handleClick("increment", setQuantity, index)
-                                  }
-                                >
-                                  Increment
-                                </Button>
-                                <Button
-                                  onClick={() =>
-                                    handleClick("decrement", setQuantity, index)
-                                  }
-                                >
-                                  Decrement
-                                </Button>
-                                {quantity} */}
-                                {/* <Box
-                                  border={"1px solid"}
-                                  borderColor={theme.palette.primary[400]}
-                                  borderRadius={"md"}
-                                  display={"flex"}
-                                  alignItems={"center"}
-                                  justifyContent={"space-between"}
-                                  minWidth={"fit-content"}
-                                >
-                                  <IconButton
-                                    onClick={(e) => {
-                                      const newCart = { ...cartStoreData };
-                                      newCart.data = newCart.data.map(
-                                        (item, i) => {
-                                          if (i === index) {
-                                            const currentQty = parseInt(
-                                              item.qty
-                                            );
-                                            if (currentQty === 1) {
-                                              // If qty is already 1, don't decrement
-                                              return item;
-                                            } else {
-                                              // Decrement qty
-                                              const newQty = (
-                                                currentQty - 1
-                                              ).toString();
-                                              manageQty(
-                                                item.product_variant_id,
-                                                newQty
-                                              );
-                                              return { ...item, qty: newQty };
-                                            }
-                                          }
-                                          return item;
-                                        }
-                                      );
-                                      dispatch(setCart(newCart));
-                                    }}
-                                  >
-                                    <RiSubtractLine
-                                      color={
-                                        theme.palette.mode === "light"
-                                          ? theme.palette.text.menuText
-                                          : theme.palette.text.currency
-                                      }
-                                    />
-                                  </IconButton>
-
-                                  <Typography
-                                    fontSize={"sm"}
-                                    fontWeight={"md"}
-                                    color={
-                                      theme.palette.mode === "light"
-                                        ? theme.palette.text.menuText
-                                        : theme.palette.text.currency
-                                    }
-                                  >
-                                    {item.qty}
-                                  </Typography>
-                                  <IconButton
-                                    onClick={(e) => {
-                                      if (
-                                        item.total_allowed_quantity === item.qty
-                                      ) {
-                                        return toast.error(
-                                          "Maximum Quantity Reached!"
-                                        );
-                                      }
-
-                                      const newCart = { ...cartStoreData };
-                                      newCart.data = newCart.data.map(
-                                        (cartItem, i) => {
-                                          if (i === index) {
-                                            return {
-                                              ...cartItem,
-                                              qty: (
-                                                parseInt(cartItem.qty) + 1
-                                              ).toString(),
-                                            };
-                                          }
-                                          return cartItem;
-                                        }
-                                      );
-
-                                      dispatch(setCart(newCart));
-                                      manageQty(
-                                        item.product_variant_id,
-                                        (parseInt(item.qty) + 1).toString()
-                                      );
-                                    }}
-                                  >
-                                    <RiAddLine
-                                      color={
-                                        theme.palette.mode === "light"
-                                          ? theme.palette.text.menuText
-                                          : theme.palette.text.currency
-                                      }
-                                    />
-                                  </IconButton>
-                                </Box> */}
+                       
 
                                 <ThrottledQuantitySelector
                                   initialValue={parseInt(item.qty)}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Box, Container, Grid, Typography } from "@mui/joy";
 
@@ -25,9 +25,12 @@ import { useTranslation } from "react-i18next";
 import { useLoadScript } from "@react-google-maps/api";
 
 const HomePage = () => {
+  const [ libraries ] = useState(['places']);
+
+  
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
-    libraries: ["places"],
+    libraries
   });
 
   const authStoreData = useSelector((state) => state.authentication);

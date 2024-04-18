@@ -97,6 +97,10 @@ const ViewCart = () => {
 
   const { t } = useTranslation();
 
+
+
+
+
   const handleRemoveItem = async (id, cart_id) => {
     try {
       const removeItem = await removeFromCart({
@@ -115,10 +119,12 @@ const ViewCart = () => {
     }
   };
 
-  const manageQty = async (product_variant_id, qty) => {
+
+
+  const manageQty = async (addons, product_variant_id, qty) => {
     if (qty < 0) toast.error("Quantity can not be less then 0!");
     else {
-      add_to_cart({ product_variant_id, qty });
+      add_to_cart({ product_variant_id, qty, addons: addons });
     }
   };
 
@@ -364,7 +370,11 @@ const ViewCart = () => {
                                     borderRadius: "md",
                                     width: {
                                       xs: "80px", // Width for extra small screens
-                                      sm: "150px", // Width for small screens
+                                      sm: "80px", // Width for small screens
+                                    },
+                                    height: {
+                                      xs: "80px", // Width for extra small screens
+                                      sm: "80px", // Width for small screens
                                     },
                                   }}
                                 ></Box>
@@ -374,12 +384,17 @@ const ViewCart = () => {
                                       ? "text.menuText"
                                       : "text.secondary"
                                   }
-                                  fontSize={"sm"}
                                   fontWeight={"lg"}
                                   width={{ md: "85%", xs: "100%" }}
                                   sx={{
                                     "@media screen and (min-width: 900px)": {
                                       display: "none",
+                                    },
+                                    "@media screen and (max-width: 425px)": {
+                                      fontSize:"sm"
+                                    },
+                                    "@media screen and (min-width: 765px)": {
+                                      fontSize:"md"
                                     },
                                   }}
                                 >
@@ -469,14 +484,25 @@ const ViewCart = () => {
                                     }}
                                     gap={2}
                                   >
-                                    <Typography
-                                      fontSize={"md"}
-                                      fontWeight={"lg"}
-                                      mb={1}
-                                      textColor={currencyColor}
-                                    >
-                                      {formatePrice(item.price)}
-                                    </Typography>
+                                    {item.price > item.special_price && item.special_price > 0 ? (
+                                      <Typography
+                                        fontSize={"md"}
+                                        fontWeight={"lg"}
+                                        mb={1}
+                                        textColor={currencyColor}
+                                      >
+                                        {formatePrice(item.special_price)}
+                                      </Typography>
+                                    ) : (
+                                      <Typography
+                                        fontSize={"md"}
+                                        fontWeight={"lg"}
+                                        mb={1}
+                                        textColor={currencyColor}
+                                      >
+                                        {formatePrice(item.price)}
+                                      </Typography>
+                                    )}
 
                                     <Box
                                       style={{
@@ -608,8 +634,8 @@ const ViewCart = () => {
                                     </Box>
                                   </Box>
                                   <Box sx={{ textAlign: { xs: "left" } }}>
-                                    {item.product_details[0]
-                                      .variants[0].add_ons_data.length ? (
+                                    {item.product_details[0].variants[0]
+                                      .add_ons_data.length ? (
                                       <>
                                         <Typography
                                           textColor={"primary"}
@@ -634,7 +660,7 @@ const ViewCart = () => {
                                                     },
                                                   }}
                                                 >
-                                                  {addOn.title} {"    "}| {" "}
+                                                  {addOn.title} {"    "}|{" "}
                                                   {formatePrice(addOn.price)}
                                                 </Typography>
                                               </React.Fragment>
@@ -642,20 +668,21 @@ const ViewCart = () => {
                                           }
                                         )}
                                       </>
-                                    )
-                                  :(null)
-                                  }
-
-                                
+                                    ) : null}
                                   </Box>
                                 </Box>
-
-                       
 
                                 <ThrottledQuantitySelector
                                   initialValue={parseInt(item.qty)}
                                   manageQty={manageQty}
                                   productVariantId={item.product_variant_id}
+                                  addons={
+                                    item.product_details[0].variants[0]
+                                      .add_ons_data
+                                      ? item.product_details[0].variants[0]
+                                          .add_ons_data
+                                      : null
+                                  }
                                 />
                               </CardContent>
                             </Card>

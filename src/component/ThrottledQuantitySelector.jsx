@@ -4,7 +4,7 @@ import { RiSubtractLine, RiAddLine } from "@remixicon/react";
 
 
 
-  const ThrottledQuantitySelector = ({ initialValue, onChange, manageQty, productVariantId }) => {
+  const ThrottledQuantitySelector = ({ initialValue, onChange, manageQty, productVariantId,addons}) => {
     const [quantity, setQuantity] = useState(initialValue);
   const [throttleTimeout, setThrottleTimeout] = useState(null);
   const theme = useTheme();
@@ -15,13 +15,7 @@ import { RiSubtractLine, RiAddLine } from "@remixicon/react";
       clearTimeout(throttleTimeout);
     }
 
-    // if (type === "increment") {
-    //   setQuantity(prevQuantity => prevQuantity + 1);
-    // } else if (type === "decrement" && quantity > 1) {
-    //   setQuantity(prevQuantity => prevQuantity - 1);
-    // }
 
-       // Update quantity based on the type, ensuring it's not less than 1
        if (type === "increment") {
         setQuantity((prevQuantity) => prevQuantity + 1);
       } else if (type === "decrement" && quantity >= 1) {
@@ -36,14 +30,14 @@ import { RiSubtractLine, RiAddLine } from "@remixicon/react";
     const timeout = setTimeout(() => {
 
       if (type === "increment") {
-      manageQty(productVariantId, quantity + 1);
+      manageQty(addons,productVariantId, quantity + 1);
        
       } else if (type === "decrement" ) {
       const newQuantity = quantity - 1;
       const decrementedQuantity = quantity < 1 ? 1 : quantity;
 
       // Decrement qty
-      manageQty(productVariantId,  decrementedQuantity - 1);
+      manageQty(addons,productVariantId,  decrementedQuantity - 1);
         }
 
     }, 800);

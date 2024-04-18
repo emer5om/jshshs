@@ -244,3 +244,10 @@ div > .MUIInput.Mui-disabled {
   background-color: var(--joy-palette-neutral-softBg) !important; 
   color: var(--variant-softColor, var(--joy-palette-neutral-softColor, var(--joy-palette-neutral-700, #32383E)));
 }
+
+
+[dir='rtl'] button.MuiModalClose-root {
+  left: var(--ModalClose-inset, 0.625rem);
+  right: auto;
+
+}

@@ -331,18 +331,17 @@ const ProductModal = ({
                       textColor={"text.currency"}
                       mb={1}
                     >
-                      {specialPrice != 0 ? (
-                        <Typography
-                          sx={{ textDecoration: "line-through" }}
-                          textColor={theme.palette.text.currency}
-                          fontSize={theme.fontSize.xs}
-                          fontWeight={theme.fontWeight.sm}
-                        >
-                          {formatePrice(priceOriginal)}
-                        </Typography>
-                      ) : (
-                        ""
-                      )}
+                   {specialPrice !== 0 && priceOriginal !== specialPrice && (
+    <Typography
+        sx={{ textDecoration: "line-through" }}
+        textColor={theme.palette.text.currency}
+        fontSize={theme.fontSize.xs}
+        fontWeight={theme.fontWeight.sm}
+    >
+        {formatePrice(priceOriginal)}
+    </Typography>
+)}
+
 
                       {specialPrice != 0
                         ? `${formatePrice(specialPrice)} ${

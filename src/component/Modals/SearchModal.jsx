@@ -32,8 +32,11 @@ import { formatePrice } from "@/helpers/functonHelpers";
 import ProductCards from "../Cards/ProductCards";
 import SearchBar from "../GlobalSearch/SearchBar";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { closeSearchDrawer } from "../../store/reducers/searchDrawerSlice";
 
 function SearchModal({ displayStyle = "icon" }) {
+  
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState([]);
@@ -41,6 +44,19 @@ function SearchModal({ displayStyle = "icon" }) {
 
   const theme = useTheme();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const isSearchOpen = useSelector((state) => state.searchDrawer.isSearchOpen);
+
+  const handleSearchButtonClick = () => {
+    dispatch(closeSearchDrawer()); // Dispatch action to open the search drawer
+  };
+
+  useEffect(() => {
+    setOpen(isSearchOpen); // Set open state based on isSearchOpen
+    setIsFocused(true);
+
+  }, [isSearchOpen]); // Re-run when isSearchOpen changes
 
   const inputRef = useRef();
   const timerRef = useRef(null);
@@ -147,8 +163,8 @@ function SearchModal({ displayStyle = "icon" }) {
             }}
           >
             <Input
-          className={isFocused ? "InputModalFocus" : "inputModal"}
-          value={searchQuery}
+              className={isFocused ? "InputModalFocus" : "inputModal"}
+              value={searchQuery}
               onChange={handleInputChange}
               placeholder={t("search-products")}
               sx={{ mb: 2, "--Input-focused:": 1 }}
@@ -157,13 +173,15 @@ function SearchModal({ displayStyle = "icon" }) {
               startDecorator={
                 <Box
                   sx={{ display: { xs: "flex", md: "none" } }}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false); // Close the search bar
+                    handleSearchButtonClick(); // Dispatch action to open the search drawer
+                  }}
                 >
                   <RiArrowLeftLine />
                 </Box>
               }
             />
-
 
             {products.length > 0 ? (
               <Grid

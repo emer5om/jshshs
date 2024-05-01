@@ -94,7 +94,6 @@ export const OfferCards = ({
           toast.error(removeFav.message);
         } else {
           toast.success(removeFav.message);
-
         }
       }
     },
@@ -171,11 +170,11 @@ export const OfferCards = ({
           >
             {discount && specialPrice != 0 ? (
               <>
-                <Typography textColor="neutral.300">{discount}% {t('off')}</Typography>
+                <Typography textColor="neutral.300">
+                  {discount}% {t("off")}
+                </Typography>
               </>
-            ) : (
-              null
-            )}
+            ) : null}
           </Box>
 
           <Box
@@ -226,22 +225,21 @@ export const OfferCards = ({
                 gap: 0.5,
               }}
             >
-              
-              
-              {specialPrice != 0 && (
-                <Typography
-                  sx={{ textDecoration: "line-through" }}
-                  textColor={theme.palette.warning[400]}
-                  fontSize={theme.fontSize.xs}
-                  fontWeight={theme.fontWeight.sm}
-                >
-                  {formatePrice(price)}
-                </Typography>
-              )}
+      {specialPrice !== price && specialPrice != 0 && specialPrice != price && (
+    <Typography
+        sx={{ textDecoration: "line-through" }}
+        textColor={theme.palette.warning[400]}
+        fontSize={theme.fontSize.xs}
+        fontWeight={theme.fontWeight.sm}
+    >
+        {formatePrice(price)}
+    </Typography>
+)}
 
 
 
-              {specialPrice > 0 ? (
+
+              {price  > specialPrice && specialPrice != 0 ? (
                 <Typography
                   textColor={"warning.400"}
                   fontSize={"xl"}

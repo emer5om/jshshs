@@ -176,7 +176,7 @@ const ProductCards = ({
                   theme.palette.mode === "light" ? "background.body" : ""
                 }
               >
-                {discount}% {t('off')}
+                {discount}% {t("off")}
               </Typography>
             </Box>
           )}
@@ -222,7 +222,6 @@ const ProductCards = ({
                 />
               </Box>
             </Box>
-           
           </Box>
 
           <Box mt={1}>
@@ -243,7 +242,7 @@ const ProductCards = ({
             </Typography>
           </Box>
           <Box display={"flex"} alignItems={"center"} gap={1}>
-            {discountedPrice < price && (
+            {specialPrice !== price && specialPrice != 0 && specialPrice != price && (
               <Typography
                 sx={{ textDecoration: "line-through" }}
                 textColor={theme.palette.text.currency}

@@ -19,6 +19,7 @@ function RTLModeToggle() {
   const toggleLayoutDirection = () => {
     const newDirection = layoutDirection === "ltr" ? "rtl" : "ltr";
     document.documentElement.setAttribute("dir", newDirection); // Update HTML dir attribute
+    localStorage.setItem("RTL", newDirection);
     dispatch(toggleRTL(newDirection)); // Dispatch action with new direction
   };
 

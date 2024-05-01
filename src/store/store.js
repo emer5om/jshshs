@@ -17,6 +17,7 @@ import selectedDeliverySlice from "@/store/reducers/selectedDeliverySlice";
 import userSettingsSlice from "@/store/reducers/userSettingsSlice";
 import darkModeReducer from "@/store/reducers/darkModeSlice";
 import rtlReducer from "@/store/reducers/rtlSlice";
+import searchDrawerReducer from "@/store/reducers/searchDrawerSlice";
 
 const persistConfig = {
   key: "root",
@@ -40,7 +41,7 @@ const rootReducer = combineReducers({
   userSettings: userSettingsSlice,
   darkMode: darkModeReducer,
   rtl: rtlReducer,
-
+  searchDrawer: searchDrawerReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

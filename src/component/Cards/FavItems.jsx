@@ -29,11 +29,10 @@ const FavItems = memo(({ data, handleRemove }) => {
 
   const theme = useTheme();
   const dispatch = useDispatch();
-  const userData = getUserData();
   const branchData = useSelector((state) => state.branch);
   const favorites = useSelector((state) => state.favorites.value);
   const { t } = useTranslation();
-
+  const userData = getUserData();
   const authentication = userData === false ? false : true;
 
   const branch_id = branchData.id;

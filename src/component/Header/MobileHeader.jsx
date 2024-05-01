@@ -14,32 +14,26 @@ import {
   MenuButton,
   Menu,
   MenuItem,
-  Select,
-  Option,
   Badge,
-  ModalClose,
-  DialogTitle,
-  Sheet,
-  Divider,
-  FormControl,
+
 } from "@mui/joy";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import ExchangeDollarLineIcon from "remixicon-react/FileListLineIcon";
 import { logout } from "@/events/actions";
-
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import Search from "@mui/icons-material/Search";
+import Person from "@mui/icons-material/Person";
 // icons
 import MenuFillIcon from "remixicon-react/MenuFillIcon";
 import CloseCircleLineIcon from "remixicon-react/CloseCircleLineIcon";
 import {
   RiArrowRightLine,
-  RiArrowLeftLine,
-  RiNotificationLine,
   RiShoppingBag4Line,
   RiDiscountPercentLine,
   RiLayoutGrid2Fill,
   RiStackLine,
-  RiGlobalLine,
   RiTranslate,
   RiUser3Line,
   RiHeartLine,
@@ -77,7 +71,8 @@ const MobileNavigation = () => {
 
   const [open, setOpen] = React.useState(false);
   const [openProfile, setOpenProfile] = React.useState(false);
-
+  const [index, setIndex] = React.useState(0);
+  const colors = ["primary", "danger", "success", "warning"];
   // const [openSettings, setOpenSettings] = React.useState(false);
 
   const toggleDrawer = (inOpen) => (event) => {
@@ -98,7 +93,6 @@ const MobileNavigation = () => {
       return;
     }
 
-
     setOpenProfile(isOpen);
   };
 
@@ -114,181 +108,188 @@ const MobileNavigation = () => {
   };
 
   return (
-    <Box sx={{ marginBottom: { xs: "15px", sm: "10px" } }}>
-      <Box
-        display={"flex"}
-        px={2}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-      >
-        <Box component={Link} href={"/"} display={"flex"} alignItems={"center"}>
-          <Box sx={{ width: "150px" }}>
-            <Image
-              src={logoSrc}
-              alt="logo"
-              height={50}
-              width={0}
-              style={{ width: "100%" }}
-              loading="lazy"
-            />
-          </Box>
-        </Box>
-
+      <Box sx={{ marginBottom: { xs: "15px", sm: "10px" } }}>
         <Box
           display={"flex"}
-          gap={1}
-          ps={2}
+          px={2}
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          {!authStoreData.isLogged ? (
-            <>
-              <LoginModal
-                loginModalState={loginModalState}
-                onClose={() => {
-                  setLoginModalState(false);
-                }}
-              />
-              <Button
-                variant={"solid"}
-                color={"primary"}
-                size="sm"
-                sx={{
-                  py: 1,
-                  borderRadius: "var(--border-radius-lg)",
-                  color: theme.palette.text.primary, // Change the text color to white
-                  // Adjust the value as needed for the desired roundness
-                  "&.MuiButton-contained": {
-                    borderRadius: "var(--border-radius-lg)", // Ensure rounded corners for contained state as well
-                  },
-                }}
-                onClick={() => {
-                  setLoginModalState(true);
-                }}
-              >
-                {t("login")}
-              </Button>
-            </>
-          ) : (
-            <>
-              <Box
-                // component={Link}
-                // href={"/user/profile"}
-                onClick={toggleDrawerProfile(true)}
-                display={"flex"}
-                alignItems={"center"}
-                gap={2}
-              >
-                <Avatar
-                  alt={authStoreData.userData.username}
-                  src={authStoreData.userData.image}
-                  size="sm"
-                  title="profile"
-                />
-              </Box>
-            </>
-          )}
-
-          <IconButton>
-            {open ? (
-              <CloseCircleLineIcon
-                size={"28px"}
-                color={theme.palette.primary[500]}
-                fontWeight={"bolder"}
-                onClick={toggleDrawer(false)}
-              />
-            ) : (
-              <MenuFillIcon
-                size={"28px"}
-                color={theme.palette.primary[500]}
-                fontWeight={"bolder"}
-                onClick={toggleDrawer(true)}
-              />
-            )}
-          </IconButton>
-        </Box>
-      </Box>
-
-      <Drawer open={open} onClose={toggleDrawer(false)} size="lg">
-        <DialogContent>
-          <Box role="presentation" width={"100%"}>
-            <Box
-              width={"100%"}
-              justifyContent={"end"}
-              display={"flex"}
-              alignItems={"center"}
-              mt={1}
-              p={1}
-            >
-              <RiArrowRightLine
-                className="remixicon"
-                size={theme.fontSize.xl4}
-                fontWeight={"bolder"}
-                onClick={toggleDrawer(false)}
+          <Box
+            component={Link}
+            href={"/"}
+            display={"flex"}
+            alignItems={"center"}
+          >
+            <Box sx={{ width: "150px" }}>
+              <Image
+                src={logoSrc}
+                alt="logo"
+                height={50}
+                width={0}
+                style={{ width: "100%" }}
+                loading="lazy"
               />
             </Box>
+          </Box>
 
-            <Box
-              width={"100%"}
-              justifyContent={"center"}
-              display={"flex"}
-              alignItems={"left"}
-              textAlign={"start"}
-              my={4}
-              px={4}
-            >
-              <Stack spacing={4} width={"100%"}>
-                {/* {['categories', 'offers', 'notifications']} */}
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={`/categories`}
-                  startDecorator={<RiLayoutGrid2Fill />}
-                  onClick={toggleDrawer(false)}
+          <Box
+            display={"flex"}
+            gap={1}
+            ps={2}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+          >
+            {!authStoreData.isLogged ? (
+              <>
+                <LoginModal
+                  loginModalState={loginModalState}
+                  onClose={() => {
+                    setLoginModalState(false);
+                  }}
+                />
+                <Button
+                  variant={"solid"}
+                  color={"primary"}
+                  size="sm"
+                  sx={{
+                    py: 1,
+                    borderRadius: "var(--border-radius-lg)",
+                    color: theme.palette.text.primary, // Change the text color to white
+                    // Adjust the value as needed for the desired roundness
+                    "&.MuiButton-contained": {
+                      borderRadius: "var(--border-radius-lg)", // Ensure rounded corners for contained state as well
+                    },
+                  }}
+                  onClick={() => {
+                    setLoginModalState(true);
+                  }}
                 >
-                  {t("categories")}
-                </Typography>
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={`/offers`}
-                  startDecorator={<RiDiscountPercentLine />}
-                  onClick={toggleDrawer(false)}
+                  {t("login")}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Box
+                  // component={Link}
+                  // href={"/user/profile"}
+                  onClick={toggleDrawerProfile(true)}
+                  display={"flex"}
+                  alignItems={"center"}
+                  gap={2}
                 >
-                  {t("offers")}
-                </Typography>
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={`/products`}
-                  startDecorator={<RiStackLine />}
-                  onClick={toggleDrawer(false)}
-                >
-                  {t("products")}
-                </Typography>
+                  <Avatar
+                    alt={authStoreData.userData.username}
+                    src={authStoreData.userData.image}
+                    size="sm"
+                    title="profile"
+                  />
+                </Box>
+              </>
+            )}
 
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={`/user/cart`}
-                  startDecorator={
-                    <Badge
-                      component={Link}
-                      href={"/user/cart"}
-                      badgeContent={cartStoreData.data.length}
-                    >
-                      <RiShoppingBag4Line color={theme.palette.text.primary} />{" "}
-                    </Badge>
-                  }
+            <IconButton>
+              {open ? (
+                <CloseCircleLineIcon
+                  size={"28px"}
+                  color={theme.palette.primary[500]}
+                  fontWeight={"bolder"}
                   onClick={toggleDrawer(false)}
-                >
-                  {t("cart")}
-                </Typography>
-                {/* <Button
+                />
+              ) : (
+                <MenuFillIcon
+                  size={"28px"}
+                  color={theme.palette.primary[500]}
+                  fontWeight={"bolder"}
+                  onClick={toggleDrawer(true)}
+                />
+              )}
+            </IconButton>
+          </Box>
+        </Box>
+
+        <Drawer open={open} onClose={toggleDrawer(false)} size="lg">
+          <DialogContent>
+            <Box role="presentation" width={"100%"}>
+              <Box
+                width={"100%"}
+                justifyContent={"end"}
+                display={"flex"}
+                alignItems={"center"}
+                mt={1}
+                p={1}
+              >
+                <RiArrowRightLine
+                  className="remixicon"
+                  size={theme.fontSize.xl4}
+                  fontWeight={"bolder"}
+                  onClick={toggleDrawer(false)}
+                />
+              </Box>
+
+              <Box
+                width={"100%"}
+                justifyContent={"center"}
+                display={"flex"}
+                alignItems={"left"}
+                textAlign={"start"}
+                my={4}
+                px={4}
+              >
+                <Stack spacing={4} width={"100%"}>
+                  {/* {['categories', 'offers', 'notifications']} */}
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href={`/categories`}
+                    startDecorator={<RiLayoutGrid2Fill />}
+                    onClick={toggleDrawer(false)}
+                  >
+                    {t("categories")}
+                  </Typography>
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href={`/offers`}
+                    startDecorator={<RiDiscountPercentLine />}
+                    onClick={toggleDrawer(false)}
+                  >
+                    {t("offers")}
+                  </Typography>
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href={`/products`}
+                    startDecorator={<RiStackLine />}
+                    onClick={toggleDrawer(false)}
+                  >
+                    {t("products")}
+                  </Typography>
+
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href={`/user/cart`}
+                    startDecorator={
+                      <Badge
+                        component={Link}
+                        href={"/user/cart"}
+                        badgeContent={cartStoreData.data.length}
+                      >
+                        <RiShoppingBag4Line
+                          color={theme.palette.text.primary}
+                        />{" "}
+                      </Badge>
+                    }
+                    onClick={toggleDrawer(false)}
+                  >
+                    {t("cart")}
+                  </Typography>
+                  {/* <Button
                   variant="text"
                   onClick={toggleSettingsDrawer(true)}
                   sx={{ textAlign: "start", justifyContent: "start", p: 0 }}
@@ -302,160 +303,168 @@ const MobileNavigation = () => {
                   </Typography>
                 </Button> */}
 
-                <DarkModeToggle />
-                <RTLModeToggle />
+                  <DarkModeToggle />
+                  <RTLModeToggle />
 
-                <Box>
-                  <Dropdown>
-                    <MenuButton
-                      slots={{ root: IconButton }}
-                      sx={{ paddingInline: 0 }}
-                      slotProps={{
-                        root: { variant: "plain", color: "neutral" },
-                      }}
-                    >
-                      <Typography
-                        fontSize={"md"}
-                        fontWeight={"lg"}
-                        startDecorator={<RiTranslate />}
+                  <Box>
+                    <Dropdown>
+                      <MenuButton
+                        slots={{ root: IconButton }}
+                        sx={{ paddingInline: 0, minHeight: 0 }}
+                        slotProps={{
+                          root: { variant: "plain", color: "neutral" },
+                        }}
                       >
-                        {t("languages")}
-                      </Typography>
-                    </MenuButton>
-                    <Menu sx={{ zIndex: 99999, width: "80%" }}>
-                      {Object.keys(languages).map((language) => {
-                        return (
-                          <MenuItem
-                            key={language}
-                            onClick={async () => {
-                              await i18n.changeLanguage(language);
-                              dispatch(setLanguage(language));
-                              document.documentElement.setAttribute(
-                                "dir",
-                                i18n.dir()
-                              );
-                              dispatch(toggleRTL(i18n.dir()));
-                            }}
-                          >
-                            {languages[language]}
-                          </MenuItem>
-                        );
-                      })}
-                    </Menu>
-                  </Dropdown>
-                </Box>
-              </Stack>
+                        <Typography
+                          fontSize={"md"}
+                          fontWeight={"lg"}
+                          startDecorator={<RiTranslate />}
+                        >
+                          {t("languages")}
+                        </Typography>
+                      </MenuButton>
+                      <Menu sx={{ zIndex: 99999, width: "80%" }}>
+                        {Object.keys(languages).map((language) => {
+                          return (
+                            <MenuItem
+                              key={language}
+                              onClick={async () => {
+                                await i18n.changeLanguage(language);
+                                dispatch(setLanguage(language));
+                                document.documentElement.setAttribute(
+                                  "dir",
+                                  i18n.dir()
+                                );
+                                dispatch(toggleRTL(i18n.dir()));
+                              }}
+                            >
+                              {languages[language]}
+                            </MenuItem>
+                          );
+                        })}
+                      </Menu>
+                    </Dropdown>
+                  </Box>
+                </Stack>
+              </Box>
             </Box>
-          </Box>
-        </DialogContent>
-      </Drawer>
+          </DialogContent>
+        </Drawer>
 
-      <Drawer open={openProfile} sx={{width:"100%"}} size="lg" onClose={() => setOpenProfile(false)}>
-        <DialogContent sx={{width:"100%"}}>
-          <Box role="presentation" width={"100%"}>
-            <Box
-              width={"100%"}
-              justifyContent={"end"}
-              display={"flex"}
-              alignItems={"center"}
-              mt={1}
-              p={1}
-            >
-              <RiArrowRightLine
-                className="remixicon"
-                size={theme.fontSize.xl4}
-                fontWeight={"bolder"}
-                onClick={toggleDrawerProfile(false)}
-              />
-            </Box>
+        <Drawer
+          open={openProfile}
+          sx={{ width: "100%" }}
+          size="lg"
+          onClose={() => setOpenProfile(false)}
+        >
+          <DialogContent sx={{ width: "100%" }}>
+            <Box role="presentation" width={"100%"}>
+              <Box
+                width={"100%"}
+                justifyContent={"end"}
+                display={"flex"}
+                alignItems={"center"}
+                mt={1}
+                p={1}
+              >
+                <RiArrowRightLine
+                  className="remixicon"
+                  size={theme.fontSize.xl4}
+                  fontWeight={"bolder"}
+                  onClick={toggleDrawerProfile(false)}
+                />
+              </Box>
 
-            <Box
-              width={"100%"}
-              justifyContent={"center"}
-              display={"flex"}
-              alignItems={"left"}
-              textAlign={"start"}
-              my={4}
-              px={4}
-            >
-              <Stack spacing={4} width={"100%"}>
-                {/* {['categories', 'offers', 'notifications']} */}
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href="/user/profile"
-                  startDecorator={<RiUser3Line />}
-                  onClick={toggleDrawerProfile(false)}
-                >
-                  {t("my-profile")}
-                </Typography>
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={"/user/my-orders"}
-                  startDecorator={<RiFilePaper2Line />}
-                  onClick={toggleDrawerProfile(false)}
-                >
+              <Box
+                width={"100%"}
+                justifyContent={"center"}
+                display={"flex"}
+                alignItems={"left"}
+                textAlign={"start"}
+                my={4}
+                px={4}
+              >
+                <Stack spacing={4} width={"100%"}>
+                  {/* {['categories', 'offers', 'notifications']} */}
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href="/user/profile"
+                    startDecorator={<RiUser3Line />}
+                    onClick={toggleDrawerProfile(false)}
+                  >
+                    {t("my-profile")}
+                  </Typography>
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href={"/user/my-orders"}
+                    startDecorator={<RiFilePaper2Line />}
+                    onClick={toggleDrawerProfile(false)}
+                  >
                     {t("my-orders")}
-                </Typography>
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={"/user/favourites"}
-                  startDecorator={<RiHeartLine />}
-                  onClick={toggleDrawerProfile(false)}
-                >
-                  {t("favourites")}
-                </Typography>
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={"/user/transactions"}
-                  startDecorator={<ExchangeDollarLineIcon />}
-                  onClick={toggleDrawerProfile(false)}
-                >
-                  {t("transactions")}
-                </Typography>
+                  </Typography>
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href={"/user/favourites"}
+                    startDecorator={<RiHeartLine />}
+                    onClick={toggleDrawerProfile(false)}
+                  >
+                    {t("favourites")}
+                  </Typography>
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href={"/user/transactions"}
+                    startDecorator={<ExchangeDollarLineIcon />}
+                    onClick={toggleDrawerProfile(false)}
+                  >
+                    {t("transactions")}
+                  </Typography>
 
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={"/user/address"}
-                  startDecorator={
-                    <RiMapPin2Line color={theme.palette.text.primary} />
-                  }
-                  onClick={toggleDrawerProfile(false)}
-                >
-                  {t("addresses")}
-                </Typography>
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href={"/user/address"}
+                    startDecorator={
+                      <RiMapPin2Line color={theme.palette.text.primary} />
+                    }
+                    onClick={toggleDrawerProfile(false)}
+                  >
+                    {t("addresses")}
+                  </Typography>
 
-                <Typography
-                  fontSize={"md"}
-                  fontWeight={"lg"}
-                  component={Link}
-                  href={"/user/address"}
-                  startDecorator={
-                    <RiShutDownLine color={theme.palette.text.primary} />
-                  }
-                  onClick={() => {
-                    toggleDrawerProfile(false);
-                    router.replace("/");
-                    logout();
-                  }}
-                >
-                  {t("logout")}
-                </Typography>
-              </Stack>
+                  <Typography
+                    fontSize={"md"}
+                    fontWeight={"lg"}
+                    component={Link}
+                    href={"/user/address"}
+                    startDecorator={
+                      <RiShutDownLine color={theme.palette.text.primary} />
+                    }
+                    onClick={() => {
+                      toggleDrawerProfile(false);
+                      router.replace("/");
+                      logout();
+                    }}
+                  >
+                    {t("logout")}
+                  </Typography>
+                </Stack>
+              </Box>
             </Box>
-          </Box>
-        </DialogContent>
-      </Drawer>
-    </Box>
+          </DialogContent>
+        </Drawer>
+      </Box>
+
+   
+ 
   );
 };
 

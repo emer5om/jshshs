@@ -1,27 +1,17 @@
 "use client";
-import react, { useEffect } from "react";
-
-import {
-  generateOrderId,
-  generateRandomOrderId,
-} from "@/helpers/functonHelpers";
+import { generateOrderId } from "@/helpers/functonHelpers";
 import {
   addTransaction,
   razorpay_create_order,
   placeOrder,
 } from "@/interceptor/routes";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button } from "@mui/joy";
-import {
-  add_to_cart,
-  add_to_cart_for_razorpay,
-  removeItemFromCart,
-  updateUserCart,
-} from "@/events/actions";
+import { updateUserCart } from "@/events/actions";
 import { getUserData } from "@/events/getters";
 import { setDeliveryAddress } from "../../store/reducers/selectedDeliverySlice";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { Box, Button } from "@mui/joy";
 
 export default function RazorpayCheckout({
   price,
@@ -57,7 +47,7 @@ export default function RazorpayCheckout({
     try {
       const product_variant_id = cartStoreData.variant_id.join(", ");
       const qty = cartStoreData.data.map((document) => document.qty).join(", ");
-      
+
       order_id = await generateOrderId(); // Generate order id before the payment
 
       const paymentIntentGenerate = await razorpay_create_order({
@@ -72,17 +62,17 @@ export default function RazorpayCheckout({
         currency: "INR",
         receipt: order_id,
         // Other Razorpay options, if needed
-       
 
         handler: async (res) => {
           // Handle successful payment
           console.log("Payment successful:", res);
+
           const txn_id = res.razorpay_payment_id;
           const transaction = await addTransaction({
             transaction_type: "transaction",
             order_id,
-            type: "paypal",
-            payment_method: "paypal",
+            type: "razorpay",
+            payment_method: "razorpay",
             txn_id: res.razorpay_payment_id,
             amount: price,
             status: "Pending",
@@ -115,12 +105,15 @@ export default function RazorpayCheckout({
               dispatch(setDeliveryAddress());
               closeModal(false);
               isModalOpen(false);
+
+              // router.replace("/orderplaced").then(() => router.reload());
+
               toast.success(place_order.message);
-              router.push("/orderplaced"); // Replace '/success' with your actual success page path
             }
           }
         },
-
+        callback_url: "/orderplaced",
+        redirect: true,
         notes: {
           address: "Example Address", // Address
         },

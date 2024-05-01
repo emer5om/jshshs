@@ -6,7 +6,7 @@ import CircularSkeleton from "@/component/Skeleton/CircularSkeleton";
 import api from "@/interceptor/api";
 import { useTranslation } from "react-i18next";
 
-const initialQuery = { limit: 6, offset: 0 };
+const initialQuery = { limit: 18, offset: 0 };
 
 const Categories = () => {
   const [loading, setLoading] = useState(true);
@@ -94,7 +94,7 @@ const Categories = () => {
       ) : (
         <>
           {result.map((item, index) => (
-            <Grid item xs={6} md={2} key={index}>
+            <Grid item xs={6} md={3} key={index}>
               <CategoryCards
                 image={item.image}
                 title={item.name}

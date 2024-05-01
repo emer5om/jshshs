@@ -11,7 +11,7 @@ import {
 const SkeletonBox = () => {
   return (
     <Grid mt={0.5} ml={0}  container spacing={2}>
-      {[...Array(12)].map((_, index) => (
+      {[...Array(18)].map((_, index) => (
         <Grid item xs={6} sm={6} md={3} lg={2} key={index}>
           <Card
             sx={{

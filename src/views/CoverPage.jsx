@@ -13,7 +13,7 @@ import {
   CircularProgress,
 } from "@mui/joy";
 import { useColorScheme } from "@mui/joy/styles";
-
+import Image from 'next/image'
 
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import { GpsFixed, LocationCity } from "@mui/icons-material";
@@ -101,48 +101,134 @@ const CoverPage = () => {
     );
   }
 
+  // const handleSelect = async (value) => {
+  //   setAddress(value); // Dispatching the setAddress action with the selected value
+
+  //   try {
+  //     const results = await geocodeByAddress(value);
+  //     const latLng = await getLatLng(results[0]);
+
+  //     const city = results[0].address_components.find((component) =>
+  //       component.types.includes("locality")
+  //     );
+
+
+  //     if (city?.long_name) {
+  //       try {
+  //         const { lat, lng } = latLng;
+
+  //         const delivery = await is_city_deliverable({
+  //           name: city?.long_name,
+  //           latitude: lat,
+  //           longitude: lng,
+  //         });
+
+  //         // Assuming you have another action creator named setNewAddress from another slice
+  //         dispatch(setNewAddress({ city: city.long_name, lat: lat, lng: lng }));
+
+  //         if (delivery.error) {
+  //           return toast.error(delivery.message);
+  //         } else {
+  //           const branch_id = delivery.data[0].branch_id;
+  //           changeBranchId({ branch_id });
+  //           await router.push("/home");
+  //         }
+  //       } catch (error) {
+  //         return toast.error(error.message);
+  //       }
+  //     } else {
+  //       return toast.error("Please Select City");
+  //     }
+  //   } catch (error) {
+  //     console.log("Error:", error);
+  //   }
+  // };
+
   const handleSelect = async (value) => {
     setAddress(value); // Dispatching the setAddress action with the selected value
-
-    try {
-      const results = await geocodeByAddress(value);
-      const latLng = await getLatLng(results[0]);
-
-      const city = results[0].address_components.find((component) =>
-        component.types.includes("locality")
-      );
-
-
-      if (city?.long_name) {
-        try {
-          const { lat, lng } = latLng;
-
-          const delivery = await is_city_deliverable({
-            name: city?.long_name,
-            latitude: lat,
-            longitude: lng,
-          });
-
-          // Assuming you have another action creator named setNewAddress from another slice
-          dispatch(setNewAddress({ city: city.long_name, lat: lat, lng: lng }));
-
-          if (delivery.error) {
-            return toast.error(delivery.message);
-          } else {
-            const branch_id = delivery.data[0].branch_id;
-            changeBranchId({ branch_id });
-            await router.push("/home");
+  
+    if (demoMode === "true") {
+      // Set predefined location for demo mode
+      const demoLatitude = 23.2420; // Demo latitude
+      const demoLongitude = 69.6669; // Demo longitude
+  
+      try {
+        const results = await geocodeByAddress(`${demoLatitude},${demoLongitude}`);
+        const city = results[0].address_components.find((component) =>
+          component.types.includes("locality")
+        );
+  
+        if (city?.long_name) {
+          try {
+            const delivery = await is_city_deliverable({
+              name: city?.long_name,
+              latitude: demoLatitude,
+              longitude: demoLongitude,
+            });
+  
+            // Assuming you have another action creator named setNewAddress from another slice
+            dispatch(setNewAddress({ city: city.long_name, lat: demoLatitude, lng: demoLongitude }));
+  
+            if (delivery.error) {
+              return toast.error(delivery.message);
+            } else {
+              const branch_id = delivery.data[0].branch_id;
+              changeBranchId({ branch_id });
+              await router.push("/home");
+              return toast.success("City is deliverable!");
+            }
+          } catch (error) {
+            return toast.error(error.message);
           }
-        } catch (error) {
-          return toast.error(error.message);
+        } else {
+          return toast.error("Please Select City");
         }
-      } else {
-        return toast.error("Please Select City");
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.log("Error:", error);
+    } else {
+      // Original code to handle selected location
+      try {
+        const results = await geocodeByAddress(value);
+        const latLng = await getLatLng(results[0]);
+  
+        const city = results[0].address_components.find((component) =>
+          component.types.includes("locality")
+        );
+  
+        if (city?.long_name) {
+          try {
+            const { lat, lng } = latLng;
+  
+            const delivery = await is_city_deliverable({
+              name: city?.long_name,
+              latitude: lat,
+              longitude: lng,
+            });
+  
+            // Assuming you have another action creator named setNewAddress from another slice
+            dispatch(setNewAddress({ city: city.long_name, lat: lat, lng: lng }));
+  
+            if (delivery.error) {
+              return toast.error(delivery.message);
+            } else {
+              const branch_id = delivery.data[0].branch_id;
+              changeBranchId({ branch_id });
+              await router.push("/home");
+              return toast.success("City is deliverable!");
+            }
+          } catch (error) {
+            return toast.error(error.message);
+          }
+        } else {
+          return toast.error("Please Select City");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
     }
   };
+
   // Function to fetch address from coordinates using a geocoding service (example)
   const fetchAddressFromCoordinates = async (latitude, longitude) => {
     try {
@@ -161,8 +247,124 @@ const CoverPage = () => {
     }
   };
 
-  const handleGPS = () => {
-    if (navigator.geolocation) {
+  const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE;
+
+
+  // const handleGPS = () => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       async (position) => {
+  //         const { latitude, longitude } = position.coords;
+  //         // Do something with the latitude and longitude values
+  //         try {
+  //           const results = await geocodeByAddress(`${latitude},${longitude}`);
+  //           if (results && results.length > 0) {
+  //             const address = results[0].formatted_address;
+
+  //             // You can extract city name or other relevant information from the address
+  //             const city = results[0].address_components.find((component) =>
+  //               component.types.includes("locality")
+  //             );
+
+  //             setAddress(address);
+
+  //             if (city) {
+  //               let delivery;
+  //               try {
+  //                 delivery = await is_city_deliverable({
+  //                   name: city.long_name,
+  //                   latitude,
+  //                   longitude,
+  //                 });
+  //                 dispatch(
+  //                   setNewAddress({
+  //                     city: city.long_name,
+  //                     lat: latitude,
+  //                     lng: longitude,
+  //                   })
+  //                 );
+  //                 if (delivery.error) {
+  //                   return toast.error(delivery.message);
+  //                 } else {
+  //                   const branch_id = delivery.data[0].branch_id;
+  //                   changeBranchId({ branch_id });
+  //                   await router.push("/home");
+  //                   return toast.success(delivery.message);
+  //                 }
+  //               } catch (error) {
+  //                 return toast.error(error.message);
+  //               }
+  //             } else {
+  //               return toast.error("Please Select City");
+  //             }
+  //           }
+  //         } catch (error) {
+  //           console.error("Error geocoding coordinates:", error);
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error("Error getting location:", error.message);
+  //       }
+  //     );
+  //   } else {
+  //     console.error("Geolocation is not supported by this browser.");
+  //   }
+  // };
+
+  const handleGPS = async () => {
+    if (demoMode === "true") {
+      // Set predefined location for demo mode
+      const demoLatitude = 23.2420; // Demo latitude
+      const demoLongitude = 69.6669; // Demo longitude
+      
+      // Do something with the predefined latitude and longitude values
+      try {
+        const results = await geocodeByAddress(`${demoLatitude},${demoLongitude}`);
+        if (results && results.length > 0) {
+          const address = results[0].formatted_address;
+  
+          // You can extract city name or other relevant information from the address
+          const city = results[0].address_components.find((component) =>
+            component.types.includes("locality")
+          );
+  
+          setAddress(address);
+  
+          if (city) {
+            let delivery;
+            try {
+              delivery = await is_city_deliverable({
+                name: city.long_name,
+                latitude: demoLatitude,
+                longitude: demoLongitude,
+              });
+              dispatch(
+                setNewAddress({
+                  city: city.long_name,
+                  lat: demoLatitude,
+                  lng: demoLongitude,
+                })
+              );
+              if (delivery.error) {
+                return toast.error(delivery.message);
+              } else {
+                const branch_id = delivery.data[0].branch_id;
+                changeBranchId({ branch_id });
+                await router.push("/home");
+                return toast.success(delivery.message);
+              }
+            } catch (error) {
+              return toast.error(error.message);
+            }
+          } else {
+            return toast.error("Please Select City");
+          }
+        }
+      } catch (error) {
+        console.error("Error geocoding coordinates:", error);
+      }
+    } else {
+     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
@@ -219,6 +421,7 @@ const CoverPage = () => {
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
+    }
     }
   };
 

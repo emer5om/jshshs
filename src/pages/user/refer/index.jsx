@@ -31,7 +31,7 @@ const index = () => {
             <HeadTitle title={"refer"} />
 
             <Box mb={4}>
-                <BreadCrumb page={[{ name: t("my-profile"), link: "#" }, { name: t("refer-and-earn"), link: "#" }]} />
+                <BreadCrumb page={[{ name: t("my-profile"), link: "#" }, { name: t("Refer-And-Earn"), link: "#" }]} />
             </Box>
 
 

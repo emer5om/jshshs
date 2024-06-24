@@ -26,6 +26,8 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Drawer,
+  Badge,
 } from "@mui/joy";
 import Link from "next/link";
 
@@ -34,6 +36,7 @@ import ArrowRightSLineIcon from "remixicon-react/ArrowRightSLineIcon";
 import Heart3LineIcon from "remixicon-react/Heart2LineIcon";
 import WalletLineIcon from "remixicon-react/WalletLineIcon";
 import ExchangeDollarLineIcon from "remixicon-react/FileListLineIcon";
+
 import {
   RiP2pLine,
   RiDeleteBin5Line,
@@ -42,17 +45,25 @@ import {
   RiShoppingBagLine,
   RiFilePaper2Line,
   RiMapPin2Line,
+  RiMenuLine,
   RiAlertFill,
   RiCustomerService2Line,
+  RiArrowRightLine,
+  RiLayoutGrid2Fill,
+  RiDiscountPercentLine,
+  RiStackLine,
+  RiShoppingBag4Line,
 } from "@remixicon/react";
 import { logout } from "@/events/actions";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { isLogged } from "@/events/getters";
 import { useTranslation } from "react-i18next";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 
 const UserLayout = ({ children }) => {
   const theme = useTheme();
+  const cartStoreData = useSelector((state) => state.cart);
 
   const path = usePathname();
   const router = useRouter();
@@ -62,6 +73,18 @@ const UserLayout = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [openDeleteAccount, setOpenDeleteAccount] = useState(false);
   const { t } = useTranslation();
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = (inOpen) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpenDrawer(inOpen);
+  };
 
   useEffect(() => {
     if (!isLogged()) {
@@ -74,7 +97,7 @@ const UserLayout = ({ children }) => {
       <Grid xs={12} md={3}>
         <Card sx={{ border: "none", width: "100%" }}>
           <CardContent>
-            <Grid container >
+            <Grid container>
               <Grid xs={12}>
                 <Box
                   bgcolor={"primary.400"}
@@ -93,8 +116,6 @@ const UserLayout = ({ children }) => {
                     position: "relative",
                     top: { xs: "-20%", md: "-25%" },
                   }}
-                  component={Link}
-                  href={"/user/profile"}
                 >
                   <Card
                     variant="outlined"
@@ -110,6 +131,8 @@ const UserLayout = ({ children }) => {
                       display={"flex"}
                       justifyContent={"center"}
                       alignItems={"center"}
+                      component={Link}
+                      href={"/user/profile"}
                     >
                       <Box
                         component={Avatar}
@@ -145,10 +168,119 @@ const UserLayout = ({ children }) => {
                         {userData.mobile}
                       </Typography>
                     </Box>
+
+                    <Box>
+                      <RiMenuLine onClick={toggleDrawer(true)} />
+                    </Box>
+
+                    <Drawer
+                      open={openDrawer}
+                      onClose={toggleDrawer(false)}
+                      size="lg"
+                    >
+                      <DialogContent>
+                        <Box role="presentation" width={"100%"}>
+                          <Box
+                            width={"100%"}
+                            justifyContent={"end"}
+                            display={"flex"}
+                            alignItems={"center"}
+                            mt={1}
+                            p={1}
+                          >
+                            <RiArrowRightLine
+                              className="remixicon"
+                              size={theme.fontSize.xl4}
+                              fontWeight={"bolder"}
+                              onClick={toggleDrawer(false)}
+                            />
+                          </Box>
+
+                          <Box
+                            width={"100%"}
+                            justifyContent={"center"}
+                            display={"flex"}
+                            alignItems={"left"}
+                            textAlign={"start"}
+                            my={4}
+                            px={4}
+                          >
+                            <Stack spacing={4} width={"100%"}>
+                              {/* {['categories', 'offers', 'notifications']} */}
+                              <Typography
+                                fontSize={"md"}
+                                fontWeight={"lg"}
+                                component={Link}
+                                href={`/user/favourites`}
+                                startDecorator={
+                                  <FavoriteBorder
+                                    color={
+                                      path === "/user/favourites"
+                                        ? "white"
+                                        : theme.palette.text.menuText
+                                    }
+                                  />
+                                }
+                                onClick={toggleDrawer(false)}
+                              >
+                                {t("favourites")}
+                              </Typography>
+                              <Typography
+                                fontSize={"md"}
+                                fontWeight={"lg"}
+                                component={Link}
+                                href={"/user/transactions"}
+                                startDecorator={<ExchangeDollarLineIcon />}
+                                onClick={toggleDrawer(false)}
+                              >
+                                {t("transactions")}
+                              </Typography>
+                              <Typography
+                                fontSize={"md"}
+                                fontWeight={"lg"}
+                                component={Link}
+                                href={"/user/address"}
+                                startDecorator={
+                                  <RiMapPin2Line
+                                    color={theme.palette.text.primary}
+                                  />
+                                }
+                                onClick={toggleDrawer(false)}
+                              >
+                                {t("addresses")}
+                              </Typography>
+                              <Typography
+                                fontSize={"md"}
+                                fontWeight={"lg"}
+                                component={Link}
+                                href={"/user/my-orders"}
+                                startDecorator={<RiFilePaper2Line />}
+                                onClick={toggleDrawer(false)}
+                              >
+                                {t("my-orders")}
+                              </Typography>
+
+                              <Typography
+                                fontSize={"md"}
+                                fontWeight={"lg"}
+                                startDecorator={<RiDeleteBin5Line />}
+                                onClick={() => {
+                                  toggleDrawer(false);
+                                  setOpenDeleteAccount(true);
+                                }}
+                              >
+                                {t("Delete-Your-Account")}
+                              </Typography>
+                            </Stack>
+                          </Box>
+                        </Box>
+                      </DialogContent>
+                    </Drawer>
                   </Card>
                 </Box>
               </Grid>
-              <Grid xs={12}>
+
+              <Grid className={"grid-container-custom"} xs={12}>
                 <Card size="sm">
                   <Stack>
                     <List sx={{ gap: 1 }}>
@@ -196,9 +328,11 @@ const UserLayout = ({ children }) => {
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
-                            color={ theme.palette.mode === "light"
-                            ? theme.palette.text.menuText
-                            : theme.palette.text.currency}
+                            color={
+                              theme.palette.mode === "light"
+                                ? theme.palette.text.menuText
+                                : theme.palette.text.currency
+                            }
                           />
                         </Box>
                       </ListItem>
@@ -207,28 +341,6 @@ const UserLayout = ({ children }) => {
                         inset={"gutter"}
                         sx={{ backgroundColor: "Background.level3" }}
                       />
-
-                      {/* <ListItem component={Link} href={"/user/wallet"}>
-                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
-                                                    <Box display={"flex"} alignItems={"center"} gap={1}>
-                                                        <ListItemDecorator>
-                                                            <Box bgcolor={path === "/user/wallet" ?
-                                                                "text.currency" : "primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
-                                                                <WalletLineIcon color={path === "/user/wallet" ?
-                                                                    "white" : theme.palette.text.menuText} />
-                                                            </Box>
-                                                        </ListItemDecorator>
-                                                        <ListItemContent>
-                                                            <Typography textColor={"text.menuText"} fontWeight={"md"}>
-                                                                {t("wallet")}
-                                                            </Typography>
-                                                        </ListItemContent>
-                                                    </Box>
-                                                    <ArrowRightSLineIcon color={theme.palette.text.menuText} />
-                                                </Box>
-                                            </ListItem>
-
-                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "Background.level3" }} /> */}
 
                       <ListItem component={Link} href={"/user/transactions"}>
                         <Box
@@ -263,10 +375,10 @@ const UserLayout = ({ children }) => {
                             <ListItemContent>
                               <Typography
                                 textColor={
-                                    theme.palette.mode === "light"
-                                      ? theme.palette.text.menuText
-                                      : theme.palette.text.secondary
-                                  }
+                                  theme.palette.mode === "light"
+                                    ? theme.palette.text.menuText
+                                    : theme.palette.text.secondary
+                                }
                                 fontWeight={"md"}
                               >
                                 {t("transactions")}
@@ -274,9 +386,12 @@ const UserLayout = ({ children }) => {
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
- color={ theme.palette.mode === "light"
- ? theme.palette.text.menuText
- : theme.palette.text.currency}                          />
+                            color={
+                              theme.palette.mode === "light"
+                                ? theme.palette.text.menuText
+                                : theme.palette.text.currency
+                            }
+                          />
                         </Box>
                       </ListItem>
 
@@ -316,13 +431,14 @@ const UserLayout = ({ children }) => {
                                 />
                               </Box>
                             </ListItemDecorator>
+
                             <ListItemContent>
                               <Typography
-                                 textColor={
-                                    theme.palette.mode === "light"
-                                      ? theme.palette.text.menuText
-                                      : theme.palette.text.secondary
-                                  }
+                                textColor={
+                                  theme.palette.mode === "light"
+                                    ? theme.palette.text.menuText
+                                    : theme.palette.text.secondary
+                                }
                                 fontWeight={"md"}
                               >
                                 {t("refer")}
@@ -330,9 +446,12 @@ const UserLayout = ({ children }) => {
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
- color={ theme.palette.mode === "light"
- ? theme.palette.text.menuText
- : theme.palette.text.currency}                          />
+                            color={
+                              theme.palette.mode === "light"
+                                ? theme.palette.text.menuText
+                                : theme.palette.text.currency
+                            }
+                          />
                         </Box>
                       </ListItem>
 
@@ -341,30 +460,6 @@ const UserLayout = ({ children }) => {
                         sx={{ backgroundColor: "Background.level3" }}
                       />
 
-                      {/* <ListItem component={Link} href={"/user/support"}>
-                                                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}  >
-                                                    <Box display={"flex"} alignItems={"center"} gap={1}>
-                                                        <ListItemDecorator>
-                                                            <Box bgcolor={router === "/user/support" ?
-                                                                "text.currency" : "primary.300"} borderRadius={"50%"} display={"flex"} p={0.5} alignItems={"center"} justifyContent={"center"}>
-
-                                                                <RiCustomerService2Line color={router === "/user/support" ?
-                                                                    "white" : theme.palette.text.menuText} />
-                                                            </Box>
-                                                        </ListItemDecorator>
-                                                        <ListItemContent>
-                                                            <Typography textColor={"text.menuText"} fontWeight={"md"}>
-                                                                Help & Support
-                                                            </Typography>
-                                                        </ListItemContent>
-                                                    </Box>
-                                                    <ArrowRightSLineIcon color={theme.palette.text.menuText} />
-                                                </Box>
-                                            </ListItem>
-
-                                            <ListDivider inset={"gutter"} sx={{ backgroundColor: "Background.level3" }} /> */}
-
-                      {/* Delete Account */}
                       <ListItem
                         onClick={() => setOpenDeleteAccount(true)}
                         sx={{
@@ -394,20 +489,24 @@ const UserLayout = ({ children }) => {
                             </ListItemDecorator>
                             <ListItemContent>
                               <Typography
-  textColor={
-    theme.palette.mode === "light"
-      ? theme.palette.text.menuText
-      : theme.palette.text.secondary
-  }                                fontWeight={"md"}
+                                textColor={
+                                  theme.palette.mode === "light"
+                                    ? theme.palette.text.menuText
+                                    : theme.palette.text.secondary
+                                }
+                                fontWeight={"md"}
                               >
                                 {t("Delete-Your-Account")}
                               </Typography>
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
- color={ theme.palette.mode === "light"
- ? theme.palette.text.menuText
- : theme.palette.text.currency}                          />
+                            color={
+                              theme.palette.mode === "light"
+                                ? theme.palette.text.menuText
+                                : theme.palette.text.currency
+                            }
+                          />
                         </Box>
                       </ListItem>
 
@@ -445,20 +544,24 @@ const UserLayout = ({ children }) => {
                             </ListItemDecorator>
                             <ListItemContent>
                               <Typography
-  textColor={
-    theme.palette.mode === "light"
-      ? theme.palette.text.menuText
-      : theme.palette.text.secondary
-  }                                fontWeight={"md"}
+                                textColor={
+                                  theme.palette.mode === "light"
+                                    ? theme.palette.text.menuText
+                                    : theme.palette.text.secondary
+                                }
+                                fontWeight={"md"}
                               >
                                 {t("logout")}
                               </Typography>
                             </ListItemContent>
                           </Box>
                           <ArrowRightSLineIcon
- color={ theme.palette.mode === "light"
- ? theme.palette.text.menuText
- : theme.palette.text.currency}                          />
+                            color={
+                              theme.palette.mode === "light"
+                                ? theme.palette.text.menuText
+                                : theme.palette.text.currency
+                            }
+                          />
                         </Box>
                       </ListItem>
                     </List>
@@ -470,16 +573,16 @@ const UserLayout = ({ children }) => {
         </Card>
       </Grid>
 
-      <Grid sx={{marginTop:{xs:2,sm:2,md:0}}}  xs={12} md={9}>
+      <Grid sx={{ marginTop: { xs: 2, sm: 2, md: 0 } }} xs={12} md={9}>
         <Grid container>
-          <Grid xs={12} width={"100%"}>
+          <Grid className={"grid-container-custom"} xs={12} width={"100%"}>
             <Card sx={{ border: "none", px: 0 }}>
               <CardContent
                 sx={{
                   display: "flex",
                   flexDirection: { xs: "column", md: "row" },
                   gap: 1,
-                  marginLeft:1
+                  marginLeft: 1,
                 }}
               >
                 <Box
@@ -508,10 +611,11 @@ const UserLayout = ({ children }) => {
                     fontSize={"lg"}
                     fontWeight={"md"}
                     textColor={
-                        theme.palette.mode === "light"
-                          ? theme.palette.text.menuText
-                          : theme.palette.text.secondary
-                      }                  >
+                      theme.palette.mode === "light"
+                        ? theme.palette.text.menuText
+                        : theme.palette.text.secondary
+                    }
+                  >
                     {t("cart")}
                   </Typography>
                 </Box>
@@ -552,10 +656,11 @@ const UserLayout = ({ children }) => {
                     fontSize={"lg"}
                     fontWeight={"md"}
                     textColor={
-                        theme.palette.mode === "light"
-                          ? theme.palette.text.menuText
-                          : theme.palette.text.secondary
-                      }                  >
+                      theme.palette.mode === "light"
+                        ? theme.palette.text.menuText
+                        : theme.palette.text.secondary
+                    }
+                  >
                     {t("my-orders")}
                   </Typography>
                 </Box>
@@ -593,10 +698,11 @@ const UserLayout = ({ children }) => {
                     fontSize={"lg"}
                     fontWeight={"md"}
                     textColor={
-                        theme.palette.mode === "light"
-                          ? theme.palette.text.menuText
-                          : theme.palette.text.secondary
-                      }                  >
+                      theme.palette.mode === "light"
+                        ? theme.palette.text.menuText
+                        : theme.palette.text.secondary
+                    }
+                  >
                     {t("addresses")}
                   </Typography>
                 </Box>

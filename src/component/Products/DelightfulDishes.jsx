@@ -89,6 +89,7 @@ const DelightfulDishes = ({ data }) => {
                   specialPrice={item.variants[0].special_price != 0}
                   categoryName={item.category_name}
                   title={item.name}
+                  rating={item.rating}
                   data={favoriteItems}
                   handleRemove={handleRemove}
                   discountedPrice={

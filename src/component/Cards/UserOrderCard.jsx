@@ -49,6 +49,7 @@ const UserOrderCard = ({
   amount,
   type,
   onCancel,
+  isCancellable,
 }) => {
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState("");
@@ -70,17 +71,19 @@ const UserOrderCard = ({
   const handleSubmit = async () => {
     setLoading(true);
 
+    console.log(userData.id)
+
     try {
       const setRating = await setProductRating({
-        // user_id: userData.id,
+        user_id: userData.id,
         product_id: id,
         rating: ratingValue,
         message: message,
       });
 
-      if (setRating.error) toast.error(setRating.message);
-      else toast.success(setRating.message);
 
+      if (setRating.data.error) toast.error(setRating.data.message);
+      else toast.success(setRating.data.message);
     } catch (error) {
       // Handle error
       console.error("Error while submitting rating:", error);
@@ -261,17 +264,22 @@ const UserOrderCard = ({
 
       <CardActions sx={{ width: "100%" }}>
         <Grid container sx={{ width: "100%" }} spacing={1}>
-          <Grid xs={6}>
-            <CustomButton
-              color="danger"
-              variant="soft"
-              onClick={() => setOpen(true)}
-              text={t("cancel")}
-              fullWidth={true}
-              customStyle={{ px: 1, py: 1 }}
-            />
-          </Grid>
-          <Grid xs={6}>
+          {isCancellable == 1 ? (
+            <Grid xs={6}>
+              <CustomButton
+                color="danger"
+                variant="soft"
+                onClick={() => setOpen(true)}
+                text={t("cancel")}
+                fullWidth={true}
+                customStyle={{ px: 1, py: 1 }}
+              />
+            </Grid>
+          ) : (
+            <></>
+          )}
+
+          <Grid xs={ isCancellable == 1 ? 6 : 12}>
             <CustomButton
               color="success"
               variant="outlined"
@@ -346,13 +354,14 @@ const UserOrderCard = ({
               disabled={loading}
               onClick={() => setOpen(false)}
             >
-{t("cancel")}            </Button>
+              {t("cancel")}{" "}
+            </Button>
           </DialogActions>
         </ModalDialog>
       </Modal>
 
-      <Modal open={openReview} onClose={() => setOpenReview(false)}>
-        <ModalDialog variant="soft" role="alertdialog" size="lg">
+      <Modal open={openReview} onClose={() => setOpenReview(false)} >
+        <ModalDialog variant="soft" role="alertdialog" size="lg" sx={{minWidth:"30%"}} >
           <ModalClose />
           <DialogTitle sx={{ alignItems: "center" }}>
             <RiStarFill /> {t("rate-product")}

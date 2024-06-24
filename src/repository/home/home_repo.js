@@ -18,6 +18,8 @@ export const updateHomeBannerData = async (branch_id) => {
   if (res.data.error) {
     return navigateErrorPage(res.data);
   }
+  console.log("updateHomebannerData",res.data.data)
+  
   store.dispatch(setHomeBanner(res.data.data));
 };
 

@@ -315,7 +315,7 @@ const specialPrice = item.variants[0].special_price != 0
                         sx={{ textDecoration: "line-through" }}
                         textColor={theme.palette.text.currency}
                         fontSize={theme.fontSize.xs}
-                        fontWeight={theme.fontWeight.sm}
+                        fontWeight={theme.fontWeight.lg}
                       >
                         {formatePrice(price)}
                       </Typography>

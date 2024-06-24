@@ -30,6 +30,9 @@ const OffersView = () => {
           }}
         >
           {/* Use the Image component to display the 404 image */}
+          <Box
+            component={'img'}
+          ></Box>
           <img
             src={"/order_successfull.svg"}
             alt="Order successful"

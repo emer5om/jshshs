@@ -359,7 +359,7 @@ const PopularCards = React.memo(
                           sx={{ textDecoration: "line-through" }}
                           textColor={theme.palette.text.currency}
                           fontSize={theme.fontSize.xs}
-                          fontWeight={theme.fontWeight.sm}
+                          fontWeight={theme.fontWeight.lg}
                         >
                           {formatePrice(item.variants[0]?.price)}
                         </Typography>

@@ -82,12 +82,46 @@ export const deleteMyAccount = async ({ user_id }) => {
  * @returns
  */
 
-export const verify_user = async ({ mobile } = {}) => {
+export const verify_user_firebase = async ({ mobile } = {}) => {
   const formData = new FormData();
 
   formData.append("mobile", mobile);
 
   let response = await api.post("/verify_user", formData);
+  return response.data;
+};
+
+export const verify_user = async ({ mobile } = {}) => {
+  const formData = new FormData();
+
+  formData.append("mobile", mobile);
+  formData.append("is_forgot_password", 0);
+
+  let response = await api.post("/verify_user", formData);
+
+  console.log(response);
+
+  return response.data;
+};
+
+export const verify_otp = async ({ mobile, otp } = {}) => {
+  const formData = new FormData();
+
+  formData.append("mobile", mobile);
+  formData.append("otp", otp);
+
+  let response = await api.post("/verify_otp", formData);
+
+  return response.data;
+};
+
+export const resend_otp = async ({ mobile } = {}) => {
+  const formData = new FormData();
+
+  formData.append("mobile", mobile);
+
+  let response = await api.post("/resend_otp", formData);
+
   return response.data;
 };
 
@@ -192,7 +226,11 @@ export const get_transactions = async ({
 } = {}) => {
   const formData = new FormData();
 
-  formData.append("limit", limit ?? 2);
+  if(limit){
+    formData.append("limit", limit);
+
+  }
+
   formData.append("offset", offset ?? 0);
   formData.append("transaction_type", transaction_type);
   if (type) formData.append("type", type);
@@ -384,6 +422,8 @@ export const getUserAddress = async ({ address_id, user_id } = {}) => {
   if (user_id) formData.append("user_id", user_id);
 
   let response = await api.post("/get_address", formData);
+
+
   return response.data;
 };
 

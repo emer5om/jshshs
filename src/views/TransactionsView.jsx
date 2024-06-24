@@ -20,6 +20,7 @@ const TransactionsView = () => {
             if (transactions.error) {
                 return toast.error(transactions.message)
             } else {
+                console.log("transactions",transactions)   
                 getAllTransactions(transactions.data)
             }
         } catch (error) {
@@ -39,7 +40,7 @@ const TransactionsView = () => {
                     return (
                         <Grid xs={12} md={3} key={index}>
                             <Transactions id={item.id}
-                                status={(item.status).toLowerCase()} date={item.date} type={item.type} message={item.message} amount={item.amount} />
+                                status={(item.status).toLowerCase()} date={item.transaction_date} type={item.type} message={item.message} amount={item.amount} />
                         </Grid>
                     )
                 })

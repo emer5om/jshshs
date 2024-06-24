@@ -126,6 +126,9 @@ const Products = ({ categoryId = 0 }) => {
   };
 
   const onPriceSelection = (value) => {
+
+    console.log("onPriceSelection",value);
+    
     if (value == "Low to High") {
       setOrder("asc");
     } else if (value == "High to Low") {
@@ -222,6 +225,7 @@ const Products = ({ categoryId = 0 }) => {
                 data={products}
                 showHeadline={false}
                 handleAdd={handleAdd}
+                simple={"simple_product"}
               />
             ) : (
               <ListCards

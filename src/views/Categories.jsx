@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import CircularSkeleton from "@/component/Skeleton/CircularSkeleton";
 import api from "@/interceptor/api";
 import { useTranslation } from "react-i18next";
+import { getBranchId } from "@/events/getters";
 
 const initialQuery = { limit: 18, offset: 0 };
 
@@ -21,7 +22,11 @@ const Categories = () => {
       try {
         setLoading(true);
         const formData = new FormData();
-        formData.append("branch_id", "7");
+        const branchId =  getBranchId()
+
+
+        formData.append("branch_id", branchId ?? 7);
+        
         formData.append("limit", initialQuery.limit);
         formData.append("offset", initialQuery.offset);
 
@@ -130,3 +135,4 @@ const Categories = () => {
 };
 
 export default Categories;
+

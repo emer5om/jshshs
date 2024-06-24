@@ -167,7 +167,7 @@ const ProductCards = ({
               },
             }}
           ></Box>
-          {discount && specialPrice != 0 && (
+          {discount !== undefined && discount !== null && (
             <Box position={"absolute"} top={"75%"} left={"5%"}>
               <Typography
                 fontSize={"md"}
@@ -176,7 +176,9 @@ const ProductCards = ({
                   theme.palette.mode === "light" ? "background.body" : ""
                 }
               >
-                {discount}% {t("off")}
+                {discount !== 0 && discount !== 100
+                  ? `${discount}% ${t("off")}`
+                  : ""}
               </Typography>
             </Box>
           )}
@@ -198,7 +200,7 @@ const ProductCards = ({
 
               <Box display={"flex"} alignItems={"center"} width={"100%"}>
                 <StarFillIcon color={theme.palette.warning[400]} />
-                <Typography> {rating ?? 0} </Typography>
+                <Typography sx={{ px: 1 }}> {rating ?? 0} </Typography>
               </Box>
               <Box>
                 <StyledCheckbox
@@ -235,23 +237,32 @@ const ProductCards = ({
           </Box>
           <Box>
             <Typography
-              sx={{ fontSize: { xs: "sm", md: "lg" } }}
-              fontWeight="md"
+              className="truncated-text" // Apply the CSS class
+              sx={{
+                fontSize: { xs: "sm", md: "lg"},
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: "2",
+                WebkitBoxOrient: "vertical",
+              }}
             >
-              {title}
+                {title}
             </Typography>
           </Box>
           <Box display={"flex"} alignItems={"center"} gap={1}>
-            {specialPrice !== price && specialPrice != 0 && specialPrice != price && (
-              <Typography
-                sx={{ textDecoration: "line-through" }}
-                textColor={theme.palette.text.currency}
-                fontSize={theme.fontSize.xs}
-                fontWeight={theme.fontWeight.sm}
-              >
-                {formatePrice(price)}
-              </Typography>
-            )}
+            {specialPrice !== price &&
+              specialPrice != 0 &&
+              specialPrice != price && (
+                <Typography
+                  sx={{ textDecoration: "line-through" }}
+                  textColor={theme.palette.text.currency}
+                  fontSize={theme.fontSize.xs}
+                  fontWeight={theme.fontWeight.lg}
+                >
+                  {formatePrice(price)}
+                </Typography>
+              )}
 
             <Typography
               fontSize={"md"}

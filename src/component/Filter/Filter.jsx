@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Card,
@@ -38,7 +38,10 @@ import {
 import GalleryLineIcon from "remixicon-react/LayoutGridFillIcon";
 import ListCheck2Icon from "remixicon-react/ListCheck2Icon";
 
-import { RiEqualizerLine as TuneIcon, RiCheckFill as Done } from "@remixicon/react"
+import {
+  RiEqualizerLine as TuneIcon,
+  RiCheckFill as Done,
+} from "@remixicon/react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
@@ -48,22 +51,29 @@ const Filter = ({
   onCategorySelect,
   onTypeChange,
   onPriceChange,
-  indicatorType
+  indicatorType,
 }) => {
   const [alignment, setAlignment] = React.useState(view);
 
   const [open, setOpen] = React.useState(false);
   const [type, setType] = React.useState(indicatorType);
-  const [price, setPrice] = React.useState("");
+  const [price, setPrice] = React.useState('High to Low');
   const [food, setFood] = React.useState();
+
   const homeStoreData = useSelector((state) => state.homepage);
-  const categories = homeStoreData.categories
+  const categories = homeStoreData.categories;
 
   const theme = useTheme();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    console.log(price);
+    console.log(type);
+    console.log(alignment);
+  }, [price]);
 
   return (
-    <Box >
+    <Box>
       <Card
         sx={{
           display: "flex",
@@ -85,7 +95,7 @@ const Filter = ({
               startDecorator={<TuneIcon />}
               onClick={() => setOpen(true)}
             >
-              {t('filter')}
+              {t("filter")}
             </Button>
           </Box>
 
@@ -187,11 +197,9 @@ const Filter = ({
               </FormLabel>
               <RadioGroup
                 value={indicatorType || ""}
-                onChange={
-                  e => {
-                    setType(e.target.value)
-                  }
-                }
+                onChange={(e) => {
+                  setType(e.target.value);
+                }}
               >
                 <Box
                   sx={{
@@ -256,6 +264,7 @@ const Filter = ({
               <RadioGroup
                 value={price || ""}
                 onChange={(event) => {
+                  console.log("Price Change Event:", event.target.value); // Added for debugging
                   setPrice(event.target.value);
                 }}
               >
@@ -272,7 +281,7 @@ const Filter = ({
                       name: t("low-to-high"),
                     },
                     {
-                      name: t('high-to-low'),
+                      name: t("high-to-low"),
                     },
                   ].map((item) => (
                     <Card
@@ -315,8 +324,6 @@ const Filter = ({
               </RadioGroup>
             </FormControl>
 
-
-
             <Typography level="title-md" fontWeight="bold" sx={{ mt: 1 }}>
               {t("food")}
             </Typography>
@@ -329,8 +336,7 @@ const Filter = ({
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns:
-                    "repeat(auto-fill, minmax(140px, 1fr))",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
                   gap: 1,
                   px: 2,
                 }}
@@ -348,7 +354,9 @@ const Filter = ({
                     color="primary"
                     variant="outlined"
                     startDecorator={
-                      food === item.id && <Done sx={{ zIndex: 1, pointerEvents: 'none' }} />
+                      food === item.id && (
+                        <Done sx={{ zIndex: 1, pointerEvents: "none" }} />
+                      )
                     }
                   >
                     <Radio
@@ -359,8 +367,7 @@ const Filter = ({
                       color="neutral"
                       label={item.name}
                       value={item.id}
-                    >
-                    </Radio>
+                    ></Radio>
                   </Chip>
                 ))}
               </Box>
@@ -381,25 +388,28 @@ const Filter = ({
                 setType("");
                 setPrice("");
                 setFood([]);
-                onTypeChange("")
-                onPriceChange("")
-                onCategorySelect("")
+                onTypeChange("");
+                onPriceChange("");
+                onCategorySelect("");
               }}
             >
               {t("clear")}
             </Button>
-            <Button onClick={() => {
-              onTypeChange(type)
-              onPriceChange(price)
-              onCategorySelect(food)
-              setOpen(false)
-            }}>
+
+            <Button
+              onClick={() => {
+                onTypeChange(type);
+                onPriceChange(price);
+                onCategorySelect(food);
+                setOpen(false);
+              }}
+            >
               {t("apply")}
             </Button>
           </Stack>
         </Sheet>
       </Drawer>
-    </Box >
+    </Box>
   );
 };
 

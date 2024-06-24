@@ -225,21 +225,20 @@ export const OfferCards = ({
                 gap: 0.5,
               }}
             >
-      {specialPrice !== price && specialPrice != 0 && specialPrice != price && (
-    <Typography
-        sx={{ textDecoration: "line-through" }}
-        textColor={theme.palette.warning[400]}
-        fontSize={theme.fontSize.xs}
-        fontWeight={theme.fontWeight.sm}
-    >
-        {formatePrice(price)}
-    </Typography>
-)}
+              {specialPrice !== price &&
+                specialPrice != 0 &&
+                specialPrice != price && (
+                  <Typography
+                    sx={{ textDecoration: "line-through" }}
+                    textColor={theme.palette.warning[400]}
+                    fontSize={theme.fontSize.xs}
+                    fontWeight={theme.fontWeight.lg}
+                  >
+                    {formatePrice(price)}
+                  </Typography>
+                )}
 
-
-
-
-              {price  > specialPrice && specialPrice != 0 ? (
+              {price > specialPrice && specialPrice != 0 ? (
                 <Typography
                   textColor={"warning.400"}
                   fontSize={"xl"}

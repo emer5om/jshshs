@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 
 import {
   AspectRatio,
@@ -65,6 +65,7 @@ import AddressSelector from "@/component/Modals/AddressSelector";
 import { getUserData } from "@/events/getters";
 import { useTranslation } from "react-i18next";
 import ThrottledQuantitySelector from "@/component/ThrottledQuantitySelector";
+import { setDeliveryAddress } from "@/store/reducers/selectedDeliverySlice";
 
 const ViewCart = () => {
   const [deliveryType, setDeliveryType] = useState("Delivery");
@@ -86,9 +87,19 @@ const ViewCart = () => {
   const branchData = useSelector((state) => state.branch);
   const promoCode = useSelector((state) => state.promoCode)?.value;
   const userAddresses = useSelector((state) => state.userAddresses)?.value;
+
   const selectedDeliveryAddress = useSelector(
     (state) => state.selectedDeliveryAddress
   )?.value;
+
+  const isAnyAddressMatching =
+    userAddresses &&
+    userAddresses.some((address) => address.id === selectedDeliveryAddress?.id);
+
+  if (!isAnyAddressMatching) {
+    dispatch(setDeliveryAddress());
+  }
+
   const branch_id = branchData.id;
 
   const currencySymbol = useSelector(
@@ -96,10 +107,6 @@ const ViewCart = () => {
   );
 
   const { t } = useTranslation();
-
-
-
-
 
   const handleRemoveItem = async (id, cart_id) => {
     try {
@@ -119,8 +126,6 @@ const ViewCart = () => {
     }
   };
 
-
-
   const manageQty = async (addons, product_variant_id, qty) => {
     if (qty < 0) toast.error("Quantity can not be less then 0!");
     else {
@@ -130,9 +135,26 @@ const ViewCart = () => {
 
   let finalTotal = 0;
   let baseAmount;
+  let discountAmount;
 
   if (promoCode.length > 0) {
+    console.log("inside promo code true");
     baseAmount = parseFloat(promoCode[0].final_total);
+
+    discountAmount =
+      cartStoreData.overall_amount * (promoCode[0]?.discount / 100);
+
+    console.log("discountAmount", promoCode[0]?.max_discount_amount);
+
+    if (discountAmount > promoCode[0]?.max_discount_amount) {
+      discountAmount = promoCode[0]?.max_discount_amount;
+      baseAmount = parseFloat(
+        cartStoreData.overall_amount - promoCode[0]?.max_discount_amount
+      );
+      console.log("baseAmount", baseAmount);
+    } else {
+      baseAmount = parseFloat(cartStoreData.overall_amount - discountAmount);
+    }
   } else {
     baseAmount = parseFloat(cartStoreData.overall_amount);
   }
@@ -142,63 +164,6 @@ const ViewCart = () => {
   } else {
     finalTotal = baseAmount + parseFloat(tip);
   }
-
-  // const [throttleTimeout, setThrottleTimeout] = useState(null); // Define throttleTimeout state
-
-  // const handleClick = (type, updateQuantity, index) => {
-  //   // If throttleTimeout is set, clear it to reset the timer
-  //   if (throttleTimeout) {
-  //     clearTimeout(throttleTimeout);
-  //   }
-
-  //   // Update quantity based on the type, ensuring it's not less than 1
-  //   if (type === "increment") {
-  //     updateQuantity((prevQuantity) => prevQuantity + 1);
-  //   } else if (type === "decrement" && quantity > 1) {
-  //     // Only decrement if quantity is greater than 1
-  //     updateQuantity((prevQuantity) => {
-  //       const newQuantity = prevQuantity - 1;
-  //       return newQuantity < 1 ? 1 : newQuantity;
-  //     });
-  //   }
-
-  //   // Set timeout to reset click count after 2 seconds
-  //   const timeout = setTimeout(() => {
-  //     // Log the corresponding action after 2 seconds
-  //     if (type === "increment") {
-  //       const newCart = { ...cartStoreData };
-
-  //       newCart.data = newCart.data.map((item, i) => {
-  //         if (i === index) {
-  //           manageQty(item.product_variant_id, quantity + 1);
-  //         }
-
-  //         return item;
-  //       });
-
-  //       dispatch(setCart(newCart));
-  //     } else if (type === "decrement") {
-  //       const newCart = { ...cartStoreData };
-  //       newCart.data = newCart.data.map((item, i) => {
-  //         if (i === index) {
-  //           const newQuantity = quantity - 1;
-  //           const decrementedQuantity = newQuantity < 1 ? 1 : newQuantity;
-
-  //           // Decrement qty
-  //           manageQty(item.product_variant_id, decrementedQuantity);
-  //         }
-  //         return item;
-  //       });
-  //       dispatch(setCart(newCart));
-  //     }
-  //   }, 800);
-
-  //   setThrottleTimeout(timeout);
-  // };
-
-  // const [quantity, setQuantity] = useState(
-  //   parseInt(cartStoreData.total_quantity, 10)
-  // );
 
   return (
     <Box>
@@ -232,10 +197,17 @@ const ViewCart = () => {
                       label={item == "Delivery" ? t("delivery") : t("pick-up")}
                       sx={{ flexGrow: 1 }}
                       onChange={(e) => {
+                        
+                        if(e.target.value == "Pick Up"){
+                          setTip(0)
+                        }
+
                         setDeliveryType(e.target.value);
                       }}
                       slotProps={{
-                        action: ({ checked }) => ({
+                        action: ({ checked }) => (
+                        
+                          {
                           sx: (theme) => ({
                             ...(checked && {
                               inset: -1,
@@ -391,10 +363,10 @@ const ViewCart = () => {
                                       display: "none",
                                     },
                                     "@media screen and (max-width: 425px)": {
-                                      fontSize:"sm"
+                                      fontSize: "sm",
                                     },
                                     "@media screen and (min-width: 765px)": {
-                                      fontSize:"md"
+                                      fontSize: "md",
                                     },
                                   }}
                                 >
@@ -484,7 +456,8 @@ const ViewCart = () => {
                                     }}
                                     gap={2}
                                   >
-                                    {item.price > item.special_price && item.special_price > 0 ? (
+                                    {item.special_price > item.price &&
+                                    item.special_price > 0 ? (
                                       <Typography
                                         fontSize={"md"}
                                         fontWeight={"lg"}
@@ -834,8 +807,7 @@ const ViewCart = () => {
                         {t("total")}
                       </Typography>
                       <Typography textColor={"text.currency"} fontWeight={"lg"}>
-                        {/* {formatePrice(cartStoreData.overall_amount)} */}
-                        {formatePrice(finalTotal)}
+                        {formatePrice(cartStoreData.overall_amount)}
                       </Typography>
                     </Box>
                     <Divider sx={{ my: 1 }} />
@@ -863,7 +835,7 @@ const ViewCart = () => {
                               textColor={"text.currency"}
                               fontWeight={"lg"}
                             >
-                              {formatePrice(promoCode[0]?.final_discount)}
+                              {formatePrice(discountAmount)}
                             </Typography>
                           </Box>
                         </Box>

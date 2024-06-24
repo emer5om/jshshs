@@ -251,3 +251,28 @@ div > .MUIInput.Mui-disabled {
   right: auto;
 
 }
+
+
+
+
+
+
+
+.MuiTab-root:not(.Mui-selected, [aria-selected="true"]):hover {
+  background-color: transparent !important;
+  color: transparent !important;
+}
+
+
+.MuiTab-root {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+
+
+@media screen and (max-width: 768px) {
+  .grid-container-custom {
+    display: none;
+  }
+}
+

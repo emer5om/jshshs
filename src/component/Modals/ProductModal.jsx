@@ -70,13 +70,14 @@ const ProductModal = ({
 
   useEffect(() => {
     const variantId = cartStoreData.data[index]?.product_variant_id;
+
     cartStoreData.data[index]?.product_details[0].variants.map((value) => {
       if (value.id == variantId && cart) {
         setSelectedAddons(value.add_ons_data);
       }
     });
   }, []);
-  
+
   const addTocart = async () => {
     if (!isLogged()) {
       return toast.error(t("please-log-in-to-continue"));
@@ -105,27 +106,34 @@ const ProductModal = ({
       const special_price =
         parseCustomFloat(selectedVariant.special_price) + extraPrice;
 
-
-        const special_price1 =
-        parseCustomFloat(selectedVariant.special_price)
+      const special_price1 = parseCustomFloat(selectedVariant.special_price);
 
       const price = parseCustomFloat(selectedVariant.price) + extraPrice;
 
-
-      if ( parseCustomFloat(selectedVariant.special_price) == 0) {
+      if (parseCustomFloat(selectedVariant.special_price) == 0) {
         setPrice(price);
         setPriceOriginal(price);
       } else {
         setPrice(price);
         setSpecialPrice(special_price);
-        setPriceOriginal(price);
       }
     }
   };
 
   useEffect(() => {
+    setPriceOriginal(123);
+  }, []);
+
+  useEffect(() => {
     getPrice();
   }, [qty, selectedVariant, setSelectedAddons, selectedAddons]);
+
+  function handleDelete() {
+    setOpen(false);
+    setModalOpen(false);
+    setQty(currentQty ?? 1);
+    setSelectedAddons([]);
+  }
 
   const mainColor = theme.palette.text.menuText;
   const currencyColor = theme.palette.text.currency;
@@ -170,10 +178,7 @@ const ProductModal = ({
         aria-labelledby="modal-title"
         aria-describedby="modal-desc"
         open={open || modalOpen}
-        onClose={() => {
-          setOpen(false);
-          setModalOpen(false);
-        }}
+        onClose={() => handleDelete()}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -276,7 +281,7 @@ const ProductModal = ({
                           }}
                           onClick={() => {
                             if (qty > 1) {
-                              setQty(qty - 1);
+                              setQty(Number(qty) - 1);
                             }
                           }}
                         />
@@ -303,7 +308,7 @@ const ProductModal = ({
                             backgroundColor: "background.body",
                           }}
                           onClick={() => {
-                            setQty(qty + 1);
+                            setQty(Number(qty) + 1);
                           }}
                         />
                       </Box>
@@ -331,28 +336,23 @@ const ProductModal = ({
                       textColor={"text.currency"}
                       mb={1}
                     >
-                   {specialPrice !== 0 && priceOriginal !== specialPrice && (
-    <Typography
-        sx={{ textDecoration: "line-through" }}
-        textColor={theme.palette.text.currency}
-        fontSize={theme.fontSize.xs}
-        fontWeight={theme.fontWeight.sm}
-    >
-        {formatePrice(priceOriginal)}
-    </Typography>
-)}
-
+                      {specialPrice !== 0 && priceOriginal !== specialPrice && (
+                        <Typography
+                          sx={{ textDecoration: "line-through" }}
+                          textColor={theme.palette.text.currency}
+                          fontSize={theme.fontSize.xs}
+                          fontWeight={theme.fontWeight.lg}
+                        >
+                          {formatePrice(priceOriginal)}
+                        </Typography>
+                      )}
 
                       {specialPrice != 0
                         ? `${formatePrice(specialPrice)} ${
-                            qty > 1
-                              ? `| ${formatePrice(specialPrice * qty)} x ${qty}`
-                              : ""
+                            qty > 1 ? ` x ${qty}` : ""
                           }`
                         : `${formatePrice(price)} ${
-                            qty > 1
-                              ? `| ${formatePrice(price * qty)} x ${qty}`
-                              : ""
+                            qty > 1 ? ` x ${qty}` : ""
                           }`}
                     </Typography>
                   </CardContent>

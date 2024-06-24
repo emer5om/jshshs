@@ -34,9 +34,9 @@ import SearchBar from "../GlobalSearch/SearchBar";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { closeSearchDrawer } from "../../store/reducers/searchDrawerSlice";
+import Image from "next/image";
 
 function SearchModal({ displayStyle = "icon" }) {
-  
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState([]);
@@ -55,7 +55,6 @@ function SearchModal({ displayStyle = "icon" }) {
   useEffect(() => {
     setOpen(isSearchOpen); // Set open state based on isSearchOpen
     setIsFocused(true);
-
   }, [isSearchOpen]); // Re-run when isSearchOpen changes
 
   const inputRef = useRef();
@@ -191,6 +190,8 @@ function SearchModal({ displayStyle = "icon" }) {
                 sx={{ maxHeight: 700, overflow: "auto" }}
               >
                 {products.map((item) => (
+
+
                   <Grid md={6} xs={12} key={item.id}>
                     <ProductCards
                       image={item.image}
@@ -208,19 +209,35 @@ function SearchModal({ displayStyle = "icon" }) {
                   </Grid>
                 ))}
               </Grid>
-            ) : (
-              <Typography
-                display={{ xs: "flex", md: "flex" }}
-                justifyContent={"center"}
-                alignItems={"center"}
-                width={"100%"}
-                textAlign={"center"}
-                fontSize={"lg"}
-                fontWeight={"xl"}
-                textTransform={"none !important"} // Set text transform to none
+            ) : searchQuery ? (
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                width="100%"
               >
-                {t("search-food-as-per-your-liking")}
-              </Typography>
+                <Image
+                  src="/no-item-found.svg"
+                  width={500}
+                  height={500}
+                  alt="No product found"
+                />
+              </Box>
+            ) : (
+              <Box>
+                <Typography
+                  display={{ xs: "flex", md: "flex" }}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  width={"100%"}
+                  textAlign={"center"}
+                  fontSize={"lg"}
+                  fontWeight={"xl"}
+                  textTransform={"none !important"} // Set text transform to none
+                >
+                  {t("search-food-as-per-your-liking")}
+                </Typography>
+              </Box>
             )}
           </DialogContent>
         </ModalDialog>

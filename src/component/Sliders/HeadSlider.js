@@ -45,7 +45,7 @@ const HeadSlider = ({ images = [1, 2, 3] }, isLoading) => {
         {images.map((image, index) => {
           let link = "#";
           if (image.type == "categories") {
-            link = "/categories/" + image.data[0].slug;
+            link = "/categories/" + image?.data[0]?.slug;
           }
           return (
             <SwiperSlide key={index}>

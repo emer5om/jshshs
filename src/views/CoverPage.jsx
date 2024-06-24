@@ -101,49 +101,6 @@ const CoverPage = () => {
     );
   }
 
-  // const handleSelect = async (value) => {
-  //   setAddress(value); // Dispatching the setAddress action with the selected value
-
-  //   try {
-  //     const results = await geocodeByAddress(value);
-  //     const latLng = await getLatLng(results[0]);
-
-  //     const city = results[0].address_components.find((component) =>
-  //       component.types.includes("locality")
-  //     );
-
-
-  //     if (city?.long_name) {
-  //       try {
-  //         const { lat, lng } = latLng;
-
-  //         const delivery = await is_city_deliverable({
-  //           name: city?.long_name,
-  //           latitude: lat,
-  //           longitude: lng,
-  //         });
-
-  //         // Assuming you have another action creator named setNewAddress from another slice
-  //         dispatch(setNewAddress({ city: city.long_name, lat: lat, lng: lng }));
-
-  //         if (delivery.error) {
-  //           return toast.error(delivery.message);
-  //         } else {
-  //           const branch_id = delivery.data[0].branch_id;
-  //           changeBranchId({ branch_id });
-  //           await router.push("/home");
-  //         }
-  //       } catch (error) {
-  //         return toast.error(error.message);
-  //       }
-  //     } else {
-  //       return toast.error("Please Select City");
-  //     }
-  //   } catch (error) {
-  //     console.log("Error:", error);
-  //   }
-  // };
-
   const handleSelect = async (value) => {
     setAddress(value); // Dispatching the setAddress action with the selected value
   
@@ -250,66 +207,6 @@ const CoverPage = () => {
   const demoMode = process.env.NEXT_PUBLIC_DEMO_MODE;
 
 
-  // const handleGPS = () => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       async (position) => {
-  //         const { latitude, longitude } = position.coords;
-  //         // Do something with the latitude and longitude values
-  //         try {
-  //           const results = await geocodeByAddress(`${latitude},${longitude}`);
-  //           if (results && results.length > 0) {
-  //             const address = results[0].formatted_address;
-
-  //             // You can extract city name or other relevant information from the address
-  //             const city = results[0].address_components.find((component) =>
-  //               component.types.includes("locality")
-  //             );
-
-  //             setAddress(address);
-
-  //             if (city) {
-  //               let delivery;
-  //               try {
-  //                 delivery = await is_city_deliverable({
-  //                   name: city.long_name,
-  //                   latitude,
-  //                   longitude,
-  //                 });
-  //                 dispatch(
-  //                   setNewAddress({
-  //                     city: city.long_name,
-  //                     lat: latitude,
-  //                     lng: longitude,
-  //                   })
-  //                 );
-  //                 if (delivery.error) {
-  //                   return toast.error(delivery.message);
-  //                 } else {
-  //                   const branch_id = delivery.data[0].branch_id;
-  //                   changeBranchId({ branch_id });
-  //                   await router.push("/home");
-  //                   return toast.success(delivery.message);
-  //                 }
-  //               } catch (error) {
-  //                 return toast.error(error.message);
-  //               }
-  //             } else {
-  //               return toast.error("Please Select City");
-  //             }
-  //           }
-  //         } catch (error) {
-  //           console.error("Error geocoding coordinates:", error);
-  //         }
-  //       },
-  //       (error) => {
-  //         console.error("Error getting location:", error.message);
-  //       }
-  //     );
-  //   } else {
-  //     console.error("Geolocation is not supported by this browser.");
-  //   }
-  // };
 
   const handleGPS = async () => {
     if (demoMode === "true") {
@@ -537,6 +434,7 @@ const CoverPage = () => {
                             minWidth: "100%", // Example minimum width
                             maxHeight: "200px", // Example maximum height
                             overflowY: "auto", // Enable vertical scrolling if needed
+                            backgroundColor:theme.palette.background.body
                           }}
                         >
                           {loading && <>Loading...</>}
@@ -616,7 +514,7 @@ const CoverPage = () => {
           position: "relative",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
             top: "-115px",
@@ -642,62 +540,94 @@ const CoverPage = () => {
             alt="Your image"
             style={{ width: "100%", height: "100%" }}
           />
-        </Box>
+        </Box> */}
+
+<Box
+  sx={{
+    position: "absolute",
+    top: "-10%",
+    left: "-20%",
+    width: "100%",
+    height: "160%",
+    backgroundImage: `url('/coverpage/pan.svg')`, // Add background image here
+    backgroundSize: "cover", // Adjust background size as needed
+    backgroundPosition: "center", // Adjust background position as needed
+    [theme.breakpoints.down("md")]: {
+      top: "-14%",
+      left: "-3%",
+      width: "21%",
+      height: "41%",
+    },
+    [theme.breakpoints.down("sm")]: {
+      top: "-92px",
+      left: "-8px",
+      width: "45%",
+      height: "21%",
+    },
+  }}
+/>
+
+
+<Box
+  sx={{
+    position: "absolute",
+    top: "-15%",
+    left: "92%",
+    width: "9%",
+    height: "40%",
+    backgroundImage: `url('/coverpage/garlic-cover-page.svg')`, // Add background image here
+    backgroundSize: "cover", // Adjust background size as needed
+    backgroundPosition: "center", // Adjust background position as needed
+    [theme.breakpoints.down("lg")]: {
+      top: "-11%",
+      left: "90%",
+      width: "12%",
+      zIndex: -99999,
+      height: "39%",
+    },
+    [theme.breakpoints.down("md")]: {
+      top: "33%",
+      left: "90%",
+      width: "14%",
+      height: "27%",
+    },
+    [theme.breakpoints.down("sm")]: {
+      top: "-20px",
+      left: "-120px",
+      width: "150%",
+      height: "auto",
+    },
+  }}
+/>
+
 
         <Box
           sx={{
             position: "absolute",
-            top: "-65px",
-            left: "88%",
-            width: "20%",
-            height: "40%",
-            [theme.breakpoints.down("lg")]: {
-              top: "-11%",
-              left: "90%",
-              width: "12%",
-              zIndex: -99999,
-              height: "39%",
-            },
-            [theme.breakpoints.down("md")]: {
-              top: "33%",
-              left: "90%",
-              width: "14%",
-              height: "27%",
-            },
-            [theme.breakpoints.down("sm")]: {
-              top: "-20px",
-              left: "-120px",
-              width: "150%",
-              height: "auto",
-            },
-          }}
-        >
-          <img
-            src="/coverpage/garlic-cover-page.svg"
-            alt="Your image"
-            style={{
-              position: "absolute",
-
-              width: "100%",
-              height: "100%",
-            }}
-          />
-        </Box>
-
-        <Box
-          sx={{
-            position: "absolute",
-            top: "-35px",
-            left: "430px",
+            top: "2px",
+            left: "480px",
             width: "40%",
             zIndex: -99999,
             height: "20%",
-            [theme.breakpoints.down("md")]: {
-              top: "41%",
-              left: "-13%",
+            [theme.breakpoints.down("xl")]: {
+              top: "2px",
+              left: "33%",
+              width: "40%",
+              zIndex: -99999,
+              height: "20%",
+            },
+              [theme.breakpoints.down("lg")]: {
+              top: "1%",
+              left: "29%",
               width: "50%",
               zIndex: -99999,
-              height: "10%",
+              height: "20%",
+            },[theme.breakpoints.down("md")]: {
+              top: "41%",
+              left: "-20%",
+              width: "50%",
+              zIndex: -99999,
+              height: "13%",
             },
             [theme.breakpoints.down("sm")]: {
               top: "447px",
@@ -732,21 +662,21 @@ const CoverPage = () => {
         <Box
           sx={{
             position: "absolute",
-            top: "210%",
-            left: "117%",
+            top: "223%",
+            left: "97%",
             width: "16%",
             zIndex: -99999,
             height: "23%",
 
             [theme.breakpoints.down("xl")]: {
-              top: "192%",
-              left: "87%",
+              top: "231%",
+              left: "91%",
               width: "10%",
               zIndex: -99999,
               height: "22%",
             },
             [theme.breakpoints.down("lg")]: {
-              top: "192%",
+              top: "210%",
               left: "87%",
               width: "15%",
               zIndex: -99999,
@@ -826,7 +756,7 @@ const CoverPage = () => {
         <Box
           sx={{
             position: "absolute",
-            top: "339px",
+            top: "500px",
             left: "-690px",
             width: "100%",
             height: "30%",
@@ -867,14 +797,14 @@ const CoverPage = () => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-between", // Add this line
-                height: "100%", // Ensure the container takes the full height of its parent
+                justifyContent: "space-between", 
+                height: "100%", 
                 paddingY: 3,
               }}
             >
               <Typography
                 level="h4"
-                sx={{ mb: 2, color: theme.palette.text.currency }}
+                sx={{ mb: 2, color: theme.palette.text.currency,zIndex:999999999999999 }}
               >
                 Our Story & Services
               </Typography>

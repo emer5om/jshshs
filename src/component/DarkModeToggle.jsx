@@ -36,9 +36,12 @@ function DarkModeToggle() {
   return (
     <IconButton onClick={handleToggle} color="inherit" sx={{}}>
       {isDarkMode == "dark" ? (
-        <SunFillIcon color={mode == "dark" ? "white" : "black" } size={"20px"} />
+        <MoonFillIcon
+          color={mode == "light" ? "black" : "white"}
+          size={"20px"}
+        />
       ) : (
-        <MoonFillIcon color={mode == "light" ? "black" : "white" } size={"20px"} />
+        <SunFillIcon color={mode == "dark" ? "white" : "black"} size={"20px"} />
       )}
     </IconButton>
   );

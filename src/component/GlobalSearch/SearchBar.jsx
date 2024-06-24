@@ -43,6 +43,9 @@ const SearchBar = ({ onClick }) => {
               "& .MuiInputBase-input.Mui-disabled": {
                 WebkitTextFillColor: "#000000",
               },
+              "& input::placeholder": {
+                fontSize: "14px", // Adjust the font size as per your requirement
+              },
             }}
             endDecorator={
               <RiSearch2Line

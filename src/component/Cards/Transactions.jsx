@@ -20,7 +20,10 @@ import { formatePrice } from "@/helpers/functonHelpers";
 const Transactions = ({ id, status, date, type, message, amount }) => {
   const theme = useTheme();
 
+  console.log("datedate",date)
+
   const currentDate = new Date();
+
   const formattedDate = format(currentDate, "yyyy-MM-dd");
 
   return (
@@ -100,9 +103,9 @@ const Transactions = ({ id, status, date, type, message, amount }) => {
             }
             fontSize={"sm"}
             fontWeight={"md"}
-            sx={{ opacity: "75%" }}
+            sx={{ opacity: "95%" }}
           >
-            {date}
+            {format(date, "yyyy-MM-dd")}
           </Typography>
         </Box>
         <Box>
@@ -125,7 +128,7 @@ const Transactions = ({ id, status, date, type, message, amount }) => {
             }
             fontSize={"sm"}
             fontWeight={"md"}
-            sx={{ opacity: "75%" }}
+            sx={{ opacity: "95%" }}
           >
             {type ?? "Credit"}
           </Typography>
@@ -150,7 +153,7 @@ const Transactions = ({ id, status, date, type, message, amount }) => {
             }
             fontSize={"sm"}
             fontWeight={"md"}
-            sx={{ opacity: "75%" }}
+            sx={{ opacity: "95%" }}
           >
             {message ?? "Payment Success"}
           </Typography>

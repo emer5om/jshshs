@@ -29,14 +29,14 @@ export default function Home() {
   }, [settings]);
 
   return (
-    <>
+    <Box>
       <HeadTitle title={""} />
       {setting && (
         <Head>
           <link rel="icon" href={setting.favicon} type="image/*" sizes="any" />
         </Head>
       )}
-      <Container>
+      <Container maxWidth={"xl"} >
         <CoverPage />
         <Container>
           <MobileAppSection />
@@ -64,6 +64,6 @@ export default function Home() {
           {setting.copyright_details}
         </Typography>
       </Box>
-    </>
+    </Box>
   );
 }

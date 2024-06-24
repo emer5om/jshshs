@@ -4,6 +4,7 @@ import { initReactI18next } from "react-i18next";
 import translationEN from "./locales/en.json";
 import translationHI from "./locales/hi.json";
 import translationAR from "./locales/ar.json";
+import translationFR from "./locales/fr.json";
 import { store } from "@/store/store";
 
 let currentLanguage = store.getState().language.value; // Get the initial language value
@@ -23,6 +24,7 @@ i18n.use(initReactI18next).init({
     en: { translation: translationEN },
     hi: { translation: translationHI },
     ar: { translation: translationAR },
+    fr: { translation: translationFR },
   },
   lng: currentLanguage, // Set the initial language
   fallbackLng: "en",
@@ -43,4 +45,6 @@ export const languages = {
   en: "English",
   hi: "हिंदी",
   ar: "العربية",
+  fr: "Français",
+
 };

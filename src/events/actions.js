@@ -35,7 +35,7 @@ export const login = async ({ phoneNumber } = {}) => {
   const formData = new FormData();
   formData.append("mobile", phoneNumber);
   const res = await api.post("/login", formData);
-  if (res.error) return res;
+  if (res.data.error) return res;
   else {
     store.dispatch(setAuth(res.data));
     onLoggedIn();
@@ -126,7 +126,7 @@ export const updateUserCart = async () => {
   try {
     const res = await api.post("/get_user_cart", formData);
     store.dispatch(setCart(res.data));
-    store.dispatch(setPromoCode([]));
+    // store.dispatch(setPromoCode([]));
   } catch (error) {
     console.error("error while updating cart:", error);
   }
@@ -175,7 +175,7 @@ export const updateUserData = async (data) => {
 
 export const setProductRating = async (data) => {
   const formData = new FormData();
-  // formData.append("user_id", data.user_id);
+  formData.append("user_id", data.user_id);
   formData.append("product_id", data.product_id);
   formData.append("rating", data.rating);
   formData.append("comment", data.message);

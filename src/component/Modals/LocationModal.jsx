@@ -16,7 +16,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/joy";
-import debounce from 'lodash.debounce';
+import debounce from "lodash.debounce";
 
 import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import { RiCrosshair2Fill, RiMapPinFill } from "@remixicon/react";
@@ -26,7 +26,7 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import { extractAddress } from "@/helpers/functonHelpers";
 import { is_city_deliverable } from "@/interceptor/routes";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import { onBranchIdChange } from "@/events/events";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddress as setNewAddress } from "@/store/reducers/selectedMapAddressSlice";
@@ -61,9 +61,7 @@ const LocationModal = () => {
   const isMd = useMediaQuery(theme.breakpoints.up("md"));
   const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
-
   const handleMapClick = async (event) => {
-
     setSelectedLocation({ lat: event.latLng.lat(), lng: event.latLng.lng() });
 
     const latitude = event.latLng.lat();
@@ -87,20 +85,26 @@ const LocationModal = () => {
               latitude,
               longitude,
             });
-            dispatch(setNewAddress({ city: city.long_name }));
+
+            console.log(delivery);
+
             if (delivery.error) {
               return toast.error(delivery.message);
             } else {
-              const branch_id = delivery.data[0].branch_id;
-              dispatch(setBranchId(branch_id));
-              onBranchIdChange({
-                branch_id,
-              });
-              // setOpen(false);
+              const branch_id = delivery?.data[0]?.branch_id;
 
-              return toast.success(delivery.message);
+              console.log(branch_id)
+
+              if (branch_id) {
+                dispatch(setNewAddress({ city: city.long_name }));
+
+                return toast.success(delivery.message);
+              } else {
+                toast.error(delivery.message);
+              }
             }
           } catch (error) {
+            console.log(error);
             return toast.error(error.message);
           }
         } else {
@@ -112,23 +116,18 @@ const LocationModal = () => {
     }
   };
 
-  const handleMapDrag =  (event) => {
-
-    setSelectedLocation({ lat: event.latLng.lat(), lng: event.latLng.lng() });
-
+  const handleMapDrag = (event) => {
+    // setSelectedLocation({ lat: event.latLng.lat(), lng: event.latLng.lng() });
     // const latitude = event.latLng.lat();
     // const longitude = event.latLng.lng();
-
     // try {
     //   const results = await geocodeByAddress(`${latitude},${longitude}`);
     //   if (results && results.length > 0) {
     //     const address = results[0].formatted_address;
-
     //     // You can extract city name or other relevant information from the address
     //     const city = results[0].address_components.find((component) =>
     //       component.types.includes("locality")
     //     );
-
     //     if (city) {
     //       let delivery;
     //       try {
@@ -147,7 +146,6 @@ const LocationModal = () => {
     //             branch_id,
     //           });
     //           // setOpen(false);
-
     //           return toast.success(delivery.message);
     //         }
     //       } catch (error) {
@@ -161,7 +159,6 @@ const LocationModal = () => {
     //   console.error("Error geocoding coordinates:", error);
     // }
   };
-
 
   const mapOptions = {
     streetViewControl: false, // Hide street view control
@@ -204,21 +201,24 @@ const LocationModal = () => {
           return toast.error(delivery.message);
         } else {
           dispatch(setNewAddress({ city: completeAddress.city }));
-          const branch_id = delivery.data[0].branch_id;
-          dispatch(setBranchId(branch_id));
+          const branch_id = delivery.data[0]?.branch_id;
 
-          onBranchIdChange({
-            branch_id,
-          });
-          setOpen(false);
+          if (branch_id) {
+            dispatch(setBranchId(branch_id));
 
-          return toast.success(delivery.message);
+            onBranchIdChange({
+              branch_id,
+            });
+            setOpen(false);
+            return toast.success(delivery.message);
+          } else {
+            toast.error("We doesn't delviery the foods at selected city!");
+          }
         }
       } catch (error) {
         console.log(error);
         return toast.error(error.message);
       }
-
     } catch (error) {
       console.error("Error selecting place: ", error);
     }
@@ -249,12 +249,14 @@ const LocationModal = () => {
                     latitude,
                     longitude,
                   });
-                  dispatch(setNewAddress({ city: city.long_name }));
                   if (delivery.error) {
                     return toast.error(delivery.message);
                   } else {
-                    const branch_id = delivery.data[0].branch_id;
+                    const branch_id = delivery?.data[0]?.branch_id;
+                    console.log(branch_id);
+
                     dispatch(setBranchId(branch_id));
+                    dispatch(setNewAddress({ city: city.long_name }));
 
                     onBranchIdChange({
                       branch_id,
@@ -286,9 +288,7 @@ const LocationModal = () => {
     setAddress(newAddress);
   };
 
-
   const debouncedHandleMapClick = debounce(handleMapClick, 500); // Debounce delay in milliseconds
-
 
   return (
     <>
@@ -298,7 +298,9 @@ const LocationModal = () => {
         onClick={() => setOpen(true)}
         sx={{ p: 0, minWidth: "30px" }}
       >
-        <RiMapPinFill  color={theme.palette.mode == "dark" ? "white" : "black" } />
+        <RiMapPinFill
+          color={theme.palette.mode == "dark" ? "white" : "black"}
+        />
       </Button>
 
       <Typography
@@ -371,11 +373,11 @@ const LocationModal = () => {
                         className: "location-search-input",
                       })}
                     />
-                    <div className="autocomplete-dropdown-container"
-                    
-                    style={{
-                      overflowY: "auto", // Enable vertical scrolling if needed
-                    }}
+                    <div
+                      className="autocomplete-dropdown-container"
+                      style={{
+                        overflowY: "auto", // Enable vertical scrolling if needed
+                      }}
                     >
                       {loading && <>Loading...</>}
                       {suggestions.map((suggestion, index) => {
@@ -406,7 +408,6 @@ const LocationModal = () => {
           </Grid>
           <Grid container spacing={2} sx={{ flexGrow: 1, mt: 2 }}>
             <Grid xs={12}>
-
               <GoogleMap
                 mapContainerStyle={{
                   width: isMd ? "100%" : "100%",
@@ -418,10 +419,12 @@ const LocationModal = () => {
                 options={mapOptions} // Set map options
               >
                 <zoomControl /> Show zoom controls
-                <MarkerF onDragEnd={(e) => handleMapDrag(e)} position={selectedLocation} draggable={true} />
+                <MarkerF
+                  onDragEnd={(e) => handleMapDrag(e)}
+                  position={selectedLocation}
+                  draggable={true}
+                />
               </GoogleMap>
-
-
             </Grid>
           </Grid>
           <DialogActions>

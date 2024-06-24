@@ -57,11 +57,12 @@ password:password
 
     const handleRegister = async () => {
         const userRegister = await register(prefill)
-        if (userRegister?.error) {
-            return toast.error(userRegister?.message)
+
+        if (userRegister?.error || userRegister?.data?.error ) {
+            return toast.error(userRegister?.message ? userRegister?.message : userRegister?.data?.message )
         } else {
             setOpenRegisterModal(false)
-            return toast.success(userRegister?.message)
+            return toast.success(userRegister?.message ? userRegister?.message : userRegister?.data?.message)
         }
     }
 

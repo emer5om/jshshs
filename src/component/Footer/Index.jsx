@@ -21,12 +21,24 @@ const Index = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   return (
-    <Grid mt={8} container sx={{px:{xs:1,sm:4, md:4}}} bgcolor={theme.palette.background.footer}>
+    <Grid
+      mt={8}
+      container
+      sx={{ px: { xs: 1, sm: 4, md: 4 } }}
+      bgcolor={theme.palette.background.footer}
+    >
       <Grid
         xs={12}
-        sx={{ height: "100%", padding: {xs:1,sm:2}, color: "white", width: "100%" }}
+        sx={{
+          height: "100%",
+          padding: { xs: 1, sm: 2 },
+          color: "white",
+          width: "100%",
+        }}
       >
-        <Box sx={{ marginTop: {xs:2 }, textAlign: { xs: "center", md: "left" } }}>
+        <Box
+          sx={{ marginTop: { xs: 2 }, textAlign: { xs: "center", md: "left" } }}
+        >
           <Grid container spacing={4} m={0} width={"100%"} color={"white"}>
             <Grid xs={12} md={6}>
               <Box
@@ -35,14 +47,14 @@ const Index = () => {
                 flexDirection={"column"}
               >
                 <Box display={"flex"} alignItems={"center"}>
-  <img
-    src={setting.light_logo}
-    alt="logo"
-    height={50}
-    style={{ maxWidth: "100%" }} // Set maxWidth to prevent stretching
-    loading="lazy"
-  />
-</Box>
+                  <img
+                    src={setting.light_logo}
+                    alt="logo"
+                    height={50}
+                    style={{ maxWidth: "100%" }} // Set maxWidth to prevent stretching
+                    loading="lazy"
+                  />
+                </Box>
 
                 <Box mt={2}>
                   <Typography level="title-sm" textColor={"white"}>
@@ -143,7 +155,7 @@ const Index = () => {
                 alignItems={"center"}
                 justifyContent={"center"}
               >
-                <Link href={setting.facebook_link ? setting.facebook_link : ""}>
+                <Link href={setting.facebook_link ? 'https://'+setting.facebook_link : ""}>
                   <Box
                     sx={{
                       border: "1px solid",
@@ -160,7 +172,7 @@ const Index = () => {
                   </Box>
                 </Link>
                 <Link
-                  href={setting.instagram_link ? setting.instagram_link : ""}
+                  href={setting.instagram_link ? 'https://'+setting.instagram_link : ""}
                 >
                   <Box
                     sx={{
@@ -177,7 +189,10 @@ const Index = () => {
                     <InstagramFillIcon className="noRotate" size={25} />
                   </Box>
                 </Link>
-                <Link href={setting.youtube_link ? setting.youtube_link : ""}>
+                <Link
+                  href={setting.twitter_link ? 'https://'+setting.twitter_link : ""}
+                  passHref
+                >
                   <Box
                     sx={{
                       border: "1px solid",
@@ -193,7 +208,7 @@ const Index = () => {
                     <TwitterLineIcon className="noRotate" size={25} />
                   </Box>
                 </Link>
-                <Link href={setting.youtube_link ? setting.youtube_link : ""}>
+                <Link href={setting.youtube_link ? 'https://'+setting.youtube_link : ""}>
                   <Box
                     sx={{
                       border: "1px solid",
@@ -216,11 +231,25 @@ const Index = () => {
                 textColor={"#ffff"}
                 sx={{ textAlign: { xs: "center", md: "left" } }}
               >
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: setting && setting.copyright_details,
-                  }}
-                />
+                {process.env.NEXT_PUBLIC_DEMO_MODE ? (
+
+                  <>
+                    Copyright © 2024, All Rights Reserved{" "}
+                    <a
+                    target="_blank"
+                      href="https://wrteam.in"
+                      style={{ color: "#ffff", textDecoration: "underline !important" }}
+                      >
+                      WRTeam
+                    </a>
+                  </>
+                ) : (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: setting && setting.copyright_details,
+                    }}
+                  />
+                )}
               </Typography>
             </Grid>
           </Grid>

@@ -57,6 +57,8 @@ const PaymentModal = ({
   settings = settings.value.paymentMethod.payment_method;
 
   const cartStoreData = useSelector((state) => state.cart);
+
+
   const branchData = useSelector((state) => state.branch);
   const branch_id = branchData.id;
 
@@ -72,7 +74,16 @@ const PaymentModal = ({
 
   let methods = [];
 
-  const is_cod_available = cod_settings?.paymentMethod?.is_cod_allowed;
+  // const is_cod_available = cod_settings?.paymentMethod?.is_cod_allowed;
+
+  let is_cod_available = true;
+
+  cartStoreData?.data.forEach((product) => {
+    if (product?.product_details[0]?.cod_allowed == 0) {
+      is_cod_available = false;
+    }
+  });
+
   const stripePG = settings.stripe_payment_method == 1 ? true : false;
   const razorpayPG = settings.razorpay_payment_method == 1 ? true : false;
   const paypalPG = settings.paypal_payment_method == 1 ? true : false;
@@ -370,17 +381,14 @@ const PaymentModal = ({
 
           {openCOD && (
             <Button
-            fullWidth
-            variant="soft"
-           onClick={() => handlePaymentOrder()}
-           disabled={loading}
-        >
-           {loading ? <CircularProgress 
-              
-             /> : "Place Order"}
-         </Button>
+              fullWidth
+              variant="soft"
+              onClick={() => handlePaymentOrder()}
+              disabled={loading}
+            >
+              {loading ? <CircularProgress /> : "Place Order"}
+            </Button>
           )}
-         
         </ModalDialog>
       </Modal>
     </Box>

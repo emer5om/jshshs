@@ -1,6 +1,7 @@
 {
   "home": "Home",
   "menu": "Menu",
+  "explore-menu": "Explore Menu",
   "products": "Products",
   "offers": "Offers",
   "my-profile": "My Profile",
@@ -150,5 +151,6 @@
   "please-select-delivery-address":"Please Select Delivery address",
   "left-to-right":"left to Right",
   "right-to-left":"Right to Left",
-  "get-upto":"Get Up To"
+  "get-upto":"Get Up To",
+  "failed-to-verify-otp":"incorrect OTP. Please try again."
 }

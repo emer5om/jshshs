@@ -16,7 +16,12 @@ import toast from "react-hot-toast";
 import OtpInput from "otp-input-react";
 import { login } from "@/events/actions";
 import firebaseConfig from "@/@core/firebase";
-import { verify_user } from "@/interceptor/routes";
+import {
+  verify_user_firebase,
+  verify_user,
+  verify_otp,
+  resend_otp,
+} from "@/interceptor/routes";
 import "react-phone-input-2/lib/material.css";
 import { RiArrowLeftLine, RiTimer2Line } from "@remixicon/react";
 import RegisterModal from "./RegisterModal";
@@ -42,6 +47,11 @@ export default function LoginModal({ loginModalState, onClose }) {
   const firebase = firebaseConfig();
 
   const Auth = useSelector((state) => state.authentication);
+
+  const Authentication_mode = useSelector(
+    (state) => state?.settings?.value?.authentication_mode
+  );
+
   const theme = useTheme();
 
   useEffect(() => {
@@ -53,7 +63,7 @@ export default function LoginModal({ loginModalState, onClose }) {
     );
   }, [firebase.firebase.auth]);
 
-  const handleSendOTP = useCallback(async () => {
+  const handleSendOTPFirebase = useCallback(async () => {
     if (!state.phoneNumber) {
       toast.error(t("please-enter-your-number"));
       return;
@@ -88,6 +98,55 @@ export default function LoginModal({ loginModalState, onClose }) {
     }
   }, [state.phoneNumber, firebase.auth, t]);
 
+  const handleSendOTP = useCallback(async () => {
+    if (!state.phoneNumber) {
+      toast.error(t("please-enter-your-number"));
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      sendOtp: true,
+    }));
+
+    try {
+      // Replace this block with your own API call to send OTP
+      const response = await verify_user({ mobile: state.phoneNumber });
+
+      const data = await response;
+
+      console.log(data);
+
+      if (!response.error) {
+        // Assume your backend returns a success message
+        toast.success(t("otp-sent-successfully"));
+        // Save some identifier for the OTP verification
+        // For example, if your backend returns an OTP session ID, save it in state
+        setState((prevState) => ({
+          ...prevState,
+          otpSessionId: data.otpSessionId, // Adjust according to your backend response
+          sendOtp: false,
+          isLoading: true,
+        }));
+      } else {
+        // Handle backend errors
+        toast.error(data.error);
+        setState((prevState) => ({
+          ...prevState,
+          isLoading: false,
+          sendOtp: false,
+        }));
+      }
+    } catch (error) {
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        sendOtp: false,
+      }));
+      toast.error(error.message);
+    }
+  }, [state.phoneNumber, t]);
+
   useEffect(() => {
     let interval;
     if (state.resendDisabled) {
@@ -101,7 +160,7 @@ export default function LoginModal({ loginModalState, onClose }) {
     return () => clearInterval(interval);
   }, [state.resendDisabled]);
 
-  const handleResendOTP = useCallback(async () => {
+  const handleResendOTPFirebase = useCallback(async () => {
     try {
       setState((prevState) => ({
         ...prevState,
@@ -128,10 +187,36 @@ export default function LoginModal({ loginModalState, onClose }) {
     }
   }, [state.phoneNumber, firebase.auth]);
 
-  const verifyUser = useCallback(async () => {
+  const handleResendOTP = useCallback(async () => {
+    try {
+      setState((prevState) => ({
+        ...prevState,
+        resendDisabled: true,
+        resendTime: 30,
+      }));
+
+      const response = await resend_otp({ mobile: state.phoneNumber });
+
+      const data = await response;
+
+      if (!response.error) {
+        setTimeout(() => {
+          setState((prevState) => ({ ...prevState, resendDisabled: false }));
+        }, 30000);
+      } else {
+        toast.error(data.error);
+        setState((prevState) => ({ ...prevState, resendDisabled: false }));
+      }
+    } catch (error) {
+      toast.error(error.message);
+      setState((prevState) => ({ ...prevState, resendDisabled: false }));
+    }
+  }, [state.phoneNumber]);
+
+  const verifyUserFirebase = useCallback(async () => {
     try {
       const number = state.phoneNumber.slice(2);
-      const verify = await verify_user({ mobile: number });
+      const verify = await verify_user_firebase({ mobile: number });
       return verify;
     } catch (error) {
       console.error("Verify User Error:", error);
@@ -139,7 +224,7 @@ export default function LoginModal({ loginModalState, onClose }) {
     }
   }, [state.phoneNumber]);
 
-  const handleOTPVerification = useCallback(async () => {
+  const handleOTPVerificationFirebase = useCallback(async () => {
     if (!state.otp) {
       toast.error(t("please-enter-verification-code"));
       return;
@@ -150,22 +235,33 @@ export default function LoginModal({ loginModalState, onClose }) {
 
     try {
       await window.confirmationResult.confirm(state.otp);
-      const verify = await verifyUser();
-      if (verify.error) {
+
+      const verify = await verifyUserFirebase();
+
+      if (verify && verify.error) {
         window.recaptchaVerifier.render().then((widgetId) => {
           grecaptcha.reset(widgetId);
         });
+
         setState((prevState) => ({
           ...prevState,
           openRegisterModal: true,
           verifyOtp: false,
         }));
+
+        toast.error(t("failed-to-verify-otp"));
       } else {
         const userLogin = await login({ phoneNumber: number });
-        if (userLogin.error) {
-          toast.error(userLogin.message);
+
+
+        if (userLogin?.error || userLogin?.data?.error) {
+          setState((prevState) => ({
+            ...prevState,
+            openRegisterModal: true,
+            verifyOtp: false,
+          }));
+          toast.error(userLogin?.data?.message);
         } else {
-          // toast.success(userLogin.message);
           toast.success("Login Successfully");
           onClose();
         }
@@ -174,7 +270,65 @@ export default function LoginModal({ loginModalState, onClose }) {
       setState((prevState) => ({ ...prevState, verifyOtp: false }));
       toast.error(t("failed-to-verify-otp"));
     }
-  }, [state.otp, state.phoneNumber, verifyUser, onClose, login, t]);
+  }, [state.otp, state.phoneNumber, verifyUserFirebase, onClose, login, t]);
+
+  const handleOTPVerification = useCallback(async () => {
+
+    if (!state.otp) {
+      toast.error(t("please-enter-verification-code"));
+      return;
+    }
+
+    setState((prevState) => ({ ...prevState, verifyOtp: true }));
+    const number = state.phoneNumber.slice(2);
+
+    try {
+      // Send OTP and phone number to your backend API for verification
+      const response = await verify_otp({
+        mobile: state.phoneNumber,
+        otp: state.otp,
+      });
+
+      const data = await response;
+
+      if (!response.error) {
+        if (!response.error) {
+          const userLogin = await login({ phoneNumber: number });
+
+          if (userLogin?.error || userLogin?.data?.error) {
+            toast.error(userLogin?.error ? "" : userLogin?.data?.message);
+
+            setState((prevState) => ({
+              ...prevState,
+              openRegisterModal: true,
+              verifyOtp: false,
+            }));
+          } else {
+            // toast.success(userLogin.message);
+            toast.success("Login Successfully");
+            onClose();
+          }
+        } else {
+          // Handle case where user is not verified
+          // window.recaptchaVerifier.render().then((widgetId) => {
+          //   grecaptcha.reset(widgetId);
+          // });
+        }
+      } else {
+        // Handle backend errors
+        setState((prevState) => ({
+          ...prevState,
+          verifyOtp: false,
+        }));
+
+        toast.error(data?.message);
+      }
+    } catch (err) {
+      console.log(err);
+      setState((prevState) => ({ ...prevState, verifyOtp: false }));
+      // toast.error(t("failed-to-verify-otp"));
+    }
+  }, [state.otp, state.phoneNumber, onClose, login, t]);
 
   return (
     <Box>
@@ -222,7 +376,9 @@ export default function LoginModal({ loginModalState, onClose }) {
                   }
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      handleSendOTP();
+                      Authentication_mode
+                        ? handleSendOTP()
+                        : handleSendOTPFirebase();
                     }
                   }}
                 />
@@ -231,7 +387,12 @@ export default function LoginModal({ loginModalState, onClose }) {
                   variant="solid"
                   color="primary"
                   fullWidth
-                  onClick={handleSendOTP}
+                  onClick={
+                    Authentication_mode ? handleSendOTP : handleSendOTPFirebase
+                  }
+                  sx={{
+                    borderRadius: "20px",
+                  }}
                   disabled={state.sendOtp}
                 >
                   {state.sendOtp ? t("loading") : t("login")}
@@ -253,7 +414,9 @@ export default function LoginModal({ loginModalState, onClose }) {
                 style={{ maxWidth: "100%", overflowX: "auto" }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    handleOTPVerification();
+                    Authentication_mode
+                      ? handleOTPVerification()
+                      : handleOTPVerificationFirebase();
                   }
                 }}
               >
@@ -301,7 +464,11 @@ export default function LoginModal({ loginModalState, onClose }) {
                 <Button
                   variant="outlined"
                   color="primary"
-                  onClick={handleResendOTP}
+                  onClick={
+                    Authentication_mode
+                      ? handleResendOTP
+                      : handleResendOTPFirebase
+                  }
                   disabled={state.isOTPLoading || state.resendDisabled}
                   startDecorator={state.resendDisabled && <RiTimer2Line />}
                 >
@@ -312,11 +479,17 @@ export default function LoginModal({ loginModalState, onClose }) {
                   variant="solid"
                   color="primary"
                   sx={{ width: "33%" }}
-                  onClick={handleOTPVerification}
+                  onClick={
+                    Authentication_mode
+                      ? handleOTPVerification
+                      : handleOTPVerificationFirebase
+                  }
                   disabled={state.verifyOtp}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      handleOTPVerification();
+                      Authentication_mode
+                        ? handleOTPVerification()
+                        : handleOTPVerificationFirebase();
                     }
                   }}
                 >

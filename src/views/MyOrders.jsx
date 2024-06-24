@@ -70,6 +70,7 @@ const MyOrders = () => {
               qty={item?.order_items?.length && item.order_items[0].quantity}
               date={item.dateTime}
               onCancel={onCancel}
+              isCancellable={item.order_items[0]?.is_cancelable}
             />
           </Grid>
         ))}

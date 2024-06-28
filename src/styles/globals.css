@@ -96,6 +96,10 @@ a {
   text-decoration: none !important;
 }
 
+.swiper {
+  width: 100% !important;
+}
+
 /* Default styles */
 .swiper-button-prev,
 .swiper-button-next {
@@ -234,45 +238,38 @@ html[data-joy-color-scheme="dark"] .special-label {
 
 .InputModalFocus {
   --Input-focused: 1;
-  tabindex:1
+  tabindex: 1;
 }
-
-
 
 div > .MUIInput.Mui-disabled {
   /* CSS styles for the input element */
-  background-color: var(--joy-palette-neutral-softBg) !important; 
-  color: var(--variant-softColor, var(--joy-palette-neutral-softColor, var(--joy-palette-neutral-700, #32383E)));
+  background-color: var(--joy-palette-neutral-softBg) !important;
+  color: var(
+    --variant-softColor,
+    var(
+      --joy-palette-neutral-softColor,
+      var(--joy-palette-neutral-700, #32383e)
+    )
+  );
 }
 
-
-[dir='rtl'] button.MuiModalClose-root {
+[dir="rtl"] button.MuiModalClose-root {
   left: var(--ModalClose-inset, 0.625rem);
   right: auto;
-
 }
-
-
-
-
-
-
 
 .MuiTab-root:not(.Mui-selected, [aria-selected="true"]):hover {
   background-color: transparent !important;
   color: transparent !important;
 }
 
-
 .MuiTab-root {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
 }
-
 
 @media screen and (max-width: 768px) {
   .grid-container-custom {
     display: none;
   }
 }
-

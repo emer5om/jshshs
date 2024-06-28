@@ -2,7 +2,7 @@
 import { getUserData, isLogged } from "@/events/getters";
 import { store } from "@/store/store";
 import axios from "axios";
-import useRouterWithInterceptor from './useRouter';
+import useRouterWithInterceptor from "./useRouter";
 
 const { handleLogout } = useRouterWithInterceptor();
 
@@ -25,7 +25,6 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
 
 api.interceptors.response.use(
   async function (response) {

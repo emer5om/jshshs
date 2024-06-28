@@ -262,7 +262,7 @@ const CoverPage = () => {
       }
     } else {
      if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
+      navigator?.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
           // Do something with the latitude and longitude values

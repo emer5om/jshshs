@@ -126,10 +126,22 @@ const ViewCart = () => {
     }
   };
 
-  const manageQty = async (addons, product_variant_id, qty) => {
+  const manageQty = async (
+    addons,
+    product_variant_id,
+    qty,
+    cart_id,
+    branch_id
+  ) => {
     if (qty < 0) toast.error("Quantity can not be less then 0!");
     else {
-      add_to_cart({ product_variant_id, qty, addons: addons });
+      add_to_cart({
+        product_variant_id,
+        qty,
+        addons: addons,
+        cart_id,
+        branch_id,
+      });
     }
   };
 
@@ -197,17 +209,14 @@ const ViewCart = () => {
                       label={item == "Delivery" ? t("delivery") : t("pick-up")}
                       sx={{ flexGrow: 1 }}
                       onChange={(e) => {
-                        
-                        if(e.target.value == "Pick Up"){
-                          setTip(0)
+                        if (e.target.value == "Pick Up") {
+                          setTip(0);
                         }
 
                         setDeliveryType(e.target.value);
                       }}
                       slotProps={{
-                        action: ({ checked }) => (
-                        
-                          {
+                        action: ({ checked }) => ({
                           sx: (theme) => ({
                             ...(checked && {
                               inset: -1,
@@ -561,6 +570,7 @@ const ViewCart = () => {
                                       index={index}
                                       buttonVariant="text"
                                       currentQty={item.qty}
+                                      cart_id={item.cart_id}
                                     />
                                     {/* vertical Divider */}
 
@@ -647,6 +657,8 @@ const ViewCart = () => {
 
                                 <ThrottledQuantitySelector
                                   initialValue={parseInt(item.qty)}
+                                  cart_id={item.cart_id}
+                                  branch_id={branch_id}
                                   manageQty={manageQty}
                                   productVariantId={item.product_variant_id}
                                   addons={

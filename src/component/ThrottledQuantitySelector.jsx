@@ -9,28 +9,29 @@ const ThrottledQuantitySelector = ({
   manageQty,
   productVariantId,
   addons,
+  cart_id,
+  branch_id,
 }) => {
   const [quantity, setQuantity] = useState(initialValue);
   const [throttleTimeout, setThrottleTimeout] = useState(null);
   const theme = useTheme();
 
+  // Fetch cart data from the Redux store
+  const cartData = useSelector((state) => state?.cart?.data);
 
- // Fetch cart data from the Redux store
- const cartData = useSelector((state) => state?.cart?.data);
-  
- // Find the cart item with the matching productVariantId
- const cartItem = cartData.find((item) => item.productVariantId == productVariantId);
+  // Find the cart item with the matching productVariantId
+  const cartItem = cartData.find(
+    (item) => item.productVariantId == productVariantId
+  );
 
- // Update local quantity state when cart item quantity changes
- useEffect(() => {
-   if (cartItem) {
-     setQuantity(cartItem.qty);
-   } else {
-     setQuantity(initialValue);
-   }
- }, [cartItem, initialValue]);
-
-  
+  // Update local quantity state when cart item quantity changes
+  useEffect(() => {
+    if (cartItem) {
+      setQuantity(cartItem.qty);
+    } else {
+      setQuantity(initialValue);
+    }
+  }, [cartItem, initialValue]);
 
   const handleClick = (type) => {
     if (throttleTimeout) {
@@ -49,13 +50,20 @@ const ThrottledQuantitySelector = ({
 
     const timeout = setTimeout(() => {
       if (type === "increment") {
-        manageQty(addons, productVariantId, quantity + 1);
+        manageQty(addons, productVariantId, quantity + 1, cart_id);
       } else if (type === "decrement") {
         const newQuantity = quantity - 1;
         const decrementedQuantity = quantity < 1 ? 1 : quantity;
 
         // Decrement qty
-        manageQty(addons, productVariantId, decrementedQuantity - 1);
+
+        manageQty(
+          addons,
+          productVariantId,
+          decrementedQuantity - 1,
+          cart_id,
+          branch_id
+        );
       }
     }, 800);
 

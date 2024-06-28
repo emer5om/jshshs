@@ -71,11 +71,16 @@ export const logout = async () => {
 export const add_to_cart = async ({
   product_variant_id,
   qty,
+  cart_id,
   addons = [],
+  branch_id,
 } = {}) => {
   // setPageLoader(true)
   let add_on_id = "";
   let add_on_qty = "";
+
+  console.log(addons);
+
   addons.map((val) => {
     if (add_on_id != "") {
       add_on_id += ",";
@@ -84,41 +89,72 @@ export const add_to_cart = async ({
     add_on_id += val.id;
     add_on_qty += qty;
   });
-  const data = {
-    product_variant_id,
-    qty: parseInt(qty),
-    add_on_id,
-    add_on_qty,
-    branch_id: getBranchId(),
-  };
+
+  console.log("add_on_id", add_on_id);
+
+  let data;
+
+  if (cart_id) {
+    console.log("Inside if cart_id");
+
+    data = {
+      product_variant_id,
+      qty: parseInt(qty),
+      add_on_id,
+      add_on_qty,
+      cart_id,
+      branch_id: getBranchId(),
+    };
+  } else {
+    console.log("Inside else cart_id");
+
+    data = {
+      product_variant_id,
+      qty: parseInt(qty),
+      add_on_id,
+      add_on_qty,
+      branch_id: getBranchId(),
+    };
+  }
+
   const formData = new FormData();
   Object.keys(data).map((key) => {
     formData.append(key, data[key]);
   });
 
+  if (qty == 0) {
+    const formData1 = new FormData();
+    console.log("quantity is zero");
 
-  try {
-    const response = await api.post("/manage_cart", formData);
+    formData1.append("branch_id", branch_id);
+    if (product_variant_id)
+      formData1.append("product_variant_id", product_variant_id);
+    if (cart_id) formData1.append("cart_id", cart_id);
+
+    let response = await api.post("/remove_from_cart", formData1);
 
     await updateUserCart();
-    if (response.data.error) {
-      toast.error(response.data.message);
+  } else {
+    try {
+      const response = await api.post("/manage_cart", formData);
+
+      console.log(response);
+
+      await updateUserCart();
+      if (response.data.error) {
+        toast.error(response.data.message);
+        return false;
+      }
+      toast.success(response.data.message);
+      return true;
+    } catch (e) {
+      toast.error("Something Went wrong...");
       return false;
     }
-    toast.success(response.data.message);
-    return true;
-  } catch (e) {
-    toast.error("Something Went wrong...");
-    return false;
   }
+
   // setPageLoader(true)
 };
-
-
-
-
-
-
 
 export const updateUserCart = async () => {
   const formData = new FormData();
@@ -162,8 +198,6 @@ export const updateUserData = async (data) => {
   formData.append("username", data.first_name);
   formData.append("image", data.image);
 
- 
-
   try {
     const res = await api.post("/update_user", formData);
     store.dispatch(updateUserInfo(res.data.data));
@@ -179,7 +213,6 @@ export const setProductRating = async (data) => {
   formData.append("product_id", data.product_id);
   formData.append("rating", data.rating);
   formData.append("comment", data.message);
-
 
   try {
     const res = await api.post("/set_product_rating", formData);

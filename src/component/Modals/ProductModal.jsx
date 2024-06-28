@@ -52,6 +52,7 @@ const ProductModal = ({
   showButton = true,
   cart = false,
   index = 0,
+  cart_id,
 }) => {
   const [open, setOpen] = React.useState(false);
   const [qty, setQty] = React.useState(currentQty ?? 1);
@@ -89,7 +90,9 @@ const ProductModal = ({
       product_variant_id: selectedVariant.id,
       qty: qty,
       addons: selectedAddons,
+      cart_id: cart_id,
     });
+
     setLoading(false);
     if (!state) {
       return;
@@ -127,6 +130,12 @@ const ProductModal = ({
   useEffect(() => {
     getPrice();
   }, [qty, selectedVariant, setSelectedAddons, selectedAddons]);
+
+  useEffect(() => {
+    if (variants.length > 0 && !selectedVariant) {
+      setSelectedVariant(variants[0]);
+    }
+  }, [variants]);
 
   function handleDelete() {
     setOpen(false);
@@ -430,7 +439,7 @@ const ProductModal = ({
                                             </Typography>
                                           }
                                           checked={
-                                            selectedVariant.id == item.id
+                                            selectedVariant.id === item.id
                                           }
                                           onChange={() => {
                                             setSelectedVariant(item);

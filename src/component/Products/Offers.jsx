@@ -32,9 +32,9 @@ const Offers = ({ data, showMore = true }) => {
                 <Grid
                   xs={12}
                   sm={6}
-                  md={2}
-                  lg={2}
-                  {...(is1024 ? { md: 6 } : {})}
+                  md={3}
+                  lg={3}
+                  {...(is1024 ? { md: 3 } : {})}
                   key={index}
                 >
                   <OfferCards

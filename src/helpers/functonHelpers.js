@@ -154,6 +154,7 @@ export const firebaseConfig = {
 };
 
 export const getHeaderTitle = (title) => {
-  if (title) return title + " | eRestro";
-  else return "eRestro";
+  const siteTitle =
+    store.getState().settings.value?.web_settings?.[0]?.site_title || "";
+  return title ? `${title}${siteTitle ? " | " : ""} ${siteTitle}` : siteTitle;
 };

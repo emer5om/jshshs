@@ -20,9 +20,10 @@ const Address = () => {
     try {
       const data = await getUserAddress({ user_id: userData.id });
       if (!data.error) {
-        setAddresses(data.data);
         dispatch(setUserAddresses(data.data));
         setIsLoaded(true); // Set isLoaded to true when addresses are fetched
+        setAddresses(data.data);
+
       } else {
         toast.error(data.message);
       }

@@ -59,6 +59,7 @@ const AddUserAddressesModal = ({
   latitude,
   longitude,
   pincode,
+  branch_id,
 }) => {
   const theme = useTheme();
   const countryCode = process.env.NEXT_PUBLIC_COUNTRY_CODE;
@@ -73,8 +74,6 @@ const AddUserAddressesModal = ({
     googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY,
     libraries,
   });
-
-  console.log(isLoaded);
 
   const [open, setOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState({
@@ -102,6 +101,7 @@ const AddUserAddressesModal = ({
     latitude: latitude ?? "",
     longitude: longitude ?? "",
     is_default: is_default ?? "",
+    branch_id: branch_id ?? "",
   });
 
   const addValueProps = (name, file = false) => {
@@ -160,6 +160,7 @@ const AddUserAddressesModal = ({
             pincode: postalCOde,
             latitude: latitude,
             longitude: longitude,
+            branch_id: branch_id,
           });
         } else {
           return toast.error("Please Select City");
@@ -177,14 +178,12 @@ const AddUserAddressesModal = ({
     });
     try {
       let addUserAddress;
-      console.log(type);
+
       if (type == "edit") {
         addUserAddress = await updateAddress(prefill);
       } else {
         addUserAddress = await addAddress(prefill);
       }
-
-      console.log(addUserAddress);
 
       if (addUserAddress.error) {
         const errorArray = addUserAddress.message.split("\n");
@@ -233,12 +232,10 @@ const AddUserAddressesModal = ({
             alignItems: "center",
             justifyContent: "center",
           }}
-          onClick={() => {setOpen(true)
-            setPrefill({})
-          
-          }
-          
-          }
+          onClick={() => {
+            setOpen(true);
+            setPrefill({});
+          }}
         >
           <RiMapPinAddFill style={{ marginRight: 5 }} />
           {t("add-address")}

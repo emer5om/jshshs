@@ -226,9 +226,8 @@ export const get_transactions = async ({
 } = {}) => {
   const formData = new FormData();
 
-  if(limit){
+  if (limit) {
     formData.append("limit", limit);
-
   }
 
   formData.append("offset", offset ?? 0);
@@ -423,7 +422,6 @@ export const getUserAddress = async ({ address_id, user_id } = {}) => {
 
   let response = await api.post("/get_address", formData);
 
-
   return response.data;
 };
 
@@ -448,10 +446,14 @@ export const updateAddress = async ({
   area,
   pincode,
   latitude,
+  city,
   longitude,
   is_default,
+  branch_id = 1,
 } = {}) => {
   const formData = new FormData();
+
+  if (branch_id) formData.append("branch_id", branch_id);
 
   if (id) formData.append("id", id);
   if (user_id) formData.append("user_id", user_id);
@@ -466,6 +468,7 @@ export const updateAddress = async ({
   if (latitude) formData.append("latitude", latitude);
   if (longitude) formData.append("longitude", longitude);
   if (is_default) formData.append("is_default", is_default);
+  if (city) formData.append("city", city);
 
   let response = await api.post("/update_address", formData);
   return response.data;
